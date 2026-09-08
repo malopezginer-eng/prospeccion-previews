@@ -4,63 +4,208 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Design proposal for Handyman In Singapore · MNKY KONNEKT SL</title>
+<title>Handyman In Singapore · Painting, plumbing, electrical and carpentry for homes, offices and shops, from a Sin Ming workshop.</title>
+<meta name="description" content="Painting, plumbing, electrical and carpentry for homes, offices and shops, from a Sin Ming workshop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#1b1b1f; --muted:#5f6368; --accent:#0b6e4f; --bg:#eef0f3; --card:#fff; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
-  .proposal-header { background:#1b1b1f; color:#fff; padding:14px 20px; display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; justify-content:space-between; }
-  .proposal-header strong { font-size:15px; }
-  .proposal-header span { font-size:13px; color:#cfd3d8; }
-  .proposal-header a { color:#9fe3c7; font-weight:600; text-decoration:none; }
-  .frame { max-width:960px; margin:28px auto 48px; background:var(--card); border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.12); overflow:hidden; }
-  .frame-bar { background:#f3f4f6; border-bottom:1px solid #e3e5e8; padding:8px 14px; font-size:12px; color:var(--muted); }
-  header.hero { padding:56px 20px 40px; text-align:center; background:linear-gradient(180deg,#e9f5f0,#fafaf7); }
-  h1 { font-size: clamp(28px, 6vw, 44px); margin:0 0 8px; letter-spacing:-0.02em; }
-  .sub { color:var(--muted); font-size:18px; margin:0 0 24px; }
-  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:14px 22px; border-radius:10px; font-weight:600; }
-  .rating { margin-top:16px; color:var(--muted); font-size:15px; }
-  main { max-width:860px; margin:0 auto; padding:0 20px 48px; }
-  section { margin:36px 0; }
-  h2 { font-size:22px; margin:0 0 12px; }
-  ul.services { list-style:none; padding:0; margin:0; display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-  ul.services li { background:#fafaf7; border:1px solid #e6e6e2; border-radius:12px; padding:18px; font-weight:600; }
-  .contact { background:#fafaf7; border:1px solid #e6e6e2; border-radius:12px; padding:20px; }
-  .contact p { margin:6px 0; }
-  .proposal-footer { max-width:960px; margin:0 auto 48px; padding:0 20px; color:var(--muted); font-size:13px; text-align:center; }
+  :root {
+    --ink: #1a1f2b; --paper: #ffffff; --tint: #fff3e6; --brand: #d9480f; --accent: #1c3f95;
+    --radius: 8px; --display: "Archivo", Georgia, serif; --body: "Inter", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("https://images.unsplash.com/photo-1637640125496-31852f042a60?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("https://images.unsplash.com/photo-1637640125496-31852f042a60?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
 </style>
 </head>
 <body>
-<div class="proposal-header preview-banner">
-  <strong>MNKY KONNEKT SL · Design proposal</strong>
-  <span>Suggested one-page layout for Handyman In Singapore. This is a mock-up made by us, not the business's website; nothing is live.</span>
+<div class="proposal">
+  <span><strong>MNKY KONNEKT SL</strong> · Design proposal for Handyman In Singapore. A mock-up made by us, not the business's website; nothing here is live.</span>
   <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer/?ref=handyman-in-singapore">How to make it yours</a>
 </div>
-<div class="frame">
-  <div class="frame-bar">Mock-up · how a one-page site could look on desktop and mobile</div>
-  <header class="hero">
-    <h1>Handyman In Singapore</h1>
-    <p class="sub">Plumbing, electrical and handyman jobs from Midview City</p>
-    <a class="cta" href="tel:9780 0018">Call 9780 0018</a>
-    <div class="rating">★ – on Google · – reviews</div>
-  </header>
-  <main>
-    <section>
-      <h2>What we do</h2>
-      <ul class="services"><li>Plumbing and electrical repairs</li><li>Installation and mounting</li><li>Small renovation and odd jobs</li></ul>
-    </section>
-    <section>
-      <h2>About Handyman In Singapore</h2>
-      <p>Handyman In Singapore fixes the small things that pile up at home or in the office: leaks, sockets, shelves, doors. Based in Sin Ming, working islandwide.</p>
-    </section>
-    <section class="contact">
-      <h2>Find us</h2>
-      <p>22 Sin Ming Lane, #06-76 Midview City, Singapore 573969</p>
-      <p>Phone: <a href="tel:9780 0018">9780 0018</a></p>
-      <p><a href="https://www.google.com/maps/search/?api=1&query=22 Sin Ming Lane, #06-76 Midview City, Singapore 573969">Open in Google Maps</a></p>
-    </section>
-  </main>
-</div>
-<p class="proposal-footer">Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with Handyman In Singapore. Business details come from its public listing; the business can ask for changes or removal at any time.</p>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Handyman In Singapore</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="tel:97800018">Call 9780 0018</a>
+  </div>
+</nav>
+
+<header class="hero-full" id="top"><div class="photo" role="img" aria-label="Hand tools laid out in a toolbox"></div><div class="wrap"><h1>We do the dirty work for you</h1><p class="lead">Painting, plumbing, electrical and carpentry for homes, offices and shops, from a Sin Ming workshop.</p><div class="actions"><a class="btn btn-brand" href="tel:97800018">Call 9780 0018</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Handyman+In+Singapore+22+Sin+Ming+Lane%2C+%2306-76+Midview+City%2C+Singapore+573969" target="_blank" rel="noopener">Get directions</a></div><ul class="chips"><li>Four trades, one team</li><li>Homes and commercial premises</li><li>Site visit before quoting</li></ul></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Painting</h3><p>The cheapest way to make a tired flat or office look new again. Residential and commercial, priced at competitive rates rather than by the room.</p></article><article class="card"><h3>Plumbing</h3><p>Leaking pipes through to fitting new sinks, basins and shower mixers. The small jobs most contractors will not come out for.</p></article><article class="card"><h3>Electrical</h3><p>Adding sockets, swapping tired switches for designer ones, rewiring a whole house, or reinstating an office or shop unit. Site visit first.</p></article><article class="card"><h3>Carpentry</h3><p>Anything in wood, from a door that no longer aligns to full-scale carpentry work. Homes and commercial premises both.</p></article><article class="card"><h3>Repair, install and remodel</h3><p>General contracting for the projects that do not fit one trade. Tell them what you are trying to do and they will come and look at it.</p></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About Handyman In Singapore</h2><p>Handyman In Singapore is a small outfit based at Midview City on Sin Ming Lane, covering painting, plumbing, electrical work and carpentry for flats, houses, offices and shop units. Four trades from one number, which is the point when a job turns out to need two of them.</p><p>The way they work is simple: get in touch, they come and look, then you get a quote. Rates are pitched to suit different budgets, and they say the relationship only ends once the client is happy with the work.</p></div><div class="stats"><div class="stat"><b>4</b><span>Trades covered</span></div><div class="stat"><b>Sin Ming</b><span>Based in</span></div><div class="stat"><b>Home &amp; office</b><span>Both served</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose Handyman In Singapore</h2><div class="grid"><article><h3>One call for four trades</h3><p>Painting, plumbing, electrical and carpentry from the same team, so a job that turns into two trades does not turn into two contractors.</p></article><article><h3>They come and look first</h3><p>Site visit and quote before anything starts, on electrical and carpentry work especially.</p></article><article><h3>Small jobs welcome</h3><p>Door alignments, an extra socket, a leaking pipe - the jobs that are too small for a renovation firm.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>22 Sin Ming Lane, #06-76 Midview City, Singapore 573969</div>
+        <div>Phone: <a href="tel:97800018">9780 0018</a></div>
+        
+        
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Handyman+In+Singapore+22+Sin+Ming+Lane%2C+%2306-76+Midview+City%2C+Singapore+573969" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to Handyman In Singapore" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Handyman+In+Singapore+22+Sin+Ming+Lane%2C+%2306-76+Midview+City%2C+Singapore+573969&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>Do you do small jobs?</summary><p>Yes. The list runs from door alignments and extra sockets up to full-scale carpentry and rewiring a whole house.</p></details><details><summary>Do you work on offices and shops?</summary><p>Yes, residential and commercial both, including reinstating an office or shop unit.</p></details><details><summary>How do I get a price?</summary><p>Call or email and they will arrange a site visit, then quote for the work.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with Handyman In Singapore?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="tel:97800018">Call 9780 0018</a>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Handyman+In+Singapore+22+Sin+Ming+Lane%2C+%2306-76+Midview+City%2C+Singapore+573969" target="_blank" rel="noopener">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Handyman In Singapore · 22 Sin Ming Lane</span>
+    <span>Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with Handyman In Singapore; details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float " href="#" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 </body>
 </html>

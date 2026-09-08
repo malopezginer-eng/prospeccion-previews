@@ -4,63 +4,208 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Design proposal for Ocean Plumbing · MNKY KONNEKT SL</title>
+<title>Ocean Plumbing · Chokes, leaks, taps, cisterns and heaters for HDB flats, condos and landed homes, day or night.</title>
+<meta name="description" content="Chokes, leaks, taps, cisterns and heaters for HDB flats, condos and landed homes, day or night.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#1b1b1f; --muted:#5f6368; --accent:#0b6e4f; --bg:#eef0f3; --card:#fff; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
-  .proposal-header { background:#1b1b1f; color:#fff; padding:14px 20px; display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; justify-content:space-between; }
-  .proposal-header strong { font-size:15px; }
-  .proposal-header span { font-size:13px; color:#cfd3d8; }
-  .proposal-header a { color:#9fe3c7; font-weight:600; text-decoration:none; }
-  .frame { max-width:960px; margin:28px auto 48px; background:var(--card); border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.12); overflow:hidden; }
-  .frame-bar { background:#f3f4f6; border-bottom:1px solid #e3e5e8; padding:8px 14px; font-size:12px; color:var(--muted); }
-  header.hero { padding:56px 20px 40px; text-align:center; background:linear-gradient(180deg,#e9f5f0,#fafaf7); }
-  h1 { font-size: clamp(28px, 6vw, 44px); margin:0 0 8px; letter-spacing:-0.02em; }
-  .sub { color:var(--muted); font-size:18px; margin:0 0 24px; }
-  .cta { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:14px 22px; border-radius:10px; font-weight:600; }
-  .rating { margin-top:16px; color:var(--muted); font-size:15px; }
-  main { max-width:860px; margin:0 auto; padding:0 20px 48px; }
-  section { margin:36px 0; }
-  h2 { font-size:22px; margin:0 0 12px; }
-  ul.services { list-style:none; padding:0; margin:0; display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-  ul.services li { background:#fafaf7; border:1px solid #e6e6e2; border-radius:12px; padding:18px; font-weight:600; }
-  .contact { background:#fafaf7; border:1px solid #e6e6e2; border-radius:12px; padding:20px; }
-  .contact p { margin:6px 0; }
-  .proposal-footer { max-width:960px; margin:0 auto 48px; padding:0 20px; color:var(--muted); font-size:13px; text-align:center; }
+  :root {
+    --ink: #1a1f2b; --paper: #ffffff; --tint: #fff3e6; --brand: #d9480f; --accent: #1c3f95;
+    --radius: 8px; --display: "Archivo", Georgia, serif; --body: "Inter", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("https://images.unsplash.com/photo-1637640125496-31852f042a60?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("https://images.unsplash.com/photo-1637640125496-31852f042a60?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
 </style>
 </head>
 <body>
-<div class="proposal-header preview-banner">
-  <strong>MNKY KONNEKT SL · Design proposal</strong>
-  <span>Suggested one-page layout for Ocean Plumbing. This is a mock-up made by us, not the business's website; nothing is live.</span>
+<div class="proposal">
+  <span><strong>MNKY KONNEKT SL</strong> · Design proposal for Ocean Plumbing. A mock-up made by us, not the business's website; nothing here is live.</span>
   <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer/?ref=ocean-plumbing">How to make it yours</a>
 </div>
-<div class="frame">
-  <div class="frame-bar">Mock-up · how a one-page site could look on desktop and mobile</div>
-  <header class="hero">
-    <h1>Ocean Plumbing</h1>
-    <p class="sub">24-hour emergency plumber, islandwide</p>
-    <a class="cta" href="tel:+65 8308 4671">Call +65 8308 4671</a>
-    <div class="rating">★ – on Google · – reviews</div>
-  </header>
-  <main>
-    <section>
-      <h2>What we do</h2>
-      <ul class="services"><li>Burst pipes and leaks, any hour</li><li>Choke clearing and drainage</li><li>Tap, toilet and water heater repairs</li></ul>
-    </section>
-    <section>
-      <h2>About Ocean Plumbing</h2>
-      <p>Ocean Plumbing answers the phone at any hour and sends a plumber across Singapore for leaks, chokes and breakdowns. Fixed call-out price, no surprises.</p>
-    </section>
-    <section class="contact">
-      <h2>Find us</h2>
-      <p>Singapore (islandwide)</p>
-      <p>Phone: <a href="tel:+65 8308 4671">+65 8308 4671</a></p>
-      <p><a href="https://www.google.com/maps/search/?api=1&query=Singapore (islandwide)">Open in Google Maps</a></p>
-    </section>
-  </main>
-</div>
-<p class="proposal-footer">Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with Ocean Plumbing. Business details come from its public listing; the business can ask for changes or removal at any time.</p>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Ocean Plumbing</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="tel:6583084671">Call +65 8308 4671</a>
+  </div>
+</nav>
+
+<header class="hero-full" id="top"><div class="photo" role="img" aria-label="Hand tools laid out in a toolbox"></div><div class="wrap"><h1>24-hour plumber, anywhere in Singapore</h1><p class="lead">Chokes, leaks, taps, cisterns and heaters for HDB flats, condos and landed homes, day or night.</p><div class="actions"><a class="btn btn-brand" href="tel:6583084671">Call +65 8308 4671</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Ocean+Plumbing+Singapore+%28islandwide%29" target="_blank" rel="noopener">Get directions</a></div><ul class="chips"><li>24 hours, islandwide</li><li>Warranty on repairs</li><li>Price agreed before work starts</li></ul></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Blocked drains and chokes</h3><p>Floor traps, basins and kitchen sinks cleared. The usual 3am call, and the reason the line is answered around the clock.</p></article><article class="card"><h3>Leaking pipes</h3><p>Repair or replacement of leaking water and waste pipework, in flats, condos and landed property.</p></article><article class="card"><h3>Taps, mixers and cistern fittings</h3><p>Replacement of faucets, water taps and mixers, plus flushing systems and toilet seat covers. They stock or source most brands, Grohe and Hansgrohe through to Saniton and Johnson Suisse.</p></article><article class="card"><h3>Sanitary ware supply and install</h3><p>Toilet bowls, basins, bidets, hand sprays and bathroom accessories supplied and fitted, including converting a squat pan to a sitting toilet bowl.</p></article><article class="card"><h3>Water heaters</h3><p>Supply and installation of instant heaters and storage heaters.</p></article><article class="card"><h3>Rubbish chutes</h3><p>New aluminium or stainless steel refuse chutes and dustbins supplied and installed.</p></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About Ocean Plumbing</h2><p>Ocean Plumbing is a Singapore plumbing company, registered here since January 2020, working islandwide on HDB flats, condominiums and landed property. The service runs 24 hours, which is the part that matters when a floor trap backs up on a public holiday.</p><p>Pricing is done job by job. They look at the problem first, quote a figure, and only start once you have agreed it, and the repair work carries a warranty. Calls and SMS both go to the same number.</p></div><div class="stats"><div class="stat"><b>2020</b><span>Registered in Singapore</span></div><div class="stat"><b>24 hours</b><span>Every day</span></div><div class="stat"><b>Islandwide</b><span>Coverage</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose Ocean Plumbing</h2><div class="grid"><article><h3>Answered at any hour</h3><p>24-hour islandwide service, by phone or SMS, for the plumbing problems that never happen at a convenient time.</p></article><article><h3>No surprise bill</h3><p>They look at the job, quote a price, and only begin once you have agreed to it.</p></article><article><h3>Warranty on the repair</h3><p>Plumbing repair work is covered by a warranty, so a job that does not hold gets put right.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      <h2 id="hours">Opening hours</h2><table class="hours"><tr><td>Monday – Sunday</td><td>24 hours</td></tr></table><div style="height:40px"></div>
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>Singapore (islandwide)</div>
+        <div>Phone: <a href="tel:6583084671">+65 8308 4671</a></div>
+        
+        
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Ocean+Plumbing+Singapore+%28islandwide%29" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to Ocean Plumbing" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Ocean+Plumbing+Singapore+%28islandwide%29&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>How much will it cost?</summary><p>It depends on the job. They check the problem first and quote a price, and the work only starts once both sides agree on it.</p></details><details><summary>Do you work on HDB flats?</summary><p>Yes, HDB flats, condominiums and landed property, anywhere on the island.</p></details><details><summary>Can you replace a squat toilet with a normal one?</summary><p>Yes, converting an existing squatting pan to a sitting toilet bowl is one of the jobs they do, sanitary ware supplied and installed.</p></details><details><summary>Is there a warranty?</summary><p>Yes, plumbing repair services are covered by a warranty.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with Ocean Plumbing?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="tel:6583084671">Call +65 8308 4671</a>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Ocean+Plumbing+Singapore+%28islandwide%29" target="_blank" rel="noopener">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Ocean Plumbing · Singapore (islandwide)</span>
+    <span>Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with Ocean Plumbing; details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float " href="#" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 </body>
 </html>
