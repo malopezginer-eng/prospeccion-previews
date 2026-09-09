@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Healthy Homestay Renon · Healthy Homestay: kamar 3 x 10 m dengan dapur dan kamar mandi sendiri, 50 meter dari Lapangan Renon.</title>
+<meta name="description" content="Healthy Homestay: kamar 3 x 10 m dengan dapur dan kamar mandi sendiri, 50 meter dari Lapangan Renon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1b1b1f; --paper: #ffffff; --tint: #f1f3f5; --brand: #0b6e4f; --accent: #f2b134;
+    --radius: 12px; --display: "Manrope", Georgia, serif; --body: "Manrope", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
+</style>
+</head>
+<body>
+<div class="proposal">
+  <span><strong>Bella Web Bali</strong> · Design proposal for Healthy Homestay Renon. A mock-up made by us, not the business's website; nothing here is live.</span>
+  <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer-bali/?ref=healthy-homestay-renon">How to make it yours</a>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Healthy Homestay Renon</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="https://wa.me/62818554664">Book on WhatsApp</a>
+  </div>
+</nav>
+
+<header class="hero-split" id="top"><div class="wrap"><div><h1>Kamar kos luas di Renon, Denpasar</h1><p class="lead">Healthy Homestay: kamar 3 x 10 m dengan dapur dan kamar mandi sendiri, 50 meter dari Lapangan Renon.</p><div class="actions"><a class="btn btn-brand" href="https://wa.me/62818554664">Book on WhatsApp</a><a class="btn btn-ghost" href="tel:62818554664">Call +62 818 55 4664</a></div><ul class="chips"><li>50 m dari Lapangan Puputan Renon</li><li>Kamar 3 x 10 m dengan dapur pribadi</li><li>Listrik, air dan WiFi termasuk</li></ul></div></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Kamar bulanan</h3><p>Satu unit 3 x 10 m untuk maksimal 2 orang dewasa: kamar tidur 3 x 5 m dengan ranjang queen size 160 x 200, dapur 3 x 3 m dengan bak cuci, kamar mandi dengan water heater, AC, TV LCD, kulkas dan lemari pakaian.</p><span class="price">Rp 2.500.000 per bulan</span></article><article class="card"><h3>Sewa enam bulan</h3><p>Unit dan fasilitas yang sama dengan tarif setengah tahun, lebih murah daripada bayar bulanan satu per satu.</p><span class="price">Rp 14.250.000 per 6 bulan</span></article><article class="card"><h3>Sewa tahunan</h3><p>Pilihan paling hemat untuk yang menetap lama di Denpasar, misalnya kerja atau kuliah di sekitar Renon.</p><span class="price">Rp 28.500.000 per tahun</span></article><article class="card"><h3>Sewa harian dan mingguan</h3><p>Unit yang sama juga bisa disewa harian atau mingguan. Tarifnya ditanyakan langsung sesuai tanggal.</p></article><article class="card"><h3>Listrik, air dan WiFi</h3><p>Listrik, air sumur pompa dan WiFi sudah tersedia di unit, jadi tidak perlu urus pasang sendiri.</p></article><article class="card"><h3>Teras, halaman dan parkir</h3><p>Teras depan dan belakang masing-masing 3 x 1 m, halaman hijau dan parkir luas di dalam pekarangan.</p></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About Healthy Homestay Renon</h2><p>Healthy Homestay adalah rumah kos di Jl. Ciung Wanara 7A Utara, Renon, Denpasar Timur, yang dikelola langsung oleh pemiliknya, Dani. Jaraknya cuma sekitar 50 meter dari Lapangan Puputan Margarana dan Monumen Bajra Sandhi, jadi lari pagi atau olahraga sore tinggal jalan kaki.</p><p>Unitnya bukan kamar kos biasa: 3 x 10 meter dengan kamar tidur, dapur sendiri, kamar mandi dengan water heater, AC, kulkas, TV dan lemari, ditambah teras depan-belakang serta halaman dan parkir yang luas. Kantor pemerintahan, bank, kedutaan, rumah sakit, pasar, kampus dan tempat makan semuanya ada di radius satu dua kilometer; Sanur sekitar 10-15 menit dan Bandara Ngurah Rai 20-30 menit.</p></div><div class="stats"><div class="stat"><b>3 x 10 m</b><span>Luas unit</span></div><div class="stat"><b>50 m</b><span>Ke Lapangan Renon</span></div><div class="stat"><b>2 orang</b><span>Kapasitas per unit</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose Healthy Homestay Renon</h2><div class="grid"><article><h3>Dapur dan kamar mandi sendiri</h3><p>Bukan kamar kos polos: ada dapur 3 x 3 m dengan bak cuci dan kamar mandi dengan water heater di dalam unit.</p></article><article><h3>Renon, dekat ke mana-mana</h3><p>Kantor, bank, rumah sakit, kampus, pasar dan tempat makan ada di sekitar, dengan jalan lebar dan lingkungan yang tenang.</p></article><article><h3>Diurus langsung pemilik</h3><p>Dani yang mengelola dan menjawab sendiri, jadi urusan sewa dan perbaikan tidak lewat perantara.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>Jl. Ciung Wanara 7A Utara, Renon, East Denpasar, Bali</div>
+        <div>Phone: <a href="tel:62818554664">+62 818 55 4664</a></div>
+        <div>WhatsApp: <a href="https://wa.me/62818554664">+62 818554664</a></div>
+        <div>Languages: Bahasa Indonesia</div>
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Healthy+Homestay+Renon+Jl.+Ciung+Wanara+7A+Utara%2C+Renon%2C+East+Denpasar%2C+Bali" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to Healthy Homestay Renon" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Healthy+Homestay+Renon+Jl.+Ciung+Wanara+7A+Utara%2C+Renon%2C+East+Denpasar%2C+Bali&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>Harga sudah termasuk apa saja?</summary><p>Unit datang lengkap dengan AC, TV LCD, kulkas, lemari, ranjang queen size, water heater, plus listrik, air sumur pompa dan WiFi. Dapur disediakan tanpa perabotan.</p></details><details><summary>Boleh diisi berapa orang?</summary><p>Maksimal 2 orang dewasa per unit.</p></details><details><summary>Bisa sewa bulanan atau harus setahun?</summary><p>Bisa bulanan, enam bulan, atau tahunan. Sewa harian dan mingguan juga tersedia, tarifnya ditanyakan sesuai tanggal.</p></details><details><summary>Bagaimana cara lihat kamarnya?</summary><p>Hubungi Dani di WhatsApp 0818 55 4664 atau email daniiswara@gmail.com untuk janji lihat unit. Lokasinya di Jl. Ciung Wanara 7A Utara, Renon.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with Healthy Homestay Renon?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="https://wa.me/62818554664">Book on WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:62818554664">Call +62 818 55 4664</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Healthy Homestay Renon · Jl. Ciung Wanara 7A Utara</span>
+    <span>Prepared by Bella Web Bali as a design suggestion. Not affiliated with Healthy Homestay Renon; details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float on" href="https://wa.me/62818554664" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+</body>
+</html>

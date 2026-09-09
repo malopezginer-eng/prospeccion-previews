@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Jadikan draf ini website Anda · Bella Web Bali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1b1a17; --paper:#ffffff; --tint:#f5f1ea; --brand:#2f6b5a; --accent:#e0a458; --muted:#5f5a52; --line:#e6e1d8; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Manrope", system-ui, sans-serif; font-size:17px; line-height:1.55; }
+  .wrap { max-width:860px; margin:0 auto; padding:0 24px; }
+  header { padding:56px 0 24px; }
+  h1 { font-size:clamp(34px, 5vw, 52px); line-height:1.08; margin:0 0 14px; letter-spacing:-0.02em; }
+  h2 { font-size:26px; margin:0 0 10px; }
+  p { margin:0 0 1em; }
+  .lead { font-size:20px; color:var(--muted); max-width:60ch; }
+  .steps { display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); margin:32px 0 8px; padding:0; list-style:none; counter-reset:step; }
+  .steps li { background:var(--tint); border-radius:14px; padding:20px; counter-increment:step; }
+  .steps li::before { content:counter(step); display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--brand); color:#fff; font-weight:700; margin-bottom:10px; }
+  .plans { display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); margin:32px 0; }
+  .plan { border:1px solid var(--line); border-radius:16px; padding:26px; display:flex; flex-direction:column; }
+  .plan.main { border:2px solid var(--brand); }
+  .plan h2 { font-size:22px; }
+  .price { font-size:36px; font-weight:700; letter-spacing:-0.02em; margin:6px 0 2px; }
+  .price small { font-size:16px; font-weight:600; color:var(--muted); }
+  .plan ul { padding-left:20px; margin:14px 0 22px; color:var(--muted); flex:1; }
+  .plan li { margin:6px 0; }
+  .btn { display:inline-block; padding:14px 22px; border-radius:10px; background:#25d366; color:#fff; text-decoration:none; font-weight:700; text-align:center; }
+  .btn.ghost { background:transparent; color:var(--brand); border:2px solid var(--brand); }
+  section { padding:28px 0; border-top:1px solid var(--line); }
+  details { border-bottom:1px solid var(--line); padding:6px 0; }
+  summary { cursor:pointer; font-weight:700; padding:12px 0; font-size:18px; }
+  details p { color:var(--muted); }
+  footer { padding:36px 0 48px; color:var(--muted); font-size:14px; }
+  .note { background:#fff6e5; border-left:4px solid var(--accent); padding:14px 18px; border-radius:0 10px 10px 0; margin:24px 0; }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Jadikan draf ini website Anda</h1>
+  <p class="lead">Anda sudah melihat draf lengkap website satu halaman untuk usaha Anda. Begini caranya kalau ingin dipakai sungguhan, berapa biayanya, dan cara bayarnya.</p>
+  <ol class="steps">
+    <li><strong>Anda bilang ya</strong><br>Balas email atau chat WhatsApp. Kami minta foto, logo, dan teks yang ingin diganti.</li>
+    <li><strong>Kami rapikan</strong><br>Dalam beberapa hari kerja Anda menerima halaman final untuk dicek.</li>
+    <li><strong>Website tayang</strong><br>Di domain Anda sendiri (kami daftarkan untuk Anda, atau pakai domain yang sudah ada). Selesai.</li>
+  </ol>
+</header>
+
+<main class="wrap">
+  <div class="plans">
+    <div class="plan main">
+      <h2>Website satu halaman</h2>
+      <div class="price">Rp 3.500.000 <small>sekali bayar</small></div>
+      <p style="color:var(--muted)">Draf yang Anda lihat, dirapikan dan ditayangkan.</p>
+      <ul>
+        <li>Foto, logo, dan teks Anda</li>
+        <li>Enak dibuka di HP, cepat, aman (https)</li>
+        <li>Tombol WhatsApp, peta, jam buka, tombol booking</li>
+        <li>Domain sendiri (tahun pertama termasuk)</li>
+        <li>Dua kali revisi sebelum tayang</li>
+        <li>Bayar via transfer bank atau QRIS</li>
+      </ul>
+      <a class="btn" href="mailto:krisabela2001@gmail.com">Chat di WhatsApp</a>
+    </div>
+    <div class="plan">
+      <h2>Paket perawatan</h2>
+      <div class="price">Rp 350.000 <small>/ bulan</small></div>
+      <p style="color:var(--muted)">Opsional, setelah website tayang.</p>
+      <ul>
+        <li>Hosting dan perpanjangan domain</li>
+        <li>Update jam, harga, foto, dan teks dalam 2 hari kerja</li>
+        <li>Keamanan dan backup</li>
+        <li>Bisa berhenti kapan saja</li>
+      </ul>
+      <a class="btn ghost" href="mailto:krisabela2001@gmail.com?subject=Paket%20perawatan">Tanya lewat email</a>
+    </div>
+  </div>
+
+  <div class="note">Tidak ada pembayaran online di halaman ini. Setelah Anda setuju, kami kirim detail rekening atau kode QRIS lewat WhatsApp, dan kuitansi setelah pembayaran diterima.</div>
+
+  <section>
+    <h2>Pertanyaan</h2>
+    <details><summary>Dari mana Anda dapat email dan data usaha saya?</summary><p>Dari website atau daftar publik usaha Anda sendiri. Draf hanya memakai informasi publik dan foto stok; tidak ada yang disalin dari situs Anda. Kalau ingin draf dihapus, balas "hapus" dan halaman itu hilang di hari yang sama.</p></details>
+    <details><summary>Apakah website-nya jadi milik saya?</summary><p>Ya. Domain terdaftar atas nama Anda dan file halamannya milik Anda. Kalau berhenti dari paket perawatan, semuanya kami serahkan.</p></details>
+    <details><summary>Kalau saya butuh lebih dari satu halaman?</summary><p>Kebanyakan usaha kecil cukup dengan satu halaman yang bagus. Kalau butuh lebih (menu, daftar harga, galeri), balas saja dan kami beri penawaran tambahan.</p></details>
+    <details><summary>Siapa Anda?</summary><p>Bella Web Bali adalah studio web kecil di Bali yang dijalankan oleh Bella. Anda berurusan dengan satu orang dari awal sampai selesai.</p></details>
+  </section>
+</main>
+
+<footer class="wrap">
+  Bella Web Bali · Bali · <a href="mailto:krisabela2001@gmail.com">krisabela2001@gmail.com</a><br>
+  Kalau tidak ingin dihubungi lagi: balas email kami dengan kata <strong>berhenti</strong>.
+</footer>
+</body>
+</html>

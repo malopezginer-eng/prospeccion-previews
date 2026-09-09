@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>He&#x27;enalu Cafe &amp; Resto Uluwatu · Hawaiian poke bowls, all-day brekky and cold-pressed juice on Jalan Raya Uluwatu in Pecatu.</title>
+<meta name="description" content="Hawaiian poke bowls, all-day brekky and cold-pressed juice on Jalan Raya Uluwatu in Pecatu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM%20Sans:wght@400;600;700&family=DM%20Serif%20Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1f1a17; --paper: #faf6f0; --tint: #efe6da; --brand: #2f3e2e; --accent: #c96f2c;
+    --radius: 10px; --display: "DM Serif Display", Georgia, serif; --body: "DM Sans", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("https://images.unsplash.com/photo-1689037676470-b72230d5236e?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("https://images.unsplash.com/photo-1689037676470-b72230d5236e?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
+</style>
+</head>
+<body>
+<div class="proposal">
+  <span><strong>Bella Web Bali</strong> · Design proposal for He&#x27;enalu Cafe &amp; Resto Uluwatu. A mock-up made by us, not the business's website; nothing here is live.</span>
+  <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer-bali/?ref=he-enalu-cafe-resto-uluwatu">How to make it yours</a>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">He&#x27;enalu Cafe &amp; Resto Uluwatu</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="tel:6289529881815">Call +62 895 2988 1815</a>
+  </div>
+</nav>
+
+<header class="hero-full" id="top"><div class="photo" role="img" aria-label="Cafe interior with tables and counter"></div><div class="wrap"><h1>He&#x27;enalu Cafe &amp; Resto, Uluwatu</h1><p class="lead">Hawaiian poke bowls, all-day brekky and cold-pressed juice on Jalan Raya Uluwatu in Pecatu.</p><div class="actions"><a class="btn btn-brand" href="tel:6289529881815">Call +62 895 2988 1815</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=He%27enalu+Cafe+%26+Resto+Uluwatu+Jl.+Raya+Uluwatu+Pecatu+No.+70x%2C+Pecatu%2C+Uluwatu%2C+Bali" target="_blank" rel="noopener">Get directions</a></div><ul class="chips"><li>Since 2017</li><li>4.8 on Tripadvisor, 487 reviews</li><li>Delivery within 4 km</li></ul></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Hawaiian bowls and poke</h3><p>The poke bowl on sushi rice with tuna, mushroom or chicken and a choice of original poke, salsa verde or wasabi mayo. Also loco moco, huli-huli chicken, buttered shoyu ahi and hamburger rice.</p><span class="price">from IDR 45,000</span></article><article class="card"><h3>All-day breakfast and brunch</h3><p>Served from opening to close: avocado toast with poached eggs and bacon, big brekky, breakfast burrito, breakfast tacos, omelettes built from a list of toppings, and smoothie bowls with acai, mango or mixed berries.</p><span class="price">from IDR 39,000</span></article><article class="card"><h3>Burgers, sandwiches and wraps</h3><p>Australian beef patties in the Ultima and teriyaki burgers, an Asian tuna burger, plus chicken cheese jalapeno and wasabi mayo tuna wraps, all with fries or a side salad.</p><span class="price">from IDR 65,000</span></article><article class="card"><h3>Vegan and gluten-free</h3><p>A full vegan section marked (V) and (GF): vegan bowl with watermelon or tofu, veggie burger, falafel wrap, tofu tex mex, buddha stew, crispy enoki and oriental fried rice.</p><span class="price">from IDR 39,000</span></article><article class="card"><h3>Coffee, juices and kombucha</h3><p>Espresso through flat whites and Vietnamese drip, matcha and iced teas, twelve cold-pressed juice blends, smoothies, milkshakes, local Bali Bucha kombucha and cold Bintang.</p><span class="price">from IDR 17,000</span></article><article class="card"><h3>Waffles and desserts</h3><p>Waffles with ice cream and fruit, chia pudding, avocado coffee, and ice-cream desserts like Choco Damnation and Summer Breeze.</p><span class="price">from IDR 35,000</span></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About He&#x27;enalu Cafe &amp; Resto Uluwatu</h2><p>He&#x27;enalu sits on Jalan Raya Uluwatu in Pecatu, near Nirmala supermarket and within a short ride of Padang Padang, Bingin, Dreamland, Suluban and Balangan. It has been feeding surfers and their families on the Bukit since 2017.</p><p>The kitchen is Hawaiian at heart and cooks from scratch each day: poke bowls, loco moco and huli-huli chicken alongside brunch plates, pasta, burgers and a vegan section that is properly marked rather than tacked on. Air-conditioned inside, open for dine-in and takeaway, and delivering to addresses within four kilometres.</p></div><div class="stats"><div class="stat"><b>2017</b><span>Established</span></div><div class="stat"><b>4.8</b><span>Tripadvisor rating</span></div><div class="stat"><b>Pecatu</b><span>Neighbourhood</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose He&#x27;enalu Cafe &amp; Resto Uluwatu</h2><div class="grid"><article><h3>Hawaiian, not generic cafe food</h3><p>Poke bowls, loco moco and huli-huli chicken cooked properly, not as a side note.</p></article><article><h3>Vegans get a real menu</h3><p>A whole section marked (V) and (GF), from the vegan bowl to falafel wraps and buddha stew.</p></article><article><h3>Rated 4.8 by 487 diners</h3><p>One of the better-reviewed cafes on the Bukit on Tripadvisor.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      <h2 id="hours">Opening hours</h2><table class="hours"><tr><td>Sunday – Friday</td><td>11:00 – 19:30</td></tr><tr><td>Saturday</td><td>Closed</td></tr></table><div style="height:40px"></div>
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>Jl. Raya Uluwatu Pecatu No. 70x, Pecatu, Uluwatu, Bali</div>
+        <div>Phone: <a href="tel:6289529881815">+62 895 2988 1815</a></div>
+        
+        <div><a href="https://instagram.com/heenalu.uluwatu.bali" target="_blank" rel="noopener">Instagram @heenalu.uluwatu.bali</a> · <a href="https://www.facebook.com/HeenaluUluwatu" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English, Indonesian</div>
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=He%27enalu+Cafe+%26+Resto+Uluwatu+Jl.+Raya+Uluwatu+Pecatu+No.+70x%2C+Pecatu%2C+Uluwatu%2C+Bali" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to He&#x27;enalu Cafe &amp; Resto Uluwatu" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=He%27enalu+Cafe+%26+Resto+Uluwatu+Jl.+Raya+Uluwatu+Pecatu+No.+70x%2C+Pecatu%2C+Uluwatu%2C+Bali&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>Are you open on Saturdays?</summary><p>No. He&#x27;enalu opens Sunday to Friday, 11:00 to 19:30, and closes on Saturdays.</p></details><details><summary>Do you deliver?</summary><p>Yes, direct delivery to addresses within about 4 km. Last takeaway orders are taken at 19:00.</p></details><details><summary>Are the menu prices final?</summary><p>Menu prices are before 10% tax and a 5% service charge.</p></details><details><summary>Is there anything for vegans?</summary><p>Yes, a full vegan section with items marked (V) and (GF), including bowls, sandwiches, wraps and fried rice.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with He&#x27;enalu Cafe &amp; Resto Uluwatu?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="tel:6289529881815">Call +62 895 2988 1815</a>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=He%27enalu+Cafe+%26+Resto+Uluwatu+Jl.+Raya+Uluwatu+Pecatu+No.+70x%2C+Pecatu%2C+Uluwatu%2C+Bali" target="_blank" rel="noopener">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>He&#x27;enalu Cafe &amp; Resto Uluwatu · Jl. Raya Uluwatu Pecatu No. 70x</span>
+    <span>Prepared by Bella Web Bali as a design suggestion. Not affiliated with He&#x27;enalu Cafe &amp; Resto Uluwatu; details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float " href="#" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+</body>
+</html>

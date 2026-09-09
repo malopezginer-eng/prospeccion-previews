@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Canggu Surf School (Bali Surfing Lesson) · ASI-certified surf lessons on Berawa Beach, run from LV8 Resort on Jl. Discovery, Canggu.</title>
+<meta name="description" content="ASI-certified surf lessons on Berawa Beach, run from LV8 Resort on Jl. Discovery, Canggu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1f2d; --paper: #ffffff; --tint: #eaf4f0; --brand: #0b6e4f; --accent: #ff7a3d;
+    --radius: 14px; --display: "Sora", Georgia, serif; --body: "Inter", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("https://images.unsplash.com/photo-1649751361457-01d3a696c7e6?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("https://images.unsplash.com/photo-1649751361457-01d3a696c7e6?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
+</style>
+</head>
+<body>
+<div class="proposal">
+  <span><strong>Bella Web Bali</strong> · Design proposal for Canggu Surf School (Bali Surfing Lesson). A mock-up made by us, not the business's website; nothing here is live.</span>
+  <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer-bali/?ref=canggu-surf-school-bali-surfing-lesson">How to make it yours</a>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Canggu Surf School (Bali Surfing Lesson)</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="https://wa.me/12517664222">Book on WhatsApp</a>
+  </div>
+</nav>
+
+<header class="hero-split" id="top"><div class="wrap"><div><h1>Learn to Surf in Canggu</h1><p class="lead">ASI-certified surf lessons on Berawa Beach, run from LV8 Resort on Jl. Discovery, Canggu.</p><div class="actions"><a class="btn btn-brand" href="https://wa.me/12517664222">Book on WhatsApp</a><a class="btn btn-ghost" href="tel:12517664222">Call +1 251 766 4222</a></div><ul class="chips"><li>ASI certified instructors</li><li>Max 3 students per group</li><li>Stand-up guarantee</li></ul></div><div class="photo" role="img" aria-label="Physiotherapist examining a patient&#x27;s knee"></div></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Group surf lesson</h3><p>Two and a half hours in the water with one instructor for up to three students, from age 15. Board, leash, helmet and rash vest are part of the lesson.</p><span class="price">from IDR 455,000</span></article><article class="card"><h3>Semi-private lesson</h3><p>One instructor for two people, so couples and friends learn together but still get corrections on every wave. Available as a 2-hour or 2.5-hour session.</p><span class="price">from IDR 540,000</span></article><article class="card"><h3>Private lesson</h3><p>One instructor, one surfer, full attention from the first pop-up. Book single days or 2 and 3-day packages, which work out cheaper per day.</p><span class="price">from IDR 720,000</span></article><article class="card"><h3>Kids surf lesson</h3><p>Sessions built for children aged 7 to 9, either one instructor to two kids or fully private. Kids&#x27; private lessons run in Canggu only.</p><span class="price">from IDR 585,000</span></article><article class="card"><h3>Intermediate sessions and surf trips</h3><p>For surfers who already stand up: coaching at Berawa or at selected spots around the island, plus half-day surf trips of around three hours.</p><span class="price">from IDR 720,000</span></article><article class="card"><h3>Surfboard rental</h3><p>Rent by the hour or by the day, with delivery available on rentals of two days or more. Anyone who has taken a lesson gets half price on rentals of two hours or more.</p><span class="price">from IDR 75,000</span></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About Canggu Surf School (Bali Surfing Lesson)</h2><p>Canggu Bali Surfing Lesson teaches from LV8 Resort Bali on Jl. Discovery No. 8, right on the Berawa stretch of Canggu. Lessons are run by the Odysseys Surf School team, who have been teaching in Bali for more than fifteen years, and the beach out front gives beginners space to practise and stronger surfers something to work on.</p><p>Every instructor is certified by the Academy of Surfing Instructors, with bronze-level surf rescue and first aid training on top. Group lessons are capped at three students so nobody is left floating around. The price of a lesson covers the board, leash, helmet and rash vest, a towel, drinking water, a changing room, showers and a safety locker, and if you do not stand up in your first lesson the next one is free.</p></div><div class="stats"><div class="stat"><b>ASI</b><span>Certified instructors</span></div><div class="stat"><b>3</b><span>Students per group</span></div><div class="stat"><b>Berawa</b><span>Home beach</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose Canggu Surf School (Bali Surfing Lesson)</h2><div class="grid"><article><h3>Small groups, real coaching</h3><p>Three students to one instructor at most, and one-to-one if you want it.</p></article><article><h3>You will stand up</h3><p>If you do not get to your feet in the first lesson, the next day&#x27;s lesson is free.</p></article><article><h3>Everything is included</h3><p>Board, leash, helmet, rash vest, towel, water, shower, changing room and locker come with the lesson.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>LV8 Resort Bali, Jl. Discovery No.8, Canggu, Badung, Bali</div>
+        <div>Phone: <a href="tel:12517664222">+1 251 766 4222</a></div>
+        <div>WhatsApp: <a href="https://wa.me/12517664222">+12 517664222</a></div>
+        <div><a href="https://instagram.com/canggubalisurf" target="_blank" rel="noopener">Instagram @canggubalisurf</a></div><div>Languages: English, Japanese</div>
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Canggu+Surf+School+%28Bali+Surfing+Lesson%29+LV8+Resort+Bali%2C+Jl.+Discovery+No.8%2C+Canggu%2C+Badung%2C+Bali" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to Canggu Surf School (Bali Surfing Lesson)" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Canggu+Surf+School+%28Bali+Surfing+Lesson%29+LV8+Resort+Bali%2C+Jl.+Discovery+No.8%2C+Canggu%2C+Badung%2C+Bali&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>How long is a lesson?</summary><p>Lessons run 2 or 2.5 hours depending on the package, and surf trips run about 3 hours. Up to two lessons a day are possible, with times set by the tide.</p></details><details><summary>Do I need to bring anything?</summary><p>No. Surfboard, leash, helmet and a long-sleeve rash vest come with the lesson, along with a towel, drinking water, a changing room, showers and a safety locker.</p></details><details><summary>What if I have never surfed before?</summary><p>Beginner lessons are the starting point, and instructors hold surf rescue and first aid certification. If you do not stand up in your first lesson, you get the next one free.</p></details><details><summary>Is there a high season surcharge?</summary><p>Yes. From June to September and from 24 December to 5 January there is an extra charge of US$10, about IDR 130,000, per person.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with Canggu Surf School (Bali Surfing Lesson)?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="https://wa.me/12517664222">Book on WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:12517664222">Call +1 251 766 4222</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Canggu Surf School (Bali Surfing Lesson) · LV8 Resort Bali</span>
+    <span>Prepared by Bella Web Bali as a design suggestion. Not affiliated with Canggu Surf School (Bali Surfing Lesson); details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float on" href="https://wa.me/12517664222" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+</body>
+</html>

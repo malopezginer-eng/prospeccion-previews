@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Family Laundry Seminyak · Laundry keluarga di Jl. Drupadi, tepat di depan Harris Seminyak, buka setiap hari sampai pukul 22.00.</title>
+<meta name="description" content="Laundry keluarga di Jl. Drupadi, tepat di depan Harris Seminyak, buka setiap hari sampai pukul 22.00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #173b2f; --paper: #ffffff; --tint: #eef8f2; --brand: #1d6b52; --accent: #ffd166;
+    --radius: 22px; --display: "Nunito", Georgia, serif; --body: "Nunito", system-ui, sans-serif;
+    --muted: color-mix(in srgb, var(--ink) 62%, var(--paper));
+    --line: color-mix(in srgb, var(--ink) 12%, var(--paper));
+    --on-brand: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0 0 1em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+
+  /* proposal bar (MNKY, neutral on purpose) */
+  .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .proposal a:hover { text-decoration: underline; }
+
+  /* nav */
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+  .brandmark { font-family: var(--display); font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 2px solid transparent; transition: transform .12s ease, background .12s ease; }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-brand { background: var(--brand); color: var(--on-brand); }
+  .btn-brand:hover { background: color-mix(in srgb, var(--brand) 88%, var(--ink)); }
+  .btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  .btn-sm { padding: 11px 16px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* hero, full-bleed photo */
+  .hero-full { position: relative; min-height: min(86vh, 760px); display: grid; align-items: end; color: #fff; isolation: isolate; }
+  .hero-full .photo { position: absolute; inset: 0; z-index: -2; background: var(--brand) url("https://images.unsplash.com/photo-1758273705627-937374bfa978?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; }
+  .hero-full::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.78) 100%); }
+  .hero-full .wrap { width: 100%; padding-top: 120px; padding-bottom: 64px; }
+  .hero-full h1 { font-size: clamp(44px, 7.5vw, 88px); max-width: 14ch; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .hero-full .lead { color: rgba(255,255,255,.88); margin: 18px 0 30px; font-size: clamp(18px, 2.2vw, 22px); }
+  .hero-full .btn-ghost { color: #fff; }
+
+  /* hero, split */
+  .hero-split { padding: 56px 0 24px; }
+  .hero-split .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-split h1 { font-size: clamp(40px, 5.6vw, 66px); max-width: 14ch; }
+  .hero-split .lead { margin: 18px 0 30px; }
+  .hero-split .photo { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) * 2); background: var(--tint) url("https://images.unsplash.com/photo-1758273705627-937374bfa978?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat; box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+  @media (max-width: 860px) { .hero-split .wrap { grid-template-columns: 1fr; } .hero-split .photo { aspect-ratio: 16 / 10; order: -1; } }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+
+  /* services */
+  .services { background: var(--tint); }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 36px; }
+  .card { background: var(--paper); border-radius: var(--radius); padding: 26px 26px 24px; border-top: 4px solid var(--brand); }
+  .card h3 { margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 16px; margin: 0; }
+  .card .price { display: inline-block; margin-top: 14px; font-weight: 700; color: var(--brand); font-size: 15px; }
+
+  /* about + highlights */
+  .about .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .about p { max-width: 62ch; }
+  .stats { display: grid; gap: 14px; }
+  .stat { padding: 22px 24px; border-left: 4px solid var(--accent); background: var(--tint); border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat b { display: block; font-family: var(--display); font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+
+  /* why */
+  .why { background: var(--brand); color: var(--on-brand); }
+  .why h2 { color: inherit; }
+  .why .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .why article { padding-top: 18px; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .why h3 { margin-bottom: 8px; }
+  .why p { opacity: .88; margin: 0; }
+
+  /* hours + find us */
+  .find .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  table.hours { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; }
+  table.hours td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  table.hours td:last-child { text-align: right; font-weight: 600; }
+  .map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  address { font-style: normal; margin-top: 18px; line-height: 1.7; }
+  address a { text-decoration: none; font-weight: 600; }
+  @media (max-width: 860px) { .find .wrap { grid-template-columns: 1fr; } }
+
+  /* faq */
+  .faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .faq summary { cursor: pointer; font-family: var(--display); font-size: 21px; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--body); color: var(--brand); font-size: 26px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 12px; }
+
+  /* cta band */
+  .cta { background: var(--ink); color: var(--paper); text-align: left; }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .cta h2 { margin: 0; }
+  .cta .btn-brand { background: var(--accent); color: var(--ink); }
+  .cta .btn-ghost { color: var(--paper); }
+
+  footer { padding: 34px 0 44px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* floating whatsapp on mobile */
+  .float { position: fixed; right: 18px; bottom: 18px; z-index: 30; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .float svg { width: 30px; height: 30px; }
+  @media (max-width: 760px) { .float.on { display: flex; } }
+</style>
+</head>
+<body>
+<div class="proposal">
+  <span><strong>Bella Web Bali</strong> · Design proposal for Family Laundry Seminyak. A mock-up made by us, not the business's website; nothing here is live.</span>
+  <a href="https://malopezginer-eng.github.io/prospeccion-previews/offer-bali/?ref=family-laundry-seminyak">How to make it yours</a>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Family Laundry Seminyak</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#find">Find us</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="https://wa.me/6289685569840">Book on WhatsApp</a>
+  </div>
+</nav>
+
+<header class="hero-split" id="top"><div class="wrap"><div><h1>Family Laundry Seminyak</h1><p class="lead">Laundry keluarga di Jl. Drupadi, tepat di depan Harris Seminyak, buka setiap hari sampai pukul 22.00.</p><div class="actions"><a class="btn btn-brand" href="https://wa.me/6289685569840">Book on WhatsApp</a><a class="btn btn-ghost" href="tel:6289685569840">Call +62 896 8556 9840</a></div><ul class="chips"><li>Usaha keluarga</li><li>Buka setiap hari 08.00 - 22.00</li><li>Ambil dan antar ke hotel</li></ul></div><div class="photo" role="img" aria-label="Bright living room being cleaned"></div></div></header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <p class="lead"></p>
+    <div class="grid"><article class="card"><h3>Cuci, kering, setrika, lipat</h3><p>Pakaian harian dicuci, dikeringkan, disetrika, lalu dilipat rapi sebelum dikembalikan. Satu tempat untuk seluruh isi tas cucian Anda.</p></article><article class="card"><h3>Ambil dan antar ke kamar hotel</h3><p>Kabari kami lewat WhatsApp, telepon, atau email, dan kami ambil tas cucian Anda langsung dari kamar hotel. Setelah selesai, kami antar kembali ke kamar.</p></article><article class="card"><h3>Sprei, sarung bantal, dan linen</h3><p>Bukan hanya pakaian. Sprei, sarung bantal, dan linen kamar juga dicuci dan disetrika di sini, cocok untuk vila dan kamar sewa di sekitar Seminyak.</p></article><article class="card"><h3>Cucian untuk acara dan pernikahan</h3><p>Pakaian pesta dan cucian untuk acara ditangani terpisah dan dengan lebih hati-hati, supaya bahan dan warnanya tetap terjaga.</p></article></div>
+  </div>
+</section>
+
+<section class="about" id="about"><div class="wrap"><div><h2>About Family Laundry Seminyak</h2><p>Family Laundry ada di Jl. Drupadi No. 19-20, Seminyak, persis di seberang Hotel Harris. Usaha ini dijalankan satu keluarga, dan mereka memang menyebut pelanggan tetapnya sebagai bagian dari keluarga. Buka setiap hari dari pukul 08.00 sampai 22.00, jadi cucian bisa dititipkan sebelum jalan pagi atau sepulang dari pantai.</p><p>Pekerjaannya lengkap dari awal sampai akhir: dicuci, dikeringkan, disetrika, lalu dilipat. Kalau Anda menginap di hotel sekitar sini, cukup satu pesan dan tas cucian diambil dari kamar, lalu diantar kembali setelah selesai. Ulasan tamu yang mereka tampilkan sendiri berulang kali menyebut hal yang sama: staf yang ramah dan hafal nama, lipatan yang rapi, dan pakaian yang kembali dalam keadaan bersih dan wangi.</p></div><div class="stats"><div class="stat"><b>08.00 - 22.00</b><span>Buka setiap hari</span></div><div class="stat"><b>Drupadi</b><span>Depan Harris Seminyak</span></div><div class="stat"><b>Keluarga</b><span>Dikelola langsung</span></div></div></div></section>
+
+<section class="why"><div class="wrap"><h2>Why people choose Family Laundry Seminyak</h2><div class="grid"><article><h3>Buka empat belas jam</h3><p>Setiap hari dari pukul 08.00 sampai 22.00, termasuk akhir pekan.</p></article><article><h3>Tidak perlu keluar hotel</h3><p>Cucian diambil dari kamar dan diantar kembali setelah selesai.</p></article><article><h3>Ditangani orangnya sendiri</h3><p>Usaha keluarga, jadi orang yang menerima cucian Anda juga yang mengurusnya.</p></article></div></div></section>
+
+<section class="find" id="find">
+  <div class="wrap">
+    <div>
+      <h2 id="hours">Opening hours</h2><table class="hours"><tr><td>Senin - Minggu</td><td>08.00 - 22.00</td></tr></table><div style="height:40px"></div>
+      <h2 id="visit">Find us</h2>
+      <address>
+        <div>Jln. Drupadi No. 19-20, Seminyak, Badung, Bali</div>
+        <div>Phone: <a href="tel:6289685569840">+62 896 8556 9840</a></div>
+        <div>WhatsApp: <a href="https://wa.me/6289685569840">+62 89685569840</a></div>
+        <div><a href="https://www.facebook.com/familylaundryseminyak" target="_blank" rel="noopener">Facebook</a></div><div>Languages: Bahasa Indonesia, English</div>
+      </address>
+      <p style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Family+Laundry+Seminyak+Jln.+Drupadi+No.+19-20%2C+Seminyak%2C+Badung%2C+Bali" target="_blank" rel="noopener">Open in Google Maps</a></p>
+    </div>
+    <div class="map"><iframe title="Map to Family Laundry Seminyak" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Family+Laundry+Seminyak+Jln.+Drupadi+No.+19-20%2C+Seminyak%2C+Badung%2C+Bali&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section class="faq" id="faq"><div class="wrap"><h2>Questions people ask</h2><details><summary>Bisa dijemput ke hotel saya?</summary><p>Bisa. Kabari lewat WhatsApp, telepon, atau email, sebutkan hotel dan nomor kamar, lalu cucian diambil dan diantar kembali setelah selesai.</p></details><details><summary>Jam berapa buka?</summary><p>Setiap hari pukul 08.00 sampai 22.00, tanpa hari libur.</p></details><details><summary>Di mana persisnya lokasinya?</summary><p>Jl. Drupadi No. 19-20, Seminyak, Badung, tepat di depan Hotel Harris Seminyak.</p></details><details><summary>Berapa biayanya?</summary><p>Tarif dihitung per kilo. Karena harga bisa berubah, silakan tanya langsung lewat WhatsApp atau telepon ke +62 896 8556 9840.</p></details></div></section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Ready to book with Family Laundry Seminyak?</h2>
+    <div class="actions">
+      <a class="btn btn-brand" href="https://wa.me/6289685569840">Book on WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:6289685569840">Call +62 896 8556 9840</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Family Laundry Seminyak · Jln. Drupadi No. 19-20</span>
+    <span>Prepared by Bella Web Bali as a design suggestion. Not affiliated with Family Laundry Seminyak; details come from public listings and may be changed or removed on request.</span>
+  </div>
+</footer>
+
+<a class="float on" href="https://wa.me/6289685569840" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+</body>
+</html>
