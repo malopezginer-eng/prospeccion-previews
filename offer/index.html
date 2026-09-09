@@ -6,47 +6,61 @@
 <meta name="robots" content="noindex">
 <title>Make the draft yours · MNKY KONNEKT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#101418; --paper:#ffffff; --tint:#f2f4f6; --brand:#0b6e4f; --accent:#f2b134; --muted:#5a6370; --line:#e3e6ea; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--paper); color:var(--ink); font-family:"Manrope", system-ui, sans-serif; font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:860px; margin:0 auto; padding:0 24px; }
-  header { padding:56px 0 24px; }
+  .wrap { max-width:900px; margin:0 auto; padding:0 24px; }
+  .launch { background:var(--accent); color:#111; font-size:14px; font-weight:700; text-align:center; padding:10px 16px; }
+  .launch span { display:inline-block; margin-left:10px; padding:2px 9px; border-radius:999px; background:#111; color:#fff; font-size:12px; }
+  header { padding:48px 0 20px; }
   h1 { font-size:clamp(34px, 5vw, 52px); line-height:1.08; margin:0 0 14px; letter-spacing:-0.02em; }
-  h2 { font-size:26px; margin:0 0 10px; }
+  h2 { font-size:26px; margin:0 0 10px; letter-spacing:-0.01em; }
+  h3 { font-size:18px; margin:0 0 4px; }
   p { margin:0 0 1em; }
   .lead { font-size:20px; color:var(--muted); max-width:60ch; }
-  .steps { display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); margin:32px 0 8px; padding:0; list-style:none; counter-reset:step; }
-  .steps li { background:var(--tint); border-radius:14px; padding:20px; counter-increment:step; }
+  .steps { display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); margin:28px 0 8px; padding:0; list-style:none; counter-reset:step; }
+  .steps li { background:var(--tint); border-radius:14px; padding:18px; counter-increment:step; font-size:15.5px; }
   .steps li::before { content:counter(step); display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--brand); color:#fff; font-weight:700; margin-bottom:10px; }
-  .plans { display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); margin:32px 0; }
+  .plans { display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); margin:28px 0; }
   .plan { border:1px solid var(--line); border-radius:16px; padding:26px; display:flex; flex-direction:column; }
   .plan.main { border:2px solid var(--brand); }
   .plan h2 { font-size:22px; }
-  .price { font-size:40px; font-weight:700; letter-spacing:-0.02em; margin:6px 0 2px; }
+  .price { font-size:40px; font-weight:800; letter-spacing:-0.02em; margin:6px 0 2px; }
   .price small { font-size:16px; font-weight:600; color:var(--muted); }
+  .alt { font-size:15px; color:var(--muted); margin:0 0 6px; }
   .plan ul { padding-left:20px; margin:14px 0 22px; color:var(--muted); flex:1; }
   .plan li { margin:6px 0; }
-  .btn { display:inline-block; padding:14px 22px; border-radius:10px; background:var(--brand); color:#fff; text-decoration:none; font-weight:700; text-align:center; }
+  .btn { display:block; padding:14px 22px; border-radius:10px; background:var(--brand); color:#fff; text-decoration:none; font-weight:700; text-align:center; }
   .btn:hover { background:#095a40; }
   .btn.ghost { background:transparent; color:var(--brand); border:2px solid var(--brand); }
+  .btn + .btn { margin-top:10px; }
+  .fine { font-size:13px; color:var(--muted); margin:10px 0 0; }
+  .bonus { background:#fff8e1; border:1px dashed var(--accent); border-radius:10px; padding:10px 12px; font-size:14px; margin:0 0 14px; }
   section { padding:28px 0; border-top:1px solid var(--line); }
+  .safe { display:grid; gap:10px 24px; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); list-style:none; padding:0; margin:16px 0 0; counter-reset:s; }
+  .safe li { counter-increment:s; display:grid; grid-template-columns:30px 1fr; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:15.5px; }
+  .safe li::before { content:counter(s, decimal-leading-zero); font-weight:800; color:var(--brand); }
+  .safe b { display:block; }
+  .safe span { color:var(--muted); }
   details { border-bottom:1px solid var(--line); padding:6px 0; }
   summary { cursor:pointer; font-weight:700; padding:12px 0; font-size:18px; }
   details p { color:var(--muted); }
   footer { padding:36px 0 48px; color:var(--muted); font-size:14px; }
-  .note { background:#fff8e1; border-left:4px solid var(--accent); padding:14px 18px; border-radius:0 10px 10px 0; margin:24px 0; }
+  .note { background:var(--tint); border-left:4px solid var(--brand); padding:14px 18px; border-radius:0 10px 10px 0; margin:24px 0; font-size:15.5px; }
 </style>
 </head>
 <body>
+<div class="launch">Launch offer · the first 10 businesses get 3 months of the care plan free <span>10 of 10 left</span></div>
 <header class="wrap">
   <h1>Make the draft yours</h1>
-  <p class="lead">You have seen a full one-page draft of your website. Here is what happens if you want it live, what it costs, and how to pay.</p>
+  <p class="lead">You have seen a full one-page draft of your website. Here is what happens if you want it live, what it costs, and how to pay. You pay only when you approve the final version.</p>
   <ol class="steps">
-    <li><strong>You say yes</strong><br>Reply to the email or pay below. We ask for your photos, your logo and any text you want changed.</li>
-    <li><strong>We finish it</strong><br>Within a few working days you get the final page to review, on a temporary address.</li>
-    <li><strong>It goes live</strong><br>On your own domain (we register it for you or connect one you already own). Done.</li>
+    <li><strong>You say yes</strong><br>Reply to the email. We ask for your logo, your photos and any text you want changed.</li>
+    <li><strong>We finish it</strong><br>Within a few working days you review the final page. Two rounds of changes included.</li>
+    <li><strong>You approve and pay</strong><br>S$590 by card, PayNow or bank transfer. Invoice from our company.</li>
+    <li><strong>It goes live</strong><br>On your own domain within 7 working days of payment, or your money back.</li>
   </ol>
 </header>
 
@@ -55,66 +69,86 @@
     <div class="plan main">
       <h2>One-page website</h2>
       <div class="price">S$590 <small>one-off</small></div>
-      <p style="color:var(--muted)">The draft you saw, finished and live.</p>
+      <p class="alt">The draft you saw, finished and live.</p>
       <ul>
         <li>Your photos, logo and text</li>
         <li>Mobile-first, fast, secure (https)</li>
         <li>Booking or WhatsApp button, map, opening hours</li>
-        <li>Your own domain (registration included for the first year)</li>
+        <li><strong>Your own .com domain</strong>, registered in your name, first year included</li>
+        <li>Hosting for the first year</li>
         <li>Two rounds of changes before launch</li>
-        <li>Invoice from MNKY KONNEKT SL (no GST applies)</li>
+        <li>Invoice from MNKY KONNEKT SL · no GST</li>
       </ul>
-      <a class="btn" id="pay" href="https://buy.stripe.com/bJe5kCcq91TbboXbU0gw003">Pay S$590 and start</a>
+      <a class="btn ghost" href="mailto:hola@mnkykonnekt.com?subject=Yes%2C%20let%27s%20finish%20my%20website">Say yes by email</a>
+      <a class="btn" id="pay" href="https://buy.stripe.com/bJe5kCcq91TbboXbU0gw003">Pay S$590 (after you approved the final version)</a>
+      <p class="fine">Already happy with the draft as it is? You can pay now and we finish it straight away.</p>
     </div>
     <div class="plan">
       <h2>Care plan</h2>
       <div class="price">S$29 <small>/ month</small></div>
-      <p style="color:var(--muted)">Optional, after launch.</p>
+      <p class="alt">or <strong>S$290 / year</strong> (two months free)</p>
+      <div class="bonus">Launch offer: the first 10 businesses get the first 3 months free.</div>
       <ul>
-        <li>Hosting and domain renewal</li>
-        <li>Updates to hours, prices, photos and text within 2 working days</li>
+        <li>Hosting and domain renewal, any extension</li>
+        <li>Changes to hours, prices, photos and text within 2 working days</li>
         <li>Security and backups</li>
         <li>Cancel any month</li>
       </ul>
-      <a class="btn ghost" href="mailto:hola@mnkykonnekt.com?subject=Care%20plan">Ask about the care plan</a>
+      <a class="btn" id="care-m" href="https://buy.stripe.com/3cI7sK9dXcxP64D1fmgw005">Start monthly · first 3 months free</a>
+      <a class="btn ghost" id="care-y" href="https://buy.stripe.com/5kQeVcbm5gO51On1fmgw006">Pay yearly · S$290</a>
+      <p class="fine">Yearly plan by PayNow or SGD bank transfer? Reply to the email and we send you the details.</p>
     </div>
     <div class="plan">
-      <h2>Google Business Profile</h2>
-      <div class="price">S$199 <small>/ month</small></div>
-      <p style="color:var(--muted)">For businesses that want to show up on Maps and keep reviews answered.</p>
+      <h2>.sg or .com.sg domain</h2>
+      <div class="price">+S$79 <small>first year</small></div>
+      <p class="alt">Instead of the .com that is included.</p>
       <ul>
-        <li>Profile set up or cleaned up: hours, photos, services, categories</li>
-        <li>Weekly posts and photo updates</li>
-        <li>Every review answered within 2 working days</li>
-        <li>Monthly one-page report</li>
-        <li>Cancel any month</li>
+        <li>Registered in your business's name (we need your UEN)</li>
+        <li>You are the owner and the administrative contact</li>
+        <li>Renewals covered by the care plan</li>
       </ul>
-      <a class="btn ghost" href="mailto:hola@mnkykonnekt.com?subject=Google%20Business%20Profile">Ask about Google</a>
+      <a class="btn ghost" id="dom" href="https://buy.stripe.com/00w6oGai1btL78HcY4gw007">Add a .sg domain</a>
     </div>
   </div>
 
-  <div class="note">Paying online is the fastest way to start, but a reply to the email works just as well. Payment is by card through Stripe; you receive a receipt immediately and an invoice from MNKY KONNEKT SL.</div>
+  <div class="note">Not sure? Reply to the email. A real person answers within a working day, on Singapore hours, and can call or WhatsApp you before you decide anything.</div>
+
+  <section>
+    <h2>Why it is safe to say yes</h2>
+    <ol class="safe">
+      <li><div><b>You pay after you approve</b><span>The draft and two rounds of changes cost nothing.</span></div></li>
+      <li><div><b>Fixed price in SGD</b><span>No GST, no hourly extras, no surprises.</span></div></li>
+      <li><div><b>A registered company</b><span>MNKY KONNEKT SL, Spain, NIF B22561179. Invoice with every payment.</span></div></li>
+      <li><div><b>Secure payment</b><span>Card through Stripe, or PayNow / bank transfer in SGD.</span></div></li>
+      <li><div><b>Live in 7 working days or your money back</b><span>Counted from the day you pay.</span></div></li>
+      <li><div><b>It is yours</b><span>Domain in your name, files yours. Stop the care plan and we hand everything over.</span></div></li>
+    </ol>
+  </section>
 
   <section>
     <h2>Questions</h2>
     <details><summary>How did you get my email and my details?</summary><p>From your own website or public listing. The draft uses only public information about your business and stock photos; nothing was copied from your site. If you want the draft taken down, reply "remove" and it disappears the same day.</p></details>
     <details><summary>Do I own the website?</summary><p>Yes. The domain is registered in your name and the page files are yours. If you stop the care plan, we hand everything over.</p></details>
     <details><summary>What if I want more than one page?</summary><p>Most small businesses need exactly one good page. If you need more (a menu, a price list, a gallery), reply and we quote it as a small add-on.</p></details>
-    <details><summary>Who are you?</summary><p>MNKY KONNEKT SL is a small web studio registered in Spain, run by Miguel López, working with local businesses in Singapore. You deal with one person from start to finish.</p></details>
+    <details><summary>Who are you?</summary><p>MNKY KONNEKT SL is a small web studio registered in Spain that makes ready-made websites for local businesses in Singapore. You deal with one person from start to finish, on Singapore hours.</p></details>
     <details><summary>Is GST charged?</summary><p>No. MNKY KONNEKT SL is a Spanish company with no GST registration in Singapore; the price you see is the price you pay.</p></details>
+    <details><summary>What happens after the first year?</summary><p>Domain and hosting for the first year are included. After that, the care plan (S$29/month or S$290/year) keeps everything running and lets you send changes. Without it, we hand you the domain and the files and you host it wherever you like.</p></details>
   </section>
 </main>
 
 <footer class="wrap">
-  MNKY KONNEKT SL · Spain · <a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a><br>
+  MNKY KONNEKT SL · NIF B22561179 · Spain · <a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a> · <a href="https://mnkykonnekt.com/privacy.html">Privacy</a><br>
   If you never want to hear from us again: <a href="../unsubscribe/">unsubscribe</a>.
 </footer>
+<!-- Cloudflare Web Analytics (sin cookies): pegar aqui el snippet cuando Miguel cree la cuenta. -->
 <script>
   try {
     var ref = new URLSearchParams(location.search).get('ref');
     if (ref && /^[a-z0-9-]{1,64}$/.test(ref)) {
-      var a = document.getElementById('pay');
-      a.href = a.href + (a.href.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(ref);
+      ['pay', 'care-m', 'care-y', 'dom'].forEach(function (id) {
+        var a = document.getElementById(id);
+        if (a) a.href = a.href + (a.href.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(ref);
+      });
     }
   } catch (e) {}
 </script>
