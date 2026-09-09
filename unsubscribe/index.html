@@ -1,16 +1,21 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Unsubscribed</title>
-<style>body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:60px auto;padding:0 20px;color:#1b1b1f;line-height:1.5}</style></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Unsubscribe · MNKY KONNEKT</title>
+<style>body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:60px auto;padding:0 20px;color:#1b1b1f;line-height:1.5}a.btn{display:inline-block;margin:8px 0 16px;padding:12px 20px;border-radius:10px;background:#0b6e4f;color:#fff;text-decoration:none;font-weight:700}small{color:#5a6370}</style></head>
 <body>
-<h1>You will not hear from us again</h1>
-<p>Your address has been noted and removed from our list. If you reached this page by mistake, simply ignore it.</p>
-<p>To make sure, you can also reply to our email with the word <strong>unsubscribe</strong>.</p>
-<p>MNKY KONNEKT SL</p>
+<h1>Never hear from us again</h1>
+<p>This page does not do anything by itself. To be removed, send us one email (the button opens it, ready to send) or simply reply "unsubscribe" to any email from us.</p>
+<a class="btn" href="mailto:hola@mnkykonnekt.com?subject=unsubscribe&body=Please%20remove%20this%20address%20from%20your%20list.">Send the unsubscribe email</a>
+<p>We remove the address the same working day, permanently, and take the draft page down if there is one. No confirmation needed.</p>
+<p><small>MNKY KONNEKT SL · NIF B22561179 · Spain · hola@mnkykonnekt.com</small></p>
 <script>
   try {
     const e = new URLSearchParams(location.search).get('e');
-    if (e) { document.querySelector('p').insertAdjacentHTML('afterend', '<p><small>Address: ' + e.replace(/[<>&]/g, '') + '</small></p>'); }
+    if (e) {
+      const a = document.querySelector('a.btn');
+      a.href = 'mailto:hola@mnkykonnekt.com?subject=unsubscribe&body=' + encodeURIComponent('Please remove this address from your list: ' + e);
+      a.insertAdjacentHTML('afterend', '<p><small>Address: ' + e.replace(/[<>&]/g, '') + '</small></p>');
+    }
   } catch (_) {}
 </script>
 </body>
