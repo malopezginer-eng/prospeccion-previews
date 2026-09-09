@@ -407,6 +407,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 .hero-aside table.tiers-table td { padding: 10px 0; }
 .hero-aside table.tiers-table td.price { font-size: 19px; }
 .tabs > input { position: absolute; opacity: 0; pointer-events: none; }
+.tabs { position: relative; }
 .tab-labels { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .tab-labels label { padding: 10px 18px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 600; font-size: 15px; cursor: pointer; }
 .tabs .pane { display: none; }
@@ -481,6 +482,11 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 .getting-there h2 + .transit { margin-top: 12px; }
 .service-area .map iframe { filter: grayscale(1) contrast(1.02) opacity(.9); }
 
+/* hero de bloque con tabla al lado: banda de foto a sangre bajo el titular */
+[data-hero="block"] .hero-band { aspect-ratio: 21 / 7; max-height: 440px; border-radius: 0; width: 100%; }
+[data-hero="block"][data-aside="tiers"] .hero-body { padding-bottom: clamp(40px, 5vw, 64px); }
+@media (max-width: 860px) { [data-hero="block"] .hero-band { aspect-ratio: 16 / 10; } }
+
 </style>
 </head>
 <body>
@@ -507,6 +513,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
     
     
   </div>
+  
 </header>
 
 <section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead">Prices are the ranges published on their services page in Singapore dollars; they note prices can change and to ask your stylist. Haircuts include shampoo, blow dry and style. Occasion work is priced separately: up-do from S$85, just curls from S$50, makeup S$75, up-do with makeup S$150, bridal and fashion styling from S$350. Extensions and The Scalp Reset are quoted after a consultation.</p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Cuts and blow dry</h3><span class="leader"></span><b class="price">from S$80</b></div><p>Precision cutting on straight, wavy and curly hair, Asian and Caucasian alike. Every haircut includes shampoo, blow dry and style. A wash and blow dry can be booked on its own.</p></li><li><div class="row"><h3>Colour, balayage and colour correction</h3><span class="leader"></span><b class="price">from S$150</b></div><p>Roots, all-over colour and foil highlights, plus balayage, ombre and foilyage. Colour correction is what the founder is known for. Toner and Olaplex can be added to any colour service.</p></li><li><div class="row"><h3>Keratin and Cezanne smoothing</h3><span class="leader"></span><b class="price">from S$285</b></div><p>The genuine Brazilian Blowout and Cezanne smoothing for Singapore frizz. They are clear that it is not a chemical straightener: it calms curl without breaking the bond of the hair.</p></li><li><div class="row"><h3>Kevin Murphy and Olaplex treatments</h3><span class="leader"></span><b class="price">from S$40</b></div><p>One of the few salons here that stocks the full Kevin Murphy treatment range: anti-ageing, thickening, moisture and strength. Book it on its own with a blow dry, or add it to a colour.</p></li><li><div class="row"><h3>Bellami hair extensions</h3></div><p>The salon is a certified Bellami Professional partner, working with 100% Remy human hair in tape, weft and keratin tip methods. Priced after a consultation, since length and volume change the quote.</p></li><li><div class="row"><h3>The Scalp Reset</h3></div><p>A scalp recovery programme for thinning, shedding and postpartum or stress-related hair loss. Starts with an in-salon or virtual consultation, then a 6 to 12 week plan applied twice a week.</p></li></ol></div></section>
@@ -561,9 +568,10 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
       if (parts.length === 1 && /,|&|and/.test(days)) days.split(/,|&|and/).forEach(function (x) { var i = dayIndex(x.trim()); if (i >= 0) idx.push(i); });
       else if (b < 0) idx = [a];
       else for (var i = a; ; i = (i + 1) % 7) { idx.push(i); if (i === b) break; }
-      var t = hours.match(/(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/i);
-      var val = /closed/i.test(hours) ? null : t ? { open: minutes(t[1]), close: minutes(t[2]) } : undefined;
-      if (val && (val.open == null || val.close == null)) val = undefined;
+      /* varios tramos por dia ("09:00 – 12:30, 14:00 – 16:30, 18:00 – 20:00"): lista de {open, close} */
+      var re = /(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/gi, m, ranges = [];
+      while ((m = re.exec(hours))) { var o = minutes(m[1]), c = minutes(m[2]); if (o != null && c != null) ranges.push({ open: o, close: c }); }
+      var val = /closed/i.test(hours) ? null : ranges.length ? ranges : undefined;
       idx.forEach(function (i) { week[i] = val; });
     });
     var parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Singapore', weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
@@ -573,12 +581,17 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
     Array.prototype.forEach.call(table.rows, function (tr) { if (dayIndex(tr.cells[0].textContent.trim()) === today || tr.cells[0].textContent.toLowerCase().indexOf(DAYS[today].slice(0, 3)) === 0) tr.classList.add('today'); });
     var el = document.createElement('p'); el.className = 'open-now';
     function fmt(m) { var h = Math.floor(m / 60), mi = m % 60; return (h % 12 || 12) + (mi ? ':' + (mi < 10 ? '0' : '') + mi : '') + (h < 12 ? 'am' : 'pm'); }
-    var t = week[today];
-    if (t && nowMin >= t.open && nowMin < t.close) el.textContent = 'Open now · closes ' + fmt(t.close);
+    var t = week[today], cur = null;
+    if (t) t.forEach(function (r) { if (!cur && nowMin >= r.open && nowMin < r.close) cur = r; });
+    if (cur) el.textContent = 'Open now · closes ' + fmt(cur.close);
     else {
       el.classList.add('closed');
       var next = null;
-      for (var k = 0; k < 7 && !next; k++) { var dd = (today + k) % 7, w = week[dd]; if (w && (k > 0 || nowMin < w.open)) next = { day: dd, open: w.open, k: k }; }
+      for (var k = 0; k < 7 && !next; k++) {
+        var dd = (today + k) % 7, w = week[dd];
+        if (!w) continue;
+        for (var j = 0; j < w.length && !next; j++) if (k > 0 || nowMin < w[j].open) next = { day: dd, open: w[j].open, k: k };
+      }
       el.textContent = next ? 'Closed now · opens ' + (next.k === 0 ? 'today' : next.k === 1 ? 'tomorrow' : DAYS[next.day].replace(/^./, function (c) { return c.toUpperCase(); })) + ' at ' + fmt(next.open) : 'Closed now';
     }
     table.parentNode.insertBefore(el, table);

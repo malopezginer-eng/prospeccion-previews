@@ -570,9 +570,10 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
       if (parts.length === 1 && /,|&|and/.test(days)) days.split(/,|&|and/).forEach(function (x) { var i = dayIndex(x.trim()); if (i >= 0) idx.push(i); });
       else if (b < 0) idx = [a];
       else for (var i = a; ; i = (i + 1) % 7) { idx.push(i); if (i === b) break; }
-      var t = hours.match(/(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/i);
-      var val = /closed/i.test(hours) ? null : t ? { open: minutes(t[1]), close: minutes(t[2]) } : undefined;
-      if (val && (val.open == null || val.close == null)) val = undefined;
+      /* varios tramos por dia ("09:00 – 12:30, 14:00 – 16:30, 18:00 – 20:00"): lista de {open, close} */
+      var re = /(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/gi, m, ranges = [];
+      while ((m = re.exec(hours))) { var o = minutes(m[1]), c = minutes(m[2]); if (o != null && c != null) ranges.push({ open: o, close: c }); }
+      var val = /closed/i.test(hours) ? null : ranges.length ? ranges : undefined;
       idx.forEach(function (i) { week[i] = val; });
     });
     var parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Singapore', weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
@@ -582,12 +583,17 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
     Array.prototype.forEach.call(table.rows, function (tr) { if (dayIndex(tr.cells[0].textContent.trim()) === today || tr.cells[0].textContent.toLowerCase().indexOf(DAYS[today].slice(0, 3)) === 0) tr.classList.add('today'); });
     var el = document.createElement('p'); el.className = 'open-now';
     function fmt(m) { var h = Math.floor(m / 60), mi = m % 60; return (h % 12 || 12) + (mi ? ':' + (mi < 10 ? '0' : '') + mi : '') + (h < 12 ? 'am' : 'pm'); }
-    var t = week[today];
-    if (t && nowMin >= t.open && nowMin < t.close) el.textContent = 'Open now · closes ' + fmt(t.close);
+    var t = week[today], cur = null;
+    if (t) t.forEach(function (r) { if (!cur && nowMin >= r.open && nowMin < r.close) cur = r; });
+    if (cur) el.textContent = 'Open now · closes ' + fmt(cur.close);
     else {
       el.classList.add('closed');
       var next = null;
-      for (var k = 0; k < 7 && !next; k++) { var dd = (today + k) % 7, w = week[dd]; if (w && (k > 0 || nowMin < w.open)) next = { day: dd, open: w.open, k: k }; }
+      for (var k = 0; k < 7 && !next; k++) {
+        var dd = (today + k) % 7, w = week[dd];
+        if (!w) continue;
+        for (var j = 0; j < w.length && !next; j++) if (k > 0 || nowMin < w[j].open) next = { day: dd, open: w[j].open, k: k };
+      }
       el.textContent = next ? 'Closed now · opens ' + (next.k === 0 ? 'today' : next.k === 1 ? 'tomorrow' : DAYS[next.day].replace(/^./, function (c) { return c.toUpperCase(); })) + ' at ' + fmt(next.open) : 'Closed now';
     }
     table.parentNode.insertBefore(el, table);
