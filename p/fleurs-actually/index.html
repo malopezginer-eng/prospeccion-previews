@@ -1,11 +1,20 @@
 <!doctype html>
-<html lang="en" data-family="florist" data-hero="mosaic" data-services="list" data-shape="none">
+<html lang="en" data-family="florist" data-hero="mosaic" data-services="list" data-shape="none" data-aside="photo">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Fleurs Actually · A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.</title>
 <meta name="description" content="A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.">
+<link rel="canonical" href="https://previews.mnkykonnekt.com/p/fleurs-actually/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fleurs Actually">
+<meta property="og:title" content="Fleurs Actually · A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.">
+<meta property="og:description" content="A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.">
+<meta property="og:url" content="https://previews.mnkykonnekt.com/p/fleurs-actually/">
+<meta property="og:image" content="https://images.pexels.com/photos/37403345/pexels-photo-37403345.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Fleurs Actually", "url": "https://previews.mnkykonnekt.com/p/fleurs-actually/", "description": "A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.", "image": "https://images.pexels.com/photos/37403345/pexels-photo-37403345.jpeg?auto=compress&cs=tinysrgb&w=1200", "address": {"@type": "PostalAddress", "streetAddress": "Home Studio @ Bishan, Singapore", "addressCountry": "SG"}, "telephone": "+65 9822 3278", "openingHours": ["Mo-Sa 10:00-18:00"], "sameAs": ["https://justblooomsg.wixsite.com/fleursactually", "https://www.instagram.com/fleursactually/", "https://www.facebook.com/fleursactuallysg"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2323453A%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2243%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EF%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +34,7 @@
    Tokens en :root los pone el generador desde sectors.json. Variantes por atributos en <html>:
    data-hero = full | split | block | mosaic     data-services = tariff | numbered | cards | list
    data-shape = none | corner | organic | ring | soft   data-family = <familia>   data-dark (paginas oscuras)
+   data-aside = photo | tiers | hours (que acompana al titular; v3). El orden de bloques del cuerpo lo decide sectors.json (blocks).
    Regla: la pagina esta completa sin JS; el JS solo anade movimiento. Nada se oculta por CSS a la espera de JS. */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -339,7 +349,8 @@ footer a { color: inherit; }
 [data-family="auto"] .hero-motif { width: 110px; height: 64px; left: clamp(20px, 4vw, 48px); top: 110px; opacity: .9; }
 [data-family="auto"] h1 { text-transform: uppercase; }
 /* salon: inicial enorme en marca de agua */
-[data-family="salon"] .hero::before { content: attr(data-initial); position: absolute; right: -2vw; bottom: -6vw; font-family: var(--display); font-weight: var(--display-weight); font-size: clamp(280px, 40vw, 620px); line-height: 1; color: #fff; opacity: .08; z-index: 0; pointer-events: none; }
+[data-family="salon"] .hero h1 { font-weight: 300; font-style: italic; letter-spacing: -0.03em; }
+[data-family="salon"] .hero .hl { font-style: normal; font-weight: 500; }
 [data-family="salon"] .hero-motif { width: 150px; height: 40px; margin-top: 10px; opacity: .9; }
 /* barber: poste de barbero muy lento en el borde izquierdo */
 [data-family="barber"] .hero::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 12px; z-index: 1; background: repeating-linear-gradient(135deg, var(--accent) 0 14px, var(--paper) 14px 28px, #9a2a2a 28px 42px); background-size: 12px 60px; animation: pole 6s linear infinite; }
@@ -367,6 +378,117 @@ footer a { color: inherit; }
 [data-family="studio"] .hero-motif { width: 72px; height: 72px; margin-bottom: 26px; animation: spin 40s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ============ v3: hero con tabla al lado (tiers | hours) ============ */
+.hero-note { font-size: 14px; font-weight: 600; margin: 18px 0 0; opacity: .85; display: flex; align-items: center; gap: 8px; }
+.hero-note::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.hero-aside { background: var(--paper); color: var(--ink); border-radius: var(--radius); padding: clamp(20px, 2.4vw, 32px); box-shadow: 0 40px 80px -40px rgba(0,0,0,.45); position: relative; z-index: 1; align-self: center; }
+.hero-aside h3, .hero-aside .tiers-title { font-size: 15px; letter-spacing: .02em; color: var(--muted); font-family: var(--body); font-weight: 600; margin: 0 0 10px; }
+.hero-aside table.hours { margin: 0; font-size: 15px; }
+.hero-aside table.hours td { padding: 9px 0; }
+.hero-aside .open-now { margin: 0 0 6px; }
+.aside-more { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--brand); }
+[data-aside="tiers"] .hero-body, [data-aside="hours"] .hero-body { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 80px); align-items: end; }
+[data-hero="split"][data-aside="hours"] .hero-body, [data-hero="split"][data-aside="tiers"] .hero-body { align-items: center; }
+[data-hero="split"][data-aside="hours"] .hero-aside, [data-hero="split"][data-aside="tiers"] .hero-aside { background: var(--tint); box-shadow: none; border: 1px solid var(--line); }
+[data-hero="block"][data-aside="tiers"] .hero-body { align-items: center; padding-bottom: clamp(48px, 7vw, 96px); }
+[data-hero="block"][data-aside="tiers"] .hero-text { padding-bottom: 0; }
+@media (max-width: 860px) { [data-aside="tiers"] .hero-body, [data-aside="hours"] .hero-body { grid-template-columns: 1fr; } .hero-aside { align-self: stretch; } }
+
+/* ============ v3: precios por tramos (tabla; pestanas con radio, sin JS) ============ */
+.prices { background: var(--tint); }
+.prices h2 { margin-bottom: 28px; }
+.prices .wrap { max-width: 900px; }
+.tiers-title { font-family: var(--display); font-weight: var(--display-weight); font-size: 22px; margin: 0 0 14px; }
+table.tiers-table { width: 100%; border-collapse: collapse; font-size: 16px; }
+table.tiers-table th { text-align: left; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+table.tiers-table th:last-child, table.tiers-table td.price { text-align: right; }
+table.tiers-table td { padding: 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.tiers-table td b { display: block; font-weight: 600; }
+table.tiers-table td span { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+table.tiers-table td.price { font-family: var(--display); font-weight: var(--display-weight); font-size: 22px; white-space: nowrap; color: var(--brand); }
+.hero-aside table.tiers-table td { padding: 10px 0; }
+.hero-aside table.tiers-table td.price { font-size: 19px; }
+.tabs > input { position: absolute; opacity: 0; pointer-events: none; }
+.tabs { position: relative; }
+.tab-labels { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.tab-labels label { padding: 10px 18px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 600; font-size: 15px; cursor: pointer; }
+.tabs .pane { display: none; }
+.tabs > input:nth-of-type(1):checked ~ .pane:nth-of-type(1), .tabs > input:nth-of-type(2):checked ~ .pane:nth-of-type(2),
+.tabs > input:nth-of-type(3):checked ~ .pane:nth-of-type(3), .tabs > input:nth-of-type(4):checked ~ .pane:nth-of-type(4) { display: block; }
+.tabs > input:nth-of-type(1):checked ~ .tab-labels label:nth-child(1), .tabs > input:nth-of-type(2):checked ~ .tab-labels label:nth-child(2),
+.tabs > input:nth-of-type(3):checked ~ .tab-labels label:nth-child(3), .tabs > input:nth-of-type(4):checked ~ .tab-labels label:nth-child(4) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tabs > input:focus-visible ~ .tab-labels { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 999px; }
+
+/* ============ v3: equipo ============ */
+.team h2 { margin-bottom: clamp(28px, 4vw, 48px); }
+.team-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 28px 24px; }
+.team-grid li { border-top: 1px solid var(--line); padding-top: 18px; }
+.team-grid .avatar { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--tint); color: var(--brand); font-family: var(--display); font-weight: var(--display-weight); font-size: 20px; margin-bottom: 14px; }
+.team-grid h3 { font-size: 20px; }
+.team-grid .role { color: var(--brand); font-weight: 600; font-size: 14px; margin: 4px 0 6px; }
+.team-grid p { color: var(--muted); font-size: 15px; margin: 0; }
+[data-family="barber"] .team-grid { counter-reset: crew; }
+[data-family="barber"] .team-grid li { counter-increment: crew; }
+[data-family="barber"] .team-grid .avatar { display: none; }
+[data-family="barber"] .team-grid li::before { content: "0" counter(crew); display: block; font-size: 12px; letter-spacing: .1em; color: var(--accent); margin-bottom: 10px; font-weight: 700; }
+[data-family="barber"] .team-grid li:nth-child(n+10)::before { content: counter(crew); }
+
+/* ============ v3: resenas citadas ============ */
+.reviews { background: var(--tint); }
+.reviews h2 { margin-bottom: clamp(28px, 4vw, 48px); }
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.reviews-grid figure { margin: 0; padding: 28px 26px 22px; background: var(--paper); border-radius: var(--radius); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; }
+.reviews-grid blockquote { margin: 0; font-family: var(--display); font-weight: var(--display-weight); font-size: clamp(19px, 1.6vw, 23px); line-height: 1.3; letter-spacing: -0.01em; flex: 1; }
+.reviews-grid blockquote p { margin: 0; }
+.reviews-grid figcaption { font-size: 14px; color: var(--muted); }
+.reviews-grid figcaption a { font-weight: 600; }
+[data-family="salon"] .reviews-grid figure { background: transparent; border: 0; border-left: 2px solid var(--accent); border-radius: 0; padding: 4px 0 4px 24px; }
+[data-family="salon"] .reviews-grid blockquote { font-style: italic; font-weight: 300; font-size: clamp(22px, 2vw, 30px); }
+
+/* ============ v3: marcas y especialidades ============ */
+.brands { padding: clamp(36px, 5vw, 56px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.brands-title { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 18px; }
+.brands-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 40px; font-family: var(--display); font-weight: var(--display-weight); font-size: clamp(20px, 2.2vw, 30px); letter-spacing: -0.01em; }
+.specialties .chips { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.specialties .chips li { padding: 10px 16px; border: 1.5px solid var(--line); border-radius: 999px; font-weight: 600; font-size: 15px; }
+
+/* ============ v3: subvenciones (dental) ============ */
+.subsidies h2 { margin-bottom: 12px; }
+.subsidies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 32px; }
+.subsidies-grid article { padding: 26px 24px; border-radius: var(--radius); background: var(--tint); border-top: 4px solid var(--brand); }
+.subsidies-grid article:nth-child(2n) { border-top-color: var(--accent); }
+.subsidies-grid h3 { font-size: 20px; margin-bottom: 8px; }
+.subsidies-grid p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* ============ v3: como reservar (pasos) ============ */
+.steps h2 { margin-bottom: clamp(28px, 4vw, 44px); }
+.steps-list { list-style: none; margin: 0 0 32px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; counter-reset: step; }
+.steps-list li { counter-increment: step; padding-top: 18px; border-top: 2px solid var(--brand); }
+.steps-list li::before { content: "0" counter(step); display: block; font-family: var(--display); font-weight: var(--display-weight); font-size: 30px; color: var(--brand); margin-bottom: 10px; }
+.steps-list p { margin: 0; font-size: 17px; }
+
+/* ============ v3: varios locales ============ */
+.locations { background: var(--tint); }
+.locations h2 { margin-bottom: clamp(28px, 4vw, 44px); }
+.locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.locations-grid article { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 26px; display: flex; flex-direction: column; gap: 12px; }
+.locations-grid h3 { font-size: 24px; }
+.locations-grid address { margin: 0; line-height: 1.6; }
+.locations-grid table.hours { margin: 6px 0 10px; font-size: 15px; }
+.locations-grid .btn { align-self: flex-start; margin-top: auto; }
+
+/* ============ v3: como llegar / zona de servicio ============ */
+.transit { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 10px; }
+.transit li { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.transit b { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+.getting-there h2 + .transit { margin-top: 12px; }
+.service-area .map iframe { filter: grayscale(1) contrast(1.02) opacity(.9); }
+
+/* hero de bloque con tabla al lado: banda de foto a sangre bajo el titular */
+[data-hero="block"] .hero-band { aspect-ratio: 21 / 7; max-height: 440px; border-radius: 0; width: 100%; }
+[data-hero="block"][data-aside="tiers"] .hero-body { padding-bottom: clamp(40px, 5vw, 64px); }
+@media (max-width: 860px) { [data-hero="block"] .hero-band { aspect-ratio: 16 / 10; } }
+
 </style>
 </head>
 <body>
@@ -374,7 +496,7 @@ footer a { color: inherit; }
 <nav class="nav">
   <div class="wrap">
     <a class="brandmark" href="#top">Fleurs Actually</a>
-    <ul><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#hours">Hours</a></li><li><a href="#find">Find us</a></li></ul>
+    <ul><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#find">Find us</a></li></ul>
     <a class="btn btn-brand btn-sm" href="tel:6598223278">Call +65 9822 3278</a>
   </div>
 </nav>
@@ -388,30 +510,18 @@ footer a { color: inherit; }
       
       <p class="lead">A Bishan home studio making preserved, dried and fresh flower gifts, delivered across Singapore.</p>
       <div class="actions"><a class="btn btn-brand" href="tel:6598223278">Call +65 9822 3278</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Fleurs+Actually+Home+Studio+%40+Bishan%2C+Singapore" target="_blank" rel="noopener">Get directions</a></div>
+      
     </div>
     
     <div class="hero-motif"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 240" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M40 234c0-34-6-48-4-70-16-6-22-22-18-34 14 2 20 16 18 34 2-26 6-40 4-58 16-10 28-8 32 2-14 8-26 6-32-2-2-30 0-50-2-78 0-10 2-16 6-20"/></svg></div>
   </div>
+  
 </header>
 
 <section class="cred"><ul class="wrap"><li><b class="small">Preserved and dried specialists</b></li><li><b class="small">Free delivery over S$100</b></li><li><b class="small">Self-collection at Bishan</b></li></ul></section>
-
-
-<section class="services" id="services">
-  <div class="wrap services-wrap">
-    <div class="services-head" data-reveal>
-      <h2>What we do</h2>
-      <p class="lead">Prices as published by Fleurs Actually. Ask for a quote on anything not listed.</p>
-    </div>
-    <ol class="services-list" data-reveal-group><li><div class="row"><h3>Preserved flowers in a vase</h3><span class="leader"></span><b class="price">from S$35</b></div><p>Real flowers treated so they hold their colour and shape for months without water. Sold ready to place, from a single rose up to larger vase pieces.</p></li><li><div class="row"><h3>Dried flower arrangements</h3><span class="leader"></span><b class="price">from S$15</b></div><p>Muted, long-lasting arrangements in vases and small bouquets, plus a mini bouquet magnet for the fridge. Custom and bespoke dried pieces are made to order.</p></li><li><div class="row"><h3>Fresh bouquets and vase arrangements</h3><span class="leader"></span><b class="price">from S$45</b></div><p>Seasonal fresh bouquets in a minimal style, from a simple eucalyptus bunch to a full statement arrangement. Order two days before your delivery or collection date.</p></li><li><div class="row"><h3>Wedding and event florals</h3><span class="leader"></span><b class="price">from S$85</b></div><p>Bridal bouquets, boutonnieres and wrist corsages, plus centrepieces and styling for photoshoots and celebrations. Quoted after a short enquiry.</p></li><li><div class="row"><h3>Corporate gifts and hampers</h3><span class="leader"></span><b class="price">from S$125</b></div><p>Curated gift boxes and hampers built with partner brands, including artisanal biscotti sets and preserved flower centrepieces. Suited to client gifting and office occasions.</p></li><li><div class="row"><h3>Workshops and flower bar</h3></div><p>Hands-on floral workshops and a flower bar you can bring to an event, where guests build their own small arrangement. Run on request and at cafe collaborations.</p></li></ol>
-  </div>
-</section>
-
-
+<section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead">Prices as published by Fleurs Actually. Ask for a quote on anything not listed.</p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Preserved flowers in a vase</h3><span class="leader"></span><b class="price">from S$35</b></div><p>Real flowers treated so they hold their colour and shape for months without water. Sold ready to place, from a single rose up to larger vase pieces.</p></li><li><div class="row"><h3>Dried flower arrangements</h3><span class="leader"></span><b class="price">from S$15</b></div><p>Muted, long-lasting arrangements in vases and small bouquets, plus a mini bouquet magnet for the fridge. Custom and bespoke dried pieces are made to order.</p></li><li><div class="row"><h3>Fresh bouquets and vase arrangements</h3><span class="leader"></span><b class="price">from S$45</b></div><p>Seasonal fresh bouquets in a minimal style, from a simple eucalyptus bunch to a full statement arrangement. Order two days before your delivery or collection date.</p></li><li><div class="row"><h3>Wedding and event florals</h3><span class="leader"></span><b class="price">from S$85</b></div><p>Bridal bouquets, boutonnieres and wrist corsages, plus centrepieces and styling for photoshoots and celebrations. Quoted after a short enquiry.</p></li><li><div class="row"><h3>Corporate gifts and hampers</h3><span class="leader"></span><b class="price">from S$125</b></div><p>Curated gift boxes and hampers built with partner brands, including artisanal biscotti sets and preserved flower centrepieces. Suited to client gifting and office occasions.</p></li><li><div class="row"><h3>Workshops and flower bar</h3></div><p>Hands-on floral workshops and a flower bar you can bring to an event, where guests build their own small arrangement. Run on request and at cafe collaborations.</p></li></ol></div></section>
 <section class="about" id="about"><div class="wrap"><div data-reveal><h2>About Fleurs Actually</h2><p>Fleurs Actually is run by Jacqueline from a home studio in Bishan. She found flowers in 2013 on a sabbatical and kept at the craft, and the shop now covers fresh, preserved and dried work rather than picking one lane. The style is deliberately minimal: fewer stems, careful colour and texture, and nothing added just to fill the wrap.</p><p>Most of what she makes is meant as a gift, so the practical side is spelled out. Orders go in two days ahead. Delivery is S$6 anywhere in Singapore and free above S$100, in a morning or afternoon window from Monday to Saturday, and you can collect from the Bishan studio instead. Anything bespoke, corporate or bridal starts with a note and gets a reply within two working days.</p><div class="stats" data-reveal-group><div class="stat"><b>Bishan</b><span>Home studio</span></div><div class="stat"><b>2 days</b><span>Order ahead</span></div><div class="stat"><b data-count>S$6</b><span>Island-wide delivery</span></div></div></div><div class="about-media" data-reveal><img src="https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/4747889/pexels-photo-4747889.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 45vw" alt="Close-up of a hand holding a textured bouquet with green leaves and soft brown accents." width="4000" height="6000" style="background:#302621" decoding="async" loading="lazy"></div></div></section>
-<section class="why"><div class="wrap"><h2 data-reveal>Why people choose Fleurs Actually</h2><div class="why-grid" data-reveal-group><article><h3>Flowers that outlast the occasion</h3><p>Preserved and dried arrangements keep for months, which suits a gift that has to travel or sit on a desk.</p></article><article><h3>Clear delivery terms</h3><p>S$6 per location, free over S$100, morning or afternoon slots Monday to Saturday, and self-collection if you would rather come by.</p></article><article><h3>Bespoke without a big minimum</h3><p>Custom pieces start small, from a S$12 boutonniere to a full preserved centrepiece, so a one-off request is still worth asking about.</p></article></div></div></section>
-
-<section class="find" id="find"><div class="wrap"><div data-reveal><h2 id="hours">Opening hours</h2><table class="hours" data-hours="[[&quot;Monday \u2013 Saturday&quot;, &quot;10:00 \u2013 18:00&quot;], [&quot;Sunday&quot;, &quot;Closed&quot;]]"><tr><td>Monday – Saturday</td><td>10:00 – 18:00</td></tr><tr><td>Sunday</td><td>Closed</td></tr></table><h2>Find us</h2><address><div>Home Studio @ Bishan, Singapore</div><div>Phone: <a href="tel:6598223278">+65 9822 3278</a></div><div><a href="https://instagram.com/fleursactually" target="_blank" rel="noopener">Instagram @fleursactually</a> · <a href="https://www.facebook.com/fleursactuallysg" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Fleurs+Actually+Home+Studio+%40+Bishan%2C+Singapore" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to Fleurs Actually" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Fleurs+Actually+Home+Studio+%40+Bishan%2C+Singapore&output=embed"></iframe><div class="map-tag">Home Studio @ Bishan</div></div></div></section>
+<section class="find service-area" id="find"><div class="wrap"><div data-reveal><h2 id="hours">Opening hours</h2><table class="hours" data-hours="[[&quot;Monday \u2013 Saturday&quot;, &quot;10:00 \u2013 18:00&quot;], [&quot;Sunday&quot;, &quot;Closed&quot;]]"><tr><td>Monday – Saturday</td><td>10:00 – 18:00</td></tr><tr><td>Sunday</td><td>Closed</td></tr></table><h2>Where we work</h2><address><div>Home Studio @ Bishan, Singapore</div><div>Phone: <a href="tel:6598223278">+65 9822 3278</a></div><div><a href="https://instagram.com/fleursactually" target="_blank" rel="noopener">Instagram @fleursactually</a> · <a href="https://www.facebook.com/fleursactuallysg" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English</div></address></div><div class="map" data-reveal><iframe title="Map to Fleurs Actually" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Fleurs+Actually+Home+Studio+%40+Bishan%2C+Singapore&output=embed"></iframe><div class="map-tag">Home Studio @ Bishan</div></div></div></section>
 <section class="faq" id="faq"><div class="wrap"><h2 data-reveal>Questions people ask</h2><div data-reveal-group><details><summary>How far ahead do I need to order?</summary><p>Two days before your delivery or collection date. If it is urgent, call the mobile number rather than emailing.</p></details><details><summary>What does delivery cost?</summary><p>S$6 per location, free on orders above S$100. Deliveries run Monday to Saturday, either 10:00 to 12:00 or 14:00 to 18:00, and a slot outside those hours costs S$10 more. PO boxes, Tuas, Jurong Island, Sentosa and restricted zones are not covered.</p></details><details><summary>Can I collect instead of paying for delivery?</summary><p>Yes, from the Bishan home studio, Monday to Saturday between 10:00 and 18:00. Ask by email if you need a time outside that.</p></details><details><summary>Can I cancel or change my order?</summary><p>Orders cannot be cancelled once payment is verified, but a delivery can be postponed if you give two business days&#x27; notice. Returns are only accepted if the wrong order was sent.</p></details></div></div></section>
 
 <section class="cta" id="contact">
@@ -457,9 +567,10 @@ footer a { color: inherit; }
       if (parts.length === 1 && /,|&|and/.test(days)) days.split(/,|&|and/).forEach(function (x) { var i = dayIndex(x.trim()); if (i >= 0) idx.push(i); });
       else if (b < 0) idx = [a];
       else for (var i = a; ; i = (i + 1) % 7) { idx.push(i); if (i === b) break; }
-      var t = hours.match(/(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/i);
-      var val = /closed/i.test(hours) ? null : t ? { open: minutes(t[1]), close: minutes(t[2]) } : undefined;
-      if (val && (val.open == null || val.close == null)) val = undefined;
+      /* varios tramos por dia ("09:00 – 12:30, 14:00 – 16:30, 18:00 – 20:00"): lista de {open, close} */
+      var re = /(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)\s*(?:–|—|-|to)\s*(\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?)/gi, m, ranges = [];
+      while ((m = re.exec(hours))) { var o = minutes(m[1]), c = minutes(m[2]); if (o != null && c != null) ranges.push({ open: o, close: c }); }
+      var val = /closed/i.test(hours) ? null : ranges.length ? ranges : undefined;
       idx.forEach(function (i) { week[i] = val; });
     });
     var parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Singapore', weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
@@ -469,18 +580,22 @@ footer a { color: inherit; }
     Array.prototype.forEach.call(table.rows, function (tr) { if (dayIndex(tr.cells[0].textContent.trim()) === today || tr.cells[0].textContent.toLowerCase().indexOf(DAYS[today].slice(0, 3)) === 0) tr.classList.add('today'); });
     var el = document.createElement('p'); el.className = 'open-now';
     function fmt(m) { var h = Math.floor(m / 60), mi = m % 60; return (h % 12 || 12) + (mi ? ':' + (mi < 10 ? '0' : '') + mi : '') + (h < 12 ? 'am' : 'pm'); }
-    var t = week[today];
-    if (t && nowMin >= t.open && nowMin < t.close) el.textContent = 'Open now · closes ' + fmt(t.close);
+    var t = week[today], cur = null;
+    if (t) t.forEach(function (r) { if (!cur && nowMin >= r.open && nowMin < r.close) cur = r; });
+    if (cur) el.textContent = 'Open now · closes ' + fmt(cur.close);
     else {
       el.classList.add('closed');
       var next = null;
-      for (var k = 0; k < 7 && !next; k++) { var dd = (today + k) % 7, w = week[dd]; if (w && (k > 0 || nowMin < w.open)) next = { day: dd, open: w.open, k: k }; }
+      for (var k = 0; k < 7 && !next; k++) {
+        var dd = (today + k) % 7, w = week[dd];
+        if (!w) continue;
+        for (var j = 0; j < w.length && !next; j++) if (k > 0 || nowMin < w[j].open) next = { day: dd, open: w[j].open, k: k };
+      }
       el.textContent = next ? 'Closed now · opens ' + (next.k === 0 ? 'today' : next.k === 1 ? 'tomorrow' : DAYS[next.day].replace(/^./, function (c) { return c.toUpperCase(); })) + ' at ' + fmt(next.open) : 'Closed now';
     }
     table.parentNode.insertBefore(el, table);
   }
-  var hoursTable = document.querySelector('table.hours[data-hours]');
-  if (hoursTable) { try { openNow(hoursTable); } catch (e) { /* horario no interpretable: no se muestra nada */ } }
+  Array.prototype.forEach.call(document.querySelectorAll('table.hours[data-hours]'), function (t) { try { openNow(t); } catch (e) { /* horario no interpretable: no se muestra nada */ } });
 
   /* 2. Barra movil: aparece al dejar atras el hero */
   var bar = document.querySelector('.mobile-bar'), hero = document.querySelector('.hero');
