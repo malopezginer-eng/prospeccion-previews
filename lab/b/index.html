@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MNKY KONNEKT · lab B — Before → After theatre</title>
+<meta name="description" content="Your website is already built. Pay only if you want it.">
+<link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<link rel="preload" as="image" type="image/webp" imagesrcset="../assets/img/before-salon-480.webp 480w, ../assets/img/before-salon-720.webp 720w, ../assets/img/before-salon-1080.webp 1080w, ../assets/img/before-salon-1440.webp 1440w" imagesizes="(min-width: 1000px) 1000px, 100vw" fetchpriority="high">
+<style>
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root { --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE; --brand: #237A77; --accent: #F2B134;
+  --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif; --body: Inter, "Inter Fallback", Arial, sans-serif; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.03em; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 15px; line-height: 1; transition: transform .15s ease, background .15s ease; white-space: nowrap; }
+.btn:hover { transform: translateY(-1px); }
+.btn-brand { background: var(--brand); color: #fff; }
+.btn-brand:hover { background: #1B615F; }
+.btn-accent { background: var(--accent); color: #16130a; }
+.btn-accent:hover { background: #e0a12b; }
+
+/* ===== topbar ===== */
+.topbar { padding: 20px 0; background: var(--paper); }
+.topbar .brandmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-weight: 800; font-size: 14px; color: var(--ink); text-decoration: none; }
+.topbar .brandmark img { width: 26px; height: 26px; }
+
+/* ===== hero ===== */
+.hero { background: var(--paper); padding: 8px 0 clamp(48px, 7vw, 80px); }
+.hero-copy-block { max-width: 780px; margin: 0 0 clamp(32px, 5vw, 56px); }
+.hero-copy-block .kicker { display: block; color: var(--brand); font: 600 12px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 16px; }
+.hero-copy-block h1 { font-size: clamp(40px, 6.5vw, 92px); }
+.hero-copy-block h1 .accent-word { color: var(--brand); }
+.hero-copy-block .cta-line { margin-top: clamp(20px, 3vw, 30px); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.hero-copy-block .price { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 2.6vw, 26px); }
+
+/* ===== browser-frame theatre ===== */
+.frame-wrap { max-width: 1000px; margin: 0 auto; }
+.browser-frame { position: relative; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 40px 80px -40px rgba(17,18,20,.35), 0 1px 0 rgba(17,18,20,.04); isolation: isolate; }
+.browser-bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; background: #ECE8DF; border-bottom: 1px solid var(--line); }
+.browser-bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #d8d5cc; flex: 0 0 auto; }
+.browser-bar .dot:nth-child(1) { background: #E0645C; }
+.browser-bar .dot:nth-child(2) { background: #E8B33D; }
+.browser-bar .dot:nth-child(3) { background: #4FA36A; }
+.browser-bar .url { margin-left: 6px; flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 12.5px; color: var(--muted); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.theatre { position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; background: #0b0c0d; }
+.stage { position: absolute; inset: 0; --p: 50%; }
+.stage picture { position: absolute; inset: 0; display: block; }
+.stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.img-before { filter: saturate(.4) brightness(.74) contrast(1.08); }
+.img-after { clip-path: inset(0 calc(100% - var(--p, 50%)) 0 0); will-change: clip-path; }
+
+.scrim-top { position: absolute; inset: 0 0 auto 0; height: 30%; background: linear-gradient(to bottom, rgba(8,9,10,.62), transparent); pointer-events: none; z-index: 6; }
+
+.stage input.drag { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 7; -webkit-appearance: none; appearance: none; touch-action: pan-y; }
+.stage .handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25), 0 0 26px rgba(0,0,0,.35); pointer-events: none; z-index: 8; transform: translateX(-1px); }
+.stage .handle::after { content: "\25C2 drag \25B8"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--ink); color: #fff; font: 600 12px/1 var(--body); padding: 11px 13px; border-radius: 999px; white-space: nowrap; }
+.drag:focus-visible ~ .handle { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+.lbl { position: absolute; top: 14px; padding: 7px 11px; border-radius: 6px; font: 600 11px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: #fff; pointer-events: none; z-index: 8; }
+.lbl.b { left: 14px; background: rgba(17,18,20,.72); }
+.lbl.a { right: 14px; background: var(--brand); }
+
+.frame-cap { font-size: 12.5px; color: var(--muted); line-height: 1.4; margin: 14px 0 0; max-width: 720px; }
+
+/* ===== drafts strip / marquee ===== */
+.drafts-strip { padding: 54px 0 64px; background: var(--tint); overflow: hidden; }
+.strip-head { font-family: var(--display); font-weight: 800; font-size: clamp(19px, 2.4vw, 26px); margin: 0 0 22px; letter-spacing: -0.01em; }
+.marquee-view { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.marquee-view::-webkit-scrollbar { display: none; }
+.marquee-view.is-looping { overflow-x: hidden; }
+.marquee-track { display: flex; gap: 18px; width: max-content; }
+.marquee-track figure { margin: 0; flex: 0 0 auto; width: min(78vw, 300px); background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.marquee-track img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.marquee-track figcaption { padding: 12px 14px 14px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.marquee-track figcaption b { font-family: var(--display); font-weight: 700; font-size: 16px; }
+.marquee-track figcaption span { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.marquee-view:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brandmark" href="https://mnkykonnekt.com/">
+      <picture><source type="image/webp" srcset="../assets/img/logo-128.webp"><img src="../assets/img/logo-128.png" alt="" width="26" height="26"></picture>
+      MNKY KONNEKT
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy-block">
+      <span class="kicker">Ready-made websites for local businesses</span>
+      <h1>Your website is <span class="accent-word">already built</span>. Pay only if you want it.</h1>
+      <div class="cta-line">
+        <span class="price">S$590</span>
+        <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
+      </div>
+    </div>
+
+    <div class="frame-wrap" id="theatre">
+      <div class="browser-frame">
+        <div class="browser-bar" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">yoursalon.com.sg</span>
+        </div>
+        <div class="theatre">
+          <div class="stage" id="stage" style="--p:50%">
+            <picture class="img-before">
+              <source type="image/webp" srcset="../assets/img/before-salon-480.webp 480w, ../assets/img/before-salon-720.webp 720w, ../assets/img/before-salon-1080.webp 1080w, ../assets/img/before-salon-1440.webp 1440w" sizes="(min-width: 1000px) 1000px, 100vw">
+              <img src="../assets/img/before-salon.jpg" srcset="../assets/img/before-salon-720.jpg 720w, ../assets/img/before-salon.jpg 1440w" sizes="(min-width: 1000px) 1000px, 100vw" alt="A Singapore hair salon's current website, name and logo hidden" width="1440" height="900" fetchpriority="high">
+            </picture>
+            <picture class="img-after">
+              <source type="image/webp" srcset="../assets/img/after-salon-480.webp 480w, ../assets/img/after-salon-720.webp 720w, ../assets/img/after-salon-1080.webp 1080w, ../assets/img/after-salon-1440.webp 1440w" sizes="(min-width: 1000px) 1000px, 100vw">
+              <img src="../assets/img/after-salon.jpg" srcset="../assets/img/after-salon-720.jpg 720w, ../assets/img/after-salon.jpg 1440w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Our draft of the same salon's website" width="1440" height="900" fetchpriority="high">
+            </picture>
+            <div class="scrim-top"></div>
+            <input class="drag" id="heroRange" type="range" min="4" max="96" value="50" aria-label="Drag to compare their site today and our draft" oninput="document.getElementById('stage').style.setProperty('--p', this.value+'%')">
+            <div class="handle" aria-hidden="true"></div>
+            <span class="lbl b">Their site today</span>
+            <span class="lbl a">Our draft</span>
+          </div>
+        </div>
+      </div>
+      <p class="frame-cap">A Singapore hair salon &middot; a design proposal made by us before any contact, shown here without the business name &middot; not client work</p>
+    </div>
+  </div>
+</section>
+
+<section class="drafts-strip" id="drafts">
+  <div class="wrap">
+    <h2 class="strip-head">Four drafts we made before anyone asked us to</h2>
+    <div class="marquee-view" id="marqueeView" tabindex="0" aria-label="Draft websites, scrollable">
+      <div class="marquee-track" id="marqueeTrack">
+        <figure>
+          <picture><source type="image/webp" srcset="../assets/img/draft-barber-720.webp 720w, ../assets/img/draft-barber-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-barber.jpg" srcset="../assets/img/draft-barber-720.jpg 720w, ../assets/img/draft-barber.jpg 1440w" sizes="300px" alt="Draft website for a barbershop, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
+          <figcaption><b>Barbershop</b><span>prices by barber level</span></figcaption>
+        </figure>
+        <figure>
+          <picture><source type="image/webp" srcset="../assets/img/draft-salon-720.webp 720w, ../assets/img/draft-salon-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-salon.jpg" srcset="../assets/img/draft-salon-720.jpg 720w, ../assets/img/draft-salon.jpg 1440w" sizes="300px" alt="Draft website for a hair salon, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
+          <figcaption><b>Hair salon</b><span>team &middot; reviews</span></figcaption>
+        </figure>
+        <figure>
+          <picture><source type="image/webp" srcset="../assets/img/draft-pets-720.webp 720w, ../assets/img/draft-pets-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-pets.jpg" srcset="../assets/img/draft-pets-720.jpg 720w, ../assets/img/draft-pets.jpg 1440w" sizes="300px" alt="Draft website for a pet groomer, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
+          <figcaption><b>Pet grooming</b><span>prices by size</span></figcaption>
+        </figure>
+        <figure>
+          <picture><source type="image/webp" srcset="../assets/img/draft-aircon-720.webp 720w, ../assets/img/draft-aircon-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-aircon.jpg" srcset="../assets/img/draft-aircon-720.jpg 720w, ../assets/img/draft-aircon.jpg 1440w" sizes="300px" alt="Draft website for an aircon servicing company, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
+          <figcaption><b>Aircon servicing</b><span>price per unit</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  /* la pagina esta completa sin JS: hero y comparadores quedan en su estado final al 50% */
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var stage = document.getElementById("stage");
+  var heroRange = document.getElementById("heroRange");
+  var mq900 = matchMedia("(min-width: 900px)");
+  var mv = document.getElementById("marqueeView"), track = document.getElementById("marqueeTrack");
+
+  if (RM || !window.gsap || !window.ScrollTrigger || !stage) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* el acto: antes de animar, arranca desde "todo antes" */
+  var state = { p: 4 };
+  stage.style.setProperty("--p", "4%");
+  if (heroRange) heroRange.value = 4;
+
+  function sync() {
+    stage.style.setProperty("--p", state.p + "%");
+    if (heroRange) heroRange.value = state.p;
+  }
+
+  if (mq900.matches) {
+    gsap.to(state, {
+      p: 96, ease: "none", onUpdate: sync,
+      scrollTrigger: { trigger: "#theatre", start: "top 90px", end: "+=80%", scrub: true, pin: true }
+    });
+  } else {
+    ScrollTrigger.create({
+      trigger: "#theatre", start: "top 75%", once: true,
+      onEnter: function () { gsap.to(state, { p: 96, duration: 1.1, ease: "power2.inOut", onUpdate: sync }); }
+    });
+  }
+
+  /* cinta de drafts: bucle continuo, se para en hover/foco */
+  if (mv && track) {
+    Array.prototype.slice.call(track.children).forEach(function (node) { track.appendChild(node.cloneNode(true)); });
+    mv.classList.add("is-looping");
+    var loop = gsap.to(track, { xPercent: -50, duration: 34, ease: "none", repeat: -1 });
+    ["mouseenter", "focusin"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.pause(); }); });
+    ["mouseleave", "focusout"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.play(); }); });
+  }
+
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+});
+</script>
+</body>
+</html>

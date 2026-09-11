@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MNKY KONNEKT — Built in front of you (lab A)</title>
+<link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<style>
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE;
+  --brand: #237A77; --brand-dark: #1B615F; --accent: #F2B134; --radius: 12px;
+  --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --body: Inter, "Inter Fallback", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.03em; text-wrap: balance; }
+p { margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease; white-space: nowrap; }
+.btn:hover { transform: translateY(-1px); }
+.btn-brand { background: var(--brand); color: #fff; }
+.btn-brand:hover { background: var(--brand-dark); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+
+/* nav */
+.nav { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brandmark { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 18px; }
+.brandmark img { width: 32px; height: 32px; }
+.nav .tag { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 640px) { .nav .tag { display: none; } }
+
+/* hero */
+.hero { padding: clamp(36px, 6vw, 68px) 0 0; }
+.kicker { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: 14px; }
+h1 { font-size: clamp(38px, 6.6vw, 92px); }
+h1 em { font-style: normal; color: var(--brand); }
+.hero-lead { font-size: clamp(16px, 1.6vw, 19px); color: var(--muted); max-width: 46ch; margin: 18px 0 26px; }
+
+/* act: hero copy + pinned/sticky phone, shared column layout */
+.act { padding-bottom: clamp(48px, 8vw, 96px); }
+.act .wrap { display: grid; grid-template-columns: 1fr 420px; gap: clamp(24px, 4vw, 64px); align-items: stretch; }
+.act-copy { min-width: 0; }
+.act-phone-col { position: relative; align-self: stretch; }
+
+/* the running commentary blocks */
+.cap { padding: 20px 0; }
+.cap-hero { padding-top: 0; }
+.step-list { margin-top: clamp(28px, 6vw, 56px); }
+.step { display: flex; gap: 16px; padding: clamp(48px, 11vw, 96px) 0; border-top: 1px solid var(--line); }
+.step:first-child { border-top: 1px solid var(--line); }
+.step .num { font-family: var(--display); font-weight: 800; font-size: 15px; color: var(--brand); flex: none; width: 34px; padding-top: 3px; }
+.step p { font-size: clamp(19px, 2.4vw, 26px); font-family: var(--display); font-weight: 700; letter-spacing: -0.01em; max-width: 30ch; line-height: 1.15; }
+.step.is-active p { color: var(--ink); }
+.step p { color: var(--muted); transition: color .3s ease; }
+
+.act-close-sec { border-top: 1px solid var(--line); }
+.act-close { padding: clamp(48px, 10vw, 88px) 0 clamp(20px, 4vw, 40px); }
+.act-close h2 { font-size: clamp(28px, 4.4vw, 44px); max-width: 18ch; margin-bottom: 16px; }
+.act-close .price { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 4vw, 44px); margin: 18px 0 22px; }
+.act-close .price small { font-size: 15px; font-weight: 600; color: var(--muted); margin-left: 8px; }
+
+/* phone mockup */
+.phone-sticky { position: sticky; top: 24px; }
+.phone { width: min(300px, 78vw); margin: 0 auto; aspect-ratio: 300 / 620; border-radius: 38px; background: var(--ink); padding: 12px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.45); }
+.phone-notch { width: 70px; height: 6px; border-radius: 4px; background: #000; margin: 0 auto 8px; opacity: .55; }
+.phone-screen { position: relative; height: calc(100% - 14px); background: #fff; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; }
+.phone-screen::before { /* blank grid state, always drawn beneath the pieces */
+  content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 22px 22px; opacity: .55;
+}
+.p-topbar, .p-hero, .p-services, .p-hours, .p-map, .p-cta { position: relative; z-index: 1; flex: none; }
+.p-topbar { display: flex; align-items: center; gap: 8px; padding: 14px 14px 10px; background: #fff; }
+.p-topbar .lg { width: 20px; height: 20px; border-radius: 6px; background: var(--brand); flex: none; }
+.p-topbar b { font-family: var(--display); font-weight: 800; font-size: 12.5px; letter-spacing: -0.01em; }
+.p-hero { position: relative; flex: none; aspect-ratio: 16/10; overflow: hidden; background: var(--tint); }
+.p-hero img { position: absolute; width: 230%; height: auto; left: -65%; top: -27.6%; max-width: none; }
+.p-services { padding: 12px 14px 4px; background: #fff; }
+.p-services .row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 11.5px; }
+.p-services .row span:first-child { font-weight: 600; }
+.p-services .row span:last-child { font-family: var(--display); font-weight: 700; color: var(--brand); }
+.p-hours { display: flex; align-items: center; gap: 7px; padding: 10px 14px; background: #fff; font-size: 11px; color: var(--muted); }
+.p-hours .go { width: 7px; height: 7px; border-radius: 50%; background: #2fae66; flex: none; }
+.p-hours b { color: var(--ink); font-weight: 700; }
+.p-map { margin: 0 14px; min-height: 40px; border-radius: 10px; background:
+  repeating-linear-gradient(0deg, #e7f1ef, #e7f1ef 8px, #dcece9 8px, #dcece9 9px),
+  repeating-linear-gradient(90deg, #e7f1ef, #e7f1ef 8px, #dcece9 8px, #dcece9 9px);
+  position: relative; overflow: hidden; flex: 1 1 auto; min-height: 40px; }
+.p-map::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50% 50% 50% 0; background: var(--brand); transform: translate(-50%, -100%) rotate(-45deg); box-shadow: 0 0 0 3px rgba(35,122,119,.18); }
+.p-cta { margin-top: auto; padding: 12px 14px 14px; background: #fff; }
+.p-cta .wa { display: flex; align-items: center; justify-content: center; gap: 7px; background: var(--brand); color: #fff; border-radius: 999px; padding: 10px; font-size: 12px; font-weight: 700; }
+.p-cta .wa .ring { width: 8px; height: 8px; border-radius: 50%; background: #7CE0B8; }
+
+/* reduced-motion / no-js: everything above is already final-state visible by default. */
+
+.cap { display: none; } /* the old inline caption list is unused; steps live in .step-list */
+
+footer { padding: 30px 0 44px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); margin-top: clamp(40px,6vw,72px); }
+
+@media (max-width: 900px) {
+  /* en movil el telefono va ARRIBA y se queda pegado: los rotulos pasan por debajo */
+  .act .wrap { grid-template-columns: 1fr; }
+  .act-phone-col { order: -1; position: sticky; top: 0; z-index: 5; align-self: start;
+    background: var(--paper); box-shadow: 0 14px 18px -14px rgba(0,0,0,.18); padding: 10px 0 14px; }
+  .phone-sticky { position: static; }
+  .phone { width: 216px; padding: 7px; border-radius: 26px; aspect-ratio: 300 / 672; }
+  .phone-notch { height: 4px; margin-bottom: 5px; }
+  .phone-screen { border-radius: 18px; }
+  .p-topbar { padding: 8px 10px; gap: 7px; }
+  .p-topbar .lg { width: 15px; height: 15px; border-radius: 5px; }
+  .p-topbar b { font-size: 10px; white-space: nowrap; }
+  .p-services { padding: 6px 10px; }
+  .p-services .row { font-size: 10px; padding: 5px 0; }
+  .p-hours { padding: 6px 10px; font-size: 9.5px; white-space: nowrap; }
+  .p-map { margin: 0 10px; }
+  .p-cta { padding: 8px 10px 10px; }
+  .p-cta .wa { font-size: 10.5px; padding: 9px 10px; }
+  .step { padding: 34px 0; }
+  .step p { font-size: clamp(17px, 4.6vw, 22px); }
+  .act-close { padding-top: 40px; }
+}
+@media (max-width: 480px) {
+  .phone { width: min(216px, 58vw); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <span class="brandmark"><picture><source type="image/webp" srcset="../assets/img/logo-128.webp"><img src="../assets/img/logo-128.png" alt="" width="32" height="32"></picture>MNKY KONNEKT</span>
+    <span class="tag">Ready-made websites for local businesses · Singapore</span>
+  </div>
+</nav>
+
+<section class="act" id="act">
+  <div class="wrap">
+    <div class="act-copy">
+
+      <header class="hero" id="top">
+        <p class="kicker">Ready-made websites for local businesses</p>
+        <h1>Your website is <em>already built.</em> Pay only if you want it.</h1>
+        <p class="hero-lead">Scroll. This is what "already built" looks like — the same page a real business of yours would get, put together piece by piece.</p>
+      </header>
+
+      <ol class="step-list" id="stepList">
+        <li class="step" data-step="1"><span class="num">01</span><p>Your business name, right at the top, the moment the page opens.</p></li>
+        <li class="step" data-step="2"><span class="num">02</span><p>A real photo of your shop — not a stock model with a stock smile.</p></li>
+        <li class="step" data-step="3"><span class="num">03</span><p>Your prices, exactly as you publish them.</p></li>
+        <li class="step" data-step="4"><span class="num">04</span><p>Your hours, with open-now worked out live.</p></li>
+        <li class="step" data-step="5"><span class="num">05</span><p>The map, so they know exactly how to find you.</p></li>
+        <li class="step" data-step="6"><span class="num">06</span><p>One tap to WhatsApp.</p></li>
+      </ol>
+
+    </div>
+
+    <div class="act-phone-col">
+      <div class="phone-sticky">
+        <div class="phone" id="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="p-topbar" data-piece="1"><span class="lg"></span><b>NORTHBRIDGE HAIR</b></div>
+            <div class="p-hero" data-piece="2">
+              <picture>
+                <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
+                <img src="../assets/img/after-salon-720.jpg" alt="Interior of a hair salon, used here as an example photo — not a real client" width="720" height="450" loading="lazy">
+              </picture>
+            </div>
+            <div class="p-services" data-piece="3">
+              <div class="row"><span>Cut &amp; blow dry</span><span>S$45</span></div>
+              <div class="row"><span>Colour, roots</span><span>S$120</span></div>
+              <div class="row"><span>Keratin smoothing</span><span>S$280</span></div>
+            </div>
+            <div class="p-hours" data-piece="4"><span class="go"></span><b>Open now</b>&nbsp;· Tue–Sun, 10:00–20:00</div>
+            <div class="p-map" data-piece="5"></div>
+            <div class="p-cta" data-piece="6"><div class="wa"><span class="ring"></span>Message on WhatsApp</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="act-close-sec">
+  <div class="wrap">
+    <div class="act-close">
+        <h2>Your site is already at this stage. You just have not seen it yet.</h2>
+        <p class="price">S$590<small>one-off</small></p>
+        <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.1 8.1 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8 1-.1.1-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.3-.4.1-.2 0-.3 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+          WhatsApp Miguel
+        </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · BORME 1 July 2025, entry 296563 · Spain — lab preview, direction A, not for indexing.</div>
+</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  /* the page is complete and legible with this script disabled; it only adds movement */
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (RM || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  var pieces = Array.prototype.slice.call(document.querySelectorAll(".phone [data-piece]"));
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var isDesktop = matchMedia("(min-width: 900px)").matches;
+
+  /* start hidden only once we know JS + animation are actually running */
+  gsap.set(pieces, { autoAlpha: 0, y: 14 });
+  gsap.set(".act-close", { autoAlpha: 0, y: 18 });
+
+  function revealPiece(i) {
+    gsap.to(pieces[i], { autoAlpha: 1, y: 0, duration: .5, ease: "power2.out", overwrite: true });
+  }
+
+  steps.forEach(function (step, i) {
+    ScrollTrigger.create({
+      trigger: step,
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: function () { revealPiece(i); step.classList.add("is-active"); },
+      onEnterBack: function () { revealPiece(i); step.classList.add("is-active"); },
+      onLeave: function () { step.classList.remove("is-active"); },
+      onLeaveBack: function () { step.classList.remove("is-active"); }
+    });
+  });
+
+  ScrollTrigger.create({
+    trigger: ".act-close",
+    start: "top 80%",
+    once: true,
+    onEnter: function () { gsap.to(".act-close", { autoAlpha: 1, y: 0, duration: .6, ease: "power2.out" }); }
+  });
+
+  /* desktop only: the phone gets a very light scrub-tied scale so the pin reads as one continuous build, not six separate pops */
+  if (isDesktop) {
+    gsap.fromTo("#phone", { scale: .96 }, {
+      scale: 1, ease: "none",
+      scrollTrigger: { trigger: "#stepList", start: "top 60%", end: "bottom 60%", scrub: .6 }
+    });
+  }
+
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+});
+</script>
+</body>
+</html>
