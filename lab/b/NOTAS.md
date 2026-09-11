@@ -1,25 +1,30 @@
-# Dirección B — Before → After theatre (corregida 2026-09-11)
+# Dirección B — web completa (2026-09-11, fase 2)
 
-**Qué cambió y por qué:** la captura dejó de ser el fondo del hero. Ahora hay un `<header>` con solo
-el logo, luego el titular en texto real sobre papel `#F9F6EF` (nada de texto sobre la foto), y debajo
-un `.browser-frame`: barra de ventana en CSS (tres puntos + `yoursalon.com.sg`) que enmarca el par
-before/after a máx. 1000px. Así la captura se lee como "una web que enseñamos", no como el hero de
-MNKY. El logo ya no cae sobre el logo tapado de la peluquería. El botón principal pasó de
-`btn-accent` (ámbar) a `btn-brand` (teal `#237A77`); el ámbar queda solo para el foco, como pide la
-identidad.
+**Qué he construido:** las 13 secciones del brief sobre el hero ya aprobado, sin tocarlo. El hilo
+conductor es el marco de navegador (tres puntos + barra de dirección), usado 3 veces con cabeza: el
+hero/teatro (ya existía), los tres pasos de «How it works» (mini ventanas CSS, sin imágenes, con la
+URL cambiando `yoursalon.com.sg · draft` → `· edits` → `yoursalon.com · live`) y el marquee de
+«Recent drafts». El resto de secciones (stats, get, price, safe, who, faq, cta) son papel/teal planos,
+para que el recurso no se repita hasta el ridículo, tal y como pide el brief.
 
-**Se conserva intacto:** el barrido `clip-path` sobre `--p` con `ScrollTrigger` (`pin`+`scrub` en
-escritorio, disparo único en móvil), los rótulos "Their site today"/"Our draft", el comparador
-arrastrable — ahora un único elemento (`#heroRange`) que sirve para el scrub Y el arrastre manual
-posterior en cualquier tamaño, ya no hay un `.mobile-compare` duplicado — el marquee de previews,
-`prefers-reduced-motion` (todo queda al 50%, ambas etiquetas visibles, contenido completo sin JS) y
-el pie de foto legal exacto.
+**Decisiones de composición:** «What you get» es un bento asimétrico (1 tarjeta grande oscura + 1
+acento teal + 6 normales), no 8 tarjetas iguales. «How it works» sigue en fondo oscuro (`--ink`) como
+la web fuente: es el único acento oscuro de la página, coherente con el resto en papel. No añadí un
+segundo efecto de scroll grande: los tres pasos usan solo `data-reveal-group` (fade+slide ligero), el
+barrido con `pin`+`scrub` del hero sigue siendo el único efecto grande. Fusioné «Recent drafts» con el
+marquee ya construido en fase 1 (mismo bloque, cabecera y texto de advertencia copiados literales de
+la web fuente) en vez de duplicar las cuatro previews en una rejilla aparte.
 
-**Dejado fuera:** subtítulo largo bajo el titular (el brief pide "una línea corta" con precio+botón,
-así que no añadí la frase de subtítulo disponible); duplicar el marco de navegador en el marquee de
-abajo (las cuatro previews siguen en tarjetas simples).
+**Retrato de Miguel:** `#who` usa `<img id="miguelPhoto" src="../assets/img/miguel.jpg" onerror="...">`
+— si el archivo no existe cae automáticamente al logo (`logo-512.png`, con `object-fit:contain` y
+relleno en tinte) dentro del mismo círculo de 200px. El día 12/09 en que llegue `miguel.jpg` no hay que
+tocar nada más: el `onerror` deja de dispararse y se ve la foto real recortada en círculo.
 
-**Riesgo que queda:** el `pin` de ScrollTrigger ahora fija un elemento más pequeño que el viewport
-(`.frame-wrap`, no toda la pantalla); visualmente funciona pero no lo he verificado en un navegador
-real con DevTools — si al probarlo el pin se ve raro (salto, layout shift), cambiar `start` de
-`"top 90px"` o quitar `pin:true` y dejar solo `scrub` sin pin.
+**Dejado fuera:** subtítulo largo repetido (ya está como `.lead` bajo el H1); segundo marco de
+navegador en «what you get» o «price» (se dejaron en tarjetas planas a propósito, ver arriba); rejilla
+separada de drafts (ver fusión con marquee).
+
+**Riesgo:** no he verificado en navegador real con Lighthouse; el pin de ScrollTrigger en el hero es
+el mismo de la fase 1 (riesgo ya anotado entonces). La página completa mide justo por debajo de las 12
+pantallas de móvil pedidas — si Miguel la ve más larga de la cuenta en el móvil, el primer recorte
+lógico es apretar el `padding` de `section` (clamp actual 48–96px), no quitar contenido.

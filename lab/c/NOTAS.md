@@ -1,23 +1,37 @@
-# Dirección C — Studio editorial
+# Dirección C — Studio editorial (web completa)
 
-**Idea ejecutada:** registro tinta/papel con retícula de 12 columnas visible de fondo (líneas de
-`--line` al 8% de opacidad), hero tipográfico a sangre (clamp 48–140px) con máscara de línea que
-sube desde abajo, banda de lectura con scrub (palabras de gris apagado a papel al entrar en foco),
-bento asimétrico de las 4 previews con distinto `aspect-ratio`/`border-radius` cada una, cursor
-"View" solo dentro del bento en desktop, marquee de sectores que se para en hover/foco.
+**Qué construyo:** las 13 secciones del brief sobre el mismo lenguaje del hero (tinta `#111214`,
+retícula de 12 columnas, display Bricolage a sangre). El bento de "Recent drafts" ya construido pasa
+a cubrir la sección 10: le añado pies estáticos (sector + descriptor, sin necesitar hover) y el aviso
+de que son propuestas, sin crear una segunda galería.
 
-**Técnica:** GSAP core + ScrollTrigger + SplitText por jsDelivr, `defer`. Máscara de líneas con
-`overflow:hidden` + `span` trasladado (no uso SplitText real para el H1 —el texto ya está partido
-en 4 `<span class="line-mask">` en el HTML para que sea legible sin JS—, dejo el plugin cargado por
-si se quiere refinar a nivel de palabra). Scrub de la banda: un `ScrollTrigger` por palabra con
-`scrub`. Marquee: `@keyframes` inyectado por JS solo si no hay `prefers-reduced-motion`, con
-`animation-play-state:paused` en `:hover`/`:focus-within`. Cursor con `requestAnimationFrame` +
-lerp, solo si `matchMedia(min-width:900px)` y sin touch.
+**Cifras (85/76/87):** tipográficas enormes en retícula de 3 columnas, con su frase y su fuente; el
+HTML ya lleva el valor final ("85%"...) para que sea correcto sin JS, y el contador solo resetea a 0
+y cuenta hacia arriba si GSAP corre (mismo patrón que la web actual).
 
-**Qué dejo fuera:** el resto de la web (precio detallado, garantía, pasos, FAQ); eso es del scope
-completo, no de este tramo. No añado testimonios ni nombres reales (regla legal del frente).
+**"What you get":** bento de texto asimétrico (7 tarjetas, tamaños distintos, una grande con las dos
+ideas de rendimiento/datos combinadas para no llegar a 8 cajas iguales).
 
-**Qué cambiaría si se elige:** SplitText real por palabra en el H1 para un stagger más fino;
-precargar `draft-barber` (la imagen grande del bento) con `fetchpriority` si se confirma que es la
-primera imagen bajo el fold; revisar el corte de columnas de la retícula en pantallas muy anchas
-(>1600px) para que no se vea desproporcionada.
+**Precio:** tarifa tipográfica con línea de puntos (concepto — valor) a la izquierda; tabla de costes
+de Singapur como tabla editorial con la fila de MNKY en teal a la derecha.
+
+**"How it works":** sticky real con CSS (`position:sticky`, sin JS) — el título se queda fijo en
+desktop (≥900px) mientras pasan los tres pasos numerados; en móvil se apila normal. Un solo efecto.
+
+**Confianza y FAQ:** bajo el espectáculo: medida de línea corta (42-62ch), `--muted-2` (#c9c7c2, ratio
+~13:1 sobre tinta) para todo párrafo largo en vez del gris medio que ya usaba el bento, foco visible.
+
+**Nota de color única:** "Who you deal with" en papel `#F9F6EF` sobre tinta — el único respiro claro
+de toda la página, tal como pide el brief.
+
+**Retrato de Miguel:** `<img src="../assets/img/miguel.jpg" onerror="...">` cae al logo (contain, con
+relleno) dentro del mismo marco circular de 220px. El día 12/09 que exista el archivo, basta con que
+esté en esa ruta — no hay que tocar el HTML, el `onerror` deja de disparar solo.
+
+**Qué dejo fuera:** SplitText real palabra a palabra (ya lo decía la nota de la fase 1); un segundo
+efecto sticky o parallax en "how" para no acumular espectáculo sobre la misma sección.
+
+**Riesgo:** el sticky de "how it works" no se ha probado con Lighthouse real; si el CLS del `wrap`
+al hacerse sticky penaliza, la salida simple es quitar `position:sticky` en ese breakpoint y dejarlo
+apilado como el resto — la marca HTML no cambia. Medir longitud móvil (~12 pantallas) con el propio
+Lighthouse antes de dar por cerrado.

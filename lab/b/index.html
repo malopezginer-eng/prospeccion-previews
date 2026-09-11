@@ -4,9 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>MNKY KONNEKT · lab B — Before → After theatre</title>
-<meta name="description" content="Your website is already built. Pay only if you want it.">
+<title>MNKY KONNEKT · Your website is already built. Pay only if you want it.</title>
+<meta name="description" content="Ready-made one-page websites for local businesses in Singapore. We draft it from what you already publish, you look at it first, S$590 one-off, live on your own domain within 7 working days.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MNKY KONNEKT">
+<meta property="og:title" content="Your website is already built. Pay only if you want it.">
+<meta property="og:description" content="Ready-made one-page websites for local businesses in Singapore. You look at the draft first. S$590, live on your own domain within 7 working days.">
+<meta property="og:url" content="https://mnkykonnekt.com/">
+<meta property="og:image" content="https://mnkykonnekt.com/img/after-salon.jpg">
+<meta property="og:image:width" content="1440">
+<meta property="og:image:height" content="900">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"MNKY KONNEKT SL","url":"https://mnkykonnekt.com/","email":"hola@mnkykonnekt.com","vatID":"B22561179","logo":"https://mnkykonnekt.com/img/logo-512.png","founder":{"@type":"Person","name":"Miguel Ángel López"},"sameAs":["https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf"],"telephone":"+34623827167","address":{"@type":"PostalAddress","addressCountry":"ES"},"areaServed":{"@type":"Country","name":"Singapore"},"description":"Ready-made one-page websites for local businesses in Singapore. Built from what you already publish; you look at it first and pay only if you want it.","makesOffer":{"@type":"Offer","name":"One-page website","price":"590","priceCurrency":"SGD","availability":"https://schema.org/InStock"}}
+</script>
 <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/img/favicon-512.png" sizes="512x512" type="image/png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
@@ -17,47 +30,71 @@
 @font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
 @font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-:root { --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE; --brand: #237A77; --accent: #F2B134;
+:root { --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE; --brand: #237A77; --accent: #F2B134; --radius: 12px;
   --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif; --body: Inter, "Inter Fallback", Arial, sans-serif; }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
-h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.03em; text-wrap: balance; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.03em; text-wrap: balance; }
+h2 { font-size: clamp(30px, 4.2vw, 50px); }
+h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+section { padding: clamp(48px, 7vw, 96px) 0; }
+.lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 54ch; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 15px; line-height: 1; transition: transform .15s ease, background .15s ease; white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 15px; line-height: 1; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease; white-space: nowrap; }
 .btn:hover { transform: translateY(-1px); }
 .btn-brand { background: var(--brand); color: #fff; }
 .btn-brand:hover { background: #1B615F; }
+.btn-ghost { border-color: var(--line); background: #fff; }
 .btn-accent { background: var(--accent); color: #16130a; }
 .btn-accent:hover { background: #e0a12b; }
+.btn-sm { padding: 10px 15px; font-size: 13.5px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 
-/* ===== topbar ===== */
-.topbar { padding: 20px 0; background: var(--paper); }
-.topbar .brandmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-weight: 800; font-size: 14px; color: var(--ink); text-decoration: none; }
-.topbar .brandmark img { width: 26px; height: 26px; }
+/* three dots — the recurring browser-frame mark */
+.dots { display: inline-flex; gap: 6px; flex: 0 0 auto; }
+.dots span { width: 8px; height: 8px; border-radius: 50%; background: #d8d5cc; }
+.dots span:nth-child(1) { background: #E0645C; }
+.dots span:nth-child(2) { background: #E8B33D; }
+.dots span:nth-child(3) { background: #4FA36A; }
 
-/* ===== hero ===== */
-.hero { background: var(--paper); padding: 8px 0 clamp(48px, 7vw, 80px); }
-.hero-copy-block { max-width: 780px; margin: 0 0 clamp(32px, 5vw, 56px); }
+/* ===== nav ===== */
+.nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; flex-wrap: nowrap; }
+.brandmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-weight: 800; font-size: 17px; text-decoration: none; letter-spacing: -0.01em; color: var(--ink); }
+.brandmark picture { flex: none; display: block; width: 30px; height: 30px; }
+.brandmark img { width: 30px; height: 30px; flex: none; }
+.nav .tag { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.nav ul { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; white-space: nowrap; }
+.nav ul a { text-decoration: none; font-size: 13.5px; font-weight: 600; color: var(--muted); }
+.nav ul a:hover { color: var(--ink); }
+.nav .brandmark .word { white-space: nowrap; }
+.nav .btn { white-space: nowrap; }
+@media (max-width: 1400px) { .nav .tag { display: none; } }
+@media (max-width: 900px) { .nav ul { display: none; } }
+@media (max-width: 480px) { .brandmark span.word { display: none; } }
+
+/* ===== hero + theatre (already built) ===== */
+.hero { background: var(--paper); padding: clamp(28px, 5vw, 56px) 0 clamp(48px, 7vw, 80px); }
+.hero-copy-block { max-width: 780px; margin: 0 0 clamp(28px, 4vw, 48px); }
 .hero-copy-block .kicker { display: block; color: var(--brand); font: 600 12px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 16px; }
-.hero-copy-block h1 { font-size: clamp(40px, 6.5vw, 92px); }
+.hero-copy-block h1 { font-size: clamp(38px, 6.2vw, 84px); }
 .hero-copy-block h1 .accent-word { color: var(--brand); }
-.hero-copy-block .cta-line { margin-top: clamp(20px, 3vw, 30px); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.hero-copy-block .lead { margin: 18px 0 0; }
+.hero-copy-block .cta-line { margin-top: clamp(20px, 3vw, 28px); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .hero-copy-block .price { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 2.6vw, 26px); }
+.trust { display: flex; gap: 8px 18px; margin: 20px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
+.trust li::before { content: "✓ "; color: var(--brand); font-weight: 700; }
 
-/* ===== browser-frame theatre ===== */
 .frame-wrap { max-width: 1000px; margin: 0 auto; }
 .browser-frame { position: relative; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 40px 80px -40px rgba(17,18,20,.35), 0 1px 0 rgba(17,18,20,.04); isolation: isolate; }
 .browser-bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; background: #ECE8DF; border-bottom: 1px solid var(--line); }
-.browser-bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #d8d5cc; flex: 0 0 auto; }
-.browser-bar .dot:nth-child(1) { background: #E0645C; }
-.browser-bar .dot:nth-child(2) { background: #E8B33D; }
-.browser-bar .dot:nth-child(3) { background: #4FA36A; }
 .browser-bar .url { margin-left: 6px; flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 12.5px; color: var(--muted); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .theatre { position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; background: #0b0c0d; }
@@ -66,24 +103,102 @@ h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 
 .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
 .img-before { filter: saturate(.4) brightness(.74) contrast(1.08); }
 .img-after { clip-path: inset(0 calc(100% - var(--p, 50%)) 0 0); will-change: clip-path; }
-
 .scrim-top { position: absolute; inset: 0 0 auto 0; height: 30%; background: linear-gradient(to bottom, rgba(8,9,10,.62), transparent); pointer-events: none; z-index: 6; }
-
 .stage input.drag { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 7; -webkit-appearance: none; appearance: none; touch-action: pan-y; }
 .stage .handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25), 0 0 26px rgba(0,0,0,.35); pointer-events: none; z-index: 8; transform: translateX(-1px); }
 .stage .handle::after { content: "\25C2 drag \25B8"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--ink); color: #fff; font: 600 12px/1 var(--body); padding: 11px 13px; border-radius: 999px; white-space: nowrap; }
 .drag:focus-visible ~ .handle { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-
 .lbl { position: absolute; top: 14px; padding: 7px 11px; border-radius: 6px; font: 600 11px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: #fff; pointer-events: none; z-index: 8; }
 .lbl.b { left: 14px; background: rgba(17,18,20,.72); }
 .lbl.a { right: 14px; background: var(--brand); }
-
 .frame-cap { font-size: 12.5px; color: var(--muted); line-height: 1.4; margin: 14px 0 0; max-width: 720px; }
 
-/* ===== drafts strip / marquee ===== */
-.drafts-strip { padding: 54px 0 64px; background: var(--tint); overflow: hidden; }
-.strip-head { font-family: var(--display); font-weight: 800; font-size: clamp(19px, 2.4vw, 26px); margin: 0 0 22px; letter-spacing: -0.01em; }
-.marquee-view { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+/* ===== stats ===== */
+.stats { padding: 0; }
+.stats .wrap { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; }
+.stats div { padding: 24px clamp(18px, 3vw, 32px) 22px; border-left: 1px solid var(--line); font-size: 14px; color: var(--muted); line-height: 1.45; }
+.stats div:first-child { border-left: 0; }
+.stats b { display: block; font-variant-numeric: tabular-nums; min-width: 3.2ch; font-family: var(--display); font-weight: 800; font-size: clamp(34px, 3.8vw, 46px); color: var(--ink); line-height: 1; margin-bottom: 8px; }
+.stats a { color: var(--muted); font-size: 12.5px; }
+@media (max-width: 760px) { .stats .wrap { grid-template-columns: 1fr; } .stats div { border-left: 0; border-top: 1px solid var(--line); } .stats div:first-child { border-top: 0; } }
+
+/* ===== what you get — asymmetric bento ===== */
+.get { background: var(--tint); }
+.get h2 { max-width: 20ch; margin-bottom: 10px; }
+.get-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 16px; margin-top: 32px; }
+.get-grid article { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 20px; display: flex; flex-direction: column; justify-content: center; }
+.get-grid article h3 { font-size: 17px; margin-bottom: 6px; }
+.get-grid article p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.get-grid article.lg { grid-column: span 2; grid-row: span 2; background: var(--ink); color: var(--paper); border-color: var(--ink); padding: 28px; justify-content: flex-end; }
+.get-grid article.lg h3 { color: #fff; font-size: 24px; }
+.get-grid article.lg p { color: rgba(249,246,239,.75); }
+.get-grid article.accent { background: #fff; border-color: var(--brand); }
+.get-grid article.accent h3 { color: var(--brand); }
+@media (max-width: 960px) { .get-grid { grid-template-columns: repeat(2, 1fr); } .get-grid article.lg { grid-column: span 2; grid-row: span 1; } }
+@media (max-width: 520px) { .get-grid { grid-template-columns: 1fr; } .get-grid article.lg { grid-column: span 1; } }
+
+/* ===== price ===== */
+.price .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; }
+.big { font-family: var(--display); font-weight: 800; font-size: clamp(56px, 7vw, 96px); line-height: 1; letter-spacing: -0.045em; }
+.big small { font-size: 16px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-left: 10px; }
+.price ul { list-style: none; padding: 0; margin: 16px 0 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.price ul li::before { content: "— "; }
+.cmp { border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; background: #fff; }
+.cmp h3 { margin: 0 0 12px; font-size: 19px; }
+.cmp table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.cmp td { padding: 10px 0; border-bottom: 1px solid var(--line); } .cmp td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+.cmp tr.us td { color: var(--brand); font-weight: 700; }
+.cmp p { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
+@media (max-width: 860px) { .price .wrap { grid-template-columns: 1fr; } }
+
+/* ===== how it works — three mini browser frames ===== */
+.how { background: var(--ink); color: var(--paper); }
+.how h2 { max-width: 18ch; margin-bottom: clamp(24px, 4vw, 40px); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; counter-reset: step; list-style: none; margin: 0; padding: 0; }
+.steps li { counter-increment: step; }
+.step-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: #17191c; margin-bottom: 16px; }
+.step-bar { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #1f2225; border-bottom: 1px solid rgba(255,255,255,.1); }
+.step-bar .url { margin-left: 5px; flex: 1; min-width: 0; background: rgba(255,255,255,.06); border-radius: 5px; padding: 4px 8px; font-size: 11px; color: rgba(249,246,239,.82); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.step-body { aspect-ratio: 16/10; padding: 12px; display: flex; flex-direction: column; gap: 7px; }
+.step-body .bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,.12); }
+.step-body .bar.w60 { width: 60%; } .step-body .bar.w40 { width: 40%; } .step-body .bar.w80 { width: 80%; } .step-body .bar.w30 { width: 30%; }
+.step-body .block { flex: 1; border-radius: 6px; background: rgba(255,255,255,.06); margin-top: 4px; }
+.s1 .bar, .s1 .block { background: rgba(255,255,255,.1); }
+.s2 .bar.hl, .s2 .block.hl { background: var(--accent); opacity: .55; }
+.s3 .bar, .s3 .block { background: rgba(35,122,119,.5); }
+.s3 .block.hl { background: var(--brand); opacity: .8; }
+.steps li::before { content: "0" counter(step); display: block; font-size: 12.5px; letter-spacing: .1em; color: var(--accent); margin-bottom: 10px; font-weight: 700; }
+.steps h3 { margin-bottom: 8px; color: #fff; }
+.steps p { opacity: .8; margin: 0; font-size: 15px; }
+.how .note { margin-top: 32px; font-size: 14.5px; opacity: .8; max-width: 70ch; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; gap: 28px; } }
+
+/* ===== why safe ===== */
+.safe .wrap { max-width: 1000px; }
+.safe h2 { max-width: 16ch; margin-bottom: 10px; }
+.safe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 26px; margin-top: 24px; list-style: none; padding: 0; counter-reset: s; }
+.safe-grid li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; padding: 13px 0; border-top: 1px solid var(--line); }
+.safe-grid li::before { content: counter(s, decimal-leading-zero); font-family: var(--display); font-weight: 800; color: var(--brand); font-size: 19px; line-height: 1.2; }
+.safe-grid b { display: block; font-family: var(--display); font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+.safe-grid p { margin: 0; color: var(--muted); font-size: 14.5px; }
+@media (max-width: 760px) { .safe-grid { grid-template-columns: 1fr; } }
+
+/* ===== who you deal with ===== */
+.who { background: var(--tint); }
+.who .wrap { display: grid; grid-template-columns: 200px 1fr; gap: clamp(24px, 4vw, 44px); align-items: center; max-width: 1000px; }
+.who-photo-frame { width: 200px; height: 200px; border-radius: 50%; overflow: hidden; border: 6px solid var(--paper); box-shadow: 0 30px 60px -40px rgba(0,0,0,.4); background: var(--paper); }
+.who-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+.who-photo-frame img.is-logo-fallback { object-fit: contain; padding: 30px; background: var(--tint); }
+.who h2 { margin-bottom: 12px; }
+.who p { color: var(--muted); max-width: 60ch; }
+.who .check { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
+.who .check li::before { content: "\2713 "; color: var(--brand); font-weight: 700; }
+@media (max-width: 760px) { .who .wrap { grid-template-columns: 1fr; } .who-photo-frame { width: 150px; height: 150px; } }
+
+/* ===== drafts marquee (= Recent drafts) ===== */
+.drafts { background: var(--paper); }
+.drafts h2 { margin-bottom: 10px; }
+.marquee-view { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-top: 28px; }
 .marquee-view::-webkit-scrollbar { display: none; }
 .marquee-view.is-looping { overflow-x: hidden; }
 .marquee-track { display: flex; gap: 18px; width: max-content; }
@@ -93,34 +208,70 @@ h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 
 .marquee-track figcaption b { font-family: var(--display); font-weight: 700; font-size: 16px; }
 .marquee-track figcaption span { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 .marquee-view:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* ===== faq ===== */
+.faq { background: var(--tint); }
+.faq .wrap { max-width: 840px; }
+.faq h2 { margin-bottom: 20px; }
+.faq details { border-bottom: 1px solid var(--line); padding: 6px 0; }
+.faq summary { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 18px; padding: 15px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--brand); font-size: 26px; line-height: 1; font-weight: 400; transition: transform .2s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { color: var(--muted); max-width: 66ch; padding-bottom: 12px; font-size: 15px; }
+
+/* ===== cta ===== */
+.cta { background: var(--brand); color: #fff; }
+.cta .wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 28px; align-items: end; }
+.cta h2 { font-size: clamp(32px, 5vw, 64px); max-width: 14ch; }
+.cta p { margin: 12px 0 0; opacity: .9; }
+.cta .actions { justify-content: flex-end; }
+.cta .btn-brand { background: var(--accent); color: #111; }
+@media (max-width: 760px) { .cta .wrap { grid-template-columns: 1fr; } .cta .actions { justify-content: flex-start; } }
+
+footer { padding: 30px 0 44px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); }
+footer .wrap { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
 
-<header class="topbar">
+<nav class="nav">
   <div class="wrap">
-    <a class="brandmark" href="https://mnkykonnekt.com/">
-      <picture><source type="image/webp" srcset="../assets/img/logo-128.webp"><img src="../assets/img/logo-128.png" alt="" width="26" height="26"></picture>
-      MNKY KONNEKT
+    <a class="brandmark" href="#top">
+      <picture><source type="image/webp" srcset="../assets/img/logo-128.webp"><img src="../assets/img/logo-128.png" alt="" width="30" height="30"></picture>
+      <span class="word">MNKY KONNEKT</span>
     </a>
+    <span class="tag">Ready-made websites for local businesses · Singapore</span>
+    <ul>
+      <li><a href="#draft">See a draft</a></li>
+      <li><a href="#price">Price</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#safe">Why it is safe</a></li>
+      <li><a href="#who">Who you deal with</a></li>
+      <li><a href="#drafts">Drafts</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-brand btn-sm" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
   </div>
-</header>
+</nav>
 
-<section class="hero">
+<header class="hero" id="top">
   <div class="wrap">
-    <div class="hero-copy-block">
+    <div class="hero-copy-block" id="draft">
       <span class="kicker">Ready-made websites for local businesses</span>
       <h1>Your website is <span class="accent-word">already built</span>. Pay only if you want it.</h1>
+      <p class="lead">A proper one-page site for your shop, made from what you already publish: prices, opening hours, team, reviews, WhatsApp, map. You look at it first. S$590, live on your own domain within 7 working days.</p>
       <div class="cta-line">
         <span class="price">S$590</span>
         <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
       </div>
+      <ul class="trust"><li>No payment until you approve the final version</li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
     </div>
 
     <div class="frame-wrap" id="theatre">
       <div class="browser-frame">
         <div class="browser-bar" aria-hidden="true">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="dots"><span></span><span></span><span></span></span>
           <span class="url">yoursalon.com.sg</span>
         </div>
         <div class="theatre">
@@ -144,11 +295,128 @@ h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 
       <p class="frame-cap">A Singapore hair salon &middot; a design proposal made by us before any contact, shown here without the business name &middot; not client work</p>
     </div>
   </div>
+</header>
+
+<section class="stats">
+  <div class="wrap" data-reveal-group>
+    <div><b>85%</b>of Singaporeans check a business online before they visit. If your site looks broken on a phone, they go elsewhere. <a href="https://hashmeta.com/blog/singapore-seo-landscape-in-trends-and-opportunities/" target="_blank" rel="noopener">Source</a></div>
+    <div><b>76%</b>of people who search for a local business on their phone visit within 24 hours. Your hours, prices and WhatsApp need to be right there. <a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+    <div><b>87%</b>read reviews before they visit. We put your real reviews and your Google map on the page. <a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+  </div>
 </section>
 
-<section class="drafts-strip" id="drafts">
+<section class="get" id="get">
   <div class="wrap">
-    <h2 class="strip-head">Four drafts we made before anyone asked us to</h2>
+    <h2 data-reveal>What you get for S$590</h2>
+    <p class="lead" data-reveal>One page that does the job of a whole site, built around how people actually find you: on a phone, in a hurry.</p>
+    <div class="get-grid" data-reveal-group>
+      <article class="lg"><h3>Fast on a phone</h3><p>One page that loads in a blink and reads well on a small screen.</p></article>
+      <article><h3>Your prices and hours</h3><p>Exactly as you publish them, with "open now" worked out live.</p></article>
+      <article><h3>WhatsApp and call buttons</h3><p>One tap to book. A fixed bar on mobile so it is always there.</p></article>
+      <article><h3>Map and how to get there</h3><p>Nearest MRT, buses, what to look for, where to park.</p></article>
+      <article><h3>Your team and reviews</h3><p>The people they will meet and what real customers said, with the source.</p></article>
+      <article class="accent"><h3>Your own domain</h3><p>yourshop.com, registered in your name. First year included. Prefer .sg or .com.sg? Add S$79.</p></article>
+      <article><h3>Live in 7 working days</h3><p>From payment and your final details to a live site. Usually faster; if not, your money back.</p></article>
+      <article><h3>Two rounds of changes</h3><p>Tell us what to fix. Then tell us again. Both included.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="price" id="price">
+  <div class="wrap">
+    <div data-reveal>
+      <div class="big">S$590<small>one-off</small></div>
+      <ul>
+        <li>One page, fast on a phone, on your own domain</li>
+        <li>Your prices, hours, team, reviews, WhatsApp and map</li>
+        <li>Live in 7 working days or your money back (the clock pauses while we wait on you) · two rounds of changes · .com domain in your name, first year included</li>
+        <li>Optional care plan from month 13: S$290/year. Hosting, .com renewal, up to 6 change requests a year within 2 working days, backups. Other domain extensions at cost. Cancel any time; we hand everything over.</li>
+        <li>Prefer a .sg or .com.sg domain? Add S$79 the first year</li>
+        <li>Pay by PayNow, bank transfer or Wise in SGD — no fee on your side. Card on request. Invoice from MNKY KONNEKT SL.</li>
+        <li>No GST is charged by us. GST-registered customers should check whether reverse charge applies.</li>
+      </ul>
+      <div class="actions" style="margin-top:20px"><a class="btn btn-brand" href="https://previews.mnkykonnekt.com/offer/" target="_blank" rel="noopener">See the full offer and pay</a><a class="btn btn-ghost" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+    </div>
+    <div class="cmp" data-reveal>
+      <h3>What a website costs in Singapore</h3>
+      <table>
+        <tr><td>Agency, one-page site</td><td>from S$1,500</td></tr>
+        <tr><td>Agency, small business site</td><td>S$2,000 – 5,000</td></tr>
+        <tr><td>Freelancer, project-based</td><td>S$800 – 4,000</td></tr>
+        <tr><td>DIY builder (Wix, Squarespace): you build it and maintain it</td><td>S$20 – 40 / month</td></tr>
+        <tr class="us"><td>MNKY KONNEKT, built before you pay, once</td><td>S$590</td></tr>
+      </table>
+      <p>Sources: <a href="https://www.creativeans.com/resources/web-design-singapore-real-costs-pricing-guide-for-2025" target="_blank" rel="noopener">Creativeans</a> and <a href="https://lemonade-it.com/cost-of-web-design-in-singapore/" target="_blank" rel="noopener">Lemonade</a> pricing guides, 2025; <a href="https://www.wix.com/plans" target="_blank" rel="noopener">Wix</a> and <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace</a> plan pages.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h2 data-reveal>How it works</h2>
+    <ol class="steps" data-reveal-group>
+      <li>
+        <div class="step-frame s1" aria-hidden="true">
+          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url">yoursalon.com.sg · draft</span></div>
+          <div class="step-body"><div class="bar w40"></div><div class="bar w60"></div><div class="block"></div><div class="bar w30"></div></div>
+        </div>
+        <h3>We draft it</h3><p>From what you already publish: your site, your Google listing, your booking page. You get a link to a finished draft.</p>
+      </li>
+      <li>
+        <div class="step-frame s2" aria-hidden="true">
+          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url">yoursalon.com.sg · edits</span></div>
+          <div class="step-body"><div class="bar w40 hl"></div><div class="bar w60"></div><div class="block hl"></div><div class="bar w30"></div></div>
+        </div>
+        <h3>You tell us what to change</h3><p>Prices, photos, wording, colours. Two rounds of changes are included. Reply by email or WhatsApp.</p>
+      </li>
+      <li>
+        <div class="step-frame s3" aria-hidden="true">
+          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url">yoursalon.com · live</span></div>
+          <div class="step-body"><div class="bar w40"></div><div class="bar w60"></div><div class="block hl"></div><div class="bar w30"></div></div>
+        </div>
+        <h3>You approve, you pay, we put it live</h3><p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p>
+      </li>
+    </ol>
+    <p class="note" data-reveal>You owe nothing until you approve the final version. If you do not want the draft, just say so and we remove it. Not live within 7 working days of payment and of receiving your logo, text and domain details? Full refund, by Wise. The clock pauses while we wait on you.</p>
+  </div>
+</section>
+
+<section class="safe" id="safe">
+  <div class="wrap">
+    <h2 data-reveal>Why it is safe to say yes</h2>
+    <p class="lead" data-reveal>You are buying from a company you have never heard of, in another country. Fair enough. Here is what protects you.</p>
+    <ol class="safe-grid" data-reveal-group>
+      <li><div><b>You pay after you approve</b><p>The draft is free. Two rounds of changes are free. You only pay when the final version is the one you want.</p></div></li>
+      <li><div><b>Fixed price in SGD</b><p>S$590. No hourly extras, no surprise on the invoice. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></div></li>
+      <li><div><b>A registered company you can check</b><p>MNKY KONNEKT SL, NIF B22561179, Commercial Registry of Murcia, Spain. <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">See our entry in the official registry gazette (BORME, 1 July 2025)</a>. Every payment comes with a proper invoice.</p></div></li>
+      <li><div><b>One person, with a name</b><p>A small studio in Spain — you always deal with the same person, Miguel Ángel López. <a href="#who">Who you deal with</a>.</p></div></li>
+      <li><div><b>WhatsApp first</b><p>Write or call <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">+34 623 827 167</a> before you decide anything. A Spanish number, because we are a Spanish company; we work Singapore hours.</p></div></li>
+      <li><div><b>Secure payment</b><p>PayNow, bank transfer or Wise, in SGD, through our payment links. Card on request. We never see your card details.</p></div></li>
+      <li><div><b>Live in 7 working days, or your money back</b><p>Counted from payment and from receiving your logo, text and domain details; the clock pauses while we wait on you. Refund by Wise.</p></div></li>
+      <li><div><b>It is yours</b><p>The domain is registered in your name and the files are yours. If you ever stop the care plan, we hand everything over.</p></div></li>
+      <li><div><b>Singapore hours</b><p>We work on your time zone and reply within a working day, by WhatsApp or email.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="who" id="who">
+  <div class="wrap">
+    <div class="who-photo-frame" data-reveal>
+      <img id="miguelPhoto" src="../assets/img/miguel.jpg" alt="Miguel Ángel López, founder of MNKY KONNEKT" width="200" height="200" loading="lazy" onerror="this.onerror=null;this.src='../assets/img/logo-512.png';this.classList.add('is-logo-fallback')">
+    </div>
+    <div data-reveal>
+      <h2>Who you deal with</h2>
+      <p><b>Miguel Ángel López</b>, founder of MNKY KONNEKT. A small studio in Spain — you always deal with the same person, Miguel Ángel López. I draft the page, I make the changes you ask for, and I put it live on your domain.</p>
+      <p>Check us before you decide: the company entry in the Spanish Commercial Registry gazette, our tax ID, and a real person on WhatsApp.</p>
+      <ul class="check"><li><a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a></li><li><a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a></li><li><a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME entry 296563 · 1 July 2025</a></li><li>NIF B22561179</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="drafts" id="drafts">
+  <div class="wrap">
+    <h2 data-reveal>Recent drafts</h2>
+    <p class="lead" data-reveal>Design proposals we made for local businesses before any contact, shown with generic names. Not client work; the real thing looks like this on day one.</p>
     <div class="marquee-view" id="marqueeView" tabindex="0" aria-label="Draft websites, scrollable">
       <div class="marquee-track" id="marqueeTrack">
         <figure>
@@ -172,46 +440,77 @@ h1, h2 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="wrap">
+    <h2 data-reveal>Questions people ask</h2>
+    <div data-reveal-group>
+      <details><summary>How did you get my details?</summary><p>From your public listing: your website, Google or your booking page. We only use what you already publish. Reply "remove" to any email and we delete your details and the draft the same day.</p></details>
+      <details><summary>Where are you, and who am I talking to?</summary><p>MNKY KONNEKT SL is a registered company in Spain, and the person you deal with is Miguel Ángel López, the founder. We work Singapore hours. Everything happens by WhatsApp (+34 623 827 167, a Spanish number) or email, and we usually reply within a working day.</p></details>
+      <details><summary>How can I check you are real?</summary><p>Look us up before you decide: our entry in the Spanish Commercial Registry gazette (<a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME, 1 July 2025, entry 296563</a>), our tax ID (NIF B22561179), this website, and a real person on WhatsApp who can join a short video call. Do not pay or share anything private before that.</p></details>
+      <details><summary>Who owns the website?</summary><p>You do. The domain is registered in your name and you get the files. The optional care plan, from month 13, only covers hosting and changes; you can cancel it any time.</p></details>
+      <details><summary>Do I need to send photos?</summary><p>No. Drafts use licensed stock photos. If you have your own, we swap them in; it usually looks better.</p></details>
+      <details><summary>Can I have more than one page?</summary><p>Yes. Most shops need one good page; if you need more (a menu, a booking page, a second location), ask and we quote it.</p></details>
+      <details><summary>How do I pay?</summary><p>Through our payment links: PayNow, a local bank transfer in SGD, or your own Wise account, with nothing added on your side. Card on request. You pay only after you approve the final version. You get an invoice from MNKY KONNEKT SL. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></details>
+      <details><summary>What if something goes wrong?</summary><p>If the site is not live within 7 working days of payment and of receiving your logo, text and domain details, you get a full refund by Wise; the clock pauses while we wait on you. After the first year, changes are what the optional care plan is for: up to 6 requests a year, applied within 2 working days. Cancel it any time.</p></details>
+      <details><summary>Is there a catch?</summary><p>No. We draft websites for local businesses before we contact them because it is the only honest way to show what you would get. If you say no, we take the draft down and that is the end of it.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div data-reveal><h2>Want a draft for your business?</h2><p>WhatsApp Miguel with your shop's name and where it is. If it makes sense, you get a link to a finished draft. No cost, no obligation.</p></div>
+    <div class="actions" data-reveal><a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a><a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.5)" href="mailto:hola@mnkykonnekt.com?subject=A%20website%20for%20my%20business">hola@mnkykonnekt.com</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME 1 July 2025, entry 296563</a> · Spain</span>
+    <span>Miguel Ángel López · <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a> · hola@mnkykonnekt.com · MNKY KONNEKT SL is not GST-registered in Singapore. · <a href="https://mnkykonnekt.com/privacy.html">Privacy</a></span>
+  </div>
+</footer>
+
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  /* la pagina esta completa sin JS: hero y comparadores quedan en su estado final al 50% */
+  /* la pagina esta completa sin JS: todo queda en su estado final (50%, drafts en fila, sin animar) */
   var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var stage = document.getElementById("stage");
   var heroRange = document.getElementById("heroRange");
   var mq900 = matchMedia("(min-width: 900px)");
   var mv = document.getElementById("marqueeView"), track = document.getElementById("marqueeTrack");
 
-  if (RM || !window.gsap || !window.ScrollTrigger || !stage) return;
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* el acto: antes de animar, arranca desde "todo antes" */
-  var state = { p: 4 };
-  stage.style.setProperty("--p", "4%");
-  if (heroRange) heroRange.value = 4;
-
-  function sync() {
-    stage.style.setProperty("--p", state.p + "%");
-    if (heroRange) heroRange.value = state.p;
-  }
-
-  if (mq900.matches) {
-    gsap.to(state, {
-      p: 96, ease: "none", onUpdate: sync,
-      scrollTrigger: { trigger: "#theatre", start: "top 90px", end: "+=80%", scrub: true, pin: true }
-    });
-  } else {
-    ScrollTrigger.create({
-      trigger: "#theatre", start: "top 75%", once: true,
-      onEnter: function () { gsap.to(state, { p: 96, duration: 1.1, ease: "power2.inOut", onUpdate: sync }); }
-    });
-  }
-
-  /* cinta de drafts: bucle continuo, se para en hover/foco */
-  if (mv && track) {
+  /* la cinta de drafts duplica sus figuras para el bucle solo si hay movimiento; en reduced motion queda como scroller manual normal */
+  if (!RM && mv && track) {
     Array.prototype.slice.call(track.children).forEach(function (node) { track.appendChild(node.cloneNode(true)); });
     mv.classList.add("is-looping");
+  }
+
+  if (RM || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* el acto: antes de animar, arranca desde "todo antes" — el unico efecto grande de la pagina */
+  var state = { p: 4 };
+  if (stage) {
+    stage.style.setProperty("--p", "4%");
+    if (heroRange) heroRange.value = 4;
+    function sync() { stage.style.setProperty("--p", state.p + "%"); if (heroRange) heroRange.value = state.p; }
+    if (mq900.matches) {
+      gsap.to(state, { p: 96, ease: "none", onUpdate: sync, scrollTrigger: { trigger: "#theatre", start: "top 90px", end: "+=80%", scrub: true, pin: true } });
+    } else {
+      ScrollTrigger.create({ trigger: "#theatre", start: "top 75%", once: true, onEnter: function () { gsap.to(state, { p: 96, duration: 1.1, ease: "power2.inOut", onUpdate: sync }); } });
+    }
+  }
+
+  /* reveals ligeros: nunca compiten con el barrido del hero */
+  gsap.utils.toArray("[data-reveal]").forEach(function (el) { gsap.from(el, { y: 22, autoAlpha: 0, duration: .6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } }); });
+  gsap.utils.toArray("[data-reveal-group]").forEach(function (g) { var items = Array.prototype.slice.call(g.children); if (items.length) gsap.from(items, { y: 22, autoAlpha: 0, duration: .6, ease: "power2.out", stagger: .06, scrollTrigger: { trigger: g, start: "top 88%", once: true } }); });
+  gsap.utils.toArray(".stats b").forEach(function (b) { var target = parseInt(b.textContent, 10); if (!target) return; var o = { v: 0 }; gsap.to(o, { v: target, duration: 1.1, ease: "power2.out", scrollTrigger: { trigger: b, start: "top 88%", once: true }, onUpdate: function () { b.textContent = Math.round(o.v) + "%"; } }); });
+
+  /* cinta de drafts: bucle continuo, se para en hover/foco */
+  if (mv && track && mv.classList.contains("is-looping")) {
     var loop = gsap.to(track, { xPercent: -50, duration: 34, ease: "none", repeat: -1 });
     ["mouseenter", "focusin"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.pause(); }); });
     ["mouseleave", "focusout"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.play(); }); });

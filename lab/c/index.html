@@ -4,12 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>MNKY KONNEKT · Studio</title>
-<meta name="description" content="Ready-made one-page websites for local businesses in Singapore.">
+<title>MNKY KONNEKT · Your website is already built. Pay only if you want it.</title>
+<meta name="description" content="Ready-made one-page websites for local businesses in Singapore. We draft it from what you already publish, you look at it first, S$590 one-off, live on your own domain within 7 working days.">
+<link rel="canonical" href="https://mnkykonnekt.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MNKY KONNEKT">
+<meta property="og:title" content="Your website is already built. Pay only if you want it.">
+<meta property="og:description" content="Ready-made one-page websites for local businesses in Singapore. You look at the draft first. S$590, live on your own domain within 7 working days.">
+<meta property="og:url" content="https://mnkykonnekt.com/">
+<meta property="og:image" content="https://mnkykonnekt.com/img/after-salon.jpg">
+<meta property="og:image:width" content="1440">
+<meta property="og:image:height" content="900">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"MNKY KONNEKT SL","url":"https://mnkykonnekt.com/","email":"hola@mnkykonnekt.com","vatID":"B22561179","logo":"https://mnkykonnekt.com/img/logo-512.png","founder":{"@type":"Person","name":"Miguel Ángel López"},"sameAs":["https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf"],"telephone":"+34623827167","address":{"@type":"PostalAddress","addressCountry":"ES"},"areaServed":{"@type":"Country","name":"Singapore"},"description":"Ready-made one-page websites for local businesses in Singapore. Built from what you already publish; you look at it first and pay only if you want it.","makesOffer":{"@type":"Offer","name":"One-page website","price":"590","priceCurrency":"SGD","availability":"https://schema.org/InStock"}}
+</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
 <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/img/favicon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 <style>
 @font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
 @font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
@@ -17,7 +32,7 @@
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root{
-  --ink:#111214; --paper:#F9F6EF; --muted:#8b8d92; --brand:#237A77; --accent:#F2B134;
+  --ink:#111214; --paper:#F9F6EF; --muted:#8b8d92; --brand:#237A77; --brand-lite:#2F9A96; --accent:#F2B134;
   --line: rgba(249,246,239,.08);
   --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
   --body: Inter, "Inter Fallback", Arial, sans-serif;
@@ -142,8 +157,137 @@ h1,h2{font-family:var(--display); font-weight:800; margin:0; line-height:.98; le
   font-family:var(--display); font-weight:800; font-size:clamp(15px,2.2vw,22px);
   color:var(--muted); white-space:nowrap; padding:0 20px; letter-spacing:.01em;
 }
-.marquee-track span::after{ content:"·"; margin-left:40px; color:var(--brand); }
+.marquee-track span::after{ content:"·"; margin-left:40px; color:var(--brand-lite); }
 .marquee-wrap:hover .marquee-track, .marquee-wrap:focus-within .marquee-track{ animation-play-state:paused; }
+
+/* --- drafts static captions (in addition to hover tag) --- */
+.bento-foot{ padding:14px 2px 0; font-size:12.5px; line-height:1.7; color:var(--muted); }
+.bento-foot b{ font-family:var(--display); font-weight:700; color:var(--paper); font-size:13px; }
+.bento-note{ margin-top:14px; font-size:12.5px; color:var(--muted); max-width:60ch; }
+
+/* --- longer body copy: lighter than --muted for real AA comfort --- */
+:root{ --muted-2:#c9c7c2; }
+
+/* --- sticky topbar --- */
+.topbar{ position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--ink) 86%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+.topbar nav{ display:flex; gap:22px; list-style:none; margin:0; padding:0; }
+.topbar nav a{ font-size:13.5px; font-weight:600; color:var(--muted-2); text-decoration:none; }
+.topbar nav a:hover{ color:var(--paper); }
+.topbar .btn-sm{ padding:10px 16px; font-size:13px; border-radius:999px; }
+.topbar .right{ display:flex; align-items:center; gap:24px; }
+@media (max-width:980px){ .topbar nav{ display:none; } .topbar .meta{ display:none; } }
+
+/* --- section scaffolding shared --- */
+.sect{ position:relative; padding:clamp(56px,8vw,104px) 0; z-index:2; border-top:1px solid var(--line); }
+.kicker{ font-family:var(--display); font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--brand-lite); margin-bottom:14px; }
+.sect h2{ font-size:clamp(30px,4vw,50px); max-width:18ch; }
+.sect .lead{ font-size:clamp(16px,1.4vw,18.5px); color:var(--muted-2); max-width:56ch; margin:16px 0 0; }
+
+/* --- stats: three big figures on the grid --- */
+.stats-grid{ display:grid; grid-template-columns:repeat(3,1fr); margin-top:clamp(28px,4vw,48px); }
+.stats-grid div{ padding:0 clamp(18px,3vw,32px) 0 0; border-left:1px solid var(--line); padding-left:clamp(18px,3vw,32px); }
+.stats-grid div:first-child{ border-left:0; padding-left:0; }
+.stats-grid b{ display:block; font-variant-numeric:tabular-nums; font-family:var(--display); font-weight:800; font-size:clamp(48px,7vw,88px); line-height:.95; letter-spacing:-0.03em; color:var(--paper); margin-bottom:14px; }
+.stats-grid p{ margin:0 0 10px; color:var(--muted-2); font-size:14.5px; line-height:1.5; max-width:32ch; }
+.stats-grid a{ font-size:12px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:760px){ .stats-grid{ grid-template-columns:1fr; gap:32px; } .stats-grid div{ border-left:0; padding-left:0; padding-top:22px; border-top:1px solid var(--line); } .stats-grid div:first-child{ border-top:0; padding-top:0; } }
+
+/* --- what you get: asymmetric text bento --- */
+.get-bento{ display:grid; gap:14px; grid-template-columns:repeat(12,1fr); margin-top:clamp(28px,4vw,44px); }
+.get-bento article{ background:#17191c; border:1px solid var(--line); border-radius:6px; padding:24px 24px 22px; }
+.get-bento h3{ font-family:var(--display); font-weight:700; font-size:19px; color:var(--paper); margin:0 0 8px; letter-spacing:-0.01em; }
+.get-bento p{ margin:0; color:var(--muted-2); font-size:14.5px; line-height:1.5; }
+.g-a{ grid-column:span 7; } .g-b{ grid-column:span 5; } .g-c{ grid-column:span 4; } .g-d{ grid-column:span 4; } .g-e{ grid-column:span 4; }
+.g-f{ grid-column:span 6; } .g-g{ grid-column:span 6; }
+.g-a{ border-radius:22px; background:#191c1f; } .g-a h3{ font-size:23px; }
+@media (max-width:900px){ .g-a,.g-b,.g-c,.g-d,.g-e,.g-f,.g-g{ grid-column:span 12; } }
+
+/* --- price: typographic tariff + editorial cost table --- */
+.price-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(32px,5vw,64px); margin-top:clamp(28px,4vw,44px); align-items:start; }
+.tariff .amount{ font-family:var(--display); font-weight:800; font-size:clamp(56px,7vw,96px); line-height:.92; letter-spacing:-0.04em; color:var(--paper); }
+.tariff .amount small{ font-family:var(--body); font-weight:600; font-size:15px; color:var(--muted); margin-left:10px; letter-spacing:0; }
+.tariff-list{ list-style:none; margin:clamp(22px,3vw,32px) 0 0; padding:0; }
+.tariff-list li{ display:flex; align-items:baseline; gap:10px; padding:13px 0; border-bottom:1px solid var(--line); font-size:14.5px; }
+.tariff-list .t{ color:var(--paper); font-weight:500; }
+.tariff-list .fill{ flex:1; border-bottom:1px dotted var(--line); margin-bottom:5px; min-width:16px; }
+.tariff-list .v{ color:var(--muted-2); text-align:right; white-space:nowrap; }
+.price-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+.btn-ghost{ background:transparent; color:var(--paper); border:1.5px solid var(--line); }
+.btn-ghost:hover{ border-color:var(--muted-2); background:transparent; }
+.cost-table{ border:1px solid var(--line); border-radius:6px; padding:clamp(22px,3vw,30px); }
+.cost-table h3{ font-family:var(--display); font-weight:700; font-size:17px; color:var(--paper); margin:0 0 18px; }
+.cost-table table{ width:100%; border-collapse:collapse; font-size:14.5px; }
+.cost-table td{ padding:11px 0; border-bottom:1px solid var(--line); color:var(--muted-2); }
+.cost-table td:last-child{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.cost-table tr.us td{ color:var(--brand-lite); font-weight:700; background:rgba(35,122,119,.14); }
+.cost-table tr.us td:first-child{ padding-left:10px; border-radius:4px 0 0 4px; }
+.cost-table tr.us td:last-child{ padding-right:10px; border-radius:0 4px 4px 0; }
+.cost-table .fine{ font-size:12px; color:var(--muted); margin:16px 0 0; }
+@media (max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
+
+/* --- how it works: sticky step column (desktop only) --- */
+.how-grid{ display:grid; gap:clamp(28px,4vw,48px); margin-top:clamp(28px,4vw,44px); }
+.how-steps{ list-style:none; margin:0; padding:0; }
+.how-steps li{ padding:clamp(28px,4vw,46px) 0; border-top:1px solid var(--line); display:grid; grid-template-columns:80px 1fr; gap:20px; }
+.how-steps li:first-child{ border-top:0; }
+.how-steps .num{ font-family:var(--display); font-weight:800; font-size:clamp(28px,3vw,40px); color:var(--brand); line-height:1; }
+.how-steps h3{ font-family:var(--display); font-weight:700; font-size:20px; color:var(--paper); margin:0 0 8px; }
+.how-steps p{ margin:0; color:var(--muted-2); font-size:15px; max-width:52ch; }
+.how-note{ margin-top:clamp(28px,4vw,40px); padding-top:22px; border-top:1px solid var(--line); font-size:14px; color:var(--muted-2); max-width:64ch; }
+@media (min-width:900px){
+  .how-grid{ grid-template-columns:280px 1fr; }
+  .how-sticky{ position:sticky; top:120px; align-self:start; }
+}
+
+/* --- why it is safe: comfortable reading grid --- */
+.safe-grid{ list-style:none; counter-reset:s; margin:clamp(28px,4vw,44px) 0 0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); gap:0 40px; }
+.safe-grid li{ counter-increment:s; display:grid; grid-template-columns:38px 1fr; gap:14px; padding:18px 0; border-top:1px solid var(--line); align-items:start; }
+.safe-grid li::before{ content:counter(s,decimal-leading-zero); font-family:var(--display); font-weight:800; color:var(--brand-lite); font-size:15px; }
+.safe-grid b{ display:block; font-family:var(--display); font-weight:700; font-size:16.5px; color:var(--paper); margin-bottom:5px; }
+.safe-grid p{ margin:0; color:var(--muted-2); font-size:14.5px; line-height:1.55; max-width:42ch; }
+.safe-grid a{ color:var(--paper); text-decoration:underline; text-underline-offset:2px; }
+@media (max-width:760px){ .safe-grid{ grid-template-columns:1fr; } }
+
+/* --- who you deal with: the one light breather --- */
+.who{ background:var(--paper); color:var(--ink); border-top:0; }
+.who .wrap{ display:grid; grid-template-columns:220px 1fr; gap:clamp(28px,4vw,48px); align-items:center; max-width:980px; }
+.who .kicker{ color:var(--brand); }
+.who h2{ font-size:clamp(28px,3.6vw,42px); color:var(--ink); }
+.who p{ color:#4a4c52; max-width:58ch; font-size:15.5px; }
+.who p b{ color:var(--ink); }
+.portrait{ width:220px; height:220px; border-radius:50%; overflow:hidden; background:var(--tint,#F0EADE); display:flex; align-items:center; justify-content:center; border:1px solid #e4e2dc; }
+.portrait img{ width:100%; height:100%; object-fit:cover; }
+.portrait img.fallback{ object-fit:contain; padding:38px; }
+.who .check{ list-style:none; margin:18px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px 22px; font-size:14px; }
+.who .check li::before{ content:"\2713 "; color:var(--brand); font-weight:700; }
+.who .check a{ color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+@media (max-width:760px){ .who .wrap{ grid-template-columns:1fr; } .portrait{ width:150px; height:150px; } }
+
+/* --- faq: comfortable measure --- */
+.faq .wrap{ max-width:760px; }
+.faq details{ border-top:1px solid var(--line); padding:4px 0; }
+.faq details:last-child{ border-bottom:1px solid var(--line); }
+.faq summary{ cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 0; font-family:var(--display); font-weight:700; font-size:17px; color:var(--paper); }
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{ content:"+"; color:var(--brand-lite); font-size:24px; font-weight:400; line-height:1; flex:none; }
+.faq details[open] summary::after{ content:"\2212"; }
+.faq details p{ margin:0 0 20px; color:var(--muted-2); font-size:14.5px; line-height:1.6; max-width:62ch; }
+
+/* --- final cta --- */
+.cta{ background:var(--brand); color:#fff; border-top:0; }
+.cta .wrap{ display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:end; }
+.cta h2{ color:#fff; font-size:clamp(32px,4.6vw,58px); max-width:14ch; }
+.cta p{ margin:14px 0 0; color:rgba(255,255,255,.85); max-width:44ch; }
+.cta .actions{ display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
+.cta .btn{ background:var(--ink); }
+.cta .btn:hover{ background:#000; }
+.cta .btn-ghost{ border-color:rgba(255,255,255,.5); color:#fff; }
+@media (max-width:760px){ .cta .wrap{ grid-template-columns:1fr; } .cta .actions{ justify-content:flex-start; } }
+
+/* --- footer --- */
+footer.site{ padding:32px 0 48px; font-size:13px; color:var(--muted); border-top:1px solid var(--line); }
+footer.site .wrap{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+footer.site a{ color:var(--muted-2); text-decoration:underline; text-underline-offset:2px; }
 </style>
 </head>
 <body>
@@ -155,9 +299,22 @@ h1,h2{font-family:var(--display); font-weight:800; margin:0; line-height:.98; le
       <img src="../assets/img/logo-128.png" width="26" height="26" alt="" loading="eager">
       MNKY KONNEKT
     </a>
-    <div class="meta">
-      <strong>Ready-made websites for local businesses</strong>
-      Singapore
+    <nav aria-label="Page sections">
+      <ul style="display:flex;gap:22px;list-style:none;margin:0;padding:0">
+        <li><a href="#work">Drafts</a></li>
+        <li><a href="#price">Price</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#safe">Why it is safe</a></li>
+        <li><a href="#who">Who you deal with</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="right">
+      <div class="meta">
+        <strong>Ready-made websites for local businesses</strong>
+        Singapore
+      </div>
+      <a class="btn btn-sm" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
     </div>
   </div>
 </header>
@@ -229,6 +386,10 @@ h1,h2{font-family:var(--display); font-weight:800; margin:0; line-height:.98; le
         <a href="../assets/img/draft-aircon.jpg" aria-label="View aircon service draft" target="_blank" rel="noopener"></a>
       </div>
     </div>
+    <div class="bento-foot" data-reveal>
+      <span><b>Barbershop</b> · prices by barber level, two shops &nbsp;—&nbsp; <b>Hair salon</b> · team, reviews, brands &nbsp;—&nbsp; <b>Pet grooming</b> · prices by size, WhatsApp &nbsp;—&nbsp; <b>Aircon service</b> · price per unit, brands</span>
+    </div>
+    <p class="bento-note" data-reveal>Design proposals we made for local businesses before any contact, shown with generic names. Not client work — the real thing looks like this on day one.</p>
   </div>
 </section>
 
@@ -238,6 +399,157 @@ h1,h2{font-family:var(--display); font-weight:800; margin:0; line-height:.98; le
     <span aria-hidden="true">BARBERSHOPS</span><span aria-hidden="true">HAIR SALONS</span><span aria-hidden="true">AIRCON</span><span aria-hidden="true">PET GROOMING</span><span aria-hidden="true">AUTO WORKSHOPS</span><span aria-hidden="true">TUITION</span><span aria-hidden="true">PLUMBING</span><span aria-hidden="true">CLEANING</span>
   </div>
 </div>
+
+<section class="sect stats-sect" aria-label="Why a website matters in Singapore">
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker" data-reveal>Why it matters</div>
+    <div class="stats-grid" data-reveal-group>
+      <div><b data-count="85">85%</b><p>of Singaporeans check a business online before they visit. If your site looks broken on a phone, they go elsewhere.</p><a href="https://hashmeta.com/blog/singapore-seo-landscape-in-trends-and-opportunities/" target="_blank" rel="noopener">Source</a></div>
+      <div><b data-count="76">76%</b><p>of people who search for a local business on their phone visit within 24 hours. Your hours, prices and WhatsApp need to be right there.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+      <div><b data-count="87">87%</b><p>read reviews before they visit. We put your real reviews and your Google map on the page.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="sect get" id="get">
+  <div class="wrap">
+    <div class="kicker" data-reveal>The build</div>
+    <h2 data-reveal>What you get for S$590</h2>
+    <p class="lead" data-reveal>One page that does the job of a whole site, built around how people actually find you: on a phone, in a hurry.</p>
+    <div class="get-bento" data-reveal-group>
+      <article class="g-a"><h3>Fast on a phone, your prices and hours</h3><p>One page that loads in a blink and reads well on a small screen, with "open now" worked out live from your hours.</p></article>
+      <article class="g-b"><h3>WhatsApp and call buttons</h3><p>One tap to book. A fixed bar on mobile so it is always there.</p></article>
+      <article class="g-c"><h3>Map and how to get there</h3><p>Nearest MRT, buses, what to look for, where to park.</p></article>
+      <article class="g-d"><h3>Your team and reviews</h3><p>The people they will meet and what real customers said, with the source.</p></article>
+      <article class="g-e"><h3>Your own domain</h3><p>yourshop.com, registered in your name. First year included. Prefer .sg or .com.sg? Add S$79.</p></article>
+      <article class="g-f"><h3>Live in 7 working days</h3><p>From payment and your final details to a live site. Usually faster; if not, your money back.</p></article>
+      <article class="g-g"><h3>Two rounds of changes</h3><p>Tell us what to fix. Then tell us again. Both included.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sect price" id="price">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Pricing</div>
+    <div class="price-grid">
+      <div class="tariff" data-reveal>
+        <div class="amount">S$590<small>one-off</small></div>
+        <ul class="tariff-list">
+          <li><span class="t">One page, fast on a phone, on your own domain</span></li>
+          <li><span class="t">Prices, hours, team, reviews, WhatsApp, map</span></li>
+          <li><span class="t">Live in 7 working days</span><span class="fill"></span><span class="v">or your money back*</span></li>
+          <li><span class="t">Two rounds of changes</span><span class="fill"></span><span class="v">included</span></li>
+          <li><span class="t">.com domain, first year</span><span class="fill"></span><span class="v">included</span></li>
+          <li><span class="t">.sg / .com.sg domain</span><span class="fill"></span><span class="v">+S$79 first year</span></li>
+          <li><span class="t">Care plan from month 13</span><span class="fill"></span><span class="v">S$290/year</span></li>
+          <li><span class="t">Payment</span><span class="fill"></span><span class="v">PayNow · bank transfer · Wise</span></li>
+          <li><span class="t">GST</span><span class="fill"></span><span class="v">not charged by us</span></li>
+        </ul>
+        <p class="how-note" style="border-top:0;padding-top:0;margin-top:16px">*The clock pauses while we wait on you. Care plan covers hosting, .com renewal, up to 6 change requests a year within 2 working days, and backups; other domain extensions at cost; cancel any time, we hand everything over. Card on request. Invoice from MNKY KONNEKT SL.</p>
+        <div class="price-cta"><a class="btn" href="https://previews.mnkykonnekt.com/offer/" target="_blank" rel="noopener">See the full offer and pay</a><a class="btn btn-ghost" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+      </div>
+      <div class="cost-table" data-reveal>
+        <h3>What a website costs in Singapore</h3>
+        <table>
+          <tr><td>Agency, one-page site</td><td>from S$1,500</td></tr>
+          <tr><td>Agency, small business site</td><td>S$2,000 – 5,000</td></tr>
+          <tr><td>Freelancer, project-based</td><td>S$800 – 4,000</td></tr>
+          <tr><td>DIY builder (Wix, Squarespace)</td><td>S$20 – 40 / mo</td></tr>
+          <tr class="us"><td>MNKY KONNEKT, built before you pay, once</td><td>S$590</td></tr>
+        </table>
+        <p class="fine">Sources: <a href="https://www.creativeans.com/resources/web-design-singapore-real-costs-pricing-guide-for-2025" target="_blank" rel="noopener">Creativeans</a> and <a href="https://lemonade-it.com/cost-of-web-design-in-singapore/" target="_blank" rel="noopener">Lemonade</a> pricing guides, 2025; <a href="https://www.wix.com/plans" target="_blank" rel="noopener">Wix</a> and <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace</a> plan pages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect how" id="how">
+  <div class="wrap">
+    <div class="how-grid">
+      <div class="how-sticky" data-reveal>
+        <div class="kicker">Process</div>
+        <h2>How it works</h2>
+      </div>
+      <div>
+        <ol class="how-steps" data-reveal-group>
+          <li><span class="num">01</span><div><h3>We draft it</h3><p>From what you already publish: your site, your Google listing, your booking page. You get a link to a finished draft.</p></div></li>
+          <li><span class="num">02</span><div><h3>You tell us what to change</h3><p>Prices, photos, wording, colours. Two rounds of changes are included. Reply by email or WhatsApp.</p></div></li>
+          <li><span class="num">03</span><div><h3>You approve, you pay, we put it live</h3><p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p></div></li>
+        </ol>
+        <p class="how-note" data-reveal>You owe nothing until you approve the final version. If you do not want the draft, just say so and we remove it. Not live within 7 working days of payment and of receiving your logo, text and domain details? Full refund, by Wise. The clock pauses while we wait on you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect safe" id="safe">
+  <div class="wrap">
+    <div class="kicker" data-reveal>The catch</div>
+    <h2 data-reveal>Why it is safe to say yes</h2>
+    <p class="lead" data-reveal>You are buying from a company you have never heard of, in another country. Fair enough. Here is what protects you.</p>
+    <ol class="safe-grid" data-reveal-group>
+      <li><div><b>You pay after you approve</b><p>The draft is free. Two rounds of changes are free. You only pay when the final version is the one you want.</p></div></li>
+      <li><div><b>Fixed price in SGD</b><p>S$590. No hourly extras, no surprise on the invoice. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></div></li>
+      <li><div><b>A registered company you can check</b><p>MNKY KONNEKT SL, NIF B22561179, Commercial Registry of Murcia, Spain. <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">See our entry in the official registry gazette (BORME, 1 July 2025)</a>. Every payment comes with a proper invoice.</p></div></li>
+      <li><div><b>One person, with a name</b><p>A small studio in Spain — you always deal with the same person, Miguel Ángel López. <a href="#who">Who you deal with</a>.</p></div></li>
+      <li><div><b>WhatsApp first</b><p>Write or call <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">+34 623 827 167</a> before you decide anything. A Spanish number, because we are a Spanish company; we work Singapore hours.</p></div></li>
+      <li><div><b>Secure payment</b><p>PayNow, bank transfer or Wise, in SGD, through our payment links. Card on request. We never see your card details.</p></div></li>
+      <li><div><b>Live in 7 working days, or your money back</b><p>Counted from payment and from receiving your logo, text and domain details; the clock pauses while we wait on you. Refund by Wise.</p></div></li>
+      <li><div><b>It is yours</b><p>The domain is registered in your name and the files are yours. If you ever stop the care plan, we hand everything over.</p></div></li>
+      <li><div><b>Singapore hours</b><p>We work on your time zone and reply within a working day, by WhatsApp or email.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="who" id="who">
+  <div class="wrap">
+    <div data-reveal>
+      <div class="portrait">
+        <img src="../assets/img/miguel.jpg" alt="Miguel Ángel López, founder of MNKY KONNEKT" width="220" height="220" loading="lazy" onerror="this.onerror=null;this.src='../assets/img/logo-512.png';this.alt='MNKY KONNEKT logo';this.classList.add('fallback')">
+      </div>
+    </div>
+    <div data-reveal>
+      <div class="kicker">Who you deal with</div>
+      <h2>Miguel Ángel López</h2>
+      <p><b>Founder of MNKY KONNEKT.</b> A small studio in Spain — you always deal with the same person, Miguel Ángel López. I draft the page, I make the changes you ask for, and I put it live on your domain.</p>
+      <p>Check us before you decide: the company entry in the Spanish Commercial Registry gazette, our tax ID, and a real person on WhatsApp.</p>
+      <ul class="check"><li><a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a></li><li><a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a></li><li><a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME entry 296563 · 1 July 2025</a></li><li>NIF B22561179</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="sect faq" id="faq">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Questions</div>
+    <h2 data-reveal>Questions people ask</h2>
+    <div data-reveal-group style="margin-top:8px">
+      <details><summary>How did you get my details?</summary><p>From your public listing: your website, Google or your booking page. We only use what you already publish. Reply "remove" to any email and we delete your details and the draft the same day.</p></details>
+      <details><summary>Where are you, and who am I talking to?</summary><p>MNKY KONNEKT SL is a registered company in Spain, and the person you deal with is Miguel Ángel López, the founder. We work Singapore hours. Everything happens by WhatsApp (+34 623 827 167, a Spanish number) or email, and we usually reply within a working day.</p></details>
+      <details><summary>How can I check you are real?</summary><p>Look us up before you decide: our entry in the Spanish Commercial Registry gazette (<a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME, 1 July 2025, entry 296563</a>), our tax ID (NIF B22561179), this website, and a real person on WhatsApp who can join a short video call. Do not pay or share anything private before that.</p></details>
+      <details><summary>Who owns the website?</summary><p>You do. The domain is registered in your name and you get the files. The optional care plan, from month 13, only covers hosting and changes; you can cancel it any time.</p></details>
+      <details><summary>Do I need to send photos?</summary><p>No. Drafts use licensed stock photos. If you have your own, we swap them in; it usually looks better.</p></details>
+      <details><summary>Can I have more than one page?</summary><p>Yes. Most shops need one good page; if you need more (a menu, a booking page, a second location), ask and we quote it.</p></details>
+      <details><summary>How do I pay?</summary><p>Through our payment links: PayNow, a local bank transfer in SGD, or your own Wise account, with nothing added on your side. Card on request. You pay only after you approve the final version. You get an invoice from MNKY KONNEKT SL. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></details>
+      <details><summary>What if something goes wrong?</summary><p>If the site is not live within 7 working days of payment and of receiving your logo, text and domain details, you get a full refund by Wise; the clock pauses while we wait on you. After the first year, changes are what the optional care plan is for: up to 6 requests a year, applied within 2 working days. Cancel it any time.</p></details>
+      <details><summary>Is there a catch?</summary><p>No. We draft websites for local businesses before we contact them because it is the only honest way to show what you would get. If you say no, we take the draft down and that is the end of it.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sect cta" id="contact">
+  <div class="wrap">
+    <div data-reveal><h2>Want a draft for your business?</h2><p>WhatsApp Miguel with your shop's name and where it is. If it makes sense, you get a link to a finished draft. No cost, no obligation.</p></div>
+    <div class="actions" data-reveal><a class="btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a><a class="btn btn-ghost" href="mailto:hola@mnkykonnekt.com?subject=A%20website%20for%20my%20business">hola@mnkykonnekt.com</a></div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <span>MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME 1 July 2025, entry 296563</a> · Spain</span>
+    <span>Miguel Ángel López · <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a> · hola@mnkykonnekt.com · MNKY KONNEKT SL is not GST-registered in Singapore. · <a href="https://mnkykonnekt.com/privacy.html">Privacy</a></span>
+  </div>
+</footer>
 
 <div class="viewcur" id="viewcur" aria-hidden="true">View</div>
 
@@ -308,6 +620,18 @@ h1,h2{font-family:var(--display); font-weight:800; margin:0; line-height:.98; le
       gsap.from(el, {
         y: 18, autoAlpha: 0, duration: .6, ease: "power2.out",
         scrollTrigger: { trigger: el, start: "top 90%", once: true }
+      });
+    });
+
+    // stat counters (page already shows the final "N%" in the HTML for no-JS)
+    gsap.utils.toArray("[data-count]").forEach(function (b) {
+      var target = parseInt(b.getAttribute("data-count"), 10);
+      if (!target) return;
+      var o = { v: 0 };
+      gsap.to(o, {
+        v: target, duration: 1.3, ease: "power2.out",
+        scrollTrigger: { trigger: b, start: "top 88%", once: true },
+        onUpdate: function () { b.textContent = Math.round(o.v) + "%"; }
       });
     });
 
