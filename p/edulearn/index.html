@@ -63,6 +63,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; position: relative; z-index: 50; }
 .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .proposal a:hover { text-decoration: underline; }
+@media (max-width: 760px) { .proposal { flex-wrap: nowrap; padding: 8px 14px; font-size: 12px; } .proposal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } }
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
@@ -323,11 +324,6 @@ footer a { color: inherit; }
 .mobile-bar a { flex: 1; text-align: center; justify-content: center; padding: 13px 10px; font-size: 15px; }
 .mobile-bar.js:not(.show) { transform: translateY(110%); }
 @media (max-width: 760px) { .mobile-bar { display: flex; } }
-.float { position: fixed; right: 18px; bottom: 90px; z-index: 46; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-.float svg { width: 30px; height: 30px; }
-.float::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid #25d366; opacity: 0; animation: pulse 2.8s ease-out infinite; }
-@keyframes pulse { 0% { transform: scale(.8); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
-@media (max-width: 760px) { .float.on { display: flex; } }
 
 /* ---------- detalles por familia (uno por familia, no mas) ---------- */
 /* dental: arco fino bajo el titular */
@@ -489,14 +485,36 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 [data-hero="block"][data-aside="tiers"] .hero-body { padding-bottom: clamp(40px, 5vw, 64px); }
 @media (max-width: 860px) { [data-hero="block"] .hero-band { aspect-ratio: 16 / 10; } }
 
+/* --- S4: movil corto (hero full a 70vh, secciones mas juntas) */
+@media (max-width: 760px) { [data-hero="full"] .hero { min-height: min(70vh, 640px); } [data-hero="full"] .hero-body { padding-top: 96px; } section { padding: clamp(44px, 8vw, 64px) 0; } }
+/* --- S4: logo real del negocio en la nav */
+.brandmark img.logo { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
+@media (max-width: 760px) { .brandmark img.logo { height: 32px; max-width: 140px; } }
+/* --- S4: bloque de cierre de MNKY (tokens propios: no es un bloque del negocio) */
+.mnky { background: #F9F6EF; color: #1b1b1f; border-top: 6px solid #237A77; font-family: "Bricolage Grotesque", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.mnky .wrap { max-width: 860px; }
+.mnky-kicker { margin: 0 0 14px; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #237A77; }
+.mnky h2 { font-family: inherit; font-weight: 700; font-size: clamp(30px, 4.6vw, 52px); letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 18px; max-width: 18ch; color: #1b1b1f; }
+.mnky-lead { font-size: clamp(18px, 2vw, 22px); font-weight: 600; margin: 0 0 24px; color: #1b1b1f; }
+.mnky-points { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 12px; }
+.mnky-points li { padding: 14px 0; border-top: 1px solid #d9d2c3; font-size: 17px; line-height: 1.45; color: #2b2b30; }
+.mnky-points li:last-child { border-bottom: 1px solid #d9d2c3; }
+.mnky-points b { color: #1b1b1f; }
+.mnky-actions { display: flex; gap: 14px 22px; align-items: center; flex-wrap: wrap; margin: 0 0 18px; }
+.mnky-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; background: #237A77; color: #fff; font-weight: 700; font-size: 16px; text-decoration: none; font-family: inherit; }
+.mnky-btn:hover { background: #1c615f; }
+.mnky-link { color: #237A77; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; font-size: 16px; }
+.mnky-note { margin: 0; font-size: 14px; color: #5f5a50; }
+footer .identity { font-size: 13px; margin: 0; }
+
 </style>
 </head>
 <body>
-<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · Design proposal for Edulearn. A mock-up made by us, not the business's website; nothing here is live.</span><a href="https://previews.mnkykonnekt.com/offer/?ref=edulearn">How to make it yours</a></div>
+<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · A website proposal for Edulearn — ready to go live when you say so.</span><a href="https://previews.mnkykonnekt.com/offer/?ref=edulearn">See how ›</a></div>
 <nav class="nav">
   <div class="wrap">
     <a class="brandmark" href="#top">Edulearn</a>
-    <ul><li><a href="#services">Services</a></li><li><a href="#about">About</a></li></ul>
+    <ul><li><a href="#services">Services</a></li><li><a href="#find">Find us</a></li></ul>
     <a class="btn btn-brand btn-sm" href="tel:6597206135">Call +65 9720 6135</a>
   </div>
 </nav>
@@ -512,7 +530,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
       <div class="actions"><a class="btn btn-brand" href="tel:6597206135">Call +65 9720 6135</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475" target="_blank" rel="noopener">Get directions</a></div>
       
     </div>
-    <div class="hero-media"><img src="https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1880" srcset="https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 48vw" alt="A young boy focuses on homework with books and a tablet at a desk, enhancing his education." width="6000" height="4000" style="background:#575047" decoding="async" fetchpriority="high"></div>
+    <div class="hero-media"><img src="https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1880" srcset="https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/5303504/pexels-photo-5303504.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 48vw" alt="Tutor helping a student at a desk" width="6000" height="4000" style="background:#575047" decoding="async" fetchpriority="high"></div>
     
   </div>
   
@@ -521,28 +539,26 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 <section class="cred"><ul class="wrap"><li><b class="small">Established 1997</b></li><li><b class="small">Small groups or one-to-one</b></li><li><b class="small">10-minute walk from Pasir Ris MRT</b></li></ul></section>
 <div class="marquee" aria-label="Specialties"><div class="marquee-track"><div class="marquee-copy"><span>Primary Maths</span><span class="sep">★</span><span>Primary English and Chinese</span><span class="sep">★</span><span>Lower Secondary Science</span><span class="sep">★</span><span>E Maths and A Maths</span><span class="sep">★</span><span>Physics and Chemistry</span><span class="sep">★</span><span>Principles of Accounts</span><span class="sep">★</span></div><div class="marquee-copy" aria-hidden="true"><span>Primary Maths</span><span class="sep">★</span><span>Primary English and Chinese</span><span class="sep">★</span><span>Lower Secondary Science</span><span class="sep">★</span><span>E Maths and A Maths</span><span class="sep">★</span><span>Physics and Chemistry</span><span class="sep">★</span><span>Principles of Accounts</span><span class="sep">★</span></div></div></div>
 <section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead"></p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Primary tuition</h3></div><p>Maths, English, Chinese and Science across the primary years. Tutors adapt the way they teach to the child in front of them.</p></li><li><div class="row"><h3>Lower secondary tuition</h3></div><p>Maths and Science for Secondary 1 and 2, covering Chemistry, Physics and Biology.</p></li><li><div class="row"><h3>Upper secondary tuition</h3></div><p>E Maths, A Maths, Principles of Accounts, Physics, Chemistry and Combined Science (Physics and Chemistry).</p></li><li><div class="row"><h3>One-to-one lessons</h3></div><p>The same subjects taught privately when a group class is not the right fit.</p></li><li><div class="row"><h3>After-school student care</h3></div><p>Teachers fetch the children from the neighbouring schools, take attendance and walk them back together. At the centre they freshen up, change out of uniform and sit down to a freshly cooked lunch before homework, spelling in English and Mother Tongue, then board games, reading and outdoor play.</p></li></ol></div></section>
-<section class="why"><div class="wrap"><h2 data-reveal>Why people choose Edulearn</h2><div class="why-grid" data-reveal-group><article><h3>Small classes, or just your child</h3><p>Tuition runs in small groups, and one-to-one sessions are available for the same subjects.</p></article><article><h3>Advice, not answers</h3><p>Teachers step in when a child is stuck but push them to work it out, so they can do it alone next time.</p></article><article><h3>Care and tuition in one place</h3><p>The centre that collects your child after school is the same one teaching the subject they are behind on.</p></article></div></div></section>
-<section class="steps" id="book"><div class="wrap"><h2 data-reveal>How to book</h2><ol class="steps-list" data-reveal-group><li><p>Call or email the centre to ask about a place</p></li><li><p>Or send your details through the contact form to request a viewing</p></li></ol><div class="actions" data-reveal><a class="btn btn-brand" href="tel:6597206135">Call +65 9720 6135</a></div></div></section>
-<section class="about" id="about"><div class="wrap"><div data-reveal><h2>About Edulearn</h2><p>EduLearn has been at Block 475 Pasir Ris Drive 6 since 1997. It sits at basement level, a two-minute walk from Downtown East and about ten minutes from Pasir Ris MRT, with Hai Sing Catholic School four minutes away, Casuarina Primary five and Pasir Ris Crest Secondary eight.</p><p>Two things run side by side here. Tuition covers primary through to the upper secondary years, in small groups or one to one, with tutors who change their approach to suit the child rather than the other way round. Student care picks up where the school day ends: collection from the neighbouring schools, a cooked lunch, homework checked by a teacher, spelling practice, then time to play. Most children who start in student care stay through primary school, and some carry on into lower secondary.</p><div class="stats" data-reveal-group><div class="stat"><b data-count>1997</b><span>Established</span></div><div class="stat"><b>Pasir Ris</b><span>Neighbourhood</span></div><div class="stat"><b data-count>3</b><span>Schools within an 8-minute walk</span></div></div></div><div class="about-media" data-reveal><img src="https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/7692550/pexels-photo-7692550.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 45vw" alt="Teacher helps a student with a creative school project in an educational setting." width="4331" height="6496" style="background:#B39C94" decoding="async" loading="lazy"></div></div></section>
-<section class="find getting-there" id="find"><div class="wrap"><div data-reveal><h2>Getting to Pasir Ris</h2><ul class="transit"><li><b>MRT</b><span>Pasir Ris MRT (EW1) · about 10 min on foot</span></li><li><b>Look for</b><span>Basement level of Block 475 Pasir Ris Drive 6, two minutes&#x27; walk from Downtown East</span></li></ul><address><div>475 Pasir Ris Drive 6, #B1-544, Singapore 510475</div><div>Phone: <a href="tel:6597206135">+65 9720 6135</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to Edulearn" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475&output=embed"></iframe><div class="map-tag">475 Pasir Ris Drive 6</div></div></div></section>
-<section class="faq" id="faq"><div class="wrap"><h2 data-reveal>Questions people ask</h2><div data-reveal-group><details><summary>Do you fetch my child from school?</summary><p>Yes. Teachers collect the children from the neighbouring schools every school day and take attendance before walking back together. If your child comes by bus, a teacher meets them at the bus stop.</p></details><details><summary>Is lunch included in student care?</summary><p>Yes, freshly prepared at the centre. The menu changes, from porridge to things like spaghetti and mac and cheese.</p></details><details><summary>Which levels and subjects do you teach?</summary><p>Primary: Maths, English, Chinese and Science. Lower secondary: Maths and Science, covering Chemistry, Physics and Biology. Upper secondary: E Maths, A Maths, Principles of Accounts, Physics, Chemistry and Combined Science.</p></details><details><summary>How much are the fees?</summary><p>Fees are not published online. Call or email the centre for the current rate for tuition or student care, and ask what is included before you sign up.</p></details></div></div></section>
+<section class="find getting-there" id="find"><div class="wrap"><div data-reveal><h2>Getting to Pasir Ris</h2><ul class="transit"><li><b>MRT</b><span>Pasir Ris MRT (EW1)</span></li><li><b>Look for</b><span>Basement level of Block 475 Pasir Ris Drive 6, two minutes&#x27; walk from Downtown East</span></li></ul><address><div>475 Pasir Ris Drive 6, #B1-544, Singapore 510475</div><div>Phone: <a href="tel:6597206135">+65 9720 6135</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to Edulearn" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475&output=embed"></iframe><div class="map-tag">475 Pasir Ris Drive 6</div></div></div></section>
+<section class="steps" id="book"><div class="wrap"><h2 data-reveal>How to book</h2><ol class="steps-list" data-reveal-group><li><p>Call or email the centre to ask about a place</p></li><li><p>Or send your details through the contact form to request a viewing</p></li></ol></div></section>
 
 <section class="cta" id="contact">
   <div class="wrap">
-    <h2 data-reveal>Ready to book with Edulearn?</h2>
+    <h2 data-reveal>Ask about a trial lesson</h2>
     <div class="actions" data-reveal><a class="btn btn-brand" href="tel:6597206135">Call +65 9720 6135</a><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475" target="_blank" rel="noopener">Get directions</a></div>
   </div>
 </section>
 
+<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">A proposal from MNKY KONNEKT</p><h2>This is a draft for Edulearn.</h2><p class="mnky-lead">Your website is already built. Pay only if you want it.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name and hosting for the first year, two rounds of changes.</li><li><b>Live in 7 working days or your money back</b> (the clock pauses while we wait on you).</li><li><b>A small studio in Spain</b> — you always deal with the same person, Miguel Ángel López.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20Edulearn">WhatsApp Miguel</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=edulearn">See the full offer</a></div><p class="mnky-note">Not yours to keep? Tell us and this draft comes down the same day.</p></div></section>
+
 <footer>
   <div class="wrap">
     <div class="foot-row"><span>Edulearn · 475 Pasir Ris Drive 6</span><span>Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with Edulearn; details come from public listings and may be changed or removed on request.</span></div>
-    <p class="credits">Photos by <a href="https://www.pexels.com/@tima-miroshnichenko" target="_blank" rel="noopener">Tima Miroshnichenko</a>, <a href="https://www.pexels.com/@karola-g" target="_blank" rel="noopener">https://kaboompics.com/</a>, <a href="https://www.pexels.com/@anastasia-shuraeva" target="_blank" rel="noopener">Anastasia  Shuraeva</a> and <a href="https://www.pexels.com/@gabby-k" target="_blank" rel="noopener">Monstera Production</a> on <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>.</p>
+    <p class="identity">MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · BORME 1 July 2025, entry 296563 · Spain</p>
   </div>
 </footer>
 
 <div class="mobile-bar"><a class="btn btn-ghost" href="tel:6597206135">Call</a><a class="btn btn-brand" href="https://www.google.com/maps/search/?api=1&query=Edulearn+475+Pasir+Ris+Drive+6%2C+%23B1-544%2C+Singapore+510475" target="_blank" rel="noopener">Directions</a></div>
-
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script><script>document.addEventListener("DOMContentLoaded",function(){
 /* Capa de movimiento de las previews PRO (se inlina al construir; GSAP + ScrollTrigger + SplitText por CDN con defer).
    Reglas: la pagina esta completa sin JS; con prefers-reduced-motion solo corren (1) abierto ahora y (2) barra movil.

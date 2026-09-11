@@ -6,16 +6,16 @@
 <meta name="robots" content="noindex">
 <title>Design proposal · InstanTuition EduHub</title>
 <meta name="description" content="MOE-registered tuition for Maths, Science and POA, from Primary to O/N-Level, two minutes from Tampines West MRT.">
-<link rel="canonical" href="https://malopezginer-eng.github.io/prospeccion-previews/p/instantuition-eduhub/">
+<link rel="canonical" href="https://previews.mnkykonnekt.com/p/instantuition-eduhub/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MNKY KONNEKT · design proposal">
 <meta property="og:title" content="Design proposal · InstanTuition EduHub">
 <meta property="og:description" content="MOE-registered tuition for Maths, Science and POA, from Primary to O/N-Level, two minutes from Tampines West MRT.">
-<meta property="og:url" content="https://malopezginer-eng.github.io/prospeccion-previews/p/instantuition-eduhub/">
+<meta property="og:url" content="https://previews.mnkykonnekt.com/p/instantuition-eduhub/">
 <meta property="og:image" content="https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Design proposal · InstanTuition EduHub", "url": "https://malopezginer-eng.github.io/prospeccion-previews/p/instantuition-eduhub/", "creator": {"@type": "Organization", "name": "MNKY KONNEKT SL", "url": "https://mnkykonnekt.com"}, "description": "MOE-registered tuition for Maths, Science and POA, from Primary to O/N-Level, two minutes from Tampines West MRT.", "image": "https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1200"}</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2316274F%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2243%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EI%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Design proposal · InstanTuition EduHub", "url": "https://previews.mnkykonnekt.com/p/instantuition-eduhub/", "creator": {"@type": "Organization", "name": "MNKY KONNEKT SL", "url": "https://mnkykonnekt.com"}, "description": "MOE-registered tuition for Maths, Science and POA, from Primary to O/N-Level, two minutes from Tampines West MRT.", "image": "https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1200"}</script>
+<link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.pexels.com">
@@ -63,6 +63,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .proposal { background: #101418; color: #e6e9ec; font: 500 13px/1.4 system-ui, sans-serif; padding: 9px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; position: relative; z-index: 50; }
 .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .proposal a:hover { text-decoration: underline; }
+@media (max-width: 760px) { .proposal { flex-wrap: nowrap; padding: 8px 14px; font-size: 12px; } .proposal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } }
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
@@ -323,11 +324,6 @@ footer a { color: inherit; }
 .mobile-bar a { flex: 1; text-align: center; justify-content: center; padding: 13px 10px; font-size: 15px; }
 .mobile-bar.js:not(.show) { transform: translateY(110%); }
 @media (max-width: 760px) { .mobile-bar { display: flex; } }
-.float { position: fixed; right: 18px; bottom: 90px; z-index: 46; display: none; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-.float svg { width: 30px; height: 30px; }
-.float::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid #25d366; opacity: 0; animation: pulse 2.8s ease-out infinite; }
-@keyframes pulse { 0% { transform: scale(.8); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
-@media (max-width: 760px) { .float.on { display: flex; } }
 
 /* ---------- detalles por familia (uno por familia, no mas) ---------- */
 /* dental: arco fino bajo el titular */
@@ -489,14 +485,36 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 [data-hero="block"][data-aside="tiers"] .hero-body { padding-bottom: clamp(40px, 5vw, 64px); }
 @media (max-width: 860px) { [data-hero="block"] .hero-band { aspect-ratio: 16 / 10; } }
 
+/* --- S4: movil corto (hero full a 70vh, secciones mas juntas) */
+@media (max-width: 760px) { [data-hero="full"] .hero { min-height: min(70vh, 640px); } [data-hero="full"] .hero-body { padding-top: 96px; } section { padding: clamp(44px, 8vw, 64px) 0; } }
+/* --- S4: logo real del negocio en la nav */
+.brandmark img.logo { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
+@media (max-width: 760px) { .brandmark img.logo { height: 32px; max-width: 140px; } }
+/* --- S4: bloque de cierre de MNKY (tokens propios: no es un bloque del negocio) */
+.mnky { background: #F9F6EF; color: #1b1b1f; border-top: 6px solid #237A77; font-family: "Bricolage Grotesque", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.mnky .wrap { max-width: 860px; }
+.mnky-kicker { margin: 0 0 14px; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #237A77; }
+.mnky h2 { font-family: inherit; font-weight: 700; font-size: clamp(30px, 4.6vw, 52px); letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 18px; max-width: 18ch; color: #1b1b1f; }
+.mnky-lead { font-size: clamp(18px, 2vw, 22px); font-weight: 600; margin: 0 0 24px; color: #1b1b1f; }
+.mnky-points { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 12px; }
+.mnky-points li { padding: 14px 0; border-top: 1px solid #d9d2c3; font-size: 17px; line-height: 1.45; color: #2b2b30; }
+.mnky-points li:last-child { border-bottom: 1px solid #d9d2c3; }
+.mnky-points b { color: #1b1b1f; }
+.mnky-actions { display: flex; gap: 14px 22px; align-items: center; flex-wrap: wrap; margin: 0 0 18px; }
+.mnky-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; background: #237A77; color: #fff; font-weight: 700; font-size: 16px; text-decoration: none; font-family: inherit; }
+.mnky-btn:hover { background: #1c615f; }
+.mnky-link { color: #237A77; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; font-size: 16px; }
+.mnky-note { margin: 0; font-size: 14px; color: #5f5a50; }
+footer .identity { font-size: 13px; margin: 0; }
+
 </style>
 </head>
 <body>
-<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · Design proposal for InstanTuition EduHub. A mock-up made by us, not the business's website; nothing here is live.</span><a href="https://malopezginer-eng.github.io/prospeccion-previews/offer/?ref=instantuition-eduhub">How to make it yours</a></div>
+<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · A website proposal for InstanTuition EduHub — ready to go live when you say so.</span><a href="https://previews.mnkykonnekt.com/offer/?ref=instantuition-eduhub">See how ›</a></div>
 <nav class="nav">
   <div class="wrap">
-    <a class="brandmark" href="#top">InstanTuition EduHub</a>
-    <ul><li><a href="#services">Services</a></li><li><a href="#team">Team</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#about">About</a></li></ul>
+    <a class="brandmark" href="#top"><img class="logo" src="assets/logo.png" alt="InstanTuition EduHub"></a>
+    <ul><li><a href="#services">Services</a></li><li><a href="#team">Team</a></li><li><a href="#find">Find us</a></li></ul>
     <a class="btn btn-brand btn-sm" href="https://wa.me/65243110">Book on WhatsApp</a>
   </div>
 </nav>
@@ -512,7 +530,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
       <div class="actions"><a class="btn btn-brand" href="https://wa.me/65243110">Book on WhatsApp</a></div>
       
     </div>
-    <div class="hero-media"><img src="https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1880" srcset="https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 48vw" alt="Middle Eastern male teacher in classroom instructing students on solving mathematical equations on whiteboard." width="6918" height="4793" style="background:#92918D" decoding="async" fetchpriority="high"></div>
+    <div class="hero-media"><img src="https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1880" srcset="https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/18870255/pexels-photo-18870255.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 48vw" alt="Tutor helping a student at a desk" width="6918" height="4793" style="background:#92918D" decoding="async" fetchpriority="high"></div>
     
   </div>
   
@@ -522,28 +540,26 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 <div class="marquee" aria-label="Specialties"><div class="marquee-track"><div class="marquee-copy"><span>PSLE Maths</span><span class="sep">★</span><span>PSLE Science</span><span class="sep">★</span><span>O-Level E-Maths &amp; A-Maths</span><span class="sep">★</span><span>O/N-Level POA</span><span class="sep">★</span><span>Physics &amp; Chemistry</span><span class="sep">★</span></div><div class="marquee-copy" aria-hidden="true"><span>PSLE Maths</span><span class="sep">★</span><span>PSLE Science</span><span class="sep">★</span><span>O-Level E-Maths &amp; A-Maths</span><span class="sep">★</span><span>O/N-Level POA</span><span class="sep">★</span><span>Physics &amp; Chemistry</span><span class="sep">★</span></div></div></div>
 <section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead">InstanTuition does not publish tuition fees, a registration fee, or GST anywhere on its site. There is a separate registration form for FAS-eligible families, but the discounted &#x27;FAS rate&#x27; itself is not disclosed online.</p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Primary tuition</h3></div><p>PSLE Maths and Science for P5–P6.</p></li><li><div class="row"><h3>Lower Secondary tuition</h3></div><p>Maths and Science (Physics, Chemistry, Biology) for Sec 1–2.</p></li><li><div class="row"><h3>Upper Secondary tuition</h3></div><p>E-Maths, A-Maths, Pure/Combined Physics and Chemistry, and POA for Sec 3–5, O-Level and N-Level.</p></li><li><div class="row"><h3>Workshops</h3></div><p>Algebra Workshop (10 sessions, up to 6 students), O-Level Science Practical Techniques (up to 10 students) and a POA Crash Course.</p></li></ol></div></section>
 <section class="team" id="team"><div class="wrap"><h2 data-reveal>The team</h2><ul class="team-grid" data-reveal-group><li><span class="avatar" aria-hidden="true">M</span><h3>Mr Cheok</h3><p class="role">Maths, Physics &amp; Chemistry tutor</p></li><li><span class="avatar" aria-hidden="true">M</span><h3>Miss Kacey</h3><p class="role">POA (Principles of Accounts) tutor</p></li></ul></div></section>
-<section class="why"><div class="wrap"><h2 data-reveal>Why people choose InstanTuition EduHub</h2><div class="why-grid" data-reveal-group><article><h3>Long-running tutors</h3><p>Its own testimonials describe students staying with the same tutor, Mr Cheok or Miss Kacey, for two to three years through to O- or N-Levels.</p></article><article><h3>Small class caps</h3><p>Its Algebra Workshop is capped at 6 students and its O-Level Science Practical sessions at 10.</p></article><article><h3>Two minutes from the MRT</h3><p>Blk 801 Tampines Ave 4, #02-267, is a 2-minute walk from Tampines West MRT, Exit A.</p></article></div></div></section>
-<section class="steps" id="book"><div class="wrap"><h2 data-reveal>How to book</h2><ol class="steps-list" data-reveal-group><li><p>Fill in the registration form (Part A: student&#x27;s particulars, Part B: family particulars) or use the contact form with your child&#x27;s level and subject.</p></li><li><p>Families eligible for FAS can register through a separate FAS-rate form; the discounted rate itself is not published online.</p></li></ol><div class="actions" data-reveal><a class="btn btn-brand" href="https://wa.me/65243110">Book on WhatsApp</a></div></div></section>
-<section class="reviews" id="reviews"><div class="wrap"><h2 data-reveal>In their words</h2><div class="reviews-grid" data-reveal-group><figure><blockquote><p>“Miss Kacey taught me POA for around 9 months, and she has imparted valuable and useful exam tips.”</p></blockquote><figcaption><b>S.</b> · <a href="https://www.instantuition.com/testimonials" target="_blank" rel="noopener">Own website</a></figcaption></figure><figure><blockquote><p>“Really helpful tuition. From borderline pass to constant A&#x27;s. The teachers here give me tips on each subject.”</p></blockquote><figcaption><b>D.</b> · <a href="https://www.instantuition.com/testimonials" target="_blank" rel="noopener">Own website</a></figcaption></figure><figure><blockquote><p>“Miss Kacey is a very helpful and caring teacher who shows great passion in teaching.”</p></blockquote><figcaption><b>A.</b> · <a href="https://www.instantuition.com/testimonials" target="_blank" rel="noopener">Own website</a></figcaption></figure></div></div></section>
-<section class="about" id="about"><div class="wrap"><div data-reveal><h2>About InstanTuition EduHub</h2><p>InstanTuition EduHub has been registered since 2003 (ACRA) and runs from Blk 801 Tampines Ave 4, teaching Maths, Science and Principles of Accounts (POA) from Primary through O/N-Level. It is MOE-registered, and its own testimonials page names two tutors: Mr Cheok for Maths, Physics and Chemistry, and Miss Kacey for POA.</p><p>Lessons run in small groups with an individualised, step-by-step approach. The centre also runs short workshops alongside its regular tuition: an Algebra Workshop (10 sessions of 1.5 hours, up to 6 students), an O-Level Science Practical Techniques course (8 sessions, up to 10 students) and a POA Crash Course for Sec 3–5, O-Level and N-Level students.</p><div class="stats" data-reveal-group><div class="stat"><b data-count>2003</b><span>Registered (ACRA)</span></div><div class="stat"><b>Tampines West</b><span>Neighbourhood</span></div><div class="stat"><b>POA, Maths &amp; Science</b><span>Focus subjects</span></div></div></div><div class="about-media" data-reveal><img src="https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/6502730/pexels-photo-6502730.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 45vw" alt="A teacher and student engage in a conversation in a study setting, fostering learning." width="4189" height="6284" style="background:#96969F" decoding="async" loading="lazy"></div></div></section>
 <section class="find getting-there" id="find"><div class="wrap"><div data-reveal><h2>Getting to Tampines West</h2><ul class="transit"><li><b>MRT</b><span>Tampines West MRT (DT31) · about 2 min on foot</span></li><li><b>Look for</b><span>Blk 801 Tampines Ave 4, #02-267 — take the stairs at Lobby B</span></li></ul><address><div>Blk 801 Tampines Ave 4, #02-267, Singapore 520801</div><div>WhatsApp: <a href="https://wa.me/65243110">+65 243110</a></div><div><a href="https://instagram.com/instantuition_sg" target="_blank" rel="noopener">Instagram @instantuition_sg</a> · <a href="https://www.facebook.com/instantuition/" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=InstanTuition+EduHub+Blk+801+Tampines+Ave+4%2C+%2302-267%2C+Singapore+520801" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to InstanTuition EduHub" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=InstanTuition+EduHub+Blk+801+Tampines+Ave+4%2C+%2302-267%2C+Singapore+520801&output=embed"></iframe><div class="map-tag">Blk 801 Tampines Ave 4</div></div></div></section>
+<section class="steps" id="book"><div class="wrap"><h2 data-reveal>How to book</h2><ol class="steps-list" data-reveal-group><li><p>Fill in the registration form (Part A: student&#x27;s particulars, Part B: family particulars) or use the contact form with your child&#x27;s level and subject.</p></li><li><p>Families eligible for FAS can register through a separate FAS-rate form; the discounted rate itself is not published online.</p></li></ol></div></section>
 
 <section class="cta" id="contact">
   <div class="wrap">
-    <h2 data-reveal>Ready to book with InstanTuition EduHub?</h2>
+    <h2 data-reveal>Book a placement chat</h2>
     <div class="actions" data-reveal><a class="btn btn-brand" href="https://wa.me/65243110">Book on WhatsApp</a></div>
   </div>
 </section>
 
+<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">A proposal from MNKY KONNEKT</p><h2>This is a draft for InstanTuition EduHub.</h2><p class="mnky-lead">Your website is already built. Pay only if you want it.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name and hosting for the first year, two rounds of changes.</li><li><b>Live in 7 working days or your money back</b> (the clock pauses while we wait on you).</li><li><b>A small studio in Spain</b> — you always deal with the same person, Miguel Ángel López.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20InstanTuition%20EduHub">WhatsApp Miguel</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=instantuition-eduhub">See the full offer</a></div><p class="mnky-note">Not yours to keep? Tell us and this draft comes down the same day.</p></div></section>
+
 <footer>
   <div class="wrap">
     <div class="foot-row"><span>InstanTuition EduHub · Blk 801 Tampines Ave 4</span><span>Prepared by MNKY KONNEKT SL as a design suggestion. Not affiliated with InstanTuition EduHub; details come from public listings and may be changed or removed on request.</span></div>
-    <p class="credits">Photos by <a href="https://www.pexels.com/@worldsikhorg" target="_blank" rel="noopener">World Sikh Organization of Canada</a>, <a href="https://www.pexels.com/@thirdman" target="_blank" rel="noopener">Thirdman</a>, <a href="https://www.pexels.com/@katerina-holmes" target="_blank" rel="noopener">Katerina Holmes</a>, <a href="https://www.pexels.com/@andy-barbour" target="_blank" rel="noopener">Andy Barbour</a> and <a href="https://www.pexels.com/@ron-lach" target="_blank" rel="noopener">Ron Lach</a> on <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>.</p>
+    <p class="identity">MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · BORME 1 July 2025, entry 296563 · Spain</p>
   </div>
 </footer>
 
 <div class="mobile-bar"><a class="btn btn-ghost" href="https://wa.me/65243110">WhatsApp</a><a class="btn btn-brand" href="https://www.google.com/maps/search/?api=1&query=InstanTuition+EduHub+Blk+801+Tampines+Ave+4%2C+%2302-267%2C+Singapore+520801" target="_blank" rel="noopener">Directions</a></div>
-<a class="float on" href="https://wa.me/65243110" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script><script>document.addEventListener("DOMContentLoaded",function(){
 /* Capa de movimiento de las previews PRO (se inlina al construir; GSAP + ScrollTrigger + SplitText por CDN con defer).
    Reglas: la pagina esta completa sin JS; con prefers-reduced-motion solo corren (1) abierto ahora y (2) barra movil.
