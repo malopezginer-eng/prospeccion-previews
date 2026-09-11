@@ -12,15 +12,15 @@
   body { margin:0; background:var(--paper); color:var(--ink); font:17px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
   .wrap { max-width:760px; margin:0 auto; padding:48px 22px 80px; }
   h1 { font-size:clamp(28px,5vw,40px); letter-spacing:-.03em; margin:0 0 8px; }
-  .sub { color:var(--muted); margin:0 0 34px; }
-  ul { list-style:none; padding:0; margin:0; display:grid; gap:16px; }
-  a.card { display:block; text-decoration:none; color:inherit; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:#fff; transition:transform .15s ease, border-color .15s ease; }
+  .sub { color:var(--muted); margin:0 0 30px; }
+  h2 { font-size:15px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:34px 0 12px; font-weight:700; }
+  ul { list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+  a.card { display:block; text-decoration:none; color:inherit; border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:#fff; transition:transform .15s ease, border-color .15s ease; }
   a.card:hover { transform:translateY(-2px); border-color:var(--brand); }
-  .k { display:inline-block; font-weight:700; color:var(--brand); letter-spacing:.02em; margin-bottom:4px; }
-  .t { font-size:21px; font-weight:700; letter-spacing:-.01em; margin:0 0 6px; }
-  .d { color:var(--muted); font-size:15.5px; margin:0; }
-  .old { opacity:.62; }
-  .old .k { color:var(--muted); }
+  .k { display:inline-block; font-weight:700; color:var(--brand); margin-bottom:4px; font-size:14px; }
+  .t { font-size:20px; font-weight:700; letter-spacing:-.01em; margin:0 0 5px; }
+  .d { color:var(--muted); font-size:15px; margin:0; }
+  .old { opacity:.6; } .old .k { color:var(--muted); }
   footer { margin-top:38px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); padding-top:18px; }
   :focus-visible { outline:3px solid #F2B134; outline-offset:3px; }
 </style>
@@ -28,13 +28,29 @@
 <body>
 <div class="wrap">
   <h1>La web de MNKY</h1>
-  <p class="sub">Dirección B elegida y subida de nivel: maqueta de móvil de verdad dentro de la tarjeta grande, los tres pasos contando algo, cifras sobre teal pleno y un cierre con peso.</p>
+  <p class="sub">Segunda vuelta sobre la dirección B: el «antes» ya no es una foto borrosa sino una web de 2006 que se desmonta sola, los tres pasos cuentan un proyecto de verdad, el móvil se toca y hay cuatro webs que puedes abrir y recorrer por dentro.</p>
+
+  <h2>La web</h2>
   <ul>
-    <li><a class="card" href="b/"><span class="k">B · elegida</span><p class="t">Before → After theatre</p><p class="d">La web que se va a publicar. Ábrela entera, en el móvil y en el portátil.</p></a></li>
-    <li><a class="card old" href="c/"><span class="k">C · descartada</span><p class="t">Studio editorial</p><p class="d">Registro oscuro, tipografía enorme, retícula visible, texto que se ilumina al bajar y una rejilla de trabajos. Lo más «estudio caro».</p></a></li>
-    <li><a class="card old" href="a/"><span class="k">A · descartada</span><p class="t">Built in front of you</p><p class="d">Se queda como estaba, solo el primer tramo. Aquí por si quieres volver a mirarla.</p></a></li>
+    <li><a class="card" href="b/"><span class="k">Ábrela entera</span><p class="t">mnkykonnekt.com</p><p class="d">En el móvil y en el portátil. Baja despacio por el hero, toca las pestañas del móvil y abre alguna de las cuatro demos.</p></a></li>
   </ul>
-  <footer>Laboratorio interno de MNKY KONNEKT SL. No indexado, no enlazado desde ningún sitio. Se borra al elegir.</footer>
+
+  <h2>Las cuatro webs demo</h2>
+  <ul>
+    <li><a class="card" href="demos/demo-barber/"><span class="k">Barbería</span><p class="t">Copperknot Barber Room</p><p class="d">Oscura, latón, precios por nivel de barbero.</p></a></li>
+    <li><a class="card" href="demos/demo-salon/"><span class="k">Peluquería</span><p class="t">Plumgrove Hair Room</p><p class="d">Malva y serifas, precios por estilista.</p></a></li>
+    <li><a class="card" href="demos/demo-aircon/"><span class="k">Aire acondicionado</span><p class="t">Northvale Cooling Works</p><p class="d">Azul acero, tarifa por número de unidades.</p></a></li>
+    <li><a class="card" href="demos/demo-pets/"><span class="k">Peluquería canina</span><p class="t">Biscuit &amp; Bramble Pet Grooming</p><p class="d">Crema y petróleo, precios para perros y gatos.</p></a></li>
+  </ul>
+  <p class="sub" style="margin-top:14px">Los cuatro negocios son inventados. Las páginas están hechas con el mismo motor con el que se construyen las de los clientes.</p>
+
+  <h2>Descartadas</h2>
+  <ul>
+    <li><a class="card old" href="c/"><span class="k">C</span><p class="t">Studio editorial</p><p class="d">La otra web completa que comparaste.</p></a></li>
+    <li><a class="card old" href="a/"><span class="k">A</span><p class="t">Built in front of you</p><p class="d">Solo el primer tramo.</p></a></li>
+  </ul>
+
+  <footer>Laboratorio interno de MNKY KONNEKT SL. No indexado, no enlazado desde ningún sitio.</footer>
 </div>
 </body>
 </html>

@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pieza · Open one and walk around it</title>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<style>
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE;
+  --brand: #237A77; --brand-deep: #1B615F; --brand-lite: #2F9A96; --accent: #F2B134; --accent-lite: #F8CE7E;
+  --on-ink: #B7BBC2;
+  --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --body: Inter, "Inter Fallback", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+/* el hueco de la barra de scroll se reserva siempre: asi bloquear el scroll del fondo
+   mientras el visor esta abierto no mueve la pagina ni un pixel */
+html { scrollbar-gutter: stable; }
+html.mkd-locked { overflow: hidden; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+/* ===================== contexto (solo para juzgar la pieza) ===================== */
+.ctx-nav { border-bottom: 1px solid var(--line); background: var(--paper); }
+.ctx-nav div { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.ctx-brand { font-family: var(--display); font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
+.ctx-tag { font-size: 13px; color: var(--muted); }
+.ctx-band { background: var(--brand-deep); color: var(--paper); }
+.ctx-band div { max-width: 1200px; margin: 0 auto; padding: clamp(38px, 5vw, 66px) clamp(20px, 4vw, 44px); }
+.ctx-band h2 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 4vw, 46px); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 12px; color: #fff; }
+.ctx-band p { margin: 0; color: #CFE3E1; max-width: 54ch; }
+
+/* ===================== PIEZA: mkd- ===================== */
+.mkd-root { position: relative; background: var(--tint); padding: clamp(46px, 6.4vw, 96px) 0 clamp(52px, 7vw, 104px); overflow: hidden; }
+.mkd-root::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(17,18,20,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,20,.045) 1px, transparent 1px);
+  background-size: 52px 52px; }
+.mkd-wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.mkd-rule { display: block; width: 54px; height: 4px; border-radius: 2px; background: var(--brand); margin: 0 0 18px; }
+.mkd-eyebrow { margin: 0 0 10px; font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-deep); }
+.mkd-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.2vw, 68px); line-height: 1.02; letter-spacing: -0.032em; margin: 0; text-wrap: balance; }
+.mkd-lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 58ch; margin: 16px 0 0; }
+
+.mkd-grid { list-style: none; margin: clamp(28px, 3.4vw, 46px) 0 0; padding: 0; display: grid; gap: clamp(16px, 1.8vw, 26px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 719px) { .mkd-grid { grid-template-columns: 1fr; } }
+
+.mkd-card { display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(17,18,20,.05);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.mkd-card:hover { transform: translateY(-3px); box-shadow: 0 26px 48px -28px rgba(17,18,20,.5); border-color: #cfd6d5; }
+.mkd-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.mkd-media { display: block; position: relative; aspect-ratio: 16 / 10; background: var(--tint); overflow: hidden; }
+.mkd-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.mkd-media::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 -1px 0 var(--line); pointer-events: none; }
+/* velo y rotulo "Open" al pasar por encima: solo con JS, porque sin JS la tarjeta navega */
+.mkd-veil { position: absolute; inset: 0; display: none; place-items: center; background: rgba(17,18,20,.42); opacity: 0; transition: opacity .18s ease; }
+.mkd-js .mkd-veil { display: grid; }
+.mkd-js .mkd-card:hover .mkd-veil, .mkd-js .mkd-card:focus-visible .mkd-veil { opacity: 1; }
+.mkd-veil span { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #16130a; font-weight: 600; font-size: 14.5px; padding: 11px 18px; border-radius: 999px; transform: translateY(6px); transition: transform .18s ease; }
+.mkd-js .mkd-card:hover .mkd-veil span, .mkd-js .mkd-card:focus-visible .mkd-veil span { transform: none; }
+.mkd-veil svg { width: 15px; height: 15px; }
+
+.mkd-meta { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 18px 16px; }
+.mkd-name { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -0.015em; line-height: 1.15; display: block; }
+.mkd-sector { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+.mkd-go { flex: none; display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--brand-deep); }
+.mkd-go svg { width: 14px; height: 14px; transition: transform .18s ease; }
+.mkd-card:hover .mkd-go svg { transform: translateX(3px); }
+.mkd-yesjs { display: none; }
+.mkd-js .mkd-yesjs { display: inline; }
+.mkd-js .mkd-nojs { display: none; }
+
+.mkd-foot { margin: clamp(22px, 2.6vw, 34px) 0 0; font-size: 14.5px; color: var(--muted); max-width: 70ch; }
+.mkd-foot b { color: var(--ink); font-weight: 600; }
+
+/* ===================== el visor ===================== */
+.mkd-viewer { width: 100%; max-width: none; height: 100%; max-height: none; border: 0; padding: clamp(8px, 1.6vh, 20px) clamp(8px, 1.6vw, 24px); margin: 0; background: transparent; color: var(--paper); overflow: hidden; }
+.mkd-panel { height: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+.mkd-bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(24,25,28,.94); border: 1px solid rgba(255,255,255,.09); border-radius: 12px; padding: 9px 10px 9px 14px; }
+.mkd-bar-l { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mkd-bar-r { display: flex; align-items: center; gap: 8px; flex: none; }
+.mkd-vname { font-family: var(--display); font-weight: 700; font-size: 15.5px; letter-spacing: -0.012em; margin: 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mkd-chip { flex: none; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #16130a; background: var(--accent); border-radius: 999px; padding: 4px 9px; white-space: nowrap; }
+
+.mkd-seg { display: inline-flex; background: rgba(255,255,255,.07); border-radius: 999px; padding: 3px; gap: 2px; }
+.mkd-seg button { appearance: none; border: 0; background: transparent; color: var(--on-ink); font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .15s ease, color .15s ease; }
+.mkd-seg button svg { width: 14px; height: 14px; }
+.mkd-seg button:hover { color: #fff; }
+.mkd-seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+
+.mkd-ghost { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--on-ink); text-decoration: none; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 8px 14px; background: transparent; cursor: pointer; font-family: inherit; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.mkd-ghost:hover { color: #fff; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.07); }
+.mkd-ghost svg { width: 14px; height: 14px; }
+.mkd-x { width: 38px; height: 38px; padding: 0; justify-content: center; border-radius: 10px; }
+.mkd-x svg { width: 16px; height: 16px; }
+
+.mkd-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.mkd-device { position: relative; background: #1b1c20; border-radius: 22px; padding: 10px; box-shadow: 0 40px 90px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08); max-width: 100%; }
+.mkd-device.is-phone { border-radius: 40px; }
+.mkd-notch { display: none; height: 24px; align-items: center; justify-content: center; }
+.mkd-notch i { display: block; width: 58px; height: 5px; border-radius: 3px; background: #3a3c42; }
+.mkd-device.is-phone .mkd-notch { display: flex; }
+.mkd-chrome { display: none; height: 34px; align-items: center; gap: 12px; padding: 0 4px 0 6px; }
+.mkd-device.is-desktop .mkd-chrome { display: flex; }
+.mkd-dots { display: inline-flex; gap: 6px; flex: none; }
+.mkd-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+.mkd-dots i:nth-child(1) { background: #E0645C; } .mkd-dots i:nth-child(2) { background: #E8B33D; } .mkd-dots i:nth-child(3) { background: #4FA36A; }
+.mkd-url { flex: 1 1 auto; min-width: 0; background: rgba(255,255,255,.08); border-radius: 7px; height: 22px; display: flex; align-items: center; gap: 7px; padding: 0 10px; font-size: 12px; color: var(--on-ink); white-space: nowrap; overflow: hidden; }
+.mkd-url svg { width: 11px; height: 11px; flex: none; }
+.mkd-screen { position: relative; background: #fff; overflow: hidden; border-radius: 12px; }
+.mkd-device.is-phone .mkd-screen { border-radius: 28px; }
+.mkd-device.is-bare { border-radius: 20px; padding: 6px; }
+.mkd-device.is-bare .mkd-screen { border-radius: 15px; }
+.mkd-frame { display: block; border: 0; background: #fff; }
+
+.mkd-note { flex: none; margin: 0; text-align: center; font-size: 12.5px; line-height: 1.45; color: #9aa0a8; }
+
+/* en movil el visor va a sangre: la demo recibe el ancho entero del telefono,
+   que es exactamente el que tendria abierta ella sola. El telefono ya es el marco. */
+@media (max-width: 759px) {
+  .mkd-seg { display: none; }
+  .mkd-viewer { padding: 0; }
+  .mkd-panel { gap: 0; }
+  .mkd-bar { border-radius: 0; border-left: 0; border-right: 0; border-top: 0; padding: 8px 8px 8px 14px; }
+  .mkd-device.is-bare { border-radius: 0; padding: 0; box-shadow: none; background: #fff; width: 100%; }
+  .mkd-device.is-bare .mkd-screen { border-radius: 0; }
+  .mkd-device.is-bare .mkd-notch { display: none; }
+  .mkd-note { padding: 9px 14px; background: rgba(18,19,22,.97); border-top: 1px solid rgba(255,255,255,.08); }
+}
+@media (max-width: 599px) { .mkd-chip { display: none; } .mkd-ghost .mkd-lbl { display: none; } .mkd-ghost { padding: 8px 11px; } }
+
+/* apertura sin View Transitions (Firefox): entrada discreta con @starting-style */
+.mkd-viewer, .mkd-viewer::backdrop { transition: opacity .26s ease, transform .26s ease, background-color .26s ease, overlay .26s allow-discrete, display .26s allow-discrete; }
+.mkd-viewer { opacity: 0; transform: scale(.985); }
+.mkd-viewer[open] { opacity: 1; transform: none; }
+@starting-style { .mkd-viewer[open] { opacity: 0; transform: scale(.985); } }
+.mkd-viewer::backdrop { background-color: rgba(12,13,15,0); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.mkd-viewer[open]::backdrop { background-color: rgba(12,13,15,.74); }
+@starting-style { .mkd-viewer[open]::backdrop { background-color: rgba(12,13,15,0); } }
+/* si la apertura la conduce una View Transition, esa animacion sobra */
+.mkd-viewer.is-vt, .mkd-viewer.is-vt::backdrop { transition: none; }
+
+/* la morfologia tarjeta <-> visor */
+::view-transition-group(mkd-demo) { animation-duration: .46s; animation-timing-function: cubic-bezier(.2,.8,.25,1); }
+::view-transition-old(mkd-demo), ::view-transition-new(mkd-demo) { height: 100%; width: 100%; object-fit: cover; object-position: top center; mix-blend-mode: normal; animation-duration: .46s; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  .mkd-viewer, .mkd-viewer::backdrop { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="ctx-nav"><div><span class="ctx-brand">MNKY KONNEKT</span><span class="ctx-tag">Contexto de prueba &middot; la pieza es la seccion de abajo</span></div></nav>
+
+<!-- ============================ PIEZA ============================ -->
+<section class="mkd-root" id="mkdRoot" aria-labelledby="mkdTitle">
+  <div class="mkd-wrap">
+    <span class="mkd-rule"></span>
+    <p class="mkd-eyebrow">Demo sites</p>
+    <h2 class="mkd-h2" id="mkdTitle">Open one and walk around it</h2>
+    <p class="mkd-lead">Four pages built with the engine we would use for yours. The businesses are invented; the pages are not. Open one and it runs right here &mdash; scroll it, press its buttons, look at it as a phone or as a desktop.</p>
+
+    <ul class="mkd-grid">
+      <li>
+        <a class="mkd-card" href="../demos/demo-barber/index.html"
+           data-name="Copperknot Barber Room" data-host="copperknot.example"
+           data-frame-title="Demo site for a fictional barber shop">
+          <span class="mkd-media">
+            <img src="posters/barber.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Copperknot Barber Room demo site: a dark page with the shop name in large condensed type over a photo of a barber at work, next to a short price list.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Copperknot Barber Room</span><span class="mkd-sector">Barber shop &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-salon/index.html"
+           data-name="Plumgrove Hair Room" data-host="plumgrove.example"
+           data-frame-title="Demo site for a fictional hair salon">
+          <span class="mkd-media">
+            <img src="posters/salon.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Plumgrove Hair Room demo site: a pale page with the salon name in a large italic serif over a photo of mirrors and styling chairs.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Plumgrove Hair Room</span><span class="mkd-sector">Hair salon &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-aircon/index.html"
+           data-name="Northvale Cooling Works" data-host="northvale.example"
+           data-frame-title="Demo site for a fictional aircon servicing company">
+          <span class="mkd-media">
+            <img src="posters/aircon.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Northvale Cooling Works demo site: a deep blue page with the company name in heavy sans type and a panel of servicing prices per unit.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Northvale Cooling Works</span><span class="mkd-sector">Aircon servicing &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-pets/index.html"
+           data-name="Biscuit &amp; Bramble Pet Grooming" data-host="biscuitandbramble.example"
+           data-frame-title="Demo site for a fictional pet grooming shop">
+          <span class="mkd-media">
+            <img src="posters/pets.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Biscuit and Bramble Pet Grooming demo site: a cream page with rounded type and an oval photo of a groomer brushing a small dog.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Biscuit &amp; Bramble Pet Grooming</span><span class="mkd-sector">Pet grooming &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <p class="mkd-foot"><b>All four businesses are invented</b> &mdash; the names, the staff, the prices and the addresses. We build them so we can show the work without putting a client&rsquo;s page on display. Yours would be built from what you already publish, and you would see it before anyone else does.</p>
+  </div>
+</section>
+
+<dialog class="mkd-viewer" id="mkdViewer" aria-labelledby="mkdVName">
+  <div class="mkd-panel">
+    <div class="mkd-bar">
+      <div class="mkd-bar-l">
+        <p class="mkd-vname" id="mkdVName">Demo</p>
+        <span class="mkd-chip">Fictional business</span>
+      </div>
+      <div class="mkd-bar-r">
+        <div class="mkd-seg" id="mkdSeg" role="group" aria-label="Screen size">
+          <button type="button" data-mode="phone" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.6h2"/></svg>Phone</button>
+          <button type="button" data-mode="desktop" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>Desktop</button>
+        </div>
+        <a class="mkd-ghost" id="mkdNewTab" href="#" target="_blank" rel="noopener"><span class="mkd-lbl">New tab</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1.6 1.6 0 0 1-1.6 1.6H5A1.6 1.6 0 0 1 3.4 19V7.6A1.6 1.6 0 0 1 5 6h5"/></svg></a>
+        <button type="button" class="mkd-ghost mkd-x" id="mkdClose" aria-label="Close the demo viewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      </div>
+    </div>
+
+    <div class="mkd-stage" id="mkdStage">
+      <div class="mkd-device is-phone" id="mkdDevice">
+        <div class="mkd-notch"><i></i></div>
+        <div class="mkd-chrome">
+          <span class="mkd-dots"><i></i><i></i><i></i></span>
+          <span class="mkd-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg><span id="mkdUrl">example</span></span>
+        </div>
+        <div class="mkd-screen" id="mkdScreen"></div>
+      </div>
+    </div>
+
+    <p class="mkd-note" id="mkdNote">A demo site for a business that does not exist.</p>
+  </div>
+</dialog>
+
+<div class="ctx-band"><div>
+  <h2>Yours would work the same way.</h2>
+  <p>We draft it from what you already publish, you look at it first, and you pay only if you want it. S$590 one-off, live on your own domain within 7 working days.</p>
+</div></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.getElementById("mkdRoot");
+  var dlg = document.getElementById("mkdViewer");
+  /* sin <dialog> (navegador viejo) no tocamos nada: las tarjetas siguen siendo enlaces */
+  if (!root || !dlg || typeof dlg.showModal !== "function") return;
+
+  document.documentElement.classList.add("mkd-js");
+
+  var NAME = "mkd-demo";
+  var BASE = 1440;   /* el ancho "de escritorio" que se renderiza y luego se escala */
+  var PHONE = 390;
+
+  var stage = document.getElementById("mkdStage");
+  var device = document.getElementById("mkdDevice");
+  var screenBox = document.getElementById("mkdScreen");
+  var vname = document.getElementById("mkdVName");
+  var urlEl = document.getElementById("mkdUrl");
+  var noteEl = document.getElementById("mkdNote");
+  var newTab = document.getElementById("mkdNewTab");
+  var closeBtn = document.getElementById("mkdClose");
+  var segBtns = document.querySelectorAll("#mkdSeg button");
+  var cards = root.querySelectorAll(".mkd-card");
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var narrow = window.matchMedia("(max-width: 759px)");
+  var ifr = null;
+  var current = null;
+  var mode = "phone";
+  var busy = false;
+
+  function canVT() { return !!document.startViewTransition && !reduce.matches; }
+
+  /* ancho de la barra de scroll: en modo telefono el iframe se hace asi de mas ancho
+     y la caja lo recorta, para que el marco no ensene una barra que un movil no tiene */
+  var SBW = null;
+  function sbw() {
+    if (SBW !== null) return SBW;
+    var p = document.createElement("div");
+    p.style.cssText = "position:absolute;top:-9999px;left:-9999px;width:100px;height:100px;overflow:scroll;";
+    document.body.appendChild(p);
+    SBW = p.offsetWidth - p.clientWidth;
+    document.body.removeChild(p);
+    return SBW;
+  }
+
+  /* ---------- el iframe no existe hasta la primera apertura ---------- */
+  function ensureFrame() {
+    if (ifr) return ifr;
+    ifr = document.createElement("iframe");
+    ifr.className = "mkd-frame";
+    ifr.setAttribute("loading", "lazy");
+    ifr.setAttribute("sandbox", "allow-scripts allow-same-origin");
+    ifr.addEventListener("load", wireInnerEsc);
+    screenBox.appendChild(ifr);
+    return ifr;
+  }
+
+  /* con el foco dentro del iframe, Esc tiene que seguir cerrando el visor */
+  function wireInnerEsc() {
+    try {
+      var d = ifr.contentDocument;
+      if (!d || d.__mkdEsc) return;
+      d.__mkdEsc = true;
+      d.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" || e.key === "Esc") { e.preventDefault(); closeViewer(); }
+      }, true);
+    } catch (err) { /* otro origen: el Esc lo gestiona el propio <dialog> */ }
+  }
+
+  /* ---------- medidas ---------- */
+  function layout() {
+    if (!dlg.open) return;
+    var bare = narrow.matches;
+    var m = bare ? "phone" : mode;
+    device.className = "mkd-device is-" + m + (bare ? " is-bare" : "");
+
+    var r = stage.getBoundingClientRect();
+    var availH = Math.max(260, r.height);
+    var availW = r.width;
+
+    if (bare) {                                   /* movil: a sangre, sin marco ni escalado */
+      device.style.width = "100%";
+      screenBox.style.width = "100%";
+      screenBox.style.height = Math.round(availH) + "px";
+      if (ifr) { ifr.style.width = "calc(100% + " + sbw() + "px)"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
+      return;
+    }
+
+    if (m === "phone") {
+      device.style.width = (PHONE + 20) + "px";
+      screenBox.style.width = PHONE + "px";
+      screenBox.style.height = Math.round(availH - 20 - 24) + "px";
+      if (ifr) { ifr.style.width = (PHONE + sbw()) + "px"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
+      return;
+    }
+
+    /* escritorio: iframe ancho de verdad, reducido con scale() */
+    var devW = Math.min(availW, 1260);
+    var boxW = devW - 20;
+    var boxH = Math.round(availH - 20 - 34);
+    var s = boxW / BASE;
+    device.style.width = devW + "px";
+    screenBox.style.width = boxW + "px";
+    screenBox.style.height = boxH + "px";
+    if (ifr) {
+      ifr.style.width = BASE + "px";
+      ifr.style.height = Math.round(boxH / s) + "px";   /* se compensa la altura al escalar */
+      ifr.style.transformOrigin = "0 0";
+      ifr.style.transform = "scale(" + s.toFixed(5) + ")";
+    }
+  }
+
+  function setMode(next) {
+    mode = next;
+    for (var i = 0; i < segBtns.length; i++) {
+      segBtns[i].setAttribute("aria-pressed", segBtns[i].getAttribute("data-mode") === next ? "true" : "false");
+    }
+    layout();
+  }
+
+  /* ---------- abrir ---------- */
+  function paint(card) {
+    current = card;
+    var name = card.getAttribute("data-name");
+    var href = card.getAttribute("href");
+    vname.textContent = name;
+    urlEl.textContent = card.getAttribute("data-host");
+    newTab.href = href;
+    newTab.setAttribute("aria-label", "Open the " + name + " demo in a new tab");
+    noteEl.textContent = name + " is an invented business. The page is real: built with the engine we use for client sites.";
+    var f = ensureFrame();
+    f.title = card.getAttribute("data-frame-title");
+    if (f.getAttribute("src") !== href) f.setAttribute("src", href);
+  }
+
+  function openNow(card) {
+    paint(card);
+    /* sin esto, al llegar al final de la demo el scroll se encadena y mueve la pagina de detras */
+    document.documentElement.classList.add("mkd-locked");
+    dlg.showModal();
+    layout();
+    closeBtn.focus();
+  }
+
+  function openViewer(card) {
+    if (busy || dlg.open) return;
+    var media = card.querySelector(".mkd-media");
+    if (!canVT() || !media) { dlg.classList.remove("is-vt"); openNow(card); return; }
+    busy = true;
+    dlg.classList.add("is-vt");
+    media.style.viewTransitionName = NAME;
+    var vt = document.startViewTransition(function () {
+      media.style.viewTransitionName = "";      /* el nombre no puede estar en dos sitios a la vez */
+      device.style.viewTransitionName = NAME;
+      openNow(card);
+    });
+    vt.finished.then(done, done);
+    function done() { device.style.viewTransitionName = ""; busy = false; }
+  }
+
+  /* ---------- cerrar ---------- */
+  function afterClose(card) {
+    if (ifr) ifr.setAttribute("src", "about:blank");   /* la demo deja de correr */
+    current = null;
+    if (card) { try { card.focus(); } catch (e) {} }
+  }
+
+  function closeViewer() {
+    if (!dlg.open || busy) return;
+    var card = current;
+    var media = card ? card.querySelector(".mkd-media") : null;
+    if (!canVT() || !media) { dlg.close(); document.documentElement.classList.remove("mkd-locked"); afterClose(card); return; }
+    busy = true;
+    device.style.viewTransitionName = NAME;
+    var vt = document.startViewTransition(function () {
+      device.style.viewTransitionName = "";
+      media.style.viewTransitionName = NAME;
+      dlg.close();
+      document.documentElement.classList.remove("mkd-locked");
+    });
+    vt.finished.then(done, done);
+    function done() { media.style.viewTransitionName = ""; busy = false; afterClose(card); }
+  }
+
+  /* ---------- cables ---------- */
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].addEventListener("click", function (e) {
+      /* ctrl/cmd/mayus-clic y clic central siguen abriendo la demo como enlace */
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      openViewer(this);
+    });
+  }
+
+  closeBtn.addEventListener("click", closeViewer);
+  dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeViewer(); });   /* Esc */
+  dlg.addEventListener("click", function (e) {                                          /* clic fuera */
+    if (e.target === dlg || e.target === stage) closeViewer();
+  });
+
+  for (var j = 0; j < segBtns.length; j++) {
+    segBtns[j].addEventListener("click", function () { setMode(this.getAttribute("data-mode")); });
+  }
+
+  var raf = 0;
+  window.addEventListener("resize", function () {
+    if (raf) return;
+    raf = requestAnimationFrame(function () { raf = 0; layout(); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MNKY KONNEKT · hero piece — the old site rebuilds itself</title>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script>(function(d){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){d.documentElement.className+=' mkh-js';}}catch(e){}})(document);</script>
+<style>
+/* ---- fonts (copied from lab/b/index.html, same size-adjust fallbacks) ---- */
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* ---- demo page chrome (context only — not part of the piece) ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: #F9F6EF; color: #111214; font-family: Inter, "Inter Fallback", Arial, sans-serif; }
+.mkh-demo-bar, .mkh-demo-tail { max-width: 1060px; margin: 0 auto; padding: 18px clamp(16px, 4vw, 28px); }
+.mkh-demo-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: #5f626a; }
+.mkh-demo-bar b { font-family: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif; font-weight: 800; color: #111214; letter-spacing: .04em; }
+.mkh-demo-tail { padding-block: 48px 72px; border-top: 1px solid #e4e2dc; color: #5f626a; font-size: 15px; line-height: 1.6; }
+.mkh-demo-tail strong { color: #111214; }
+
+/* ===================== THE PIECE — everything below is mkh- prefixed ===================== */
+.mkh-hero {
+  --mkh-paper: #F9F6EF; --mkh-ink: #111214; --mkh-muted: #5f626a; --mkh-line: #e4e2dc; --mkh-tint: #F0EADE;
+  --mkh-teal: #237A77; --mkh-teal-deep: #1B615F; --mkh-amber: #F2B134;
+  --mkh-old-bg: #d9d9d9;
+  --mkh-display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --mkh-body: Inter, "Inter Fallback", Arial, sans-serif;
+  --mkh-pad: clamp(16px, 4vw, 28px);
+  position: relative;
+  background: var(--mkh-paper);
+  color: var(--mkh-ink);
+  font-family: var(--mkh-body);
+}
+
+/* ---- headline ---- */
+.mkh-head { max-width: 1060px; margin: 0 auto; padding: clamp(28px, 6vw, 64px) var(--mkh-pad) clamp(18px, 3vw, 30px); }
+.mkh-h1 {
+  margin: 0; max-width: 18ch;
+  font-family: var(--mkh-display); font-weight: 800; letter-spacing: -.022em; line-height: 1.02;
+  font-size: clamp(34px, 7.4vw, 68px);
+}
+.mkh-em { font-style: normal; box-shadow: inset 0 -.26em 0 rgba(242, 177, 52, .55); }
+.mkh-sub { margin: 14px 0 0; max-width: 46ch; color: var(--mkh-muted); font-size: clamp(15px, 1.9vw, 18px); line-height: 1.55; }
+.mkh-hint { display: none; margin: 22px 0 0; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-js .mkh-hint { display: flex; }
+.mkh-hint span { display: block; width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); animation: mkh-bob 1.9s ease-in-out infinite; }
+@keyframes mkh-bob { 0%, 100% { transform: rotate(45deg) translate(0, 0); } 50% { transform: rotate(45deg) translate(3px, 3px); } }
+
+/* ---- scroll track + sticky stage ---- */
+.mkh-scroller { position: relative; }
+.mkh-js .mkh-scroller { height: 340vh; }
+.mkh-stage { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); padding: 0 var(--mkh-pad) clamp(20px, 4vw, 34px); }
+.mkh-js .mkh-stage { position: sticky; top: 0; height: 100vh; height: 100svh; padding-top: clamp(10px, 2vw, 20px); justify-content: center; }
+
+.mkh-label { position: relative; height: 1.6em; width: 100%; max-width: 1000px; margin: 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-lab { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 8px; }
+.mkh-lab::before { content: ""; width: 16px; height: 1px; background: currentColor; }
+.mkh-lab--b { color: var(--mkh-teal); }
+.mkh-lab--a { display: none; }
+.mkh-js .mkh-lab--a { display: inline-flex; }
+
+/* ---- browser frame ---- */
+.mkh-browser {
+  width: min(1000px, 100%); max-height: 660px; display: flex; flex-direction: column;
+  background: var(--mkh-paper); border: 1px solid #d7d4cc; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 34px 70px -38px rgba(17, 18, 20, .5), 0 2px 5px rgba(17, 18, 20, .05);
+}
+.mkh-js .mkh-browser { flex: 1 1 auto; min-height: 0; }
+.mkh-chrome { flex: none; display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #ece9e2; border-bottom: 1px solid #dcd8d0; }
+.mkh-dots { display: flex; gap: 6px; flex: none; }
+.mkh-dots i { width: 10px; height: 10px; border-radius: 50%; background: #c9c4ba; }
+.mkh-dots i:nth-child(1) { background: #e0a19a; } .mkh-dots i:nth-child(2) { background: #e3cb9a; } .mkh-dots i:nth-child(3) { background: #a9c7ae; }
+.mkh-url { position: relative; flex: 1 1 auto; height: 24px; min-width: 0; background: #f6f4ef; border: 1px solid #ddd9d1; border-radius: 999px; overflow: hidden; }
+.mkh-u { position: absolute; inset: 0; display: flex; align-items: center; gap: 6px; padding: 0 10px; font-size: 11.5px; color: #6b6e75; white-space: nowrap; overflow: hidden; }
+.mkh-u b { font-weight: 400; color: #111214; }
+.mkh-lock { flex: none; width: 8px; height: 7px; margin-top: 1px; border-radius: 1px; background: var(--mkh-teal); position: relative; }
+.mkh-lock::before { content: ""; position: absolute; left: 1.5px; top: -4px; width: 5px; height: 5px; border: 1.5px solid var(--mkh-teal); border-bottom: 0; border-radius: 3px 3px 0 0; }
+.mkh-u--old { display: none; }
+.mkh-js .mkh-u--old { display: flex; }
+
+.mkh-viewport { position: relative; flex: 1 1 auto; min-height: 0; background: var(--mkh-paper); }
+.mkh-js .mkh-viewport { background: var(--mkh-old-bg); }
+.mkh-face { position: relative; }
+.mkh-js .mkh-face { position: absolute; inset: 0; overflow: hidden; }
+.mkh-js .mkh-old { z-index: 2; }
+.mkh-js .mkh-new { z-index: 1; }
+.mkh-old { display: none; }
+.mkh-js .mkh-old { display: block; }
+.mkh-rmlab { display: none; }
+
+/* ---------- the 2006 site ---------- */
+/* transparent on purpose: the viewport carries the grey, so the new page can be
+   seen assembling underneath while the old pieces are still falling */
+.mkh-o-page {
+  height: 100%; display: flex; flex-direction: column;
+  padding: 0 0 8px; background: transparent;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: clamp(11px, 2.4vw, 14px); line-height: 1.35; color: #101010; text-align: center;
+}
+.mkh-o-banner {
+  flex: none; padding: 5px 6px; font-weight: 700; font-size: .92em; letter-spacing: .06em; color: #2b0f68;
+  background: linear-gradient(90deg, #ff9c9c, #ffe08a, #b6f0a5, #a5dcf0, #d7b6f0, #ff9c9c);
+  border-bottom: 2px ridge #8f8f8f; text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
+}
+.mkh-o-title { margin: 8px 0 2px; font-size: 2.05em; font-weight: 700; letter-spacing: .05em; color: #10108a; text-decoration: underline; text-shadow: 1px 1px 0 #fff, 2px 2px 0 #9a9a9a; }
+.mkh-o-sub { margin: 0 0 6px; font-size: .95em; color: #4a2d0a; }
+.mkh-o-nav { margin: 0 0 8px; font-size: .95em; color: #444; }
+.mkh-o-nav a { color: #0000ee; text-decoration: underline; }
+.mkh-o-table { width: calc(100% - 16px); margin: 0 8px; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
+.mkh-o-td { padding: 0; vertical-align: top; width: 50%; }
+.mkh-o-cell { border: 2px inset #b7b7b7; background: #ededed; padding: 5px; text-align: left; }
+.mkh-o-cell--photo { text-align: center; background: #e3e3e3; }
+.mkh-o-photo { display: block; width: 100%; height: clamp(58px, 11vh, 96px); background: #b9b9b9; border: 2px solid #7a7a7a; }
+.mkh-o-photo img { display: block; width: 100%; height: 100%; object-fit: fill; filter: saturate(.62) contrast(1.06); }
+.mkh-o-cap { margin-top: 3px; font-size: .82em; font-style: italic; color: #3a3a3a; }
+.mkh-o-blink { color: #cc0000; font-weight: 700; animation: mkh-blink 1.05s steps(1) infinite; }
+@keyframes mkh-blink { 50% { opacity: 0; } }
+.mkh-o-cell b { display: inline-block; margin-bottom: 2px; letter-spacing: .04em; }
+.mkh-o-cell a { color: #0000ee; }
+.mkh-o-list { font-family: "Courier New", Courier, monospace; font-size: .92em; white-space: pre-wrap; }
+.mkh-o-uc { flex: none; display: inline-flex; align-items: center; gap: 7px; align-self: center; margin: 9px auto 0; padding: 4px 9px 4px 4px; background: #ffef9f; border: 2px outset #d8c86a; }
+.mkh-o-uc-sign { position: relative; flex: none; width: 24px; height: 22px; background: #f2c21a; border: 2px solid #111; }
+.mkh-o-uc-sign i { position: absolute; background: #111; }
+.mkh-o-uc-hat { left: 4px; top: 2px; width: 9px; height: 4px; border-radius: 5px 5px 0 0; }
+.mkh-o-uc-body { left: 6px; top: 7px; width: 4px; height: 9px; }
+.mkh-o-uc-tool { left: 11px; top: 5px; width: 3px; height: 12px; transform-origin: 50% 0; animation: mkh-dig 1.1s ease-in-out infinite; }
+@keyframes mkh-dig { 0%, 100% { transform: rotate(22deg); } 50% { transform: rotate(52deg); } }
+.mkh-o-uc-txt { font-size: .84em; font-weight: 700; letter-spacing: .08em; color: #6b4b00; }
+.mkh-o-btns { flex: none; margin: 9px 0 0; display: flex; gap: 8px; justify-content: center; }
+.mkh-o-btn98 { display: inline-block; padding: 3px 10px; font-size: .88em; font-family: Arial, Helvetica, sans-serif; color: #111; background: #d4d0c8; border: 3px outset #efefef; }
+.mkh-o-badges { flex: none; margin: 8px 0 0; display: flex; gap: 5px; justify-content: center; }
+.mkh-o-badges span { display: inline-block; padding: 2px 6px; border: 1px solid #000; font: 700 8px/1.3 Arial, Helvetica, sans-serif; letter-spacing: .05em; color: #fff; text-transform: uppercase; }
+.mkh-o-badges span:nth-child(1) { background: linear-gradient(180deg, #5a5ab4, #17173f); }
+.mkh-o-badges span:nth-child(2) { background: linear-gradient(180deg, #b45a5a, #3f1717); }
+.mkh-o-badges span:nth-child(3) { background: linear-gradient(180deg, #4a4a4a, #111); }
+.mkh-o-foot { flex: none; margin-top: auto; padding-top: 10px; }
+.mkh-o-counter { font-size: .86em; color: #222; }
+.mkh-o-leds { display: inline-flex; gap: 1px; margin-left: 4px; vertical-align: middle; }
+.mkh-o-leds b { margin: 0; padding: 1px 3px; font-family: "Courier New", Courier, monospace; font-size: .95em; color: #35ff5e; background: #0b0b0b; border: 1px solid #5a5a5a; }
+.mkh-o-best { margin-top: 3px; font-size: .8em; color: #555; }
+
+/* ---------- the new site ---------- */
+/* transparent like the old page: .mkh-viewport owns the colour so it can flip grey -> paper mid-sequence */
+.mkh-n-page { height: 100%; display: flex; flex-direction: column; background: transparent; color: var(--mkh-ink); font-family: var(--mkh-body); }
+.mkh-n-head { flex: none; display: flex; align-items: center; gap: 10px; padding: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px); border-bottom: 1px solid var(--mkh-line); }
+.mkh-n-mark { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--mkh-teal); color: #fff; font-family: var(--mkh-display); font-weight: 800; font-size: 12px; letter-spacing: .02em; }
+.mkh-n-word { font-family: var(--mkh-display); font-weight: 800; font-size: clamp(15px, 2.2vw, 19px); letter-spacing: -.01em; }
+.mkh-n-nav { margin-left: auto; display: flex; gap: clamp(10px, 2vw, 20px); font-size: 13px; color: var(--mkh-muted); }
+/* Drawn, not photographed. Every image in lab/assets is a screenshot of a web page with
+   typography baked in, so any crop leaked stray wording; a CSS panel is sharp at every size
+   and adds no asset dependency. To use a real photo of the business, drop an <img> back in
+   (position:absolute; inset:0; object-fit:cover) - the vignette and caption still work. */
+.mkh-n-photo { position: relative; flex: 1 1 auto; min-height: clamp(96px, 20vh, 210px); margin: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px) 0; border-radius: 12px; overflow: hidden;
+  background:
+    radial-gradient(78% 62% at 50% -10%, rgba(255, 206, 126, .30), transparent 66%),
+    radial-gradient(72% 96% at 95% 106%, rgba(47, 154, 150, .44), transparent 64%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 86px),
+    linear-gradient(163deg, #14282c 0%, #0e1b1e 54%, #11322f 100%); }
+/* a row of warm bulbs along the top, the way a salon mirror is lit */
+.mkh-n-photo::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46%; pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255, 226, 168, .95) 0 17%, rgba(255, 214, 140, .30) 30%, transparent 56%),
+    radial-gradient(circle, rgba(255, 206, 126, .22) 0 40%, transparent 72%);
+  background-size: 44px 44px, 44px 88px; background-position: 0 13px, 0 0; background-repeat: repeat-x; }
+.mkh-n-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 56%; pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 20, 22, 0), rgba(10, 20, 22, .40) 52%, rgba(10, 20, 22, .80)); }
+.mkh-n-badge { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; padding: 0 clamp(12px, 2.2vw, 18px) clamp(10px, 1.8vw, 15px); color: #fff; font-size: 11.5px; letter-spacing: .02em; }
+.mkh-n-badge b { display: block; margin-bottom: 4px; font-family: var(--mkh-display); font-weight: 800; font-size: clamp(17px, 2.7vw, 27px); line-height: 1.1; letter-spacing: -.015em; }
+.mkh-n-body { flex: none; display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(14px, 2.6vw, 30px); padding: clamp(12px, 2.4vw, 20px) clamp(12px, 2.4vw, 22px) clamp(14px, 2.6vw, 22px); }
+.mkh-n-kicker { margin: 0 0 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-n-row { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; font-size: clamp(13px, 1.7vw, 15px); }
+.mkh-n-row i { flex: 1 1 auto; height: 0; border-bottom: 1px dotted #cfccc4; transform: translateY(-3px); font-style: normal; }
+.mkh-n-row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.mkh-n-side { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: clamp(10px, 2vw, 15px); border: 1px solid var(--mkh-line); border-radius: 12px; background: #fff; }
+.mkh-n-open { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--mkh-teal-deep); }
+.mkh-n-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mkh-teal); box-shadow: 0 0 0 4px rgba(35, 122, 119, .14); }
+.mkh-n-hrs { font-size: 13px; line-height: 1.65; color: var(--mkh-muted); font-variant-numeric: tabular-nums; }
+.mkh-n-cta { display: inline-block; margin-top: 2px; padding: 9px 16px; border-radius: 999px; background: var(--mkh-ink); color: var(--mkh-paper); font-size: 13.5px; font-weight: 600; }
+/* margin-top:auto pins the footer to the bottom, so the new page fills the frame at any height */
+.mkh-n-foot { flex: none; margin-top: auto; padding: 11px clamp(12px, 2.4vw, 22px); border-top: 1px solid var(--mkh-line); font-size: 12px; color: var(--mkh-muted); }
+
+/* ---- replay ---- */
+.mkh-replay { display: none; align-items: center; gap: 8px; margin: 0; padding: 7px 14px; border: 1px solid var(--mkh-line); border-radius: 999px; background: var(--mkh-paper); color: var(--mkh-muted); font: inherit; font-size: 12.5px; cursor: pointer; }
+.mkh-js .mkh-replay { display: inline-flex; }
+.mkh-replay:hover { color: var(--mkh-ink); border-color: #cfccc4; }
+.mkh-replay:focus-visible { outline: 2px solid var(--mkh-teal); outline-offset: 3px; color: var(--mkh-ink); }
+.mkh-replay span { display: block; width: 11px; height: 11px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; }
+
+/* ---- narrow ---- */
+@media (max-width: 899px) {
+  .mkh-js .mkh-scroller { height: 300vh; height: 300svh; }
+  .mkh-browser { max-height: none; }
+  .mkh-n-nav { display: none; }
+  .mkh-o-nav { line-height: 1.7; }
+  /* fixed band, so it stays a wide strip on a phone instead of growing into a tall square */
+  .mkh-n-photo { flex: 0 0 auto; height: clamp(130px, 20vh, 190px); min-height: 0; }
+  /* the body takes the slack and keeps its rows at natural height */
+  .mkh-n-body { grid-template-columns: 1fr; gap: 12px; flex: 1 1 auto; align-content: start; }
+}
+/* short windows: trim the new page so its footer never falls outside the frame */
+@media (max-height: 700px) {
+  .mkh-js .mkh-stage { gap: 6px; }
+  .mkh-o-photo { height: 52px; }
+  .mkh-n-photo { height: clamp(96px, 16vh, 150px); }
+  .mkh-n-row { padding: 3px 0; }
+  .mkh-n-side { gap: 6px; }
+  .mkh-n-foot { padding-block: 8px; }
+  .mkh-n-body { padding-block: 10px 12px; }
+}
+
+/* ---- reduced motion: no sequence, both versions side by side ---- */
+@media (prefers-reduced-motion: reduce) {
+  .mkh-hint, .mkh-replay, .mkh-label, .mkh-chrome { display: none !important; }
+  .mkh-js .mkh-scroller, .mkh-scroller { height: auto !important; }
+  .mkh-js .mkh-stage, .mkh-stage { position: static !important; height: auto !important; }
+  .mkh-browser { width: min(1060px, 100%); max-height: none; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .mkh-viewport, .mkh-js .mkh-viewport { position: static !important; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 28px); background: transparent !important; }
+  .mkh-face, .mkh-js .mkh-face { position: static !important; display: block !important; overflow: hidden; border: 1px solid var(--mkh-line); border-radius: 12px; opacity: 1 !important; visibility: visible !important; }
+  .mkh-rmlab { display: block; padding: 8px 12px; background: var(--mkh-tint); border-bottom: 1px solid var(--mkh-line); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
+  .mkh-o-page, .mkh-n-page { height: auto; }
+  .mkh-n-body { grid-template-columns: 1fr; gap: 14px; }
+  .mkh-old { background: var(--mkh-old-bg); }
+  .mkh-new { background: var(--mkh-paper); }
+  .mkh-o-photo { height: 90px; }
+  .mkh-n-photo { min-height: 150px; }
+  .mkh-o-blink, .mkh-o-uc-tool, .mkh-hint span { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 899px) {
+  .mkh-viewport, .mkh-js .mkh-viewport { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="mkh-demo-bar"><b>MNKY KONNEKT</b><span>hero piece · lab</span></div>
+
+<!-- ======================= PIECE START ======================= -->
+<section class="mkh-hero" id="mkh-hero">
+
+  <div class="mkh-head">
+    <h1 class="mkh-h1">Your website is <em class="mkh-em">already built</em>. Pay only if you want it.</h1>
+    <p class="mkh-sub">We draft it from what you already publish. You look at it first, then decide.</p>
+    <p class="mkh-hint">Scroll <span aria-hidden="true"></span></p>
+  </div>
+
+  <div class="mkh-scroller" id="mkh-scroller">
+    <div class="mkh-stage">
+
+      <p class="mkh-label">
+        <span class="mkh-lab mkh-lab--a">what most shops have</span>
+        <span class="mkh-lab mkh-lab--b">what we build</span>
+      </p>
+
+      <div class="mkh-browser">
+        <div class="mkh-chrome">
+          <div class="mkh-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="mkh-url">
+            <span class="mkh-u mkh-u--old" aria-hidden="true">http://www.hairstudio-sg.webspace.net/index_new2.htm</span>
+            <span class="mkh-u mkh-u--new"><i class="mkh-lock" aria-hidden="true"></i><b>hairstudio.sg</b></span>
+          </div>
+        </div>
+
+        <div class="mkh-viewport" id="mkh-viewport">
+
+          <!-- ---------- BEFORE ---------- -->
+          <div class="mkh-face mkh-old" id="mkh-old">
+            <span class="mkh-rmlab">Before — what most shops have</span>
+            <div class="mkh-o-page" aria-hidden="true">
+              <div class="mkh-o-banner" id="mkh-o-banner">★ ★ ★ &nbsp; W E L C O M E &nbsp; T O &nbsp; O U R &nbsp; H O M E P A G E &nbsp; ★ ★ ★</div>
+              <h2 class="mkh-o-title" id="mkh-o-title">HAIR STUDIO</h2>
+              <p class="mkh-o-sub" id="mkh-o-sub"><i>"Your hair is our passion since 1998"</i></p>
+              <p class="mkh-o-nav" id="mkh-o-nav"><a>Home</a> | <a>About Us</a> | <a>Our Services</a> | <a>Price List</a> | <a>Contact</a> | <a>Guestbook</a></p>
+              <table class="mkh-o-table">
+                <tbody>
+                  <tr>
+                    <td class="mkh-o-td"><div class="mkh-o-cell mkh-o-cell--photo">
+                      <div class="mkh-o-photo"><img src="../assets/img/after-salon-720.webp" width="720" height="450" alt="" loading="eager" decoding="async"></div>
+                      <div class="mkh-o-cap">our shop (photo)</div>
+                    </div></td>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <span class="mkh-o-blink">NEW!!</span> Welcome to our web site!!! We are a family hair salon.
+                      Please <a>click here</a> to call for appointment. Walk-in also can. Thank you for visiting!!!
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <b>PRICE LIST</b>
+                      <div class="mkh-o-list">Lady Cut ....... $28
+Gent Cut ...... $18
+Colouring ... fr $80
+Perm ..... pls call</div>
+                    </div></td>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <b>OPENING HOUR</b>
+                      <div class="mkh-o-list">Mon-Fri : 10am-8pm
+Sat &amp; Sun : 9am-6pm
+Closed on P. Holiday</div>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td class="mkh-o-td" colspan="2"><div class="mkh-o-cell">
+                      <b>OUR SERVICES</b>
+                      <div class="mkh-o-list">Hair Cut * Hair Dye * Rebonding * Treatment * Wedding Set
+Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
+                    </div></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="mkh-o-uc" id="mkh-o-uc">
+                <span class="mkh-o-uc-sign"><i class="mkh-o-uc-hat"></i><i class="mkh-o-uc-body"></i><i class="mkh-o-uc-tool"></i></span>
+                <span class="mkh-o-uc-txt">UNDER CONSTRUCTION</span>
+              </div>
+              <p class="mkh-o-btns" id="mkh-o-btns">
+                <span class="mkh-o-btn98">Sign Our Guestbook</span>
+                <span class="mkh-o-btn98">E-mail Us</span>
+              </p>
+              <p class="mkh-o-badges" id="mkh-o-badges">
+                <span>Best with Netscape</span><span>HTML 4.0</span><span>Get Flash Player</span>
+              </p>
+              <div class="mkh-o-foot" id="mkh-o-foot">
+                <div class="mkh-o-counter">You are visitor number
+                  <span class="mkh-o-leds" id="mkh-o-leds"><b>0</b><b>0</b><b>1</b><b>4</b><b>2</b><b>2</b><b>7</b></span>
+                </div>
+                <div class="mkh-o-best">Best viewed in 1024 × 768 · Last updated: 14 March 2006</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- AFTER ---------- -->
+          <div class="mkh-face mkh-new" id="mkh-new">
+            <span class="mkh-rmlab">After — what we build</span>
+            <div class="mkh-n-page">
+              <header class="mkh-n-head" id="mkh-n-head">
+                <span class="mkh-n-mark" aria-hidden="true">HS</span>
+                <span class="mkh-n-word">Hair Studio</span>
+                <nav class="mkh-n-nav"><span>Services</span><span>Prices</span><span>Visit</span></nav>
+              </header>
+              <div class="mkh-n-photo" id="mkh-n-photo">
+                <span class="mkh-n-badge" id="mkh-n-badge"><b>Cuts, colour and treatments</b>Tanjong Pagar · since 1998</span>
+              </div>
+              <div class="mkh-n-body">
+                <div>
+                  <p class="mkh-n-kicker" id="mkh-n-kicker">Price list</p>
+                  <div class="mkh-n-row"><span>Cut &amp; finish</span><i></i><b>$28</b></div>
+                  <div class="mkh-n-row"><span>Gents cut</span><i></i><b>$18</b></div>
+                  <div class="mkh-n-row"><span>Colour</span><i></i><b>from $80</b></div>
+                  <div class="mkh-n-row"><span>Perm</span><i></i><b>from $120</b></div>
+                </div>
+                <aside class="mkh-n-side" id="mkh-n-side">
+                  <span class="mkh-n-open"><span class="mkh-n-dot" id="mkh-n-dot"></span> Open now · closes 20:00</span>
+                  <div class="mkh-n-hrs">Mon–Fri&nbsp; 10:00–20:00<br>Sat–Sun&nbsp; 09:00–18:00</div>
+                  <span class="mkh-n-cta" id="mkh-n-cta">Book an appointment</span>
+                </aside>
+              </div>
+              <footer class="mkh-n-foot" id="mkh-n-foot">12 Duxton Road, Singapore 089490 &nbsp;·&nbsp; +65 6xxx xxxx</footer>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button type="button" class="mkh-replay" id="mkh-replay"><span aria-hidden="true"></span>Replay</button>
+
+    </div>
+  </div>
+</section>
+<!-- ======================= PIECE END ======================= -->
+
+<div class="mkh-demo-tail">
+  <p><strong>Piece only.</strong> Scroll back up to run the sequence again, or press Replay. With JavaScript off the finished site stays on screen; with “reduce motion” on, both versions sit side by side, labelled.</p>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var replayTween = null;
+
+  function init() {
+    // No GSAP (blocked CDN, offline) or reduced motion: fall back to the finished site. Never a blank frame.
+    if (!window.gsap || !window.ScrollTrigger) { root.classList.remove("mkh-js"); return; }
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { root.classList.remove("mkh-js"); return; }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    var scroller = document.getElementById("mkh-scroller");
+    var replay = document.getElementById("mkh-replay");
+    var mm = gsap.matchMedia();
+
+    mm.add({
+      wide: "(min-width: 900px)",
+      ok: "(prefers-reduced-motion: no-preference)"
+    }, function (ctx) {
+      if (!ctx.conditions.ok) { root.classList.remove("mkh-js"); return; }
+      root.classList.add("mkh-js");
+
+      var narrow = !ctx.conditions.wide;
+      var cells = gsap.utils.toArray(".mkh-o-cell");
+      var rows = gsap.utils.toArray(".mkh-n-row");
+      var newBits = ["#mkh-n-head", "#mkh-n-photo", "#mkh-n-badge", "#mkh-n-kicker", "#mkh-n-side", "#mkh-n-cta", "#mkh-n-foot"];
+
+      // start state: old page on screen, new page laid out but hidden piece by piece
+      gsap.set("#mkh-new", { autoAlpha: 1 });
+      gsap.set(newBits, { autoAlpha: 0 });
+      gsap.set(rows, { autoAlpha: 0, x: -16 });
+      gsap.set("#mkh-n-head", { y: -18 });
+      gsap.set("#mkh-n-photo", { clipPath: "inset(0% 50% 0% 50%)" });
+      gsap.set("#mkh-n-badge", { y: 10 });
+      gsap.set("#mkh-n-kicker", { y: 10 });
+      gsap.set("#mkh-n-side", { y: 20 });
+      gsap.set("#mkh-n-cta", { y: 12, scale: .96 });
+      gsap.set("#mkh-n-foot", { y: 12 });
+      gsap.set("#mkh-n-dot", { scale: 0 });
+      gsap.set(".mkh-u--new", { autoAlpha: 0 });
+      gsap.set(".mkh-lab--b", { autoAlpha: 0, y: 8 });
+      gsap.set("#mkh-old", { autoAlpha: 1 });
+
+      var tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: { trigger: scroller, start: "top top", end: "bottom bottom", scrub: .55, invalidateOnRefresh: true }
+      });
+
+      if (!narrow) {
+        // --- wide: every old element leaves with its own gesture ---
+        tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -3, y: 3, duration: .4 }, 0)
+          .to("#mkh-o-banner", { rotation: -13, yPercent: -170, autoAlpha: 0, duration: 1, ease: "power2.in" }, .4)
+          .to("#mkh-o-uc", { x: 6, duration: .1, repeat: 5, yoyo: true }, .5)
+          .to("#mkh-o-uc", { y: 220, rotation: 18, autoAlpha: 0, duration: .9, ease: "power2.in" }, 1.1)
+          .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 7, yoyo: true }, 1.3)
+          .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .5 }, 1.95)
+          .to("#mkh-o-badges span", { autoAlpha: 0, y: 170, rotation: -9, duration: .7, ease: "power2.in", stagger: .07 }, 2.05)
+          .to("#mkh-o-nav", { autoAlpha: 0, y: 26, duration: .5 }, 2.2)
+          .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .35, stagger: .06 }, 1.9)
+          .to(cells, { skewX: 2.5, x: 5, duration: .3, stagger: { each: .06, from: "random" } }, 2.3)
+          .to(cells, {
+            y: 300, autoAlpha: 0, duration: 1, ease: "power2.in",
+            rotation: function () { return gsap.utils.random(-11, 11); },
+            xPercent: function () { return gsap.utils.random(-16, 16); },
+            stagger: { each: .09, from: "end" }
+          }, 2.6)
+          .to(["#mkh-o-title", "#mkh-o-sub"], { autoAlpha: 0, y: -20, duration: .5, stagger: .08 }, 2.8)
+          .to("#mkh-o-btns", { autoAlpha: 0, y: 140, rotation: 7, duration: .6, ease: "power2.in" }, 3)
+          .to("#mkh-o-foot", { autoAlpha: 0, y: 100, duration: .6, ease: "power2.in" }, 3.2)
+          .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: 1.2 }, 2.7)
+          .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .6 }, 3.1)
+          .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.1 }, 3.5)
+          .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 4.15)
+          .to("#mkh-n-kicker", { autoAlpha: 1, y: 0, duration: .45 }, 4.4)
+          .to(rows, { autoAlpha: 1, x: 0, duration: .55, stagger: .12 }, 4.5)
+          .to("#mkh-n-badge", { autoAlpha: 1, y: 0, duration: .5 }, 4.7)
+          .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .6 }, 5.2)
+          .to("#mkh-n-dot", { scale: 1, duration: .45, ease: "back.out(3)" }, 5.6)
+          .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .5 }, 5.8)
+          .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .5 }, 6)
+          .to(".mkh-u--old", { autoAlpha: 0, duration: .3 }, 5.9)
+          .to(".mkh-u--new", { autoAlpha: 1, duration: .4 }, 6.05)
+          .to(".mkh-lab--a", { autoAlpha: 0, y: -8, duration: .3 }, 5.9)
+          .to(".mkh-lab--b", { autoAlpha: 1, y: 0, duration: .4 }, 6.1)
+          .to({}, { duration: .9 }, 6.7);
+      } else {
+        // --- narrow: same story, fewer beats ---
+        tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -10, yPercent: -170, autoAlpha: 0, duration: .8, ease: "power2.in" }, 0)
+          .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 5, yoyo: true }, .3)
+          .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .4 }, .85)
+          .to(["#mkh-o-uc", "#mkh-o-nav", "#mkh-o-badges"], { autoAlpha: 0, y: 90, duration: .7, stagger: .1, ease: "power2.in" }, .55)
+          .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .3, stagger: .05 }, 1.05)
+          .to(cells, {
+            y: 260, autoAlpha: 0, duration: .8, ease: "power2.in",
+            rotation: function () { return gsap.utils.random(-9, 9); },
+            stagger: { each: .07, from: "end" }
+          }, 1.4)
+          .to(["#mkh-o-title", "#mkh-o-sub", "#mkh-o-btns", "#mkh-o-foot"], { autoAlpha: 0, y: -16, duration: .55, stagger: .06 }, 2.1)
+          .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: .9 }, 1.95)
+          .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .55 }, 2.35)
+          .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: .95 }, 2.75)
+          .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 2.95)
+          .to(["#mkh-n-kicker", "#mkh-n-badge"], { autoAlpha: 1, y: 0, duration: .45, stagger: .1 }, 3.4)
+          .to(rows, { autoAlpha: 1, x: 0, duration: .45, stagger: .09 }, 3.55)
+          .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .5 }, 4)
+          .to("#mkh-n-dot", { scale: 1, duration: .4, ease: "back.out(3)" }, 4.3)
+          .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .45 }, 4.4)
+          .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .45 }, 4.6)
+          .to([".mkh-u--old", ".mkh-lab--a"], { autoAlpha: 0, duration: .3 }, 4.6)
+          .to([".mkh-u--new", ".mkh-lab--b"], { autoAlpha: 1, y: 0, duration: .4 }, 4.8)
+          .to({}, { duration: .8 }, 5.4);
+      }
+
+      function cancelReplay() { if (replayTween) { replayTween.kill(); replayTween = null; } }
+
+      function runReplay() {
+        var st = tl.scrollTrigger;
+        if (!st) return;
+        cancelReplay();
+        var top = st.start, bottom = st.end;
+        window.scrollTo(0, top);
+        var o = { y: top };
+        replayTween = gsap.to(o, {
+          y: bottom, duration: narrow ? 2.6 : 3.4, ease: "power1.inOut",
+          onUpdate: function () { window.scrollTo(0, o.y); },
+          onComplete: function () { replayTween = null; }
+        });
+      }
+
+      replay.addEventListener("click", runReplay);
+      window.addEventListener("wheel", cancelReplay, { passive: true });
+      window.addEventListener("touchstart", cancelReplay, { passive: true });
+
+      return function () {
+        cancelReplay();
+        replay.removeEventListener("click", runReplay);
+        window.removeEventListener("wheel", cancelReplay);
+        window.removeEventListener("touchstart", cancelReplay);
+      };
+    });
+
+    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  }
+
+  window.MKH_init = init;
+  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", init); } else { init(); }
+})();
+</script>
+</body>
+</html>

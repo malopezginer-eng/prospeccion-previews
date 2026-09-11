@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pieza 2 · La maqueta de movil, interactiva</title>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<style>
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE;
+  --brand: #237A77; --brand-deep: #1B615F; --brand-lite: #2F9A96; --accent: #F2B134; --accent-lite: #F8CE7E;
+  --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --body: Inter, "Inter Fallback", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ============ PIEZA 2 ============ */
+.mkm-root { padding: clamp(40px, 5.6vw, 84px) 0; position: relative; }
+.mkm-root::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(17,18,20,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,20,.045) 1px, transparent 1px);
+  background-size: 52px 52px; }
+.mkm-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); position: relative; z-index: 1; }
+.mkm-grid { display: grid; grid-template-columns: 1fr minmax(300px, 380px); gap: clamp(26px, 4vw, 64px); align-items: center; }
+.mkm-rule { display: block; width: 54px; height: 4px; border-radius: 2px; background: var(--brand); margin: 0 0 18px; }
+.mkm-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.032em; margin: 0; text-wrap: balance; }
+.mkm-lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 52ch; margin: 16px 0 0; }
+.mkm-points { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; max-width: 48ch; }
+.mkm-points li { position: relative; padding-left: 26px; font-size: 15.5px; color: #33363c; }
+.mkm-points li::before { content: ""; position: absolute; left: 0; top: .52em; width: 11px; height: 11px; border-radius: 3px; background: var(--brand); }
+.mkm-points li.a::before { background: var(--accent); }
+.mkm-try { display: none; gap: 8px; flex-wrap: wrap; margin: 24px 0 0; }
+.mkm-js .mkm-try { display: flex; }
+.mkm-try span { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border: 1px solid #cfe0de; border-radius: 999px; padding: 8px 13px; }
+.mkm-try span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex: none; }
+
+.mkm-stagewrap { justify-self: center; }
+.mkm-cap { margin: 14px 0 0; text-align: center; font-size: 12.5px; color: var(--muted); }
+
+/* ---- el telefono ---- */
+.mkm-phone { width: min(330px, 84vw); margin: 0 auto; border-radius: 30px; background: #06070a; padding: 10px; box-shadow: 0 34px 62px -26px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.09); }
+.mkm-notch { width: 62px; height: 5px; border-radius: 3px; background: #000; margin: 0 auto 8px; opacity: .6; }
+.mkm-screen { position: relative; background: #fff; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); font-size: 13px; line-height: 1.45; }
+.mkm-js .mkm-screen { height: 600px; }
+
+.mkm-topbar { flex: none; display: flex; align-items: center; gap: 8px; padding: 12px 13px 10px; border-bottom: 1px solid var(--line); background: #fff; }
+.mkm-logo { width: 20px; height: 20px; border-radius: 6px; background: var(--brand); flex: none; }
+.mkm-name { font-family: var(--display); font-weight: 800; font-size: 13.5px; letter-spacing: .01em; }
+.mkm-status { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border-radius: 999px; padding: 5px 9px; white-space: nowrap; }
+.mkm-status .mkm-dot { width: 7px; height: 7px; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkm-status.is-shut { color: #8a3f2f; background: #F6E9E4; }
+.mkm-status.is-shut .mkm-dot { background: #C1583F; }
+
+/* ---- pestanas (solo con JS) ---- */
+.mkm-tabs { display: none; flex: none; gap: 2px; padding: 8px 8px 0; border-bottom: 1px solid var(--line); background: #fff; }
+.mkm-js .mkm-tabs { display: flex; }
+.mkm-tabs button { flex: 1 1 0; min-width: 0; appearance: none; background: none; border: 0; border-radius: 8px 8px 0 0; padding: 9px 2px 10px; font: 600 11.5px/1.1 var(--body); color: var(--muted); cursor: pointer; position: relative; letter-spacing: -.01em; }
+.mkm-tabs button::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -1px; height: 3px; border-radius: 2px 2px 0 0; background: transparent; transition: background .18s ease; }
+.mkm-tabs button:hover { color: var(--ink); background: #F6F4EE; }
+.mkm-tabs button[aria-selected="true"] { color: var(--brand-deep); }
+.mkm-tabs button[aria-selected="true"]::after { background: var(--brand); }
+.mkm-tabs button:focus-visible { outline-offset: -3px; }
+
+/* ---- paneles ---- */
+.mkm-panels { flex: 1 1 auto; position: relative; min-height: 0; background: #fff; }
+.mkm-panel { padding: 14px 13px 16px; }
+.mkm-js .mkm-panel { position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; transition: transform .26s ease, opacity .26s ease; }
+.mkm-panel h3 { font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: -.02em; margin: 0 0 10px; }
+/* con JS la pestana ya dice el nombre: el h3 queda solo para lectores de pantalla */
+.mkm-js .mkm-panel h3 { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.mkm-panel + .mkm-panel { border-top: 1px solid var(--line); }
+.mkm-js .mkm-panel + .mkm-panel { border-top: 0; }
+
+.mkm-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 12.5px; }
+.mkm-row span:first-child { font-weight: 600; }
+.mkm-row b { font-family: var(--display); font-weight: 800; color: var(--brand-deep); letter-spacing: -.02em; white-space: nowrap; }
+.mkm-row small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.mkm-hint { margin: 12px 0 0; font-size: 11.5px; color: var(--muted); }
+
+.mkm-live { display: flex; align-items: center; gap: 8px; padding: 10px 11px; border-radius: 10px; background: #EAF1F0; margin: 0 0 12px; font-size: 12.5px; }
+.mkm-live .mkm-dot { width: 9px; height: 9px; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkm-live b { font-weight: 700; }
+.mkm-live.is-shut { background: #F6E9E4; }
+.mkm-live.is-shut .mkm-dot { background: #C1583F; }
+.mkm-week { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.mkm-week th { text-align: left; font-weight: 600; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.mkm-week td { text-align: right; padding: 7px 0; border-bottom: 1px dashed var(--line); color: var(--muted); }
+.mkm-week tr.is-today th, .mkm-week tr.is-today td { color: var(--brand-deep); font-weight: 700; }
+
+.mkm-map { position: relative; height: 132px; border-radius: 10px; overflow: hidden; margin: 0 0 12px; background: #E7E9E4;
+  background-image: linear-gradient(rgba(17,18,20,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,20,.09) 1px, transparent 1px), linear-gradient(115deg, #E9EDE7, #DCE4DE); background-size: 22px 22px, 22px 22px, 100% 100%; }
+.mkm-map::before { content: ""; position: absolute; left: -10%; top: 56%; width: 120%; height: 12px; background: #fff; opacity: .85; transform: rotate(-7deg); }
+.mkm-map::after { content: ""; position: absolute; left: 50%; top: 52%; width: 16px; height: 16px; border-radius: 50% 50% 50% 0; background: var(--brand); transform: translate(-50%, -100%) rotate(-45deg); box-shadow: 0 0 0 5px rgba(35,122,119,.18); }
+.mkm-addr { font-size: 12.5px; }
+.mkm-addr b { display: block; font-weight: 700; }
+.mkm-ways { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; font-size: 12px; color: var(--muted); }
+.mkm-ways li { position: relative; padding-left: 20px; }
+.mkm-ways li::before { content: ""; position: absolute; left: 0; top: .45em; width: 9px; height: 9px; border-radius: 2px; background: var(--brand); opacity: .75; }
+
+.mkm-rev { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.mkm-rev:last-of-type { border-bottom: 0; }
+.mkm-stars { color: #C9901B; letter-spacing: 2px; font-size: 12px; }
+.mkm-rev p { margin: 4px 0 4px; font-size: 12.5px; }
+.mkm-rev small { color: var(--muted); font-size: 11px; }
+
+/* ---- barra inferior ---- */
+.mkm-bottom { display: none; flex: none; padding: 10px 13px 13px; border-top: 1px solid var(--line); background: #fff; }
+.mkm-js .mkm-bottom { display: block; }
+.mkm-wa { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; appearance: none; border: 0; background: var(--brand); color: #fff; border-radius: 999px; padding: 12px 10px; font: 700 13px/1 var(--body); cursor: pointer; transition: background .15s ease, transform .15s ease; }
+.mkm-wa:hover { background: var(--brand-deep); transform: translateY(-1px); }
+.mkm-wa .mkm-ring { width: 8px; height: 8px; border-radius: 50%; background: #7CE0B8; flex: none; }
+.mkm-demo { display: block; margin: 7px 0 0; text-align: center; font-size: 10.5px; color: var(--muted); }
+
+/* ---- chat de demostracion ---- */
+.mkm-chat { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; background: #EFE7DC; transform: translateY(101%); transition: transform .28s ease; }
+.mkm-chat.is-open { transform: translateY(0); }
+.mkm-chat[hidden] { display: none; }
+.mkm-chat-top { flex: none; display: flex; align-items: center; gap: 9px; padding: 11px 11px; background: var(--brand-deep); color: #fff; }
+.mkm-back { appearance: none; border: 0; background: rgba(255,255,255,.14); color: #fff; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font: 700 15px/1 var(--body); flex: none; }
+.mkm-back:hover { background: rgba(255,255,255,.26); }
+.mkm-chat-top b { font-size: 13px; font-weight: 700; }
+.mkm-chat-top small { margin-left: auto; font-size: 10.5px; color: #CFE3E1; }
+.mkm-thread { flex: 1 1 auto; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 9px; }
+.mkm-msg { max-width: 84%; padding: 9px 11px; border-radius: 12px; font-size: 12.5px; box-shadow: 0 1px 1px rgba(17,18,20,.09); opacity: 0; transform: translateY(6px); transition: opacity .22s ease, transform .22s ease; }
+.mkm-msg.is-in { opacity: 1; transform: none; }
+.mkm-msg.out { align-self: flex-end; background: #D8F0D6; border-bottom-right-radius: 3px; }
+.mkm-msg.in { align-self: flex-start; background: #fff; border-bottom-left-radius: 3px; }
+.mkm-msg time { display: block; margin-top: 3px; font-size: 9.5px; color: var(--muted); text-align: right; }
+.mkm-chat-foot { flex: none; padding: 9px 12px 12px; background: #EFE7DC; }
+.mkm-fakeinput { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; font-size: 12px; color: var(--muted); }
+.mkm-chat-note { display: block; margin: 7px 0 0; text-align: center; font-size: 10.5px; color: var(--muted); }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .mkm-grid { grid-template-columns: 1fr; gap: 28px; }
+  .mkm-stagewrap { order: -1; }
+  .mkm-js .mkm-screen { height: min(600px, 74vh); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mkm-js .mkm-panel, .mkm-chat, .mkm-msg, .mkm-wa { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<section class="mkm-root" aria-labelledby="mkmTitle">
+  <div class="mkm-wrap">
+    <div class="mkm-grid">
+
+      <div class="mkm-copy">
+        <span class="mkm-rule" aria-hidden="true"></span>
+        <h2 class="mkm-h2" id="mkmTitle">Fast on a phone</h2>
+        <p class="mkm-lead">One page that does the job of a whole site, built around how people actually find you: on a phone, in a hurry. This is a working example &mdash; open the tabs, tap the button.</p>
+        <ul class="mkm-points">
+          <li>Your prices and your hours, exactly as you publish them.</li>
+          <li>&ldquo;Open now&rdquo; worked out live, on the visitor&rsquo;s own clock.</li>
+          <li>One tap to WhatsApp, fixed at the bottom so it is always there.</li>
+          <li class="a">Loads in a blink, even on a bad connection.</li>
+        </ul>
+        <div class="mkm-try" aria-hidden="true">
+          <span>Tap the tabs</span>
+          <span>Tap the green button</span>
+        </div>
+      </div>
+
+      <div class="mkm-stagewrap">
+        <div class="mkm-phone">
+          <div class="mkm-notch" aria-hidden="true"></div>
+          <div class="mkm-screen">
+
+            <div class="mkm-topbar">
+              <span class="mkm-logo" aria-hidden="true"></span>
+              <span class="mkm-name">TIONG BAHRU HAIR</span>
+              <span class="mkm-status" id="mkmChip"><span class="mkm-dot" aria-hidden="true"></span><span id="mkmChipTxt">Tue&ndash;Sun, 10:00&ndash;20:00</span></span>
+            </div>
+
+            <div class="mkm-tabs" role="tablist" aria-label="Sections of this example page" id="mkmTabs">
+              <button type="button" role="tab" id="mkmTab-serv" aria-controls="mkmPanel-serv" aria-selected="true" tabindex="0">Services</button>
+              <button type="button" role="tab" id="mkmTab-hours" aria-controls="mkmPanel-hours" aria-selected="false" tabindex="-1">Hours</button>
+              <button type="button" role="tab" id="mkmTab-find" aria-controls="mkmPanel-find" aria-selected="false" tabindex="-1">Find us</button>
+              <button type="button" role="tab" id="mkmTab-rev" aria-controls="mkmPanel-rev" aria-selected="false" tabindex="-1">Reviews</button>
+            </div>
+
+            <div class="mkm-panels" id="mkmPanels">
+
+              <section class="mkm-panel" id="mkmPanel-serv" role="tabpanel" aria-labelledby="mkmTab-serv" tabindex="0">
+                <h3>Services</h3>
+                <div class="mkm-row"><span>Cut &amp; blow dry<small>45 min</small></span><b>S$45</b></div>
+                <div class="mkm-row"><span>Colour, roots<small>90 min</small></span><b>S$120</b></div>
+                <div class="mkm-row"><span>Balayage<small>2 h 30</small></span><b>S$210</b></div>
+                <div class="mkm-row"><span>Keratin smoothing<small>3 h</small></span><b>S$280</b></div>
+                <div class="mkm-row"><span>Fringe trim<small>15 min</small></span><b>Free</b></div>
+                <p class="mkm-hint">Prices include GST. Walk-ins welcome; booking is faster.</p>
+              </section>
+
+              <section class="mkm-panel" id="mkmPanel-hours" role="tabpanel" aria-labelledby="mkmTab-hours" tabindex="0">
+                <h3>Hours</h3>
+                <p class="mkm-live" id="mkmLive"><span class="mkm-dot" aria-hidden="true"></span><span id="mkmLiveTxt"><b>Tue&ndash;Sun</b>, 10:00&ndash;20:00. Closed on Mondays.</span></p>
+                <table class="mkm-week">
+                  <tbody>
+                    <tr data-day="1"><th scope="row">Monday</th><td>Closed</td></tr>
+                    <tr data-day="2"><th scope="row">Tuesday</th><td>10:00 &ndash; 20:00</td></tr>
+                    <tr data-day="3"><th scope="row">Wednesday</th><td>10:00 &ndash; 20:00</td></tr>
+                    <tr data-day="4"><th scope="row">Thursday</th><td>10:00 &ndash; 20:00</td></tr>
+                    <tr data-day="5"><th scope="row">Friday</th><td>10:00 &ndash; 20:00</td></tr>
+                    <tr data-day="6"><th scope="row">Saturday</th><td>10:00 &ndash; 20:00</td></tr>
+                    <tr data-day="0"><th scope="row">Sunday</th><td>10:00 &ndash; 20:00</td></tr>
+                  </tbody>
+                </table>
+                <p class="mkm-hint">Public holidays: last booking at 17:00.</p>
+              </section>
+
+              <section class="mkm-panel" id="mkmPanel-find" role="tabpanel" aria-labelledby="mkmTab-find" tabindex="0">
+                <h3>Find us</h3>
+                <div class="mkm-map" role="img" aria-label="Simplified map with the shop marked on the main road"></div>
+                <p class="mkm-addr"><b>78 Tiong Poh Road, #01-12</b>Singapore 160078</p>
+                <ul class="mkm-ways">
+                  <li>2 min walk from Tiong Bahru MRT, exit B.</li>
+                  <li>Buses 5, 16, 123, 195 stop across the road.</li>
+                  <li>Blue shopfront, next to the bakery.</li>
+                  <li>Car park under the block, S$1.20 an hour.</li>
+                </ul>
+              </section>
+
+              <section class="mkm-panel" id="mkmPanel-rev" role="tabpanel" aria-labelledby="mkmTab-rev" tabindex="0">
+                <h3>Reviews</h3>
+                <div class="mkm-rev">
+                  <span class="mkm-stars" role="img" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  <p>&ldquo;Asked for something low maintenance and that is exactly what I got. Grew out well.&rdquo;</p>
+                  <small>Google review &middot; 4.8 average, 212 reviews</small>
+                </div>
+                <div class="mkm-rev">
+                  <span class="mkm-stars" role="img" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  <p>&ldquo;Booked on WhatsApp at 9am, in the chair by noon. No fuss.&rdquo;</p>
+                  <small>Google review</small>
+                </div>
+                <div class="mkm-rev">
+                  <span class="mkm-stars" role="img" aria-label="4 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                  <p>&ldquo;Colour came out just as in the photo. Busy on Saturdays, so book ahead.&rdquo;</p>
+                  <small>Google review</small>
+                </div>
+                <p class="mkm-hint">Example reviews for a business that does not exist.</p>
+              </section>
+
+              <div class="mkm-chat" id="mkmChat" hidden>
+                <div class="mkm-chat-top">
+                  <button type="button" class="mkm-back" id="mkmBack" aria-label="Back to the page">&#8592;</button>
+                  <b>Tiong Bahru Hair</b>
+                  <small>demo</small>
+                </div>
+                <div class="mkm-thread" id="mkmThread">
+                  <div class="mkm-msg out" data-msg><span>Hi, do you have a slot on Saturday?</span><time>10:42</time></div>
+                  <div class="mkm-msg in" data-msg><span>Yes, 3pm works.</span><time>10:44</time></div>
+                </div>
+                <div class="mkm-chat-foot">
+                  <div class="mkm-fakeinput" aria-hidden="true">Type a message&hellip;</div>
+                  <span class="mkm-chat-note">Demo only. This does not open WhatsApp.</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mkm-bottom">
+              <button type="button" class="mkm-wa" id="mkmWa" aria-expanded="false" aria-controls="mkmChat">
+                <span class="mkm-ring" aria-hidden="true"></span>Message on WhatsApp
+              </button>
+              <span class="mkm-demo">Demo &middot; nothing is sent</span>
+            </div>
+
+          </div>
+        </div>
+        <p class="mkm-cap">Example page for a business that does not exist.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script defer>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  var tablist = document.getElementById("mkmTabs");
+  var panelsBox = document.getElementById("mkmPanels");
+  if (!tablist || !panelsBox) { return; }
+
+  var tabs = Array.prototype.slice.call(tablist.querySelectorAll("[role=tab]"));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
+  if (panels.indexOf(null) !== -1) { return; }
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.classList.add("mkm-js");
+
+  function chatIsOpen() {
+    var c = document.getElementById("mkmChat");
+    return !!c && c.classList.contains("is-open");
+  }
+
+  /* ---------- pestanas ---------- */
+  var current = 0;
+  var timer = null;
+
+  panels.forEach(function (p, i) { if (i !== 0) { p.hidden = true; } });
+
+  function select(next, focusTab) {
+    if (chatIsOpen()) { closeChat(false); }
+    if (next === current || !panels[next]) { return; }
+    var dir = next > current ? 1 : -1;
+    var from = panels[current];
+    var to = panels[next];
+
+    tabs[current].setAttribute("aria-selected", "false");
+    tabs[current].tabIndex = -1;
+    tabs[next].setAttribute("aria-selected", "true");
+    tabs[next].tabIndex = 0;
+    if (focusTab) { tabs[next].focus(); }
+
+    to.hidden = false;
+    to.scrollTop = 0;
+    if (reduce) {
+      from.hidden = true;
+      current = next;
+      return;
+    }
+    to.style.transition = "none";
+    to.style.transform = "translateX(" + (dir * 18) + "%)";
+    to.style.opacity = "0";
+    void to.offsetWidth;
+    to.style.transition = "";
+    to.style.transform = "translateX(0)";
+    to.style.opacity = "1";
+    from.style.transform = "translateX(" + (-dir * 18) + "%)";
+    from.style.opacity = "0";
+
+    var leaving = from;
+    current = next;
+    if (timer) { clearTimeout(timer); }
+    timer = setTimeout(function () {
+      if (panels[current] !== leaving) {
+        leaving.hidden = true;
+        leaving.style.transition = "none";
+        leaving.style.transform = "";
+        leaving.style.opacity = "";
+        void leaving.offsetWidth;
+        leaving.style.transition = "";
+      }
+    }, 300);
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () { select(i, false); });
+    tab.addEventListener("keydown", function (ev) {
+      var k = ev.key, n = -1;
+      if (k === "ArrowRight") { n = (i + 1) % tabs.length; }
+      else if (k === "ArrowLeft") { n = (i - 1 + tabs.length) % tabs.length; }
+      else if (k === "Home") { n = 0; }
+      else if (k === "End") { n = tabs.length - 1; }
+      else { return; }
+      ev.preventDefault();
+      select(n, true);
+    });
+  });
+
+  /* ---------- horario vivo ---------- */
+  var OPEN = 10 * 60, CLOSE = 20 * 60, SHUT_DAY = 1; /* lunes cerrado */
+  var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var chip = document.getElementById("mkmChip");
+  var chipTxt = document.getElementById("mkmChipTxt");
+  var live = document.getElementById("mkmLive");
+  var liveTxt = document.getElementById("mkmLiveTxt");
+  var weekRows = Array.prototype.slice.call(document.querySelectorAll(".mkm-week tr"));
+
+  function state() {
+    var now = new Date();
+    var d = now.getDay();
+    var m = now.getHours() * 60 + now.getMinutes();
+    if (d !== SHUT_DAY && m >= OPEN && m < CLOSE) {
+      return { open: true, chip: "Open now", full: "<b>Open now</b> &middot; closes at 20:00." };
+    }
+    if (d !== SHUT_DAY && m < OPEN) {
+      return { open: false, chip: "Opens at 10:00", full: "<b>Closed</b> &middot; opens today at 10:00." };
+    }
+    var k = 1;
+    while (k < 8 && (d + k) % 7 === SHUT_DAY) { k++; }
+    var nd = (d + k) % 7;
+    var when = k === 1 ? "tomorrow" : "on " + DAYS[nd];
+    return { open: false, chip: "Opens " + (k === 1 ? "tomorrow" : DAYS[nd].slice(0, 3)) + " 10:00", full: "<b>Closed</b> &middot; opens " + when + " at 10:00." };
+  }
+
+  function paint() {
+    var s = state();
+    if (chipTxt) { chipTxt.textContent = s.chip; }
+    if (chip) { chip.classList.toggle("is-shut", !s.open); }
+    if (liveTxt) { liveTxt.innerHTML = s.full + " Closed on Mondays."; }
+    if (live) { live.classList.toggle("is-shut", !s.open); }
+    var today = new Date().getDay();
+    weekRows.forEach(function (r) { r.classList.toggle("is-today", Number(r.getAttribute("data-day")) === today); });
+  }
+  paint();
+  setInterval(paint, 60000);
+
+  /* ---------- chat de demostracion ---------- */
+  var wa = document.getElementById("mkmWa");
+  var chat = document.getElementById("mkmChat");
+  var back = document.getElementById("mkmBack");
+  var msgs = Array.prototype.slice.call(document.querySelectorAll("#mkmThread [data-msg]"));
+  var msgTimers = [];
+
+  function openChat() {
+    if (!chat) { return; }
+    chat.hidden = false;
+    void chat.offsetWidth;
+    chat.classList.add("is-open");
+    wa.setAttribute("aria-expanded", "true");
+    msgs.forEach(function (m) { m.classList.remove("is-in"); });
+    msgTimers.forEach(clearTimeout);
+    msgTimers = msgs.map(function (m, i) {
+      return setTimeout(function () { m.classList.add("is-in"); }, reduce ? 0 : 260 + i * 620);
+    });
+    if (back) { back.focus(); }
+  }
+
+  function closeChat(returnFocus) {
+    if (!chat) { return; }
+    chat.classList.remove("is-open");
+    wa.setAttribute("aria-expanded", "false");
+    msgTimers.forEach(clearTimeout);
+    setTimeout(function () { if (!chat.classList.contains("is-open")) { chat.hidden = true; } }, reduce ? 0 : 300);
+    if (wa && returnFocus !== false) { wa.focus(); }
+  }
+
+  if (wa && chat) {
+    wa.addEventListener("click", function () {
+      if (chat.classList.contains("is-open")) { closeChat(true); } else { openChat(); }
+    });
+  }
+  if (back) { back.addEventListener("click", function () { closeChat(true); }); }
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape" && chat && chat.classList.contains("is-open")) { closeChat(true); }
+  });
+})();
+</script>
+
+</body>
+</html>

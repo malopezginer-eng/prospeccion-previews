@@ -1,42 +1,106 @@
-# Dirección B — pasada «vibrante» y arreglos (2026-09-11, fase 3)
+# Dirección B — montaje final con las cuatro piezas (2026-09-11, fase 4)
 
-## Parte 1 — lo que estaba roto
-- **«Fast on a phone»** ya no es un rectángulo negro: lleva dentro una **maqueta de móvil en HTML/CSS** copiada y
-  adaptada de la dirección A (`.phone`, `.p-topbar`, `.p-hero`, `.p-services`, `.p-hours`, `.p-map`, `.p-cta`), con
-  el mismo recorte de foto (`width:230%; left:-65%; top:-27.6%`). Negocio ficticio «YOURSALON», rotulado
-  «Example page · not a real business». Todos los bloques llevan `flex: none` y el mapa es el único elástico: no
-  colapsa ni desborda, comprobado de 320 a 1600 px.
-- El bento pasa a **6 columnas**: la tarjeta grande ocupa 2 col × 3 filas (móvil vertical), cinco tarjetas de 2 col
-  y las dos de texto más corto en columnas estrechas. Ninguna celda vacía en ningún ancho; la tarjeta más aireada
-  queda al 53 % de aire, el resto por debajo del 50 %.
-- **«How it works»** ya no son barras de color: son **tres estados de la misma web** con la captura `after-salon`.
-  01 barra `· draft` + sello «draft»; 02 la misma captura con **tres marcas de revisión** en ámbar (recuadro
-  discontinuo + etiqueta «photo», «price», «hours»); 03 barra `· live` con **candado SVG** y sello «LIVE» teal.
+Un solo archivo, `lab/b/index.html`. Las piezas de `lab/pieces/` están **copiadas dentro**, cada una en su
+bloque de CSS rotulado dentro del `<style>` y su IIFE dentro del único `<script>` del final. Las piezas
+originales no se han tocado. El montaje se hizo con un script reproducible que falla si un marcador no
+aparece: `%TEMP%\claude\C--dev-prospeccion\<sesión>\scratchpad\build\build.py`.
 
-## Parte 2 — que vibre
-- **Dos bandas a color pleno**: las tres cifras sobre teal profundo `#1B615F` (85/76/87 a `clamp(62px,8.6vw,128px)`,
-  en blanco) y el cierre sobre el mismo teal con «S$590» gigante en ámbar. «How it works» sigue en tinta y el pie
-  pasa a tinta. Ritmo: papel → teal → tinte → papel → tinta → papel → tinte → papel → tinte → teal → tinta.
-- **Ámbar `#F2B134`** como acento vivo: marcas de revisión, subrayado de «already built» y de «S$590», filetes de
-  sección, número de paso y botón del cierre. Para texto pequeño sobre teal se usa `--accent-lite: #F8CE7E` (4,8:1)
-  y `--brand-lite: #2F9A96` para el teal pequeño sobre oscuro, como avisaba el brief.
-- Titulares a `clamp(34px,5.2vw,68px)`; retícula de fondo al 4,5 % en las secciones claras; sombras largas y
-  distintas por pieza; micro-interacciones de 150-160 ms en botones, tarjetas, filas de la tabla, FAQ y nav.
-- **Movimiento**: el barrido del hero sigue siendo el acto principal (arranca al 14 % para que el tirador no se
-  corte en móvil); se añaden las cifras contando sobre el teal y el **build escalonado del bento**. La cinta de
-  drafts ya existía y sigue parándose en hover y foco. Nada más se anima.
+## Qué pieza vive dónde
 
-## Comprobado en navegador
-Sin scroll horizontal ni recortes de 320 a 1600 px · contraste AA automático: **0 fallos** (incluida la FAQ abierta)
-· **12,8 pantallas** a 390 px · HTML bien formado, ninguna caja vacía salvo gradientes decorativos · contenido
-completo sin JS y en `prefers-reduced-motion` · solo GSAP 3.13.0 (core + ScrollTrigger) por jsDelivr.
-Bug encontrado y corregido de paso: la barra de navegación desbordaba a 1440 px (etiqueta + anclas + botón).
+| Pieza | Dónde queda | Qué sustituyó |
+|---|---|---|
+| `hero.html` (`mkh-`) | `<header class="mkh-hero" id="top">`, primer bloque del cuerpo | El marco con la captura de la peluquería, el barrido por scroll y el comparador arrastrable |
+| `movil.html` (`mkm-`) | Dentro de `article.lg` («Fast on a phone») de `#get` | La maqueta estática `.phone` / `.p-*` |
+| `pasos.html` (`mkp-`) | `<section class="mkp-root" id="how">` | La `<ol class="steps">` entera de `#how` |
+| `demos.html` (`mkd-`) | `<section class="mkd-root" id="demos">` + su `<dialog>`, entre `#how` y `#safe` | Nada: sección nueva |
 
-## Retrato de Miguel
-Cuando llegue, basta copiar el archivo a `lab/assets/img/miguel.jpg`: la `<img>` ya apunta ahí y el `onerror` la
-sustituye por el logo mientras no exista. No hay que tocar el HTML.
+Orden final: nav → hero → cifras (teal) → What you get (móvil dentro) → precio → tres pasos → **demos** →
+confianza → quién te atiende → FAQ → cierre → pie.
 
-## Fuera / riesgo
-Fuera: iconos por tarjeta en el bento y la «web espectacular» aparte. Riesgo: entre 620 y 1040 px la mitad izquierda
-de la tarjeta grande respira mucho; y las tres capturas de «How it works» son la misma imagen, así que si Miguel
-quiere tres pantallas realmente distintas hay que producirlas.
+## Qué se retiró
+
+- **«Recent drafts» (la cinta) entera.** Enseñaba capturas estáticas de los mismos cuatro sectores que las
+  demos, que además se abren y se navegan: era la versión peor de la misma idea y costaba ~0,7 pantallas de
+  móvil. El enlace «See a draft» de la nav apunta ahora a `#demos` y el ítem «Drafts» desaparece.
+- Andamio de las piezas: `.mkh-demo-bar` / `.mkh-demo-tail`, el escaparate de `movil` (`.mkm-root`,
+  `.mkm-wrap`, `.mkm-grid`, su `<h2>` y su lead, que duplicaban el titular y el lead de `#get`), y la nav y
+  la banda teal de contexto de `demos`. Y de las cuatro: `@font-face`, `:root`, reset, `body`, `img`,
+  `:focus-visible` (ya estaban en la página).
+- CSS muerta de la página: hero viejo (`.theatre`, `.stage`, `.handle`, `.img-*`, `.frame-*`), maqueta
+  `.phone`/`.p-*`, `#how` viejo (`.steps`, `.step-frame`, `.shot`, `.stamp`, `.mark`), `.drafts`/`.marquee-*`
+  y `.dots`. El JS del comparador y de la cinta también.
+- Direcciones postales de las maquetas: «12 Duxton Road, Singapore 089490» → «Tanjong Pagar, Singapore»;
+  «78 Tiong Poh Road…» → «Tiong Bahru»; «…, #01-12 / Singapore 160078» → «Tiong Bahru · Singapore».
+  Nombres unificados en el inventado que ya usaba la página: **YOURSALON** (antes «HAIR STUDIO» / «Hair
+  Studio» / «Tiong Bahru Hair»), con `yoursalon.sg` y `yoursalon-sg.webspace.net`.
+
+## Qué se conservó a propósito (textos de venta)
+
+El hero **mantiene** el kicker, el subtítulo aprobado, «S$590», el botón de WhatsApp, las cinco garantías y
+el pie legal de la captura; la pieza solo aporta el titular y el teatro. `#how` mantiene el párrafo largo de
+garantía de la página (no el corto de la pieza), con su filete ámbar.
+
+## Adaptaciones de integración (y por qué)
+
+- `body { overflow-x: clip }` en vez de `hidden`: `hidden` crea contenedor de scroll y **rompe los dos
+  sticky**. Comprobado: sin scroll horizontal a 390 px (`scrollWidth − clientWidth = 0`).
+- En el `<html>`: `scrollbar-gutter: stable` y `html.mkd-locked { overflow: hidden }` (visor de demos).
+- La nav es fija y mide 64 px: los dos sticky van a `top: 64px` con `height/min-height: calc(100svh − 64px)`.
+- El `<script>` inline que pone `mkh-js` sigue inline, en el `<head>`, antes de pintar.
+- Un solo `<script>` al final, dentro de `DOMContentLoaded` (un `<script>` en línea ignora `defer`, así que
+  espera a que GSAP 3.13.0 —cargado una sola vez, por jsDelivr, con `defer`— exista). `RM` se lee una vez y
+  se comparte con las cuatro piezas.
+- **Fugas de cascada arregladas**: `.get-grid article p/h3` y `.get-grid article.lg p/h3` pintaban de blanco
+  el texto de dentro de la pantalla del móvil (texto blanco sobre blanco); ahora van al hijo directo o a
+  `.lg-copy`. Y `footer { background: var(--ink) }` alcanzaba al `<footer>` de la web nueva del hero (caja
+  negra dentro del marco); ahora es `body > footer`. El `<h2>` de la web de 2006 recupera su serif con
+  `font-family: inherit`.
+- **`html { scroll-behavior: smooth }` rompía el botón «Replay»** (cada `scrollTo` del tween arrancaba su
+  propia animación suave; medido: 2306 → 2108 → 2887 en vez de recorrer el raíl). Ahora el Replay pide
+  `behavior: "instant"`.
+- **Los reveals usaban `autoAlpha`**, que pone `visibility: hidden` y sacaba de la tabulación todo lo que
+  hubiera dentro (con Tab se saltaban los botones de `#price`). Pasan a `opacity`, más una red de seguridad
+  en `focusin`. Recorrido con Tab completo verificado, de la nav al pie, con foco visible en cada parada.
+- La tarjeta «Fast on a phone» pasa a ancho completo (`grid-column: 1 / -1`, copia y teléfono en fila): el
+  teléfono de 520 px no cabía en una columna de 2/6 sin dejar 250 px de aire en las siete tarjetas vecinas.
+  Dentro de la tarjeta, el teléfono pierde el `order: -1` de la pieza (manda el titular) y oculta la barra
+  de scroll de los paneles (un móvil real no enseña ninguna).
+- El lead de los pasos («Scroll and watch…») solo aparece con la secuencia activa: sin JS o con
+  reduced-motion no hay nada que mirar.
+
+## Recorte de pantallas
+
+Con todo montado salían **16,91 pantallas** de móvil. Se recortó **aire, nunca contenido**: raíles del hero
+(300 → 163 svh) y de los pasos (240 → 158 vh) —la única concesión de la que avisa el brief—, paddings de
+sección, póster de las demos a 5:2 en móvil (se recorta por arriba: se sigue viendo cabecera y titular de
+cada diseño), pantalla del teléfono a 445 px y una pasada de micro-aire en cifras, precio, confianza, FAQ,
+cierre y pie. Resultado: **14,83 pantallas a 390×844**. Los scrubs quedan en ~600 px cada uno (la pieza
+original tenía ~1700 y ~1200): la secuencia es más rápida en móvil, es el precio del tope.
+
+## Comprobado en navegador (1440×900 y 390×844, servido por http)
+
+Hero se reconstruye y «Replay» recorre el raíl entero · los tres pasos avanzan y las anotaciones del cliente
+cambian la página · las cuatro pestañas del móvil con ratón y con ←/→/Home/End, y el botón abre la
+conversación falsa (Esc la cierra, el foco vuelve) · **las cuatro demos** abren en el visor, se navegan por
+dentro, Phone/Desktop escala (1440→0,861), `Esc` y la X cierran, el `src` vuelve a `about:blank` y el foco
+vuelve a su tarjeta · **0 iframes en la carga inicial** · ninguna imagen rota, ninguna caja vacía, sin scroll
+horizontal · los seis enlaces del menú llevan a su sección con el título a 164 px (la barra mide 64) ·
+contraste AA: 0 fallos reales · `prefers-reduced-motion`: hero en «Before/After» lado a lado, pasos en la
+página terminada, 11,1 pantallas · sin JS: página completa, precio, garantías, tres pasos y las cuatro demos
+como enlaces normales, 0 iframes · estilos computados de las cuatro piezas comparados uno a uno contra sus
+archivos originales: **demos 0 diferencias, móvil y pasos solo subpíxeles, hero solo el `font-size` heredado
+del `body` (17 px en vez de 16), que no cambia ningún texto**.
+
+## Riesgo y pendiente
+
+- **Único error de consola: `assets/img/miguel.jpg` 404.** Es el hueco del retrato, anterior a este montaje:
+  el `onerror` pone el logo y se ve bien. Se apaga solo el día que se copie la foto ahí.
+- Tres de las cuatro demos desbordan en horizontal a 375 px (hallazgo de `demos-NOTAS.md`, pasa también
+  abriéndolas solas); está fuera de `lab/b/`.
+- Dentro de la web de 2006 del hero sigue habiendo una captura real anonimizada (`after-salon-720.webp`)
+  estirada, con «The Hair Studio» incrustado; por eso se conserva el pie legal aprobado. Si molesta que no
+  case con «YOURSALON», se recorta o se sustituye por una foto real del negocio.
+- Sin JS, el móvil de `#get` se estira (las cuatro secciones una debajo de otra, ~1520 px): es la caída
+  prevista por la pieza, legible y completa, pero larga.
+- El repo tiene `lab/pieces/` y `lab/demos/` sin trackear (de las otras sesiones). **No se ha commiteado
+  nada**: el brief acota el trabajo a `lab/b/` y el commit de todo el lote es del que coordina.

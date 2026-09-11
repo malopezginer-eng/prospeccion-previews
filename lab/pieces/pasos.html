@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pieza 1 · How it works, contado de verdad</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
+<style>
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 700 800; font-display: swap; src: url(../assets/fonts/bricolage-grotesque-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../assets/fonts/inter-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --paper: #F9F6EF; --ink: #111214; --muted: #5f626a; --line: #e4e2dc; --tint: #F0EADE;
+  --brand: #237A77; --brand-deep: #1B615F; --brand-lite: #2F9A96; --accent: #F2B134; --accent-lite: #F8CE7E;
+  --on-ink: #B7BBC2;
+  --display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --body: Inter, "Inter Fallback", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+/* ============ PIEZA 1 ============ */
+.mkp-root { background: var(--ink); color: var(--paper); padding: clamp(44px, 6vw, 88px) 0 clamp(52px, 7vw, 104px); }
+.mkp-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.mkp-rule { display: block; width: 54px; height: 4px; border-radius: 2px; background: var(--accent); margin: 0 0 18px; }
+.mkp-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.2vw, 68px); line-height: 1.02; letter-spacing: -0.032em; margin: 0; color: #fff; text-wrap: balance; }
+.mkp-lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--on-ink); max-width: 54ch; margin: 16px 0 0; }
+
+/* el rail de scroll: alto propio; dentro, un bloque pegado.
+   Sin JS, sin GSAP o con reduced-motion la clase .mkp-anim no llega a ponerse:
+   el rail no ocupa alto de mas y el bloque deja de estar pegado. */
+.mkp-stage { position: relative; margin-top: clamp(26px, 3.4vw, 46px); }
+.mkp-sticky { display: grid; grid-template-columns: 1fr minmax(280px, 380px); gap: clamp(26px, 3.2vw, 52px); align-items: center; padding: clamp(18px, 3vw, 40px) 0; }
+.mkp-anim .mkp-stage { height: 360vh; }
+.mkp-anim .mkp-sticky { position: sticky; top: 0; min-height: 100vh; }
+
+/* ---- marco de navegador ---- */
+.mkp-browser { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); background: #17191c; box-shadow: 0 40px 80px -40px rgba(0,0,0,.95); container-type: inline-size; }
+.mkp-bar { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: #1f2225; border-bottom: 1px solid rgba(255,255,255,.1); }
+.mkp-dots { display: inline-flex; gap: 6px; flex: none; }
+.mkp-dots span { width: 8px; height: 8px; border-radius: 50%; }
+.mkp-dots span:nth-child(1) { background: #E0645C; }
+.mkp-dots span:nth-child(2) { background: #E8B33D; }
+.mkp-dots span:nth-child(3) { background: #4FA36A; }
+.mkp-url { margin-left: 4px; flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.08); border-radius: 6px; padding: 5px 9px; font-size: 11.5px; color: rgba(249,246,239,.94); white-space: nowrap; overflow: hidden; }
+.mkp-lock { flex: none; display: block; width: 10px; height: 12px; }
+.mkp-swap { display: inline-grid; align-items: center; min-width: 0; }
+.mkp-swap > * { grid-area: 1 / 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- la pagina dibujada (todo en em sobre el font-size de .mkp-page) ---- */
+/* la pagina se mide en cqw: todo dentro escala exacto con el ancho del marco */
+.mkp-page { position: relative; aspect-ratio: 16 / 10; background: var(--paper); color: var(--ink); overflow: hidden; font-size: clamp(7px, 1.02vw, 12px); }
+@supports (font-size: 1cqw) { .mkp-page { font-size: 1.68cqw; } }
+.mkp-doc { position: absolute; inset: 0; display: flex; flex-direction: column; background: #fff; }
+
+.mkp-pnav { flex: none; display: flex; align-items: center; gap: .8em; padding: .78em 1.3em; border-bottom: 1px solid var(--line); background: #fff; }
+.mkp-plogo { width: 1.5em; height: 1.5em; border-radius: .4em; background: var(--brand); flex: none; }
+.mkp-pname { font-family: var(--display); font-weight: 800; font-size: 1.05em; letter-spacing: .01em; }
+.mkp-pnav ul { display: flex; gap: 1.1em; list-style: none; margin: 0 0 0 auto; padding: 0; font-size: .82em; color: var(--muted); font-weight: 600; }
+.mkp-pnav .mkp-pbtn { font-size: .78em; }
+.mkp-pbtn { display: inline-flex; align-items: center; gap: .5em; background: var(--brand); color: #fff; border-radius: 999px; padding: .7em 1.2em; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+
+.mkp-phero { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; padding: 1.15em 1.3em .9em; align-items: center; }
+.mkp-phero h3 { font-family: var(--display); font-weight: 800; font-size: 2.2em; line-height: 1.02; letter-spacing: -.035em; margin: 0 0 .34em; }
+.mkp-phero p { margin: 0 0 .9em; font-size: .95em; color: var(--muted); line-height: 1.45; }
+.mkp-pphoto { position: relative; aspect-ratio: 8 / 5; border-radius: .7em; overflow: hidden; background: var(--tint); }
+.mkp-pphoto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mkp-pphoto .mkp-photo-b { z-index: 2; }
+
+.mkp-pprices { flex: none; padding: 0 1.3em; }
+.mkp-prow { display: flex; align-items: baseline; justify-content: space-between; gap: 1em; padding: .38em 0; border-bottom: 1px dashed var(--line); font-size: .92em; }
+.mkp-prow span:first-child { font-weight: 600; }
+.mkp-prow b { font-family: var(--display); font-weight: 800; color: var(--brand-deep); letter-spacing: -.02em; display: inline-block; transform-origin: 100% 50%; }
+
+.mkp-phours { flex: none; display: flex; align-items: center; gap: .5em; padding: .7em 1.3em .2em; font-size: .86em; color: var(--muted); }
+.mkp-phours .mkp-go { width: .6em; height: .6em; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkp-phours b { color: var(--ink); font-weight: 700; }
+
+.mkp-pfoot { margin-top: auto; flex: none; display: flex; align-items: center; gap: .9em; padding: .7em 1.3em .9em; }
+.mkp-pfoot small { font-size: .78em; color: var(--muted); }
+
+/* sello live */
+.mkp-live { position: absolute; z-index: 6; bottom: .85em; right: .9em; display: inline-flex; align-items: center; gap: .5em; background: var(--brand); color: #fff; font: 700 .78em/1 var(--body); letter-spacing: .1em; text-transform: uppercase; padding: .62em .8em; border-radius: .45em; box-shadow: 0 .5em 1.4em -.5em rgba(0,0,0,.6); }
+.mkp-live::before { content: ""; width: .55em; height: .55em; border-radius: 50%; background: #7CE0B8; }
+
+/* esqueleto */
+.mkp-sk { position: absolute; inset: 0; z-index: 4; display: none; }
+.mkp-sk i { position: absolute; display: block; background: #DEDACF; border-radius: .35em; transform-origin: 0 50%; }
+
+/* anotaciones del cliente */
+.mkp-ann { position: absolute; z-index: 5; display: none; border: 2px dashed var(--accent); border-radius: .5em; background: rgba(242,177,52,.18); box-shadow: 0 0 0 1px rgba(17,18,20,.14); }
+.mkp-ann i { position: absolute; left: -2px; font-style: normal; background: var(--accent); color: #16130a; font: 700 .92em/1 var(--body); padding: .5em .7em; border-radius: .4em; white-space: nowrap; box-shadow: 0 .4em 1em -.35em rgba(17,18,20,.55); transform: rotate(-1.4deg); }
+.mkp-ann.mkp-lbl-top i { bottom: calc(100% + .45em); }
+.mkp-ann.mkp-lbl-in i { top: .5em; left: .5em; }
+.mkp-ann.mkp-lbl-right i { left: calc(100% + .5em); top: 50%; transform: translateY(-50%) rotate(-1.4deg); }
+.mkp-ann.mkp-a1 { left: 1.4%; top: 62.2%; width: 97%; height: 7.8%; }
+.mkp-ann.mkp-a2 { left: 50.4%; top: 13.2%; width: 48.2%; height: 48.2%; }
+.mkp-ann.mkp-a3 { left: 1.4%; top: 80.4%; width: 46%; height: 7.6%; }
+
+/* ---- columna de texto ---- */
+.mkp-steps { list-style: none; margin: 0; padding: 0; counter-reset: mkpstep; }
+.mkp-step { counter-increment: mkpstep; margin: 0 0 clamp(20px, 2.4vw, 30px); transition: opacity .35s ease, transform .35s ease; }
+.mkp-step:last-child { margin-bottom: 0; }
+.mkp-step .mkp-num { display: block; font-family: var(--display); font-size: 13px; letter-spacing: .12em; color: var(--accent); font-weight: 800; margin-bottom: 8px; }
+.mkp-step .mkp-num::before { content: "0" counter(mkpstep); }
+.mkp-step h3 { font-family: var(--display); font-weight: 800; font-size: clamp(19px, 1.7vw, 24px); letter-spacing: -.02em; line-height: 1.08; margin: 0 0 8px; color: #fff; }
+.mkp-step p { margin: 0; font-size: 15px; color: var(--on-ink); }
+.mkp-rail { display: none; gap: 6px; margin: 0 0 22px; }
+.mkp-rail span { flex: 1 1 0; height: 3px; border-radius: 2px; background: rgba(255,255,255,.16); overflow: hidden; }
+.mkp-rail span i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 2px; }
+.mkp-note { margin: clamp(22px, 3vw, 34px) 0 0; font-size: 14.5px; color: var(--on-ink); max-width: 70ch; }
+
+/* estado base = pagina TERMINADA (sin JS, sin GSAP o con reduced-motion):
+   de los dos textos apilados en cada .mkp-swap solo se ve el final */
+#mkpUrlDraft, #mkpHoursA { visibility: hidden; }
+
+/* ---- estado animado (lo pone el JS solo si hay GSAP y no hay reduced-motion) ---- */
+.mkp-anim #mkpUrlDraft, .mkp-anim #mkpHoursA { visibility: visible; }
+.mkp-anim .mkp-sk { display: block; }
+.mkp-anim .mkp-ann { display: block; opacity: 0; }
+.mkp-anim .mkp-live { opacity: 0; }
+.mkp-anim .mkp-rail { display: flex; }
+.mkp-anim .mkp-step { opacity: .3; }
+.mkp-anim .mkp-step.is-on { opacity: 1; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .mkp-anim .mkp-stage { height: 240vh; }
+  .mkp-sticky { grid-template-columns: 1fr; gap: 18px; align-items: start; align-content: start; padding: 12px 0 18px; }
+  .mkp-anim .mkp-sticky { min-height: 100svh; }
+  .mkp-browser { order: -1; }
+    .mkp-step { margin-bottom: 16px; }
+  .mkp-step p { font-size: 14.5px; }
+  .mkp-rail { margin-bottom: 16px; }
+}
+/* en movil solo el paso activo lleva parrafo: el bloque pegado cabe siempre en pantalla */
+@media (max-width: 900px) {
+  .mkp-anim .mkp-step:not(.is-on) p { display: none; }
+  .mkp-anim .mkp-step:not(.is-on) { margin-bottom: 12px; }
+}
+
+</style>
+</head>
+<body>
+
+<section class="mkp-root" id="mkpHow" aria-labelledby="mkpTitle">
+  <div class="mkp-wrap">
+    <span class="mkp-rule" aria-hidden="true"></span>
+    <h2 class="mkp-h2" id="mkpTitle">How it works</h2>
+    <p class="mkp-lead">Three steps, one draft. Scroll and watch the same page go from a grey box to a live site.</p>
+
+    <div class="mkp-stage" id="mkpStage">
+      <div class="mkp-sticky">
+
+        <div class="mkp-browser">
+          <div class="mkp-bar">
+            <span class="mkp-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="mkp-url">
+              <svg class="mkp-lock" id="mkpLock" viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M2.4 5.1V3.4a2.6 2.6 0 0 1 5.2 0v1.7" fill="none" stroke="#7CE0B8" stroke-width="1.3" stroke-linecap="round"></path><rect x="1" y="5.1" width="8" height="6" rx="1.4" fill="#7CE0B8"></rect></svg>
+              <span class="mkp-swap">
+                <span id="mkpUrlDraft">yoursalon.com.sg &middot; draft</span>
+                <span id="mkpUrlLive">yoursalon.com &middot; live</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="mkp-page" id="mkpPage" role="img" aria-label="The same one-page site in three stages: a grey draft, the same draft with three change requests marked on it, and the finished page live on its own domain.">
+            <div class="mkp-doc" aria-hidden="true">
+
+              <div class="mkp-pnav">
+                <span class="mkp-plogo" data-txt></span>
+                <span class="mkp-pname" data-txt>YOURSALON</span>
+                <ul><li data-txt>Services</li><li data-txt>Hours</li><li data-txt>Find us</li></ul>
+                <span class="mkp-pbtn" data-txt>WhatsApp</span>
+              </div>
+
+              <div class="mkp-phero">
+                <div>
+                  <h3 data-txt>Hair that behaves.</h3>
+                  <p data-txt>Cut, colour and keratin in Tiong Bahru. Walk-ins welcome, booking is faster.</p>
+                  <span class="mkp-pbtn" data-txt>Book a slot</span>
+                </div>
+                <div class="mkp-pphoto">
+                  <picture>
+                    <source type="image/webp" srcset="../assets/img/draft-salon-720.webp">
+                    <img class="mkp-photo-a" id="mkpPhotoA" src="../assets/img/draft-salon-720.jpg" alt="" width="720" height="450" loading="lazy" decoding="async">
+                  </picture>
+                  <picture>
+                    <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
+                    <img class="mkp-photo-b" id="mkpPhotoB" src="../assets/img/after-salon-720.jpg" alt="" width="720" height="450" loading="lazy" decoding="async">
+                  </picture>
+                </div>
+              </div>
+
+              <div class="mkp-pprices">
+                <div class="mkp-prow"><span data-txt>Cut &amp; blow dry</span><b id="mkpPrice" data-txt>S$45</b></div>
+                <div class="mkp-prow"><span data-txt>Colour, roots</span><b data-txt>S$120</b></div>
+                <div class="mkp-prow"><span data-txt>Keratin smoothing</span><b data-txt>S$280</b></div>
+              </div>
+
+              <div class="mkp-phours">
+                <span class="mkp-go" data-txt></span>
+                <span class="mkp-swap">
+                  <span id="mkpHoursA" data-txt><b>Open now</b> &middot; Mon&ndash;Sun, 09:00&ndash;20:00</span>
+                  <span id="mkpHoursB"><b>Open now</b> &middot; Tue&ndash;Sun, 10:00&ndash;20:00</span>
+                </span>
+              </div>
+
+              <div class="mkp-pfoot">
+                <span class="mkp-pbtn" data-txt>Message on WhatsApp</span>
+                <small data-txt>78 Tiong Poh Road &middot; 2 min from Tiong Bahru MRT</small>
+              </div>
+            </div>
+
+            <div class="mkp-sk" id="mkpSk" aria-hidden="true">
+              <i style="left:2.2%;top:3.8%;width:15%;height:5.2%"></i>
+              <i style="left:66%;top:4.2%;width:32%;height:4.8%"></i>
+              <i style="left:51.2%;top:14%;width:46.6%;height:46.6%"></i>
+              <i style="left:2.2%;top:25.6%;width:40%;height:7%"></i>
+              <i style="left:2.2%;top:34.6%;width:46%;height:3%"></i>
+              <i style="left:2.2%;top:38.6%;width:33%;height:3%"></i>
+              <i style="left:2.2%;top:44.2%;width:13%;height:8.1%"></i>
+              <i style="left:2.2%;top:63.8%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:69.8%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:75.9%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:82%;width:44%;height:4.2%"></i>
+              <i style="left:2.2%;top:88.6%;width:27%;height:8%"></i>
+            </div>
+
+            <div class="mkp-ann mkp-a1 mkp-lbl-top" aria-hidden="true"><i>make this bigger</i></div>
+            <div class="mkp-ann mkp-a2 mkp-lbl-in" aria-hidden="true"><i>use our photo</i></div>
+            <div class="mkp-ann mkp-a3 mkp-lbl-right" aria-hidden="true"><i>we open at 10</i></div>
+
+            <span class="mkp-live" id="mkpLive" aria-hidden="true">live</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="mkp-rail" id="mkpRail" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+          <ol class="mkp-steps" id="mkpSteps">
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>We draft it</h3>
+              <p>From what you already publish: your site, your Google listing, your booking page. You get a link to a finished draft.</p>
+            </li>
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>You tell us what to change</h3>
+              <p>Prices, photos, wording, colours. Two rounds of changes are included. Reply by email or WhatsApp.</p>
+            </li>
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>You approve, you pay, we put it live</h3>
+              <p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="mkp-note">You owe nothing until you approve the final version. Two rounds of changes are included.</p>
+  </div>
+</section>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  /* ojo: un <script> en linea ignora defer, asi que esperamos a DOMContentLoaded,
+     que se dispara despues de los <script defer src> de GSAP */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+
+  function init() {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduce || !window.gsap || !window.ScrollTrigger) { return; }
+  gsap.registerPlugin(ScrollTrigger);
+
+  var stage = document.getElementById("mkpStage");
+  var steps = Array.prototype.slice.call(document.querySelectorAll("#mkpSteps .mkp-step"));
+  var rails = Array.prototype.slice.call(document.querySelectorAll("#mkpRail i"));
+  var txt = Array.prototype.slice.call(document.querySelectorAll("#mkpPage [data-txt]"));
+  var sk = Array.prototype.slice.call(document.querySelectorAll("#mkpSk i"));
+  var anns = Array.prototype.slice.call(document.querySelectorAll("#mkpPage .mkp-ann"));
+  if (!stage || !steps.length || !sk.length) { return; }
+
+  /* a partir de aqui mandamos nosotros: la seccion pasa a modo animado */
+  root.classList.add("mkp-anim");
+
+  /* estado inicial: lienzo en blanco */
+  gsap.set(sk, { scaleX: 0, autoAlpha: 1 });
+  gsap.set(txt, { autoAlpha: 0, y: 6 });
+  gsap.set(["#mkpPhotoA", "#mkpPhotoB"], { autoAlpha: 0 });
+  gsap.set("#mkpPhotoA", { scale: 1.05 });
+  gsap.set(anns, { autoAlpha: 0, y: 10, scale: .96, transformOrigin: "0% 50%" });
+  gsap.set("#mkpUrlLive", { autoAlpha: 0 });
+  gsap.set("#mkpHoursB", { autoAlpha: 0, y: 8 });
+  gsap.set("#mkpLock", { autoAlpha: 0, scale: .6, transformOrigin: "50% 50%" });
+  gsap.set("#mkpLive", { autoAlpha: 0, scale: .7, transformOrigin: "100% 100%" });
+  gsap.set("#mkpPrice", { scale: 1 });
+
+  function setStep(i) {
+    for (var k = 0; k < steps.length; k++) { steps[k].classList.toggle("is-on", k === i); }
+  }
+  setStep(0);
+
+  var tl = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: {
+      trigger: stage,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.6,
+      onUpdate: function (self) {
+        var p = self.progress;
+        setStep(p < 0.38 ? 0 : (p < 0.775 ? 1 : 2));
+        for (var k = 0; k < rails.length; k++) {
+          var seg = Math.min(1, Math.max(0, (p - k / 3) * 3));
+          rails[k].style.width = (seg * 100).toFixed(1) + "%";
+        }
+      }
+    }
+  });
+
+  /* ---- FASE 1: la pagina se monta ---- */
+  tl.to(sk, { scaleX: 1, duration: 3, stagger: 0.35 }, 0)
+    .to(txt, { autoAlpha: 1, y: 0, duration: 2, stagger: 0.22 }, 4.2)
+    .to(sk, { autoAlpha: 0, duration: 1.6, stagger: 0.12 }, 4.4)
+    .to("#mkpPhotoA", { autoAlpha: 1, scale: 1, duration: 2.4 }, 7.2)
+    .to({}, { duration: 1.4 }, 9.6);
+
+  /* ---- FASE 2: anotaciones del cliente y la pagina responde ---- */
+  tl.to(anns[0], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 12)
+    .to(anns[1], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 13.4)
+    .to(anns[2], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 14.8)
+    .to("#mkpPrice", { scale: 1.7, duration: 1.8, ease: "back.out(2)" }, 16.6)
+    .to("#mkpPhotoB", { autoAlpha: 1, duration: 2 }, 18)
+    .to("#mkpHoursA", { autoAlpha: 0, y: -8, duration: 1.2 }, 19.8)
+    .to("#mkpHoursB", { autoAlpha: 1, y: 0, duration: 1.2 }, 20.2);
+
+  /* ---- FASE 3: aprobada, pagada, en vivo ---- */
+  tl.to(anns, { autoAlpha: 0, y: -8, scale: .96, duration: 1.4, stagger: 0.2 }, 24)
+    .to("#mkpUrlDraft", { autoAlpha: 0, duration: 1 }, 25.2)
+    .to("#mkpUrlLive", { autoAlpha: 1, duration: 1 }, 25.6)
+    .to("#mkpLock", { autoAlpha: 1, scale: 1, duration: 1, ease: "back.out(2.5)" }, 25.8)
+    .to("#mkpLive", { autoAlpha: 1, scale: 1, duration: 1.2, ease: "back.out(2)" }, 26.4)
+    .to({}, { duration: 3 }, 27.6);
+
+  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  }
+})();
+</script>
+
+</body>
+</html>

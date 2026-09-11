@@ -24,9 +24,13 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
-<link rel="preload" as="image" type="image/webp" imagesrcset="../assets/img/before-salon-480.webp 480w, ../assets/img/before-salon-720.webp 720w, ../assets/img/before-salon-1080.webp 1080w, ../assets/img/before-salon-1440.webp 1440w" imagesizes="(min-width: 1000px) 1000px, 100vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="../assets/img/after-salon-720.webp" fetchpriority="high">
+<!-- inline y antes de pintar a proposito: si esta clase llega tarde, el hero parpadea -->
+<script>(function(d){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){d.documentElement.className+=' mkh-js';}}catch(e){}})(document);</script>
 <style>
-html { scroll-padding-top: 82px; }
+html { scroll-padding-top: 82px; scrollbar-gutter: stable; }
+/* visor de demos: bloquear el fondo sin que la pagina se mueva (el gutter ya esta reservado) */
+html.mkd-locked { overflow: hidden; }
 section[id], header[id] { scroll-margin-top: 82px; }
 @font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
 @font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
@@ -46,7 +50,7 @@ section[id], header[id] { scroll-margin-top: 82px; }
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.032em; text-wrap: balance; }
@@ -54,7 +58,7 @@ h2 { font-size: clamp(34px, 5.2vw, 68px); }
 h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.012em; }
 p { margin: 0 0 1em; }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); position: relative; z-index: 1; }
-section, header.hero { position: relative; }
+section { position: relative; }
 section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 56ch; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
@@ -96,13 +100,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .btn-sm { padding: 10px 15px; font-size: 13.5px; }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 
-/* tres puntos: la marca de marco de navegador que se repite */
-.dots { display: inline-flex; gap: 6px; flex: 0 0 auto; }
-.dots span { width: 8px; height: 8px; border-radius: 50%; background: #d8d5cc; }
-.dots span:nth-child(1) { background: #E0645C; }
-.dots span:nth-child(2) { background: #E8B33D; }
-.dots span:nth-child(3) { background: #4FA36A; }
-
 /* ===== nav ===== */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; flex-wrap: nowrap; }
@@ -121,42 +118,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 @media (max-width: 1100px) { .nav ul { display: none; } }
 @media (max-width: 480px) { .brandmark span.word { display: none; } }
 
-/* ===== hero + teatro ===== */
-.hero { background: var(--paper); padding: clamp(28px, 5vw, 56px) 0 clamp(44px, 6.4vw, 84px); }
-.hero-copy-block { max-width: 840px; margin: 0 0 clamp(28px, 4vw, 48px); }
-.hero-copy-block .kicker { display: inline-flex; align-items: center; gap: 9px; color: var(--brand-deep); font: 600 12px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 20px; background: #EAF1F0; border: 1px solid #cfe0de; border-radius: 999px; padding: 9px 14px; }
-.hero-copy-block .kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex: none; }
-.hero-copy-block h1 { font-size: clamp(40px, 6.6vw, 92px); letter-spacing: -0.04em; }
-.hero-copy-block h1 .accent-word { color: var(--brand); position: relative; display: inline-block; }
-.hero-copy-block h1 .accent-word::after { content: ""; position: absolute; left: -.02em; right: -.02em; bottom: .05em; height: .1em; background: var(--accent); opacity: .8; border-radius: 3px; z-index: -1; }
-.hero-copy-block .lead { margin: 22px 0 0; font-size: clamp(16.5px, 1.5vw, 20px); color: #4a4d54; max-width: 60ch; }
-.hero-copy-block .cta-line { margin-top: clamp(22px, 3vw, 32px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.hero-copy-block .price { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -0.035em; position: relative; padding: 0 4px; }
-.hero-copy-block .price::after { content: ""; position: absolute; left: 0; right: 0; bottom: .04em; height: .22em; background: var(--accent); opacity: .5; z-index: -1; }
-.trust { display: flex; gap: 8px 20px; margin: 24px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--muted); flex-wrap: wrap; }
-.trust li::before { content: "\2713\00A0"; color: var(--brand); font-weight: 700; }
-
-.frame-wrap { max-width: 1000px; margin: 0 auto; }
-.browser-frame { position: relative; border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: var(--sh-deep), 0 1px 0 rgba(17,18,20,.04); isolation: isolate; }
-.browser-bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; background: #ECE8DF; border-bottom: 1px solid var(--line); }
-.browser-bar .url { margin-left: 6px; flex: 1; min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 12.5px; color: var(--muted); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-.theatre { position: relative; width: 100%; aspect-ratio: 1440 / 900; overflow: hidden; background: #0b0c0d; }
-.stage { position: absolute; inset: 0; --p: 50%; }
-.stage picture { position: absolute; inset: 0; display: block; }
-.stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
-.img-before { filter: saturate(.4) brightness(.74) contrast(1.08); }
-.img-after { clip-path: inset(0 calc(100% - var(--p, 50%)) 0 0); will-change: clip-path; }
-.scrim-top { position: absolute; inset: 0 0 auto 0; height: 30%; background: linear-gradient(to bottom, rgba(8,9,10,.62), transparent); pointer-events: none; z-index: 6; }
-.stage input.drag { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 7; -webkit-appearance: none; appearance: none; touch-action: pan-y; }
-.stage .handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25), 0 0 26px rgba(0,0,0,.35); pointer-events: none; z-index: 8; transform: translateX(-1px); }
-.stage .handle::after { content: "\25C2 drag \25B8"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--ink); color: #fff; font: 600 12px/1 var(--body); padding: 11px 13px; border-radius: 999px; white-space: nowrap; }
-.drag:focus-visible ~ .handle { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-.lbl { position: absolute; top: 14px; padding: 7px 11px; border-radius: 6px; font: 600 11px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: #fff; pointer-events: none; z-index: 8; }
-.lbl.b { left: 14px; background: rgba(17,18,20,.78); }
-.lbl.a { right: 14px; background: var(--brand); }
-.frame-cap { font-size: 12.5px; color: var(--muted); line-height: 1.4; margin: 14px 0 0; max-width: 720px; }
-
 /* ===== tres cifras: banda de color pleno ===== */
 .stats .band-kicker { font: 600 12px/1.4 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-lite); margin: 0 0 clamp(26px, 4vw, 44px); }
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 3.4vw, 44px); }
@@ -174,63 +135,42 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .get-grid article { grid-column: span 2; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; justify-content: center; box-shadow: var(--sh-card);
   transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
 .get-grid article:hover { transform: translateY(-4px); box-shadow: var(--sh-lift); border-color: #d2ccbe; }
-.get-grid article h3 { font-size: 19.5px; margin-bottom: 8px; }
-.get-grid article p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.get-grid article > h3, .get-grid article .lg-copy h3 { font-size: 19.5px; margin-bottom: 8px; }
+.get-grid article > p, .get-grid article .lg-copy p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
 .get-grid article.sm { grid-column: span 1; }
 .get-grid article.accent { background: #fff; border-color: var(--brand); box-shadow: 0 0 0 1px rgba(35,122,119,.18), var(--sh-card); }
 .get-grid article.accent h3 { color: var(--brand-deep); }
 
 /* la tarjeta grande lleva una maqueta de movil real, nunca un rectangulo vacio */
-.get-grid article.lg { grid-column: span 2; grid-row: span 3; background-color: var(--ink); color: var(--paper); border-color: var(--ink); padding: 24px 20px 24px; gap: 16px; justify-content: flex-start; align-items: stretch;
+.get-grid article.lg { grid-column: 1 / -1; grid-row: auto; background-color: var(--ink); color: var(--paper); border-color: var(--ink); padding: clamp(24px, 3vw, 38px) clamp(20px, 2.6vw, 34px); flex-direction: row; flex-wrap: wrap; gap: clamp(24px, 5vw, 76px); justify-content: center; align-items: center;
   background-image: radial-gradient(115% 68% at 50% 90%, rgba(35,122,119,.45), transparent 62%); }
 .get-grid article.lg:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(17,18,20,.6); border-color: var(--ink); }
-.get-grid article.lg h3 { color: #fff; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.03em; }
-.get-grid article.lg p { color: rgba(249,246,239,.84); font-size: 15px; }
+.get-grid article.lg .lg-copy h3 { color: #fff; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.03em; }
+.get-grid article.lg .lg-copy p { color: rgba(249,246,239,.84); font-size: 15px; }
 .lg-copy { flex: none; }
 .lg-note { display: block; margin-top: 10px; font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--brand-lite); font-weight: 600; }
 
-/* maqueta de movil (adaptada de la direccion A) */
-.phone { flex: none; width: 200px; height: 414px; margin: 0 auto; border-radius: 26px; background: #06070a; padding: 9px; box-shadow: 0 28px 50px -22px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.09); }
-.phone-notch { width: 56px; height: 5px; border-radius: 3px; background: #000; margin: 0 auto 7px; opacity: .6; }
-.phone-screen { position: relative; height: calc(100% - 12px); background: #fff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); }
-.p-topbar, .p-hero, .p-services, .p-hours, .p-cta { flex: none; position: relative; z-index: 1; }
-.p-topbar { display: flex; align-items: center; gap: 7px; padding: 11px 11px 8px; background: #fff; }
-.p-topbar .lg-dot { width: 16px; height: 16px; border-radius: 5px; background: var(--brand); flex: none; }
-.p-topbar b { font-family: var(--display); font-weight: 800; font-size: 10.5px; letter-spacing: .01em; color: var(--ink); white-space: nowrap; }
-.p-hero { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--tint); }
-.p-hero picture { flex: none; display: block; }
-.p-hero img { position: absolute; width: 230%; height: auto; left: -65%; top: -27.6%; max-width: none; }
-.p-services { padding: 9px 11px 3px; background: #fff; }
-.p-services .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 10px; }
-.p-services .row span:first-child { font-weight: 600; color: var(--ink); }
-.p-services .row span:last-child { font-family: var(--display); font-weight: 700; color: var(--brand-deep); }
-.p-hours { display: flex; align-items: center; gap: 5px; padding: 8px 9px; background: #fff; font-size: 8.8px; letter-spacing: -0.01em; color: var(--muted); white-space: nowrap; overflow: hidden; }
-.p-hours .go { width: 7px; height: 7px; border-radius: 50%; background: #1f9e5e; flex: none; }
-.p-hours b { color: var(--ink); font-weight: 700; }
-.p-map { flex: 1 1 auto; min-height: 34px; margin: 0 11px; border-radius: 9px; position: relative; overflow: hidden; z-index: 1;
-  background: repeating-linear-gradient(0deg, #e7f1ef, #e7f1ef 8px, #dcece9 8px, #dcece9 9px), repeating-linear-gradient(90deg, #e7f1ef, #e7f1ef 8px, #dcece9 8px, #dcece9 9px); }
-.p-map::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50% 50% 50% 0; background: var(--brand); transform: translate(-50%, -100%) rotate(-45deg); box-shadow: 0 0 0 3px rgba(35,122,119,.18); }
-.p-cta { margin-top: auto; padding: 9px 11px 11px; background: #fff; }
-.p-cta .wa { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--brand); color: #fff; border-radius: 999px; padding: 9px 6px; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
-.p-cta .wa .ring { width: 7px; height: 7px; border-radius: 50%; background: #7CE0B8; flex: none; }
 
+.get-grid article.lg .lg-copy { flex: 0 1 auto; display: flex; flex-direction: column; align-items: flex-start; max-width: 42ch; }
+.get-grid article.lg .lg-copy p { max-width: 40ch; }
+.get-grid article.lg .lg-note { margin-top: 16px; }
 @media (max-width: 1040px) {
   .get-grid { grid-template-columns: repeat(4, 1fr); }
   .get-grid article, .get-grid article.sm { grid-column: span 2; }
-  .get-grid article.lg { grid-column: 1 / -1; grid-row: auto; flex-direction: row; align-items: stretch; gap: clamp(20px, 4vw, 44px); padding: 26px; }
-  .get-grid article.lg .lg-copy { flex: 1 1 auto; display: flex; flex-direction: column; }
-  .get-grid article.lg .lg-copy p { max-width: 40ch; }
-  .get-grid article.lg .lg-note { margin-top: auto; padding-top: 14px; }
-  .get-grid article.lg .phone { width: 200px; height: 414px; align-self: center; }
+  .get-grid article.lg { padding: 26px; }
   .get-grid article:last-child { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 20px; }
   .get-grid article:last-child h3 { flex: none; }
   .get-grid article:last-child p { flex: 1 1 auto; }
+}
+@media (max-width: 760px) {
+  .get-grid article.lg { flex-direction: column; align-items: stretch; }
+  .get-grid article.lg .lg-copy { max-width: none; }
+  .get-grid article.lg .lg-note { margin-top: 0; }
 }
 @media (max-width: 620px) {
   .get-grid { grid-template-columns: 1fr; }
   .get-grid article, .get-grid article.sm, .get-grid article.lg, .get-grid article:last-child { grid-column: 1 / -1; grid-row: auto; flex-direction: column; align-items: stretch; gap: 0; }
   .get-grid article.lg { padding: 24px 20px 26px; gap: 18px; }
-  .phone { width: min(226px, 64vw); height: auto; aspect-ratio: 300 / 620; }
 }
 
 /* ===== precio ===== */
@@ -258,35 +198,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 @media (max-width: 900px) { .price .wrap { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .cmp { padding: 16px; } .cmp td:last-child { white-space: normal; } }
 
-/* ===== how it works: tres estados de la misma web ===== */
-.how h2 { max-width: 18ch; margin-bottom: clamp(24px, 4vw, 40px); }
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 2.6vw, 30px); counter-reset: step; list-style: none; margin: 0; padding: 0; }
-.steps li { counter-increment: step; }
-.steps li::before { content: "0" counter(step); display: block; font-family: var(--display); font-size: 13px; letter-spacing: .12em; color: var(--accent); margin-bottom: 12px; font-weight: 800; }
-.step-frame { margin: 0 0 16px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); background: #17191c; box-shadow: 0 26px 48px -28px rgba(0,0,0,.9); transition: transform .16s ease, border-color .16s ease; }
-.steps li:hover .step-frame { transform: translateY(-4px); border-color: rgba(255,255,255,.32); }
-.step-bar { display: flex; align-items: center; gap: 7px; padding: 8px 10px; background: #1f2225; border-bottom: 1px solid rgba(255,255,255,.1); }
-.step-bar .url { margin-left: 4px; flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,.08); border-radius: 5px; padding: 5px 8px; font-size: 11px; color: rgba(249,246,239,.92); overflow: hidden; white-space: nowrap; }
-.step-bar .url > span { overflow: hidden; text-overflow: ellipsis; }
-.step-bar .url svg { flex: none; display: block; }
-.shot { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #0e0f11; }
-.shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-.shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,11,12,.30), transparent 44%); pointer-events: none; }
-.stamp { position: absolute; z-index: 3; font: 700 10.5px/1 var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 6px 9px; border-radius: 5px; }
-.stamp.draft { top: 10px; left: 10px; background: rgba(17,18,20,.85); color: var(--paper); border: 1px solid rgba(255,255,255,.24); }
-.stamp.live { top: 10px; right: 10px; background: var(--brand); color: #fff; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 6px 18px -6px rgba(0,0,0,.7); }
-.stamp.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #7CE0B8; }
-/* marcas de revision del paso 2: la zona que el cliente quiere cambiar, con su nota */
-.mark { position: absolute; z-index: 3; border: 2px dashed var(--accent); border-radius: 7px; background: rgba(242,177,52,.16); box-shadow: 0 0 0 1px rgba(17,18,20,.35); }
-.mark i { position: absolute; top: -11px; left: -2px; font-style: normal; background: var(--accent); color: #16130a; font: 700 10.5px/1 var(--body); padding: 6px 8px; border-radius: 5px; white-space: nowrap; box-shadow: 0 4px 12px -4px rgba(0,0,0,.85); }
-.mark.m1 { left: 5%; top: 20%; width: 44%; height: 30%; }
-.mark.m2 { right: 6%; top: 42%; width: 30%; height: 20%; }
-.mark.m3 { left: 9%; bottom: 13%; width: 33%; height: 16%; }
-.steps h3 { margin-bottom: 8px; color: #fff; font-size: 21px; }
-.steps p { color: var(--on-ink); margin: 0; font-size: 15px; }
-.how .note { margin: clamp(28px, 4vw, 40px) 0 0; font-size: 14.5px; color: var(--on-ink); max-width: 78ch; padding-left: 16px; border-left: 3px solid var(--accent); }
-@media (max-width: 820px) { .steps { grid-template-columns: 1fr; gap: 30px; } }
-
 /* ===== why it is safe ===== */
 .safe .wrap { max-width: 1060px; }
 .safe h2 { max-width: 16ch; margin-bottom: 12px; }
@@ -313,21 +224,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .who .check li::before { content: "\2713\00A0"; color: var(--brand); font-weight: 700; }
 .who .check a { color: var(--brand-deep); }
 @media (max-width: 780px) { .who .wrap { grid-template-columns: 1fr; } .who-photo-frame { width: 156px; height: 156px; } }
-
-/* ===== recent drafts ===== */
-.drafts { background: var(--paper); }
-.drafts h2 { margin-bottom: 12px; }
-.marquee-view { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-top: 30px; padding: 6px 0 10px; }
-.marquee-view::-webkit-scrollbar { display: none; }
-.marquee-view.is-looping { overflow-x: hidden; }
-.marquee-track { display: flex; gap: 18px; width: max-content; }
-.marquee-track figure { margin: 0; flex: 0 0 auto; width: min(78vw, 310px); background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--sh-card); transition: transform .16s ease, box-shadow .16s ease; }
-.marquee-track figure:hover { transform: translateY(-4px); box-shadow: var(--sh-lift); }
-.marquee-track img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
-.marquee-track figcaption { padding: 13px 15px 15px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; border-top: 1px solid var(--line); }
-.marquee-track figcaption b { font-family: var(--display); font-weight: 700; font-size: 16px; }
-.marquee-track figcaption span { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
-.marquee-view:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 /* ===== faq ===== */
 .faq { background: var(--tint); }
@@ -357,48 +253,662 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .cta-aside p { margin: 14px 0 0; font-size: 15px; color: var(--on-teal); max-width: 34ch; }
 @media (max-width: 820px) { .cta .wrap { grid-template-columns: 1fr; align-items: start; } .cta-aside { order: -1; } }
 
-footer { background: var(--ink); color: var(--on-ink); padding: 34px 0 46px; font-size: 13.5px; }
-footer .wrap { display: flex; justify-content: space-between; gap: 18px 34px; flex-wrap: wrap; }
-footer span { max-width: 64ch; }
-footer a { color: var(--brand-lite); }
-footer a:hover { color: #fff; }
+body > footer { background: var(--ink); color: var(--on-ink); padding: 34px 0 46px; font-size: 13.5px; }
+body > footer .wrap { display: flex; justify-content: space-between; gap: 18px 34px; flex-wrap: wrap; }
+body > footer span { max-width: 64ch; }
+body > footer a { color: var(--brand-lite); }
+body > footer a:hover { color: #fff; }
 
-/* ===== movil: se recorta aire, nunca contenido (tope de 13 pantallas) ===== */
+
+/* =================================================================
+   PIEZA 1 - hero "la web vieja se reconstruye"  (lab/pieces/hero.html)
+   Fuera: barra y cola de demostracion, fuentes y reset (ya estan arriba).
+   Cambiado: gutter y ancho al de .wrap, sticky a top:64px (nav fija),
+   rail movil 300->230svh, y font-family heredada del <h2> de 2006.
+   ================================================================= */
+/* ===================== THE PIECE — everything below is mkh- prefixed ===================== */
+.mkh-hero {
+  --mkh-paper: #F9F6EF; --mkh-ink: #111214; --mkh-muted: #5f626a; --mkh-line: #e4e2dc; --mkh-tint: #F0EADE;
+  --mkh-teal: #237A77; --mkh-teal-deep: #1B615F; --mkh-amber: #F2B134;
+  --mkh-old-bg: #d9d9d9;
+  --mkh-display: "Bricolage Grotesque", "Bricolage Fallback", Arial, sans-serif;
+  --mkh-body: Inter, "Inter Fallback", Arial, sans-serif;
+  --mkh-pad: clamp(20px, 4vw, 44px); /* integracion: mismo gutter que .wrap */
+  position: relative;
+  background: var(--mkh-paper);
+  color: var(--mkh-ink);
+  font-family: var(--mkh-body);
+}
+
+/* ---- headline ---- */
+.mkh-head { max-width: 1200px; margin: 0 auto; padding: clamp(28px, 6vw, 64px) var(--mkh-pad) clamp(18px, 3vw, 30px); }
+.mkh-h1 {
+  margin: 0; max-width: 18ch;
+  font-family: var(--mkh-display); font-weight: 800; letter-spacing: -.022em; line-height: 1.02;
+  font-size: clamp(34px, 7.4vw, 68px);
+}
+.mkh-em { font-style: normal; box-shadow: inset 0 -.26em 0 rgba(242, 177, 52, .55); }
+.mkh-sub { margin: 14px 0 0; max-width: 46ch; color: var(--mkh-muted); font-size: clamp(15px, 1.9vw, 18px); line-height: 1.55; }
+.mkh-hint { display: none; margin: 22px 0 0; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-js .mkh-hint { display: flex; }
+.mkh-hint span { display: block; width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); animation: mkh-bob 1.9s ease-in-out infinite; }
+@keyframes mkh-bob { 0%, 100% { transform: rotate(45deg) translate(0, 0); } 50% { transform: rotate(45deg) translate(3px, 3px); } }
+
+/* ---- scroll track + sticky stage ---- */
+.mkh-scroller { position: relative; }
+.mkh-js .mkh-scroller { height: 340vh; }
+.mkh-stage { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); padding: 0 var(--mkh-pad) clamp(20px, 4vw, 34px); }
+.mkh-js .mkh-stage { position: sticky; top: 64px; height: calc(100vh - 64px); height: calc(100svh - 64px); padding-top: clamp(10px, 2vw, 20px); justify-content: center; }
+
+.mkh-label { position: relative; height: 1.6em; width: 100%; max-width: 1000px; margin: 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-lab { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 8px; }
+.mkh-lab::before { content: ""; width: 16px; height: 1px; background: currentColor; }
+.mkh-lab--b { color: var(--mkh-teal); }
+.mkh-lab--a { display: none; }
+.mkh-js .mkh-lab--a { display: inline-flex; }
+
+/* ---- browser frame ---- */
+.mkh-browser {
+  width: min(1000px, 100%); max-height: 660px; display: flex; flex-direction: column;
+  background: var(--mkh-paper); border: 1px solid #d7d4cc; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 34px 70px -38px rgba(17, 18, 20, .5), 0 2px 5px rgba(17, 18, 20, .05);
+}
+.mkh-js .mkh-browser { flex: 1 1 auto; min-height: 0; }
+.mkh-chrome { flex: none; display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #ece9e2; border-bottom: 1px solid #dcd8d0; }
+.mkh-dots { display: flex; gap: 6px; flex: none; }
+.mkh-dots i { width: 10px; height: 10px; border-radius: 50%; background: #c9c4ba; }
+.mkh-dots i:nth-child(1) { background: #e0a19a; } .mkh-dots i:nth-child(2) { background: #e3cb9a; } .mkh-dots i:nth-child(3) { background: #a9c7ae; }
+.mkh-url { position: relative; flex: 1 1 auto; height: 24px; min-width: 0; background: #f6f4ef; border: 1px solid #ddd9d1; border-radius: 999px; overflow: hidden; }
+.mkh-u { position: absolute; inset: 0; display: flex; align-items: center; gap: 6px; padding: 0 10px; font-size: 11.5px; color: #6b6e75; white-space: nowrap; overflow: hidden; }
+.mkh-u b { font-weight: 400; color: #111214; }
+.mkh-lock { flex: none; width: 8px; height: 7px; margin-top: 1px; border-radius: 1px; background: var(--mkh-teal); position: relative; }
+.mkh-lock::before { content: ""; position: absolute; left: 1.5px; top: -4px; width: 5px; height: 5px; border: 1.5px solid var(--mkh-teal); border-bottom: 0; border-radius: 3px 3px 0 0; }
+.mkh-u--old { display: none; }
+.mkh-js .mkh-u--old { display: flex; }
+
+.mkh-viewport { position: relative; flex: 1 1 auto; min-height: 0; background: var(--mkh-paper); }
+.mkh-js .mkh-viewport { background: var(--mkh-old-bg); }
+.mkh-face { position: relative; }
+.mkh-js .mkh-face { position: absolute; inset: 0; overflow: hidden; }
+.mkh-js .mkh-old { z-index: 2; }
+.mkh-js .mkh-new { z-index: 1; }
+.mkh-old { display: none; }
+.mkh-js .mkh-old { display: block; }
+.mkh-rmlab { display: none; }
+
+/* ---------- the 2006 site ---------- */
+/* transparent on purpose: the viewport carries the grey, so the new page can be
+   seen assembling underneath while the old pieces are still falling */
+.mkh-o-page {
+  height: 100%; display: flex; flex-direction: column;
+  padding: 0 0 8px; background: transparent;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: clamp(11px, 2.4vw, 14px); line-height: 1.35; color: #101010; text-align: center;
+}
+.mkh-o-banner {
+  flex: none; padding: 5px 6px; font-weight: 700; font-size: .92em; letter-spacing: .06em; color: #2b0f68;
+  background: linear-gradient(90deg, #ff9c9c, #ffe08a, #b6f0a5, #a5dcf0, #d7b6f0, #ff9c9c);
+  border-bottom: 2px ridge #8f8f8f; text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
+}
+.mkh-o-title { font-family: inherit; line-height: 1.15; text-wrap: wrap; margin: 8px 0 2px; font-size: 2.05em; font-weight: 700; letter-spacing: .05em; color: #10108a; text-decoration: underline; text-shadow: 1px 1px 0 #fff, 2px 2px 0 #9a9a9a; }
+.mkh-o-sub { margin: 0 0 6px; font-size: .95em; color: #4a2d0a; }
+.mkh-o-nav { margin: 0 0 8px; font-size: .95em; color: #444; }
+.mkh-o-nav a { color: #0000ee; text-decoration: underline; }
+.mkh-o-table { width: calc(100% - 16px); margin: 0 8px; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
+.mkh-o-td { padding: 0; vertical-align: top; width: 50%; }
+.mkh-o-cell { border: 2px inset #b7b7b7; background: #ededed; padding: 5px; text-align: left; }
+.mkh-o-cell--photo { text-align: center; background: #e3e3e3; }
+.mkh-o-photo { display: block; width: 100%; height: clamp(58px, 11vh, 96px); background: #b9b9b9; border: 2px solid #7a7a7a; }
+.mkh-o-photo img { display: block; width: 100%; height: 100%; object-fit: fill; filter: saturate(.62) contrast(1.06); }
+.mkh-o-cap { margin-top: 3px; font-size: .82em; font-style: italic; color: #3a3a3a; }
+.mkh-o-blink { color: #cc0000; font-weight: 700; animation: mkh-blink 1.05s steps(1) infinite; }
+@keyframes mkh-blink { 50% { opacity: 0; } }
+.mkh-o-cell b { display: inline-block; margin-bottom: 2px; letter-spacing: .04em; }
+.mkh-o-cell a { color: #0000ee; }
+.mkh-o-list { font-family: "Courier New", Courier, monospace; font-size: .92em; white-space: pre-wrap; }
+.mkh-o-uc { flex: none; display: inline-flex; align-items: center; gap: 7px; align-self: center; margin: 9px auto 0; padding: 4px 9px 4px 4px; background: #ffef9f; border: 2px outset #d8c86a; }
+.mkh-o-uc-sign { position: relative; flex: none; width: 24px; height: 22px; background: #f2c21a; border: 2px solid #111; }
+.mkh-o-uc-sign i { position: absolute; background: #111; }
+.mkh-o-uc-hat { left: 4px; top: 2px; width: 9px; height: 4px; border-radius: 5px 5px 0 0; }
+.mkh-o-uc-body { left: 6px; top: 7px; width: 4px; height: 9px; }
+.mkh-o-uc-tool { left: 11px; top: 5px; width: 3px; height: 12px; transform-origin: 50% 0; animation: mkh-dig 1.1s ease-in-out infinite; }
+@keyframes mkh-dig { 0%, 100% { transform: rotate(22deg); } 50% { transform: rotate(52deg); } }
+.mkh-o-uc-txt { font-size: .84em; font-weight: 700; letter-spacing: .08em; color: #6b4b00; }
+.mkh-o-btns { flex: none; margin: 9px 0 0; display: flex; gap: 8px; justify-content: center; }
+.mkh-o-btn98 { display: inline-block; padding: 3px 10px; font-size: .88em; font-family: Arial, Helvetica, sans-serif; color: #111; background: #d4d0c8; border: 3px outset #efefef; }
+.mkh-o-badges { flex: none; margin: 8px 0 0; display: flex; gap: 5px; justify-content: center; }
+.mkh-o-badges span { display: inline-block; padding: 2px 6px; border: 1px solid #000; font: 700 8px/1.3 Arial, Helvetica, sans-serif; letter-spacing: .05em; color: #fff; text-transform: uppercase; }
+.mkh-o-badges span:nth-child(1) { background: linear-gradient(180deg, #5a5ab4, #17173f); }
+.mkh-o-badges span:nth-child(2) { background: linear-gradient(180deg, #b45a5a, #3f1717); }
+.mkh-o-badges span:nth-child(3) { background: linear-gradient(180deg, #4a4a4a, #111); }
+.mkh-o-foot { flex: none; margin-top: auto; padding-top: 10px; }
+.mkh-o-counter { font-size: .86em; color: #222; }
+.mkh-o-leds { display: inline-flex; gap: 1px; margin-left: 4px; vertical-align: middle; }
+.mkh-o-leds b { margin: 0; padding: 1px 3px; font-family: "Courier New", Courier, monospace; font-size: .95em; color: #35ff5e; background: #0b0b0b; border: 1px solid #5a5a5a; }
+.mkh-o-best { margin-top: 3px; font-size: .8em; color: #555; }
+
+/* ---------- the new site ---------- */
+/* transparent like the old page: .mkh-viewport owns the colour so it can flip grey -> paper mid-sequence */
+.mkh-n-page { height: 100%; display: flex; flex-direction: column; background: transparent; color: var(--mkh-ink); font-family: var(--mkh-body); }
+.mkh-n-head { flex: none; display: flex; align-items: center; gap: 10px; padding: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px); border-bottom: 1px solid var(--mkh-line); }
+.mkh-n-mark { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--mkh-teal); color: #fff; font-family: var(--mkh-display); font-weight: 800; font-size: 12px; letter-spacing: .02em; }
+.mkh-n-word { font-family: var(--mkh-display); font-weight: 800; font-size: clamp(15px, 2.2vw, 19px); letter-spacing: -.01em; }
+.mkh-n-nav { margin-left: auto; display: flex; gap: clamp(10px, 2vw, 20px); font-size: 13px; color: var(--mkh-muted); }
+/* Drawn, not photographed. Every image in lab/assets is a screenshot of a web page with
+   typography baked in, so any crop leaked stray wording; a CSS panel is sharp at every size
+   and adds no asset dependency. To use a real photo of the business, drop an <img> back in
+   (position:absolute; inset:0; object-fit:cover) - the vignette and caption still work. */
+.mkh-n-photo { position: relative; flex: 1 1 auto; min-height: clamp(96px, 20vh, 210px); margin: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px) 0; border-radius: 12px; overflow: hidden;
+  background:
+    radial-gradient(78% 62% at 50% -10%, rgba(255, 206, 126, .30), transparent 66%),
+    radial-gradient(72% 96% at 95% 106%, rgba(47, 154, 150, .44), transparent 64%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 86px),
+    linear-gradient(163deg, #14282c 0%, #0e1b1e 54%, #11322f 100%); }
+/* a row of warm bulbs along the top, the way a salon mirror is lit */
+.mkh-n-photo::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46%; pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255, 226, 168, .95) 0 17%, rgba(255, 214, 140, .30) 30%, transparent 56%),
+    radial-gradient(circle, rgba(255, 206, 126, .22) 0 40%, transparent 72%);
+  background-size: 44px 44px, 44px 88px; background-position: 0 13px, 0 0; background-repeat: repeat-x; }
+.mkh-n-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 56%; pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 20, 22, 0), rgba(10, 20, 22, .40) 52%, rgba(10, 20, 22, .80)); }
+.mkh-n-badge { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; padding: 0 clamp(12px, 2.2vw, 18px) clamp(10px, 1.8vw, 15px); color: #fff; font-size: 11.5px; letter-spacing: .02em; }
+.mkh-n-badge b { display: block; margin-bottom: 4px; font-family: var(--mkh-display); font-weight: 800; font-size: clamp(17px, 2.7vw, 27px); line-height: 1.1; letter-spacing: -.015em; }
+.mkh-n-body { flex: none; display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(14px, 2.6vw, 30px); padding: clamp(12px, 2.4vw, 20px) clamp(12px, 2.4vw, 22px) clamp(14px, 2.6vw, 22px); }
+.mkh-n-kicker { margin: 0 0 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
+.mkh-n-row { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; font-size: clamp(13px, 1.7vw, 15px); }
+.mkh-n-row i { flex: 1 1 auto; height: 0; border-bottom: 1px dotted #cfccc4; transform: translateY(-3px); font-style: normal; }
+.mkh-n-row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.mkh-n-side { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: clamp(10px, 2vw, 15px); border: 1px solid var(--mkh-line); border-radius: 12px; background: #fff; }
+.mkh-n-open { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--mkh-teal-deep); }
+.mkh-n-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mkh-teal); box-shadow: 0 0 0 4px rgba(35, 122, 119, .14); }
+.mkh-n-hrs { font-size: 13px; line-height: 1.65; color: var(--mkh-muted); font-variant-numeric: tabular-nums; }
+.mkh-n-cta { display: inline-block; margin-top: 2px; padding: 9px 16px; border-radius: 999px; background: var(--mkh-ink); color: var(--mkh-paper); font-size: 13.5px; font-weight: 600; }
+/* margin-top:auto pins the footer to the bottom, so the new page fills the frame at any height */
+.mkh-n-foot { flex: none; margin-top: auto; padding: 11px clamp(12px, 2.4vw, 22px); border-top: 1px solid var(--mkh-line); font-size: 12px; color: var(--mkh-muted); }
+
+/* ---- replay ---- */
+.mkh-replay { display: none; align-items: center; gap: 8px; margin: 0; padding: 7px 14px; border: 1px solid var(--mkh-line); border-radius: 999px; background: var(--mkh-paper); color: var(--mkh-muted); font: inherit; font-size: 12.5px; cursor: pointer; }
+.mkh-js .mkh-replay { display: inline-flex; }
+.mkh-replay:hover { color: var(--mkh-ink); border-color: #cfccc4; }
+.mkh-replay:focus-visible { outline: 2px solid var(--mkh-teal); outline-offset: 3px; color: var(--mkh-ink); }
+.mkh-replay span { display: block; width: 11px; height: 11px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; }
+
+/* ---- narrow ---- */
+@media (max-width: 899px) {
+  .mkh-js .mkh-scroller { height: 163vh; height: 163svh; }
+  .mkh-browser { max-height: none; }
+  .mkh-n-nav { display: none; }
+  .mkh-o-nav { line-height: 1.7; }
+  /* fixed band, so it stays a wide strip on a phone instead of growing into a tall square */
+  .mkh-n-photo { flex: 0 0 auto; height: clamp(130px, 20vh, 190px); min-height: 0; }
+  /* the body takes the slack and keeps its rows at natural height */
+  .mkh-n-body { grid-template-columns: 1fr; gap: 12px; flex: 1 1 auto; align-content: start; }
+}
+/* short windows: trim the new page so its footer never falls outside the frame */
+@media (max-height: 700px) {
+  .mkh-js .mkh-stage { gap: 6px; }
+  .mkh-o-photo { height: 52px; }
+  .mkh-n-photo { height: clamp(96px, 16vh, 150px); }
+  .mkh-n-row { padding: 3px 0; }
+  .mkh-n-side { gap: 6px; }
+  .mkh-n-foot { padding-block: 8px; }
+  .mkh-n-body { padding-block: 10px 12px; }
+}
+
+/* ---- reduced motion: no sequence, both versions side by side ---- */
+@media (prefers-reduced-motion: reduce) {
+  .mkh-hint, .mkh-replay, .mkh-label, .mkh-chrome { display: none !important; }
+  .mkh-js .mkh-scroller, .mkh-scroller { height: auto !important; }
+  .mkh-js .mkh-stage, .mkh-stage { position: static !important; height: auto !important; }
+  .mkh-browser { width: min(1060px, 100%); max-height: none; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .mkh-viewport, .mkh-js .mkh-viewport { position: static !important; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 28px); background: transparent !important; }
+  .mkh-face, .mkh-js .mkh-face { position: static !important; display: block !important; overflow: hidden; border: 1px solid var(--mkh-line); border-radius: 12px; opacity: 1 !important; visibility: visible !important; }
+  .mkh-rmlab { display: block; padding: 8px 12px; background: var(--mkh-tint); border-bottom: 1px solid var(--mkh-line); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
+  .mkh-o-page, .mkh-n-page { height: auto; }
+  .mkh-n-body { grid-template-columns: 1fr; gap: 14px; }
+  .mkh-old { background: var(--mkh-old-bg); }
+  .mkh-new { background: var(--mkh-paper); }
+  .mkh-o-photo { height: 90px; }
+  .mkh-n-photo { min-height: 150px; }
+  .mkh-o-blink, .mkh-o-uc-tool, .mkh-hint span { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 899px) {
+  .mkh-viewport, .mkh-js .mkh-viewport { grid-template-columns: 1fr; }
+}
+/* ---- cabecera de venta del hero (se conserva del hero anterior) ---- */
+.mkh-head .kicker { display: inline-flex; align-items: center; gap: 9px; color: var(--brand-deep); font: 600 12px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 18px; background: #EAF1F0; border: 1px solid #cfe0de; border-radius: 999px; padding: 9px 14px; }
+.mkh-head .kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex: none; }
+.mkh-head .lead { margin: 16px 0 0; font-size: clamp(16.5px, 1.5vw, 20px); color: #4a4d54; max-width: 60ch; }
+.mkh-head .cta-line { margin-top: clamp(18px, 2.4vw, 26px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.mkh-head .price { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -0.035em; position: relative; padding: 0 4px; }
+.mkh-head .price::after { content: ""; position: absolute; left: 0; right: 0; bottom: .04em; height: .22em; background: var(--accent); opacity: .5; z-index: -1; }
+.mkh-head .trust { display: flex; gap: 8px 20px; margin: 20px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--muted); flex-wrap: wrap; }
+.mkh-head .trust li::before { content: "\2713\00A0"; color: var(--brand); font-weight: 700; }
+.mkh-cap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px) clamp(18px, 3vw, 30px); font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+
+/* =================================================================
+   PIEZA 2 - los tres pasos contados  (lab/pieces/pasos.html)
+   Fuera: fuentes, :root y reset. Cambiado: sticky a top:64px,
+   rail movil 240->190vh y el filete ambar del parrafo de garantia.
+   ================================================================= */
+/* ============ PIEZA 1 ============ */
+.mkp-root { background: var(--ink); color: var(--paper); padding: clamp(44px, 6vw, 88px) 0 clamp(52px, 7vw, 104px); }
+.mkp-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.mkp-rule { display: block; width: 54px; height: 4px; border-radius: 2px; background: var(--accent); margin: 0 0 18px; }
+.mkp-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.2vw, 68px); line-height: 1.02; letter-spacing: -0.032em; margin: 0; color: #fff; text-wrap: balance; }
+.mkp-onanim { display: none; }
+.mkp-anim .mkp-onanim { display: inline; }
+.mkp-lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--on-ink); max-width: 54ch; margin: 16px 0 0; }
+
+/* el rail de scroll: alto propio; dentro, un bloque pegado.
+   Sin JS, sin GSAP o con reduced-motion la clase .mkp-anim no llega a ponerse:
+   el rail no ocupa alto de mas y el bloque deja de estar pegado. */
+.mkp-stage { position: relative; margin-top: clamp(26px, 3.4vw, 46px); }
+.mkp-sticky { display: grid; grid-template-columns: 1fr minmax(280px, 380px); gap: clamp(26px, 3.2vw, 52px); align-items: center; padding: clamp(18px, 3vw, 40px) 0; }
+.mkp-anim .mkp-stage { height: 360vh; }
+.mkp-anim .mkp-sticky { position: sticky; top: 64px; min-height: calc(100vh - 64px); }
+
+/* ---- marco de navegador ---- */
+.mkp-browser { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); background: #17191c; box-shadow: 0 40px 80px -40px rgba(0,0,0,.95); container-type: inline-size; }
+.mkp-bar { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: #1f2225; border-bottom: 1px solid rgba(255,255,255,.1); }
+.mkp-dots { display: inline-flex; gap: 6px; flex: none; }
+.mkp-dots span { width: 8px; height: 8px; border-radius: 50%; }
+.mkp-dots span:nth-child(1) { background: #E0645C; }
+.mkp-dots span:nth-child(2) { background: #E8B33D; }
+.mkp-dots span:nth-child(3) { background: #4FA36A; }
+.mkp-url { margin-left: 4px; flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.08); border-radius: 6px; padding: 5px 9px; font-size: 11.5px; color: rgba(249,246,239,.94); white-space: nowrap; overflow: hidden; }
+.mkp-lock { flex: none; display: block; width: 10px; height: 12px; }
+.mkp-swap { display: inline-grid; align-items: center; min-width: 0; }
+.mkp-swap > * { grid-area: 1 / 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- la pagina dibujada (todo en em sobre el font-size de .mkp-page) ---- */
+/* la pagina se mide en cqw: todo dentro escala exacto con el ancho del marco */
+.mkp-page { position: relative; aspect-ratio: 16 / 10; background: var(--paper); color: var(--ink); overflow: hidden; font-size: clamp(7px, 1.02vw, 12px); }
+@supports (font-size: 1cqw) { .mkp-page { font-size: 1.68cqw; } }
+.mkp-doc { position: absolute; inset: 0; display: flex; flex-direction: column; background: #fff; }
+
+.mkp-pnav { flex: none; display: flex; align-items: center; gap: .8em; padding: .78em 1.3em; border-bottom: 1px solid var(--line); background: #fff; }
+.mkp-plogo { width: 1.5em; height: 1.5em; border-radius: .4em; background: var(--brand); flex: none; }
+.mkp-pname { font-family: var(--display); font-weight: 800; font-size: 1.05em; letter-spacing: .01em; }
+.mkp-pnav ul { display: flex; gap: 1.1em; list-style: none; margin: 0 0 0 auto; padding: 0; font-size: .82em; color: var(--muted); font-weight: 600; }
+.mkp-pnav .mkp-pbtn { font-size: .78em; }
+.mkp-pbtn { display: inline-flex; align-items: center; gap: .5em; background: var(--brand); color: #fff; border-radius: 999px; padding: .7em 1.2em; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+
+.mkp-phero { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; padding: 1.15em 1.3em .9em; align-items: center; }
+.mkp-phero h3 { font-family: var(--display); font-weight: 800; font-size: 2.2em; line-height: 1.02; letter-spacing: -.035em; margin: 0 0 .34em; }
+.mkp-phero p { margin: 0 0 .9em; font-size: .95em; color: var(--muted); line-height: 1.45; }
+.mkp-pphoto { position: relative; aspect-ratio: 8 / 5; border-radius: .7em; overflow: hidden; background: var(--tint); }
+.mkp-pphoto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* las dos imagenes son capturas de paginas: se encuadran en la franja fotografica para que
+   dentro de la maqueta se lean como una foto del local y no como una web dentro de otra web */
+.mkp-pphoto img { inset: auto; width: 230%; height: auto; left: -65%; top: -27.6%; max-width: none; }
+.mkp-pphoto .mkp-photo-b { z-index: 2; }
+
+.mkp-pprices { flex: none; padding: 0 1.3em; }
+.mkp-prow { display: flex; align-items: baseline; justify-content: space-between; gap: 1em; padding: .38em 0; border-bottom: 1px dashed var(--line); font-size: .92em; }
+.mkp-prow span:first-child { font-weight: 600; }
+.mkp-prow b { font-family: var(--display); font-weight: 800; color: var(--brand-deep); letter-spacing: -.02em; display: inline-block; transform-origin: 100% 50%; }
+
+.mkp-phours { flex: none; display: flex; align-items: center; gap: .5em; padding: .7em 1.3em .2em; font-size: .86em; color: var(--muted); }
+.mkp-phours .mkp-go { width: .6em; height: .6em; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkp-phours b { color: var(--ink); font-weight: 700; }
+
+.mkp-pfoot { margin-top: auto; flex: none; display: flex; align-items: center; gap: .9em; padding: .7em 1.3em .9em; }
+.mkp-pfoot small { font-size: .78em; color: var(--muted); }
+
+/* sello live */
+.mkp-live { position: absolute; z-index: 6; bottom: .85em; right: .9em; display: inline-flex; align-items: center; gap: .5em; background: var(--brand); color: #fff; font: 700 .78em/1 var(--body); letter-spacing: .1em; text-transform: uppercase; padding: .62em .8em; border-radius: .45em; box-shadow: 0 .5em 1.4em -.5em rgba(0,0,0,.6); }
+.mkp-live::before { content: ""; width: .55em; height: .55em; border-radius: 50%; background: #7CE0B8; }
+
+/* esqueleto */
+.mkp-sk { position: absolute; inset: 0; z-index: 4; display: none; }
+.mkp-sk i { position: absolute; display: block; background: #DEDACF; border-radius: .35em; transform-origin: 0 50%; }
+
+/* anotaciones del cliente */
+.mkp-ann { position: absolute; z-index: 5; display: none; border: 2px dashed var(--accent); border-radius: .5em; background: rgba(242,177,52,.18); box-shadow: 0 0 0 1px rgba(17,18,20,.14); }
+.mkp-ann i { position: absolute; left: -2px; font-style: normal; background: var(--accent); color: #16130a; font: 700 .92em/1 var(--body); padding: .5em .7em; border-radius: .4em; white-space: nowrap; box-shadow: 0 .4em 1em -.35em rgba(17,18,20,.55); transform: rotate(-1.4deg); }
+.mkp-ann.mkp-lbl-top i { bottom: calc(100% + .45em); }
+.mkp-ann.mkp-lbl-in i { top: .5em; left: .5em; }
+.mkp-ann.mkp-lbl-right i { left: calc(100% + .5em); top: 50%; transform: translateY(-50%) rotate(-1.4deg); }
+.mkp-ann.mkp-a1 { left: 1.4%; top: 62.2%; width: 97%; height: 7.8%; }
+.mkp-ann.mkp-a2 { left: 50.4%; top: 13.2%; width: 48.2%; height: 48.2%; }
+.mkp-ann.mkp-a3 { left: 1.4%; top: 80.4%; width: 46%; height: 7.6%; }
+
+/* ---- columna de texto ---- */
+.mkp-steps { list-style: none; margin: 0; padding: 0; counter-reset: mkpstep; }
+.mkp-step { counter-increment: mkpstep; margin: 0 0 clamp(20px, 2.4vw, 30px); transition: opacity .35s ease, transform .35s ease; }
+.mkp-step:last-child { margin-bottom: 0; }
+.mkp-step .mkp-num { display: block; font-family: var(--display); font-size: 13px; letter-spacing: .12em; color: var(--accent); font-weight: 800; margin-bottom: 8px; }
+.mkp-step .mkp-num::before { content: "0" counter(mkpstep); }
+.mkp-step h3 { font-family: var(--display); font-weight: 800; font-size: clamp(19px, 1.7vw, 24px); letter-spacing: -.02em; line-height: 1.08; margin: 0 0 8px; color: #fff; }
+.mkp-step p { margin: 0; font-size: 15px; color: var(--on-ink); }
+.mkp-rail { display: none; gap: 6px; margin: 0 0 22px; }
+.mkp-rail span { flex: 1 1 0; height: 3px; border-radius: 2px; background: rgba(255,255,255,.16); overflow: hidden; }
+.mkp-rail span i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 2px; }
+.mkp-note { margin: clamp(22px, 3vw, 34px) 0 0; font-size: 14.5px; color: var(--on-ink); max-width: 78ch; padding-left: 16px; border-left: 3px solid var(--accent); }
+
+/* estado base = pagina TERMINADA (sin JS, sin GSAP o con reduced-motion):
+   de los dos textos apilados en cada .mkp-swap solo se ve el final */
+#mkpUrlDraft, #mkpHoursA { visibility: hidden; }
+
+/* ---- estado animado (lo pone el JS solo si hay GSAP y no hay reduced-motion) ---- */
+.mkp-anim #mkpUrlDraft, .mkp-anim #mkpHoursA { visibility: visible; }
+.mkp-anim .mkp-sk { display: block; }
+.mkp-anim .mkp-ann { display: block; opacity: 0; }
+.mkp-anim .mkp-live { opacity: 0; }
+.mkp-anim .mkp-rail { display: flex; }
+.mkp-anim .mkp-step { opacity: .3; }
+.mkp-anim .mkp-step.is-on { opacity: 1; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .mkp-anim .mkp-stage { height: 158vh; }
+  .mkp-sticky { grid-template-columns: 1fr; gap: 18px; align-items: start; align-content: start; padding: 12px 0 18px; }
+  .mkp-anim .mkp-sticky { min-height: calc(100svh - 64px); }
+  .mkp-browser { order: -1; }
+    .mkp-step { margin-bottom: 16px; }
+  .mkp-step p { font-size: 14.5px; }
+  .mkp-rail { margin-bottom: 16px; }
+}
+/* en movil solo el paso activo lleva parrafo: el bloque pegado cabe siempre en pantalla */
+@media (max-width: 900px) {
+  .mkp-anim .mkp-step:not(.is-on) p { display: none; }
+  .mkp-anim .mkp-step:not(.is-on) { margin-bottom: 12px; }
+}
+
+/* =================================================================
+   PIEZA 3 - movil interactivo  (lab/pieces/movil.html)
+   Fuera: fuentes, :root, reset y el escaparate (.mkm-root/.mkm-wrap/
+   .mkm-grid/.mkm-copy): la pieza vive dentro de la tarjeta 'Fast on a
+   phone' de #get, que ya trae su titular y su parrafo.
+   ================================================================= */
+/* ============ PIEZA 2 ============ */
+.mkm-try { display: none; gap: 8px; flex-wrap: wrap; margin: 24px 0 0; }
+.mkm-js .mkm-try { display: flex; }
+.mkm-try span { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border: 1px solid #cfe0de; border-radius: 999px; padding: 8px 13px; }
+.mkm-try span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex: none; }
+
+.mkm-stagewrap { justify-self: center; }
+.mkm-cap { margin: 14px 0 0; text-align: center; font-size: 12.5px; color: var(--muted); }
+
+/* ---- el telefono ---- */
+.mkm-phone { width: min(330px, 84vw); margin: 0 auto; border-radius: 30px; background: #06070a; padding: 10px; box-shadow: 0 34px 62px -26px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.09); }
+.mkm-notch { width: 62px; height: 5px; border-radius: 3px; background: #000; margin: 0 auto 8px; opacity: .6; }
+.mkm-screen { position: relative; background: #fff; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); font-size: 13px; line-height: 1.45; }
+.mkm-js .mkm-screen { height: 600px; }
+
+.mkm-topbar { flex: none; display: flex; align-items: center; gap: 8px; padding: 12px 13px 10px; border-bottom: 1px solid var(--line); background: #fff; }
+.mkm-logo { width: 20px; height: 20px; border-radius: 6px; background: var(--brand); flex: none; }
+.mkm-name { font-family: var(--display); font-weight: 800; font-size: 13.5px; letter-spacing: .01em; }
+.mkm-status { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border-radius: 999px; padding: 5px 9px; white-space: nowrap; }
+.mkm-status .mkm-dot { width: 7px; height: 7px; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkm-status.is-shut { color: #8a3f2f; background: #F6E9E4; }
+.mkm-status.is-shut .mkm-dot { background: #C1583F; }
+
+/* ---- pestanas (solo con JS) ---- */
+.mkm-tabs { display: none; flex: none; gap: 2px; padding: 8px 8px 0; border-bottom: 1px solid var(--line); background: #fff; }
+.mkm-js .mkm-tabs { display: flex; }
+.mkm-tabs button { flex: 1 1 0; min-width: 0; appearance: none; background: none; border: 0; border-radius: 8px 8px 0 0; padding: 9px 2px 10px; font: 600 11.5px/1.1 var(--body); color: var(--muted); cursor: pointer; position: relative; letter-spacing: -.01em; }
+.mkm-tabs button::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -1px; height: 3px; border-radius: 2px 2px 0 0; background: transparent; transition: background .18s ease; }
+.mkm-tabs button:hover { color: var(--ink); background: #F6F4EE; }
+.mkm-tabs button[aria-selected="true"] { color: var(--brand-deep); }
+.mkm-tabs button[aria-selected="true"]::after { background: var(--brand); }
+.mkm-tabs button:focus-visible { outline-offset: -3px; }
+
+/* ---- paneles ---- */
+.mkm-panels { flex: 1 1 auto; position: relative; min-height: 0; background: #fff; }
+.mkm-panel { padding: 14px 13px 16px; }
+.mkm-js .mkm-panel { position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; transition: transform .26s ease, opacity .26s ease; }
+.mkm-panel h3 { font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: -.02em; margin: 0 0 10px; }
+/* con JS la pestana ya dice el nombre: el h3 queda solo para lectores de pantalla */
+.mkm-js .mkm-panel h3 { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.mkm-panel + .mkm-panel { border-top: 1px solid var(--line); }
+.mkm-js .mkm-panel + .mkm-panel { border-top: 0; }
+
+.mkm-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 12.5px; }
+.mkm-row span:first-child { font-weight: 600; }
+.mkm-row b { font-family: var(--display); font-weight: 800; color: var(--brand-deep); letter-spacing: -.02em; white-space: nowrap; }
+.mkm-row small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.mkm-hint { margin: 12px 0 0; font-size: 11.5px; color: var(--muted); }
+
+.mkm-live { display: flex; align-items: center; gap: 8px; padding: 10px 11px; border-radius: 10px; background: #EAF1F0; margin: 0 0 12px; font-size: 12.5px; }
+.mkm-live .mkm-dot { width: 9px; height: 9px; border-radius: 50%; background: #1f9e5e; flex: none; }
+.mkm-live b { font-weight: 700; }
+.mkm-live.is-shut { background: #F6E9E4; }
+.mkm-live.is-shut .mkm-dot { background: #C1583F; }
+.mkm-week { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.mkm-week th { text-align: left; font-weight: 600; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.mkm-week td { text-align: right; padding: 7px 0; border-bottom: 1px dashed var(--line); color: var(--muted); }
+.mkm-week tr.is-today th, .mkm-week tr.is-today td { color: var(--brand-deep); font-weight: 700; }
+
+.mkm-map { position: relative; height: 132px; border-radius: 10px; overflow: hidden; margin: 0 0 12px; background: #E7E9E4;
+  background-image: linear-gradient(rgba(17,18,20,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,20,.09) 1px, transparent 1px), linear-gradient(115deg, #E9EDE7, #DCE4DE); background-size: 22px 22px, 22px 22px, 100% 100%; }
+.mkm-map::before { content: ""; position: absolute; left: -10%; top: 56%; width: 120%; height: 12px; background: #fff; opacity: .85; transform: rotate(-7deg); }
+.mkm-map::after { content: ""; position: absolute; left: 50%; top: 52%; width: 16px; height: 16px; border-radius: 50% 50% 50% 0; background: var(--brand); transform: translate(-50%, -100%) rotate(-45deg); box-shadow: 0 0 0 5px rgba(35,122,119,.18); }
+.mkm-addr { font-size: 12.5px; }
+.mkm-addr b { display: block; font-weight: 700; }
+.mkm-ways { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; font-size: 12px; color: var(--muted); }
+.mkm-ways li { position: relative; padding-left: 20px; }
+.mkm-ways li::before { content: ""; position: absolute; left: 0; top: .45em; width: 9px; height: 9px; border-radius: 2px; background: var(--brand); opacity: .75; }
+
+.mkm-rev { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.mkm-rev:last-of-type { border-bottom: 0; }
+.mkm-stars { color: #C9901B; letter-spacing: 2px; font-size: 12px; }
+.mkm-rev p { margin: 4px 0 4px; font-size: 12.5px; }
+.mkm-rev small { color: var(--muted); font-size: 11px; }
+
+/* ---- barra inferior ---- */
+.mkm-bottom { display: none; flex: none; padding: 10px 13px 13px; border-top: 1px solid var(--line); background: #fff; }
+.mkm-js .mkm-bottom { display: block; }
+.mkm-wa { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; appearance: none; border: 0; background: var(--brand); color: #fff; border-radius: 999px; padding: 12px 10px; font: 700 13px/1 var(--body); cursor: pointer; transition: background .15s ease, transform .15s ease; }
+.mkm-wa:hover { background: var(--brand-deep); transform: translateY(-1px); }
+.mkm-wa .mkm-ring { width: 8px; height: 8px; border-radius: 50%; background: #7CE0B8; flex: none; }
+.mkm-demo { display: block; margin: 7px 0 0; text-align: center; font-size: 10.5px; color: var(--muted); }
+
+/* ---- chat de demostracion ---- */
+.mkm-chat { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; background: #EFE7DC; transform: translateY(101%); transition: transform .28s ease; }
+.mkm-chat.is-open { transform: translateY(0); }
+.mkm-chat[hidden] { display: none; }
+.mkm-chat-top { flex: none; display: flex; align-items: center; gap: 9px; padding: 11px 11px; background: var(--brand-deep); color: #fff; }
+.mkm-back { appearance: none; border: 0; background: rgba(255,255,255,.14); color: #fff; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font: 700 15px/1 var(--body); flex: none; }
+.mkm-back:hover { background: rgba(255,255,255,.26); }
+.mkm-chat-top b { font-size: 13px; font-weight: 700; }
+.mkm-chat-top small { margin-left: auto; font-size: 10.5px; color: #CFE3E1; }
+.mkm-thread { flex: 1 1 auto; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 9px; }
+.mkm-msg { max-width: 84%; padding: 9px 11px; border-radius: 12px; font-size: 12.5px; box-shadow: 0 1px 1px rgba(17,18,20,.09); opacity: 0; transform: translateY(6px); transition: opacity .22s ease, transform .22s ease; }
+.mkm-msg.is-in { opacity: 1; transform: none; }
+.mkm-msg.out { align-self: flex-end; background: #D8F0D6; border-bottom-right-radius: 3px; }
+.mkm-msg.in { align-self: flex-start; background: #fff; border-bottom-left-radius: 3px; }
+.mkm-msg time { display: block; margin-top: 3px; font-size: 9.5px; color: var(--muted); text-align: right; }
+.mkm-chat-foot { flex: none; padding: 9px 12px 12px; background: #EFE7DC; }
+.mkm-fakeinput { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; font-size: 12px; color: var(--muted); }
+.mkm-chat-note { display: block; margin: 7px 0 0; text-align: center; font-size: 10.5px; color: var(--muted); }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .mkm-stagewrap { order: -1; }
+  .mkm-js .mkm-screen { height: min(600px, 74vh); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mkm-js .mkm-panel, .mkm-chat, .mkm-msg, .mkm-wa { transition: none !important; }
+}
+/* --- la pieza dentro de la tarjeta oscura de #get --- */
+.get-grid article.lg .mkm-cap { color: var(--on-ink); }
+.get-grid article.lg .mkm-stagewrap { flex: none; }
+/* 520 px: las cuatro pestanas caben enteras sin scroll interno y la tarjeta no se dispara */
+.mkm-js .get-grid article.lg .mkm-screen { height: 520px; }
+/* la pieza ponia el telefono por encima del texto (order:-1 en su escaparate); dentro de
+   la tarjeta manda el titular, que es quien la nombra */
+.get-grid article.lg .mkm-stagewrap { order: 0; }
+/* un telefono real no ensena barra de scroll: dentro del marco tampoco */
+.get-grid article.lg .mkm-panel { scrollbar-width: none; }
+.get-grid article.lg .mkm-panel::-webkit-scrollbar { display: none; }
+@media (max-width: 620px) { .mkm-js .get-grid article.lg .mkm-screen { height: min(445px, 53vh); } }
+
+/* =================================================================
+   PIEZA 4 - visor de demos navegables  (lab/pieces/demos.html)
+   Fuera: fuentes, :root, reset y la nav/banda de contexto. Las reglas
+   html.mkd-locked y scrollbar-gutter viven arriba, en el <html>.
+   ================================================================= */
+/* ===================== PIEZA: mkd- ===================== */
+.mkd-root { position: relative; background: var(--tint); padding: clamp(46px, 6.4vw, 96px) 0 clamp(52px, 7vw, 104px); overflow: hidden; }
+.mkd-root::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(17,18,20,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,20,.045) 1px, transparent 1px);
+  background-size: 52px 52px; }
+.mkd-wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.mkd-rule { display: block; width: 54px; height: 4px; border-radius: 2px; background: var(--brand); margin: 0 0 18px; }
+.mkd-eyebrow { margin: 0 0 10px; font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-deep); }
+.mkd-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.2vw, 68px); line-height: 1.02; letter-spacing: -0.032em; margin: 0; text-wrap: balance; }
+.mkd-lead { font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 58ch; margin: 16px 0 0; }
+
+.mkd-grid { list-style: none; margin: clamp(28px, 3.4vw, 46px) 0 0; padding: 0; display: grid; gap: clamp(16px, 1.8vw, 26px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 719px) { .mkd-grid { grid-template-columns: 1fr; } }
+
+.mkd-card { display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(17,18,20,.05);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.mkd-card:hover { transform: translateY(-3px); box-shadow: 0 26px 48px -28px rgba(17,18,20,.5); border-color: #cfd6d5; }
+.mkd-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.mkd-media { display: block; position: relative; aspect-ratio: 16 / 10; background: var(--tint); overflow: hidden; }
+.mkd-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.mkd-media::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 -1px 0 var(--line); pointer-events: none; }
+/* velo y rotulo "Open" al pasar por encima: solo con JS, porque sin JS la tarjeta navega */
+.mkd-veil { position: absolute; inset: 0; display: none; place-items: center; background: rgba(17,18,20,.42); opacity: 0; transition: opacity .18s ease; }
+.mkd-js .mkd-veil { display: grid; }
+.mkd-js .mkd-card:hover .mkd-veil, .mkd-js .mkd-card:focus-visible .mkd-veil { opacity: 1; }
+.mkd-veil span { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #16130a; font-weight: 600; font-size: 14.5px; padding: 11px 18px; border-radius: 999px; transform: translateY(6px); transition: transform .18s ease; }
+.mkd-js .mkd-card:hover .mkd-veil span, .mkd-js .mkd-card:focus-visible .mkd-veil span { transform: none; }
+.mkd-veil svg { width: 15px; height: 15px; }
+
+.mkd-meta { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 18px 16px; }
+.mkd-name { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -0.015em; line-height: 1.15; display: block; }
+.mkd-sector { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+.mkd-go { flex: none; display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--brand-deep); }
+.mkd-go svg { width: 14px; height: 14px; transition: transform .18s ease; }
+.mkd-card:hover .mkd-go svg { transform: translateX(3px); }
+.mkd-yesjs { display: none; }
+.mkd-js .mkd-yesjs { display: inline; }
+.mkd-js .mkd-nojs { display: none; }
+
+.mkd-foot { margin: clamp(22px, 2.6vw, 34px) 0 0; font-size: 14.5px; color: var(--muted); max-width: 70ch; }
+.mkd-foot b { color: var(--ink); font-weight: 600; }
+
+/* ===================== el visor ===================== */
+.mkd-viewer { width: 100%; max-width: none; height: 100%; max-height: none; border: 0; padding: clamp(8px, 1.6vh, 20px) clamp(8px, 1.6vw, 24px); margin: 0; background: transparent; color: var(--paper); overflow: hidden; }
+.mkd-panel { height: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+.mkd-bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(24,25,28,.94); border: 1px solid rgba(255,255,255,.09); border-radius: 12px; padding: 9px 10px 9px 14px; }
+.mkd-bar-l { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mkd-bar-r { display: flex; align-items: center; gap: 8px; flex: none; }
+.mkd-vname { font-family: var(--display); font-weight: 700; font-size: 15.5px; letter-spacing: -0.012em; margin: 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mkd-chip { flex: none; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #16130a; background: var(--accent); border-radius: 999px; padding: 4px 9px; white-space: nowrap; }
+
+.mkd-seg { display: inline-flex; background: rgba(255,255,255,.07); border-radius: 999px; padding: 3px; gap: 2px; }
+.mkd-seg button { appearance: none; border: 0; background: transparent; color: var(--on-ink); font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .15s ease, color .15s ease; }
+.mkd-seg button svg { width: 14px; height: 14px; }
+.mkd-seg button:hover { color: #fff; }
+.mkd-seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+
+.mkd-ghost { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--on-ink); text-decoration: none; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 8px 14px; background: transparent; cursor: pointer; font-family: inherit; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.mkd-ghost:hover { color: #fff; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.07); }
+.mkd-ghost svg { width: 14px; height: 14px; }
+.mkd-x { width: 38px; height: 38px; padding: 0; justify-content: center; border-radius: 10px; }
+.mkd-x svg { width: 16px; height: 16px; }
+
+.mkd-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.mkd-device { position: relative; background: #1b1c20; border-radius: 22px; padding: 10px; box-shadow: 0 40px 90px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08); max-width: 100%; }
+.mkd-device.is-phone { border-radius: 40px; }
+.mkd-notch { display: none; height: 24px; align-items: center; justify-content: center; }
+.mkd-notch i { display: block; width: 58px; height: 5px; border-radius: 3px; background: #3a3c42; }
+.mkd-device.is-phone .mkd-notch { display: flex; }
+.mkd-chrome { display: none; height: 34px; align-items: center; gap: 12px; padding: 0 4px 0 6px; }
+.mkd-device.is-desktop .mkd-chrome { display: flex; }
+.mkd-dots { display: inline-flex; gap: 6px; flex: none; }
+.mkd-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+.mkd-dots i:nth-child(1) { background: #E0645C; } .mkd-dots i:nth-child(2) { background: #E8B33D; } .mkd-dots i:nth-child(3) { background: #4FA36A; }
+.mkd-url { flex: 1 1 auto; min-width: 0; background: rgba(255,255,255,.08); border-radius: 7px; height: 22px; display: flex; align-items: center; gap: 7px; padding: 0 10px; font-size: 12px; color: var(--on-ink); white-space: nowrap; overflow: hidden; }
+.mkd-url svg { width: 11px; height: 11px; flex: none; }
+.mkd-screen { position: relative; background: #fff; overflow: hidden; border-radius: 12px; }
+.mkd-device.is-phone .mkd-screen { border-radius: 28px; }
+.mkd-device.is-bare { border-radius: 20px; padding: 6px; }
+.mkd-device.is-bare .mkd-screen { border-radius: 15px; }
+.mkd-frame { display: block; border: 0; background: #fff; }
+
+.mkd-note { flex: none; margin: 0; text-align: center; font-size: 12.5px; line-height: 1.45; color: #9aa0a8; }
+
+/* en movil el visor va a sangre: la demo recibe el ancho entero del telefono,
+   que es exactamente el que tendria abierta ella sola. El telefono ya es el marco. */
+@media (max-width: 759px) {
+  .mkd-seg { display: none; }
+  .mkd-viewer { padding: 0; }
+  .mkd-panel { gap: 0; }
+  .mkd-bar { border-radius: 0; border-left: 0; border-right: 0; border-top: 0; padding: 8px 8px 8px 14px; }
+  .mkd-device.is-bare { border-radius: 0; padding: 0; box-shadow: none; background: #fff; width: 100%; }
+  .mkd-device.is-bare .mkd-screen { border-radius: 0; }
+  .mkd-device.is-bare .mkd-notch { display: none; }
+  .mkd-note { padding: 9px 14px; background: rgba(18,19,22,.97); border-top: 1px solid rgba(255,255,255,.08); }
+}
+@media (max-width: 599px) { .mkd-chip { display: none; } .mkd-ghost .mkd-lbl { display: none; } .mkd-ghost { padding: 8px 11px; } }
+
+/* apertura sin View Transitions (Firefox): entrada discreta con @starting-style */
+.mkd-viewer, .mkd-viewer::backdrop { transition: opacity .26s ease, transform .26s ease, background-color .26s ease, overlay .26s allow-discrete, display .26s allow-discrete; }
+.mkd-viewer { opacity: 0; transform: scale(.985); }
+.mkd-viewer[open] { opacity: 1; transform: none; }
+@starting-style { .mkd-viewer[open] { opacity: 0; transform: scale(.985); } }
+.mkd-viewer::backdrop { background-color: rgba(12,13,15,0); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.mkd-viewer[open]::backdrop { background-color: rgba(12,13,15,.74); }
+@starting-style { .mkd-viewer[open]::backdrop { background-color: rgba(12,13,15,0); } }
+/* si la apertura la conduce una View Transition, esa animacion sobra */
+.mkd-viewer.is-vt, .mkd-viewer.is-vt::backdrop { transition: none; }
+
+/* la morfologia tarjeta <-> visor */
+::view-transition-group(mkd-demo) { animation-duration: .46s; animation-timing-function: cubic-bezier(.2,.8,.25,1); }
+::view-transition-old(mkd-demo), ::view-transition-new(mkd-demo) { height: 100%; width: 100%; object-fit: cover; object-position: top center; mix-blend-mode: normal; animation-duration: .46s; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mkd-viewer, .mkd-viewer::backdrop { transition: none; }
+}
+
+/* ===== movil: se recorta aire, nunca contenido ===== */
 @media (max-width: 620px) {
-  section { padding: 28px 0; }
-  .hero { padding: 18px 0 28px; }
-  .cta { padding: 42px 0; }
-  .hero-copy-block { margin-bottom: 26px; }
-  .hero-copy-block .kicker { margin-bottom: 14px; }
-  .hero-copy-block .lead { margin-top: 16px; }
-  .hero-copy-block .cta-line { margin-top: 20px; }
-  .trust { margin-top: 16px; gap: 6px 16px; }
+  section { padding: 18px 0; }
+  .mkh-head { padding-block: 22px 14px; }
+  .mkh-head .kicker { margin-bottom: 12px; }
+  .mkh-head .lead { margin-top: 12px; }
+  .mkh-head .cta-line { margin-top: 16px; }
+  .mkh-head .trust { margin-top: 14px; gap: 6px 16px; }
+  .mkh-cap { padding-bottom: 16px; }
+  .mkd-root { padding: 24px 0 28px; }
+  .mkp-root { padding: 24px 0 28px; }
+  .mkp-note { margin-top: 18px; }
+  .mkd-media { aspect-ratio: 5 / 2; }
+  .mkd-grid { margin-top: 20px; gap: 12px; }
+  .mkd-meta { padding: 11px 14px 12px; }
+  .mkd-lead, .mkd-foot { margin-top: 12px; }
+  .cta { padding: 32px 0; }
   .stats .band-kicker { margin-bottom: 22px; }
-  .stat-row { gap: 22px; }
-  .stat { padding-top: 16px; }
-  .stat b { font-size: clamp(54px, 15vw, 96px); margin-bottom: 10px; }
+  .stat-row { gap: 16px; }
+  .stat { padding-top: 12px; }
+  .stat b { font-size: clamp(54px, 15vw, 96px); margin-bottom: 6px; }
   .stat p { margin-bottom: 8px; }
-  .get-grid { margin-top: 22px; gap: 10px; }
-  .get-grid article { padding: 17px; }
+  .get-grid { margin-top: 16px; gap: 8px; }
+  .get-grid article { padding: 15px; }
   .get-grid article.lg { padding: 20px 18px 22px; gap: 14px; }
-  .phone { width: min(206px, 60vw); }
   .price ul { margin-top: 16px; }
-  .price ul li { padding: 8px 0 8px 18px; }
-  .cmp { padding: 20px; }
-  .cmp td { padding: 9px 6px; }
-  .steps { gap: 26px; }
-  .step-frame { margin-bottom: 12px; }
-  .how .note { margin-top: 26px; }
+  .price ul li { padding: 6px 0 6px 18px; }
+  .cmp { padding: 16px; }
+  .cmp td { padding: 7px 6px; }
   .safe-grid { margin-top: 20px; }
-  .safe-grid li { padding: 12px 10px 12px 4px; }
-  .who .check { margin-top: 14px; }
-  .marquee-view { margin-top: 22px; }
+  .safe-grid li { padding: 8px 10px 8px 4px; }
+  .who .check { margin-top: 12px; }
   .faq h2 { margin-bottom: 14px; }
-  .faq summary { padding: 14px 0; }
-  .faq details p { padding-bottom: 12px; }
+  .faq summary { padding: 10px 0; }
+  .faq details p { padding-bottom: 10px; }
   .cta p { margin: 14px 0 22px; }
   .cta-aside { padding-top: 18px; }
-  footer { padding: 26px 0 34px; }
+  body > footer { padding: 22px 0 28px; }
 }
 </style>
 </head>
@@ -412,58 +922,153 @@ footer a:hover { color: #fff; }
     </a>
     <span class="tag">Ready-made websites for local businesses · Singapore</span>
     <ul>
-      <li><a href="#draft">See a draft</a></li>
+      <li><a href="#demos">See a draft</a></li>
       <li><a href="#price">Price</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#safe">Why it is safe</a></li>
       <li><a href="#who">Who you deal with</a></li>
-      <li><a href="#drafts">Drafts</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <a class="btn btn-brand btn-sm" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
   </div>
 </nav>
 
-<header class="hero tex" id="top">
-  <div class="wrap">
-    <div class="hero-copy-block" id="draft">
-      <span class="kicker">Ready-made websites for local businesses</span>
-      <h1>Your website is <span class="accent-word">already built</span>. Pay only if you want it.</h1>
-      <p class="lead">A proper one-page site for your shop, made from what you already publish: prices, opening hours, team, reviews, WhatsApp, map. You look at it first. S$590, live on your own domain within 7 working days.</p>
-      <div class="cta-line">
-        <span class="price">S$590</span>
-        <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
-      </div>
-      <ul class="trust"><li>No payment until you approve the final version</li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
-    </div>
+<header class="mkh-hero" id="top">
 
-    <div class="frame-wrap" id="theatre">
-      <div class="browser-frame">
-        <div class="browser-bar" aria-hidden="true">
-          <span class="dots"><span></span><span></span><span></span></span>
-          <span class="url">yoursalon.com.sg</span>
-        </div>
-        <div class="theatre">
-          <div class="stage" id="stage" style="--p:50%">
-            <picture class="img-before">
-              <source type="image/webp" srcset="../assets/img/before-salon-480.webp 480w, ../assets/img/before-salon-720.webp 720w, ../assets/img/before-salon-1080.webp 1080w, ../assets/img/before-salon-1440.webp 1440w" sizes="(min-width: 1000px) 1000px, 100vw">
-              <img src="../assets/img/before-salon.jpg" srcset="../assets/img/before-salon-720.jpg 720w, ../assets/img/before-salon.jpg 1440w" sizes="(min-width: 1000px) 1000px, 100vw" alt="A Singapore hair salon's current website, name and logo hidden" width="1440" height="900" fetchpriority="high">
-            </picture>
-            <picture class="img-after">
-              <source type="image/webp" srcset="../assets/img/after-salon-480.webp 480w, ../assets/img/after-salon-720.webp 720w, ../assets/img/after-salon-1080.webp 1080w, ../assets/img/after-salon-1440.webp 1440w" sizes="(min-width: 1000px) 1000px, 100vw">
-              <img src="../assets/img/after-salon.jpg" srcset="../assets/img/after-salon-720.jpg 720w, ../assets/img/after-salon.jpg 1440w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Our draft of the same salon's website" width="1440" height="900" fetchpriority="high">
-            </picture>
-            <div class="scrim-top"></div>
-            <input class="drag" id="heroRange" type="range" min="4" max="96" value="50" aria-label="Drag to compare their site today and our draft" oninput="document.getElementById('stage').style.setProperty('--p', this.value+'%')">
-            <div class="handle" aria-hidden="true"></div>
-            <span class="lbl b">Their site today</span>
-            <span class="lbl a">Our draft</span>
+  <div class="mkh-head">
+    <span class="kicker">Ready-made websites for local businesses</span>
+    <h1 class="mkh-h1">Your website is <em class="mkh-em">already built</em>. Pay only if you want it.</h1>
+    <p class="lead">A proper one-page site for your shop, made from what you already publish: prices, opening hours, team, reviews, WhatsApp, map. You look at it first. S$590, live on your own domain within 7 working days.</p>
+    <div class="cta-line">
+      <span class="price">S$590</span>
+      <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
+    </div>
+    <ul class="trust"><li>No payment until you approve the final version</li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
+    <p class="mkh-hint">Scroll <span aria-hidden="true"></span></p>
+  </div>
+
+  <div class="mkh-scroller" id="mkh-scroller">
+    <div class="mkh-stage">
+
+      <p class="mkh-label">
+        <span class="mkh-lab mkh-lab--a">what most shops have</span>
+        <span class="mkh-lab mkh-lab--b">what we build</span>
+      </p>
+
+      <div class="mkh-browser">
+        <div class="mkh-chrome">
+          <div class="mkh-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="mkh-url">
+            <span class="mkh-u mkh-u--old" aria-hidden="true">http://www.yoursalon-sg.webspace.net/index_new2.htm</span>
+            <span class="mkh-u mkh-u--new"><i class="mkh-lock" aria-hidden="true"></i><b>yoursalon.sg</b></span>
           </div>
         </div>
+
+        <div class="mkh-viewport" id="mkh-viewport">
+
+          <!-- ---------- BEFORE ---------- -->
+          <div class="mkh-face mkh-old" id="mkh-old">
+            <span class="mkh-rmlab">Before — what most shops have</span>
+            <div class="mkh-o-page" aria-hidden="true">
+              <div class="mkh-o-banner" id="mkh-o-banner">★ ★ ★ &nbsp; W E L C O M E &nbsp; T O &nbsp; O U R &nbsp; H O M E P A G E &nbsp; ★ ★ ★</div>
+              <h2 class="mkh-o-title" id="mkh-o-title">YOURSALON</h2>
+              <p class="mkh-o-sub" id="mkh-o-sub"><i>"Your hair is our passion since 1998"</i></p>
+              <p class="mkh-o-nav" id="mkh-o-nav"><a>Home</a> | <a>About Us</a> | <a>Our Services</a> | <a>Price List</a> | <a>Contact</a> | <a>Guestbook</a></p>
+              <table class="mkh-o-table">
+                <tbody>
+                  <tr>
+                    <td class="mkh-o-td"><div class="mkh-o-cell mkh-o-cell--photo">
+                      <div class="mkh-o-photo"><img src="../assets/img/after-salon-720.webp" width="720" height="450" alt="" loading="eager" decoding="async"></div>
+                      <div class="mkh-o-cap">our shop (photo)</div>
+                    </div></td>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <span class="mkh-o-blink">NEW!!</span> Welcome to our web site!!! We are a family hair salon.
+                      Please <a>click here</a> to call for appointment. Walk-in also can. Thank you for visiting!!!
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <b>PRICE LIST</b>
+                      <div class="mkh-o-list">Lady Cut ....... $28
+Gent Cut ...... $18
+Colouring ... fr $80
+Perm ..... pls call</div>
+                    </div></td>
+                    <td class="mkh-o-td"><div class="mkh-o-cell">
+                      <b>OPENING HOUR</b>
+                      <div class="mkh-o-list">Mon-Fri : 10am-8pm
+Sat &amp; Sun : 9am-6pm
+Closed on P. Holiday</div>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td class="mkh-o-td" colspan="2"><div class="mkh-o-cell">
+                      <b>OUR SERVICES</b>
+                      <div class="mkh-o-list">Hair Cut * Hair Dye * Rebonding * Treatment * Wedding Set
+Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
+                    </div></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="mkh-o-uc" id="mkh-o-uc">
+                <span class="mkh-o-uc-sign"><i class="mkh-o-uc-hat"></i><i class="mkh-o-uc-body"></i><i class="mkh-o-uc-tool"></i></span>
+                <span class="mkh-o-uc-txt">UNDER CONSTRUCTION</span>
+              </div>
+              <p class="mkh-o-btns" id="mkh-o-btns">
+                <span class="mkh-o-btn98">Sign Our Guestbook</span>
+                <span class="mkh-o-btn98">E-mail Us</span>
+              </p>
+              <p class="mkh-o-badges" id="mkh-o-badges">
+                <span>Best with Netscape</span><span>HTML 4.0</span><span>Get Flash Player</span>
+              </p>
+              <div class="mkh-o-foot" id="mkh-o-foot">
+                <div class="mkh-o-counter">You are visitor number
+                  <span class="mkh-o-leds" id="mkh-o-leds"><b>0</b><b>0</b><b>1</b><b>4</b><b>2</b><b>2</b><b>7</b></span>
+                </div>
+                <div class="mkh-o-best">Best viewed in 1024 × 768 · Last updated: 14 March 2006</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- AFTER ---------- -->
+          <div class="mkh-face mkh-new" id="mkh-new">
+            <span class="mkh-rmlab">After — what we build</span>
+            <div class="mkh-n-page">
+              <header class="mkh-n-head" id="mkh-n-head">
+                <span class="mkh-n-mark" aria-hidden="true">YS</span>
+                <span class="mkh-n-word">Your Salon</span>
+                <nav class="mkh-n-nav"><span>Services</span><span>Prices</span><span>Visit</span></nav>
+              </header>
+              <div class="mkh-n-photo" id="mkh-n-photo">
+                <span class="mkh-n-badge" id="mkh-n-badge"><b>Cuts, colour and treatments</b>Tanjong Pagar · since 1998</span>
+              </div>
+              <div class="mkh-n-body">
+                <div>
+                  <p class="mkh-n-kicker" id="mkh-n-kicker">Price list</p>
+                  <div class="mkh-n-row"><span>Cut &amp; finish</span><i></i><b>$28</b></div>
+                  <div class="mkh-n-row"><span>Gents cut</span><i></i><b>$18</b></div>
+                  <div class="mkh-n-row"><span>Colour</span><i></i><b>from $80</b></div>
+                  <div class="mkh-n-row"><span>Perm</span><i></i><b>from $120</b></div>
+                </div>
+                <aside class="mkh-n-side" id="mkh-n-side">
+                  <span class="mkh-n-open"><span class="mkh-n-dot" id="mkh-n-dot"></span> Open now · closes 20:00</span>
+                  <div class="mkh-n-hrs">Mon–Fri&nbsp; 10:00–20:00<br>Sat–Sun&nbsp; 09:00–18:00</div>
+                  <span class="mkh-n-cta" id="mkh-n-cta">Book an appointment</span>
+                </aside>
+              </div>
+              <footer class="mkh-n-foot" id="mkh-n-foot">Tanjong Pagar, Singapore &nbsp;·&nbsp; +65 6xxx xxxx</footer>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <p class="frame-cap">A Singapore hair salon &middot; a design proposal made by us before any contact, shown here without the business name &middot; not client work</p>
+
+      <button type="button" class="mkh-replay" id="mkh-replay"><span aria-hidden="true"></span>Replay</button>
+
     </div>
   </div>
+
+  <p class="mkh-cap">Both versions are drawn here, side by side, for a salon that does not exist &middot; the old one is the kind of page most shops still have</p>
 </header>
 
 <section class="stats band-teal" id="stats">
@@ -486,27 +1091,119 @@ footer a:hover { color: #fff; }
         <div class="lg-copy">
           <h3>Fast on a phone</h3>
           <p>One page that loads in a blink and reads well on a small screen.</p>
+    <div class="mkm-try" aria-hidden="true">
+    <span>Tap the tabs</span>
+    <span>Tap the green button</span>
+    </div>
           <span class="lg-note">Example page &middot; not a real business</span>
         </div>
-        <div class="phone" aria-hidden="true">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="p-topbar"><span class="lg-dot"></span><b>YOURSALON</b></div>
-            <div class="p-hero">
-              <picture>
-                <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
-                <img src="../assets/img/after-salon-720.jpg" alt="Example of the page we build: photo, prices, opening hours and a WhatsApp button" width="720" height="450" loading="lazy">
-              </picture>
+        <div class="mkm-stagewrap">
+          <div class="mkm-phone">
+            <div class="mkm-notch" aria-hidden="true"></div>
+            <div class="mkm-screen">
+
+              <div class="mkm-topbar">
+                <span class="mkm-logo" aria-hidden="true"></span>
+                <span class="mkm-name">YOURSALON</span>
+                <span class="mkm-status" id="mkmChip"><span class="mkm-dot" aria-hidden="true"></span><span id="mkmChipTxt">Tue&ndash;Sun, 10:00&ndash;20:00</span></span>
+              </div>
+
+              <div class="mkm-tabs" role="tablist" aria-label="Sections of this example page" id="mkmTabs">
+                <button type="button" role="tab" id="mkmTab-serv" aria-controls="mkmPanel-serv" aria-selected="true" tabindex="0">Services</button>
+                <button type="button" role="tab" id="mkmTab-hours" aria-controls="mkmPanel-hours" aria-selected="false" tabindex="-1">Hours</button>
+                <button type="button" role="tab" id="mkmTab-find" aria-controls="mkmPanel-find" aria-selected="false" tabindex="-1">Find us</button>
+                <button type="button" role="tab" id="mkmTab-rev" aria-controls="mkmPanel-rev" aria-selected="false" tabindex="-1">Reviews</button>
+              </div>
+
+              <div class="mkm-panels" id="mkmPanels">
+
+                <section class="mkm-panel" id="mkmPanel-serv" role="tabpanel" aria-labelledby="mkmTab-serv" tabindex="0">
+                  <h3>Services</h3>
+                  <div class="mkm-row"><span>Cut &amp; blow dry<small>45 min</small></span><b>S$45</b></div>
+                  <div class="mkm-row"><span>Colour, roots<small>90 min</small></span><b>S$120</b></div>
+                  <div class="mkm-row"><span>Balayage<small>2 h 30</small></span><b>S$210</b></div>
+                  <div class="mkm-row"><span>Keratin smoothing<small>3 h</small></span><b>S$280</b></div>
+                  <div class="mkm-row"><span>Fringe trim<small>15 min</small></span><b>Free</b></div>
+                  <p class="mkm-hint">Prices include GST. Walk-ins welcome; booking is faster.</p>
+                </section>
+
+                <section class="mkm-panel" id="mkmPanel-hours" role="tabpanel" aria-labelledby="mkmTab-hours" tabindex="0">
+                  <h3>Hours</h3>
+                  <p class="mkm-live" id="mkmLive"><span class="mkm-dot" aria-hidden="true"></span><span id="mkmLiveTxt"><b>Tue&ndash;Sun</b>, 10:00&ndash;20:00. Closed on Mondays.</span></p>
+                  <table class="mkm-week">
+                    <tbody>
+                      <tr data-day="1"><th scope="row">Monday</th><td>Closed</td></tr>
+                      <tr data-day="2"><th scope="row">Tuesday</th><td>10:00 &ndash; 20:00</td></tr>
+                      <tr data-day="3"><th scope="row">Wednesday</th><td>10:00 &ndash; 20:00</td></tr>
+                      <tr data-day="4"><th scope="row">Thursday</th><td>10:00 &ndash; 20:00</td></tr>
+                      <tr data-day="5"><th scope="row">Friday</th><td>10:00 &ndash; 20:00</td></tr>
+                      <tr data-day="6"><th scope="row">Saturday</th><td>10:00 &ndash; 20:00</td></tr>
+                      <tr data-day="0"><th scope="row">Sunday</th><td>10:00 &ndash; 20:00</td></tr>
+                    </tbody>
+                  </table>
+                  <p class="mkm-hint">Public holidays: last booking at 17:00.</p>
+                </section>
+
+                <section class="mkm-panel" id="mkmPanel-find" role="tabpanel" aria-labelledby="mkmTab-find" tabindex="0">
+                  <h3>Find us</h3>
+                  <div class="mkm-map" role="img" aria-label="Simplified map with the shop marked on the main road"></div>
+                  <p class="mkm-addr"><b>Tiong Bahru</b>Singapore</p>
+                  <ul class="mkm-ways">
+                    <li>2 min walk from the MRT station, exit B.</li>
+                    <li>Buses 5, 16, 123, 195 stop across the road.</li>
+                    <li>Blue shopfront, next to the bakery.</li>
+                    <li>Car park under the block, S$1.20 an hour.</li>
+                  </ul>
+                </section>
+
+                <section class="mkm-panel" id="mkmPanel-rev" role="tabpanel" aria-labelledby="mkmTab-rev" tabindex="0">
+                  <h3>Reviews</h3>
+                  <div class="mkm-rev">
+                    <span class="mkm-stars" role="img" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <p>&ldquo;Asked for something low maintenance and that is exactly what I got. Grew out well.&rdquo;</p>
+                    <small>Google review &middot; 4.8 average, 212 reviews</small>
+                  </div>
+                  <div class="mkm-rev">
+                    <span class="mkm-stars" role="img" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <p>&ldquo;Booked on WhatsApp at 9am, in the chair by noon. No fuss.&rdquo;</p>
+                    <small>Google review</small>
+                  </div>
+                  <div class="mkm-rev">
+                    <span class="mkm-stars" role="img" aria-label="4 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                    <p>&ldquo;Colour came out just as in the photo. Busy on Saturdays, so book ahead.&rdquo;</p>
+                    <small>Google review</small>
+                  </div>
+                  <p class="mkm-hint">Example reviews for a business that does not exist.</p>
+                </section>
+
+                <div class="mkm-chat" id="mkmChat" hidden>
+                  <div class="mkm-chat-top">
+                    <button type="button" class="mkm-back" id="mkmBack" aria-label="Back to the page">&#8592;</button>
+                    <b>YOURSALON</b>
+                    <small>demo</small>
+                  </div>
+                  <div class="mkm-thread" id="mkmThread">
+                    <div class="mkm-msg out" data-msg><span>Hi, do you have a slot on Saturday?</span><time>10:42</time></div>
+                    <div class="mkm-msg in" data-msg><span>Yes, 3pm works.</span><time>10:44</time></div>
+                  </div>
+                  <div class="mkm-chat-foot">
+                    <div class="mkm-fakeinput" aria-hidden="true">Type a message&hellip;</div>
+                    <span class="mkm-chat-note">Demo only. This does not open WhatsApp.</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="mkm-bottom">
+                <button type="button" class="mkm-wa" id="mkmWa" aria-expanded="false" aria-controls="mkmChat">
+                  <span class="mkm-ring" aria-hidden="true"></span>Message on WhatsApp
+                </button>
+                <span class="mkm-demo">Demo &middot; nothing is sent</span>
+              </div>
+
             </div>
-            <div class="p-services">
-              <div class="row"><span>Cut &amp; blow dry</span><span>S$45</span></div>
-              <div class="row"><span>Colour, roots</span><span>S$120</span></div>
-              <div class="row"><span>Keratin smoothing</span><span>S$280</span></div>
-            </div>
-            <div class="p-hours"><span class="go"></span><b>Open now</b>&nbsp;&middot; Tue&ndash;Sun, 10:00&ndash;20:00</div>
-            <div class="p-map"></div>
-            <div class="p-cta"><div class="wa"><span class="ring"></span>Message on WhatsApp</div></div>
           </div>
+          <p class="mkm-cap">Example page for a business that does not exist.</p>
         </div>
       </article>
       <article><h3>Your prices and hours</h3><p>Exactly as you publish them, with "open now" worked out live.</p></article>
@@ -549,55 +1246,227 @@ footer a:hover { color: #fff; }
   </div>
 </section>
 
-<section class="how band-ink" id="how">
-  <div class="wrap">
-    <span class="rule" aria-hidden="true"></span><h2 data-reveal>How it works</h2>
-        <ol class="steps" id="stepsList">
-      <li>
-        <figure class="step-frame">
-          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url"><span>yoursalon.com.sg &middot; draft</span></span></div>
-          <div class="shot">
-            <picture>
-              <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
-              <img src="../assets/img/after-salon-720.jpg" alt="The draft page we build for you, shown here without the business name" width="720" height="450" loading="lazy">
-            </picture>
-            <span class="stamp draft">draft</span>
+<section class="mkp-root" id="how" aria-labelledby="mkpTitle">
+  <div class="mkp-wrap">
+    <span class="mkp-rule" aria-hidden="true"></span>
+    <h2 class="mkp-h2" id="mkpTitle">How it works</h2>
+    <p class="mkp-lead">Three steps, one draft. <span class="mkp-onanim">Scroll and watch the same page go from a grey box to a live site.</span></p>
+
+    <div class="mkp-stage" id="mkpStage">
+      <div class="mkp-sticky">
+
+        <div class="mkp-browser">
+          <div class="mkp-bar">
+            <span class="mkp-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="mkp-url">
+              <svg class="mkp-lock" id="mkpLock" viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M2.4 5.1V3.4a2.6 2.6 0 0 1 5.2 0v1.7" fill="none" stroke="#7CE0B8" stroke-width="1.3" stroke-linecap="round"></path><rect x="1" y="5.1" width="8" height="6" rx="1.4" fill="#7CE0B8"></rect></svg>
+              <span class="mkp-swap">
+                <span id="mkpUrlDraft">yoursalon.com.sg &middot; draft</span>
+                <span id="mkpUrlLive">yoursalon.com &middot; live</span>
+              </span>
+            </span>
           </div>
-        </figure>
-        <h3>We draft it</h3><p>From what you already publish: your site, your Google listing, your booking page. You get a link to a finished draft.</p>
-      </li>
-      <li>
-        <figure class="step-frame">
-          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url"><span>yoursalon.com.sg &middot; your notes</span></span></div>
-          <div class="shot">
-            <picture>
-              <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
-              <img src="../assets/img/after-salon-720.jpg" alt="The same draft page with three change requests marked on it" width="720" height="450" loading="lazy">
-            </picture>
-            <span class="mark m1"><i>photo</i></span>
-            <span class="mark m2"><i>price</i></span>
-            <span class="mark m3"><i>hours</i></span>
+
+          <div class="mkp-page" id="mkpPage" role="img" aria-label="The same one-page site in three stages: a grey draft, the same draft with three change requests marked on it, and the finished page live on its own domain.">
+            <div class="mkp-doc" aria-hidden="true">
+
+              <div class="mkp-pnav">
+                <span class="mkp-plogo" data-txt></span>
+                <span class="mkp-pname" data-txt>YOURSALON</span>
+                <ul><li data-txt>Services</li><li data-txt>Hours</li><li data-txt>Find us</li></ul>
+                <span class="mkp-pbtn" data-txt>WhatsApp</span>
+              </div>
+
+              <div class="mkp-phero">
+                <div>
+                  <h3 data-txt>Hair that behaves.</h3>
+                  <p data-txt>Cut, colour and keratin in Tiong Bahru. Walk-ins welcome, booking is faster.</p>
+                  <span class="mkp-pbtn" data-txt>Book a slot</span>
+                </div>
+                <div class="mkp-pphoto">
+                  <picture>
+                    <source type="image/webp" srcset="../assets/img/draft-salon-720.webp">
+                    <img class="mkp-photo-a" id="mkpPhotoA" src="../assets/img/draft-salon-720.jpg" alt="" width="720" height="450" loading="lazy" decoding="async">
+                  </picture>
+                  <picture>
+                    <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
+                    <img class="mkp-photo-b" id="mkpPhotoB" src="../assets/img/after-salon-720.jpg" alt="" width="720" height="450" loading="lazy" decoding="async">
+                  </picture>
+                </div>
+              </div>
+
+              <div class="mkp-pprices">
+                <div class="mkp-prow"><span data-txt>Cut &amp; blow dry</span><b id="mkpPrice" data-txt>S$45</b></div>
+                <div class="mkp-prow"><span data-txt>Colour, roots</span><b data-txt>S$120</b></div>
+                <div class="mkp-prow"><span data-txt>Keratin smoothing</span><b data-txt>S$280</b></div>
+              </div>
+
+              <div class="mkp-phours">
+                <span class="mkp-go" data-txt></span>
+                <span class="mkp-swap">
+                  <span id="mkpHoursA" data-txt><b>Open now</b> &middot; Mon&ndash;Sun, 09:00&ndash;20:00</span>
+                  <span id="mkpHoursB"><b>Open now</b> &middot; Tue&ndash;Sun, 10:00&ndash;20:00</span>
+                </span>
+              </div>
+
+              <div class="mkp-pfoot">
+                <span class="mkp-pbtn" data-txt>Message on WhatsApp</span>
+                <small data-txt>Tiong Bahru &middot; 2 min from the MRT</small>
+              </div>
+            </div>
+
+            <div class="mkp-sk" id="mkpSk" aria-hidden="true">
+              <i style="left:2.2%;top:3.8%;width:15%;height:5.2%"></i>
+              <i style="left:66%;top:4.2%;width:32%;height:4.8%"></i>
+              <i style="left:51.2%;top:14%;width:46.6%;height:46.6%"></i>
+              <i style="left:2.2%;top:25.6%;width:40%;height:7%"></i>
+              <i style="left:2.2%;top:34.6%;width:46%;height:3%"></i>
+              <i style="left:2.2%;top:38.6%;width:33%;height:3%"></i>
+              <i style="left:2.2%;top:44.2%;width:13%;height:8.1%"></i>
+              <i style="left:2.2%;top:63.8%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:69.8%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:75.9%;width:95.5%;height:4.4%"></i>
+              <i style="left:2.2%;top:82%;width:44%;height:4.2%"></i>
+              <i style="left:2.2%;top:88.6%;width:27%;height:8%"></i>
+            </div>
+
+            <div class="mkp-ann mkp-a1 mkp-lbl-top" aria-hidden="true"><i>make this bigger</i></div>
+            <div class="mkp-ann mkp-a2 mkp-lbl-in" aria-hidden="true"><i>use our photo</i></div>
+            <div class="mkp-ann mkp-a3 mkp-lbl-right" aria-hidden="true"><i>we open at 10</i></div>
+
+            <span class="mkp-live" id="mkpLive" aria-hidden="true">live</span>
           </div>
-        </figure>
-        <h3>You tell us what to change</h3><p>Prices, photos, wording, colours. Two rounds of changes are included. Reply by email or WhatsApp.</p>
-      </li>
-      <li>
-        <figure class="step-frame">
-          <div class="step-bar"><span class="dots"><span></span><span></span><span></span></span><span class="url"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M2.4 5.1V3.4a2.6 2.6 0 0 1 5.2 0v1.7" fill="none" stroke="#7CE0B8" stroke-width="1.3" stroke-linecap="round"></path><rect x="1" y="5.1" width="8" height="6" rx="1.4" fill="#7CE0B8"></rect></svg><span>yoursalon.com &middot; live</span></span></div>
-          <div class="shot">
-            <picture>
-              <source type="image/webp" srcset="../assets/img/after-salon-720.webp">
-              <img src="../assets/img/after-salon-720.jpg" alt="The same page, live on the business's own domain" width="720" height="450" loading="lazy">
-            </picture>
-            <span class="stamp live">live</span>
-          </div>
-        </figure>
-        <h3>You approve, you pay, we put it live</h3><p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p>
-      </li>
-    </ol>
-    <p class="note" data-reveal>You owe nothing until you approve the final version. If you do not want the draft, just say so and we remove it. Not live within 7 working days of payment and of receiving your logo, text and domain details? Full refund, by Wise. The clock pauses while we wait on you.</p>
+        </div>
+
+        <div>
+          <div class="mkp-rail" id="mkpRail" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+          <ol class="mkp-steps" id="mkpSteps">
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>We draft it</h3>
+              <p>From what you already publish: your site, your Google listing, your booking page. You get a link to a finished draft.</p>
+            </li>
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>You tell us what to change</h3>
+              <p>Prices, photos, wording, colours. Two rounds of changes are included. Reply by email or WhatsApp.</p>
+            </li>
+            <li class="mkp-step">
+              <span class="mkp-num" aria-hidden="true"></span>
+              <h3>You approve, you pay, we put it live</h3>
+              <p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="mkp-note">You owe nothing until you approve the final version. If you do not want the draft, just say so and we remove it. Not live within 7 working days of payment and of receiving your logo, text and domain details? Full refund, by Wise. The clock pauses while we wait on you.</p>
   </div>
 </section>
+
+<section class="mkd-root" id="demos" aria-labelledby="mkdTitle">
+  <div class="mkd-wrap">
+    <span class="mkd-rule"></span>
+    <p class="mkd-eyebrow">Demo sites</p>
+    <h2 class="mkd-h2" id="mkdTitle">Open one and walk around it</h2>
+    <p class="mkd-lead">Four pages built with the engine we would use for yours. The businesses are invented; the pages are not. Open one and it runs right here &mdash; scroll it, press its buttons, look at it as a phone or as a desktop.</p>
+
+    <ul class="mkd-grid">
+      <li>
+        <a class="mkd-card" href="../demos/demo-barber/index.html"
+           data-name="Copperknot Barber Room" data-host="copperknot.example"
+           data-frame-title="Demo site for a fictional barber shop">
+          <span class="mkd-media">
+            <img src="../pieces/posters/barber.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Copperknot Barber Room demo site: a dark page with the shop name in large condensed type over a photo of a barber at work, next to a short price list.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Copperknot Barber Room</span><span class="mkd-sector">Barber shop &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-salon/index.html"
+           data-name="Plumgrove Hair Room" data-host="plumgrove.example"
+           data-frame-title="Demo site for a fictional hair salon">
+          <span class="mkd-media">
+            <img src="../pieces/posters/salon.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Plumgrove Hair Room demo site: a pale page with the salon name in a large italic serif over a photo of mirrors and styling chairs.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Plumgrove Hair Room</span><span class="mkd-sector">Hair salon &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-aircon/index.html"
+           data-name="Northvale Cooling Works" data-host="northvale.example"
+           data-frame-title="Demo site for a fictional aircon servicing company">
+          <span class="mkd-media">
+            <img src="../pieces/posters/aircon.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Northvale Cooling Works demo site: a deep blue page with the company name in heavy sans type and a panel of servicing prices per unit.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Northvale Cooling Works</span><span class="mkd-sector">Aircon servicing &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="mkd-card" href="../demos/demo-pets/index.html"
+           data-name="Biscuit &amp; Bramble Pet Grooming" data-host="biscuitandbramble.example"
+           data-frame-title="Demo site for a fictional pet grooming shop">
+          <span class="mkd-media">
+            <img src="../pieces/posters/pets.webp" width="960" height="600" loading="lazy" decoding="async" alt="Top of the Biscuit and Bramble Pet Grooming demo site: a cream page with rounded type and an oval photo of a groomer brushing a small dog.">
+            <span class="mkd-veil" aria-hidden="true"><span>Open this one<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+          </span>
+          <span class="mkd-meta">
+            <span><span class="mkd-name">Biscuit &amp; Bramble Pet Grooming</span><span class="mkd-sector">Pet grooming &middot; fictional</span></span>
+            <span class="mkd-go"><span class="mkd-yesjs">Open</span><span class="mkd-nojs">Visit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <p class="mkd-foot"><b>All four businesses are invented</b> &mdash; the names, the staff, the prices and the addresses. We build them so we can show the work without putting a client&rsquo;s page on display. Yours would be built from what you already publish, and you would see it before anyone else does.</p>
+  </div>
+</section>
+
+<dialog class="mkd-viewer" id="mkdViewer" aria-labelledby="mkdVName">
+  <div class="mkd-panel">
+    <div class="mkd-bar">
+      <div class="mkd-bar-l">
+        <p class="mkd-vname" id="mkdVName">Demo</p>
+        <span class="mkd-chip">Fictional business</span>
+      </div>
+      <div class="mkd-bar-r">
+        <div class="mkd-seg" id="mkdSeg" role="group" aria-label="Screen size">
+          <button type="button" data-mode="phone" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.6h2"/></svg>Phone</button>
+          <button type="button" data-mode="desktop" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>Desktop</button>
+        </div>
+        <a class="mkd-ghost" id="mkdNewTab" href="#" target="_blank" rel="noopener"><span class="mkd-lbl">New tab</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1.6 1.6 0 0 1-1.6 1.6H5A1.6 1.6 0 0 1 3.4 19V7.6A1.6 1.6 0 0 1 5 6h5"/></svg></a>
+        <button type="button" class="mkd-ghost mkd-x" id="mkdClose" aria-label="Close the demo viewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      </div>
+    </div>
+
+    <div class="mkd-stage" id="mkdStage">
+      <div class="mkd-device is-phone" id="mkdDevice">
+        <div class="mkd-notch"><i></i></div>
+        <div class="mkd-chrome">
+          <span class="mkd-dots"><i></i><i></i><i></i></span>
+          <span class="mkd-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg><span id="mkdUrl">example</span></span>
+        </div>
+        <div class="mkd-screen" id="mkdScreen"></div>
+      </div>
+    </div>
+
+    <p class="mkd-note" id="mkdNote">A demo site for a business that does not exist.</p>
+  </div>
+</dialog>
 
 <section class="safe tex" id="safe">
   <div class="wrap">
@@ -627,33 +1496,6 @@ footer a:hover { color: #fff; }
       <p><b>Miguel Ángel López</b>, founder of MNKY KONNEKT. A small studio in Spain — you always deal with the same person, Miguel Ángel López. I draft the page, I make the changes you ask for, and I put it live on your domain.</p>
       <p>Check us before you decide: the company entry in the Spanish Commercial Registry gazette, our tax ID, and a real person on WhatsApp.</p>
       <ul class="check"><li><a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a></li><li><a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a></li><li><a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME entry 296563 · 1 July 2025</a></li><li>NIF B22561179</li></ul>
-    </div>
-  </div>
-</section>
-
-<section class="drafts tex" id="drafts">
-  <div class="wrap">
-    <span class="rule" aria-hidden="true"></span><h2 data-reveal>Recent drafts</h2>
-    <p class="lead" data-reveal>Design proposals we made for local businesses before any contact, shown with generic names. Not client work; the real thing looks like this on day one.</p>
-    <div class="marquee-view" id="marqueeView" tabindex="0" aria-label="Draft websites, scrollable">
-      <div class="marquee-track" id="marqueeTrack">
-        <figure>
-          <picture><source type="image/webp" srcset="../assets/img/draft-barber-720.webp 720w, ../assets/img/draft-barber-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-barber.jpg" srcset="../assets/img/draft-barber-720.jpg 720w, ../assets/img/draft-barber.jpg 1440w" sizes="300px" alt="Draft website for a barbershop, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
-          <figcaption><b>Barbershop</b><span>prices by barber level</span></figcaption>
-        </figure>
-        <figure>
-          <picture><source type="image/webp" srcset="../assets/img/draft-salon-720.webp 720w, ../assets/img/draft-salon-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-salon.jpg" srcset="../assets/img/draft-salon-720.jpg 720w, ../assets/img/draft-salon.jpg 1440w" sizes="300px" alt="Draft website for a hair salon, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
-          <figcaption><b>Hair salon</b><span>team &middot; reviews</span></figcaption>
-        </figure>
-        <figure>
-          <picture><source type="image/webp" srcset="../assets/img/draft-pets-720.webp 720w, ../assets/img/draft-pets-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-pets.jpg" srcset="../assets/img/draft-pets-720.jpg 720w, ../assets/img/draft-pets.jpg 1440w" sizes="300px" alt="Draft website for a pet groomer, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
-          <figcaption><b>Pet grooming</b><span>prices by size</span></figcaption>
-        </figure>
-        <figure>
-          <picture><source type="image/webp" srcset="../assets/img/draft-aircon-720.webp 720w, ../assets/img/draft-aircon-1440.webp 1440w" sizes="300px"><img src="../assets/img/draft-aircon.jpg" srcset="../assets/img/draft-aircon-720.jpg 720w, ../assets/img/draft-aircon.jpg 1440w" sizes="300px" alt="Draft website for an aircon servicing company, shown with a generic name" loading="lazy" width="1440" height="900"></picture>
-          <figcaption><b>Aircon servicing</b><span>price per unit</span></figcaption>
-        </figure>
-      </div>
     </div>
   </div>
 </section>
@@ -700,79 +1542,660 @@ footer a:hover { color: #fff; }
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script>
+/* Un solo bloque, por piezas, cada una en su IIFE. GSAP se carga una vez (arriba, con
+   defer) y el interruptor de reduced-motion se lee aqui y se comparte.
+   OJO: un <script> en linea ignora defer, por eso todo espera a DOMContentLoaded,
+   que se dispara despues de los <script defer src> de GSAP. */
 document.addEventListener("DOMContentLoaded", function () {
-  /* la pagina esta completa sin JS: todo queda en su estado final (comparador al 50%, drafts en fila, cifras con su valor) */
-  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var stage = document.getElementById("stage");
-  var heroRange = document.getElementById("heroRange");
-  var mq900 = matchMedia("(min-width: 900px)");
-  var mv = document.getElementById("marqueeView"), track = document.getElementById("marqueeTrack");
+  "use strict";
+  var RM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var GS = !!(window.gsap && window.ScrollTrigger);
+  if (GS) { gsap.registerPlugin(ScrollTrigger); }
 
-  /* la cinta de drafts duplica sus figuras para el bucle solo si hay movimiento; en reduced motion queda como scroller manual */
-  if (!RM && mv && track) {
-    Array.prototype.slice.call(track.children).forEach(function (node) {
-      var copia = node.cloneNode(true);
-      /* los clones viven fuera de pantalla: sin esto cargarian tarde y se veria el hueco al pasar la cinta */
-      Array.prototype.forEach.call(copia.querySelectorAll("img"), function (img) { img.loading = "eager"; });
-      track.appendChild(copia);
-    });
-    mv.classList.add("is-looping");
-  }
+  /* ============ PIEZA 1 - hero: la web vieja se reconstruye ============ */
+  (function () {
+    var root = document.documentElement;
+    var replayTween = null;
 
-  if (RM || !window.gsap || !window.ScrollTrigger) return;
-  gsap.registerPlugin(ScrollTrigger);
+    function init() {
+      // No GSAP (blocked CDN, offline) or reduced motion: fall back to the finished site. Never a blank frame.
+      if (!window.gsap || !window.ScrollTrigger) { root.classList.remove("mkh-js"); return; }
+      if (RM) { root.classList.remove("mkh-js"); return; }
 
-  /* MOMENTO 1 (el principal): el barrido del comparador del hero */
-  var state = { p: 14 };
-  if (stage) {
-    stage.style.setProperty("--p", "14%");
-    if (heroRange) heroRange.value = 14;
-    var sync = function () { stage.style.setProperty("--p", state.p + "%"); if (heroRange) heroRange.value = state.p; };
-    if (mq900.matches) {
-      gsap.to(state, { p: 96, ease: "none", onUpdate: sync, scrollTrigger: { trigger: "#theatre", start: "top 90px", end: "+=80%", scrub: true, pin: true } });
-    } else {
-      ScrollTrigger.create({ trigger: "#theatre", start: "top 75%", once: true, onEnter: function () { gsap.to(state, { p: 96, duration: 1.1, ease: "power2.inOut", onUpdate: sync }); } });
+
+      var scroller = document.getElementById("mkh-scroller");
+      var replay = document.getElementById("mkh-replay");
+      var mm = gsap.matchMedia();
+
+      mm.add({
+        wide: "(min-width: 900px)",
+        ok: "(prefers-reduced-motion: no-preference)"
+      }, function (ctx) {
+        if (!ctx.conditions.ok) { root.classList.remove("mkh-js"); return; }
+        root.classList.add("mkh-js");
+
+        var narrow = !ctx.conditions.wide;
+        var cells = gsap.utils.toArray(".mkh-o-cell");
+        var rows = gsap.utils.toArray(".mkh-n-row");
+        var newBits = ["#mkh-n-head", "#mkh-n-photo", "#mkh-n-badge", "#mkh-n-kicker", "#mkh-n-side", "#mkh-n-cta", "#mkh-n-foot"];
+
+        // start state: old page on screen, new page laid out but hidden piece by piece
+        gsap.set("#mkh-new", { autoAlpha: 1 });
+        gsap.set(newBits, { autoAlpha: 0 });
+        gsap.set(rows, { autoAlpha: 0, x: -16 });
+        gsap.set("#mkh-n-head", { y: -18 });
+        gsap.set("#mkh-n-photo", { clipPath: "inset(0% 50% 0% 50%)" });
+        gsap.set("#mkh-n-badge", { y: 10 });
+        gsap.set("#mkh-n-kicker", { y: 10 });
+        gsap.set("#mkh-n-side", { y: 20 });
+        gsap.set("#mkh-n-cta", { y: 12, scale: .96 });
+        gsap.set("#mkh-n-foot", { y: 12 });
+        gsap.set("#mkh-n-dot", { scale: 0 });
+        gsap.set(".mkh-u--new", { autoAlpha: 0 });
+        gsap.set(".mkh-lab--b", { autoAlpha: 0, y: 8 });
+        gsap.set("#mkh-old", { autoAlpha: 1 });
+
+        var tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          scrollTrigger: { trigger: scroller, start: "top top", end: "bottom bottom", scrub: .55, invalidateOnRefresh: true }
+        });
+
+        if (!narrow) {
+          // --- wide: every old element leaves with its own gesture ---
+          tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -3, y: 3, duration: .4 }, 0)
+            .to("#mkh-o-banner", { rotation: -13, yPercent: -170, autoAlpha: 0, duration: 1, ease: "power2.in" }, .4)
+            .to("#mkh-o-uc", { x: 6, duration: .1, repeat: 5, yoyo: true }, .5)
+            .to("#mkh-o-uc", { y: 220, rotation: 18, autoAlpha: 0, duration: .9, ease: "power2.in" }, 1.1)
+            .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 7, yoyo: true }, 1.3)
+            .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .5 }, 1.95)
+            .to("#mkh-o-badges span", { autoAlpha: 0, y: 170, rotation: -9, duration: .7, ease: "power2.in", stagger: .07 }, 2.05)
+            .to("#mkh-o-nav", { autoAlpha: 0, y: 26, duration: .5 }, 2.2)
+            .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .35, stagger: .06 }, 1.9)
+            .to(cells, { skewX: 2.5, x: 5, duration: .3, stagger: { each: .06, from: "random" } }, 2.3)
+            .to(cells, {
+              y: 300, autoAlpha: 0, duration: 1, ease: "power2.in",
+              rotation: function () { return gsap.utils.random(-11, 11); },
+              xPercent: function () { return gsap.utils.random(-16, 16); },
+              stagger: { each: .09, from: "end" }
+            }, 2.6)
+            .to(["#mkh-o-title", "#mkh-o-sub"], { autoAlpha: 0, y: -20, duration: .5, stagger: .08 }, 2.8)
+            .to("#mkh-o-btns", { autoAlpha: 0, y: 140, rotation: 7, duration: .6, ease: "power2.in" }, 3)
+            .to("#mkh-o-foot", { autoAlpha: 0, y: 100, duration: .6, ease: "power2.in" }, 3.2)
+            .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: 1.2 }, 2.7)
+            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .6 }, 3.1)
+            .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.1 }, 3.5)
+            .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 4.15)
+            .to("#mkh-n-kicker", { autoAlpha: 1, y: 0, duration: .45 }, 4.4)
+            .to(rows, { autoAlpha: 1, x: 0, duration: .55, stagger: .12 }, 4.5)
+            .to("#mkh-n-badge", { autoAlpha: 1, y: 0, duration: .5 }, 4.7)
+            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .6 }, 5.2)
+            .to("#mkh-n-dot", { scale: 1, duration: .45, ease: "back.out(3)" }, 5.6)
+            .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .5 }, 5.8)
+            .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .5 }, 6)
+            .to(".mkh-u--old", { autoAlpha: 0, duration: .3 }, 5.9)
+            .to(".mkh-u--new", { autoAlpha: 1, duration: .4 }, 6.05)
+            .to(".mkh-lab--a", { autoAlpha: 0, y: -8, duration: .3 }, 5.9)
+            .to(".mkh-lab--b", { autoAlpha: 1, y: 0, duration: .4 }, 6.1)
+            .to({}, { duration: .9 }, 6.7);
+        } else {
+          // --- narrow: same story, fewer beats ---
+          tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -10, yPercent: -170, autoAlpha: 0, duration: .8, ease: "power2.in" }, 0)
+            .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 5, yoyo: true }, .3)
+            .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .4 }, .85)
+            .to(["#mkh-o-uc", "#mkh-o-nav", "#mkh-o-badges"], { autoAlpha: 0, y: 90, duration: .7, stagger: .1, ease: "power2.in" }, .55)
+            .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .3, stagger: .05 }, 1.05)
+            .to(cells, {
+              y: 260, autoAlpha: 0, duration: .8, ease: "power2.in",
+              rotation: function () { return gsap.utils.random(-9, 9); },
+              stagger: { each: .07, from: "end" }
+            }, 1.4)
+            .to(["#mkh-o-title", "#mkh-o-sub", "#mkh-o-btns", "#mkh-o-foot"], { autoAlpha: 0, y: -16, duration: .55, stagger: .06 }, 2.1)
+            .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: .9 }, 1.95)
+            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .55 }, 2.35)
+            .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: .95 }, 2.75)
+            .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 2.95)
+            .to(["#mkh-n-kicker", "#mkh-n-badge"], { autoAlpha: 1, y: 0, duration: .45, stagger: .1 }, 3.4)
+            .to(rows, { autoAlpha: 1, x: 0, duration: .45, stagger: .09 }, 3.55)
+            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .5 }, 4)
+            .to("#mkh-n-dot", { scale: 1, duration: .4, ease: "back.out(3)" }, 4.3)
+            .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .45 }, 4.4)
+            .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .45 }, 4.6)
+            .to([".mkh-u--old", ".mkh-lab--a"], { autoAlpha: 0, duration: .3 }, 4.6)
+            .to([".mkh-u--new", ".mkh-lab--b"], { autoAlpha: 1, y: 0, duration: .4 }, 4.8)
+            .to({}, { duration: .8 }, 5.4);
+        }
+
+        function cancelReplay() { if (replayTween) { replayTween.kill(); replayTween = null; } }
+
+        function runReplay() {
+          var st = tl.scrollTrigger;
+          if (!st) return;
+          cancelReplay();
+          var top = st.start, bottom = st.end;
+          window.scrollTo({ top: top, behavior: "instant" });
+          var o = { y: top };
+          replayTween = gsap.to(o, {
+            y: bottom, duration: narrow ? 2.6 : 3.4, ease: "power1.inOut",
+            onUpdate: function () { window.scrollTo({ top: o.y, behavior: "instant" }); },
+            onComplete: function () { replayTween = null; }
+          });
+        }
+
+        replay.addEventListener("click", runReplay);
+        window.addEventListener("wheel", cancelReplay, { passive: true });
+        window.addEventListener("touchstart", cancelReplay, { passive: true });
+
+        return function () {
+          cancelReplay();
+          replay.removeEventListener("click", runReplay);
+          window.removeEventListener("wheel", cancelReplay);
+          window.removeEventListener("touchstart", cancelReplay);
+        };
+      });
     }
-  }
+    init();
+  })();
 
-  /* entradas discretas de cabecera de seccion: un desplazamiento corto, no un fundido general */
-  gsap.utils.toArray("[data-reveal]").forEach(function (el) {
-    gsap.from(el, { y: 20, autoAlpha: 0, duration: .5, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
-  });
+  /* ============ PIEZA 2 - los tres pasos contados ============ */
+  (function () {
+    if (RM || !GS) { return; }
+  var root = document.documentElement;
 
-  /* MOMENTO 2: las cifras cuentan sobre el teal pleno y suben en cascada */
-  var statRow = document.querySelector(".stat-row");
-  if (statRow) {
-    gsap.from(statRow.children, { y: 40, autoAlpha: 0, duration: .6, ease: "power3.out", stagger: .12, scrollTrigger: { trigger: statRow, start: "top 84%", once: true } });
-    gsap.utils.toArray(".stat b").forEach(function (b) {
-      var target = parseInt(b.textContent, 10); if (!target) return;
-      var o = { v: 0 };
-      gsap.to(o, { v: target, duration: 1.3, ease: "power2.out", scrollTrigger: { trigger: statRow, start: "top 84%", once: true },
-        onUpdate: function () { b.textContent = Math.round(o.v) + "%"; },
-        onComplete: function () { b.textContent = target + "%"; } });
+    var stage = document.getElementById("mkpStage");
+    var steps = Array.prototype.slice.call(document.querySelectorAll("#mkpSteps .mkp-step"));
+    var rails = Array.prototype.slice.call(document.querySelectorAll("#mkpRail i"));
+    var txt = Array.prototype.slice.call(document.querySelectorAll("#mkpPage [data-txt]"));
+    var sk = Array.prototype.slice.call(document.querySelectorAll("#mkpSk i"));
+    var anns = Array.prototype.slice.call(document.querySelectorAll("#mkpPage .mkp-ann"));
+    if (!stage || !steps.length || !sk.length) { return; }
+
+    /* a partir de aqui mandamos nosotros: la seccion pasa a modo animado */
+    root.classList.add("mkp-anim");
+
+    /* estado inicial: lienzo en blanco */
+    gsap.set(sk, { scaleX: 0, autoAlpha: 1 });
+    gsap.set(txt, { autoAlpha: 0, y: 6 });
+    gsap.set(["#mkpPhotoA", "#mkpPhotoB"], { autoAlpha: 0 });
+    gsap.set("#mkpPhotoA", { scale: 1.05 });
+    gsap.set(anns, { autoAlpha: 0, y: 10, scale: .96, transformOrigin: "0% 50%" });
+    gsap.set("#mkpUrlLive", { autoAlpha: 0 });
+    gsap.set("#mkpHoursB", { autoAlpha: 0, y: 8 });
+    gsap.set("#mkpLock", { autoAlpha: 0, scale: .6, transformOrigin: "50% 50%" });
+    gsap.set("#mkpLive", { autoAlpha: 0, scale: .7, transformOrigin: "100% 100%" });
+    gsap.set("#mkpPrice", { scale: 1 });
+
+    function setStep(i) {
+      for (var k = 0; k < steps.length; k++) { steps[k].classList.toggle("is-on", k === i); }
+    }
+    setStep(0);
+
+    var tl = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: stage,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.6,
+        onUpdate: function (self) {
+          var p = self.progress;
+          setStep(p < 0.38 ? 0 : (p < 0.775 ? 1 : 2));
+          for (var k = 0; k < rails.length; k++) {
+            var seg = Math.min(1, Math.max(0, (p - k / 3) * 3));
+            rails[k].style.width = (seg * 100).toFixed(1) + "%";
+          }
+        }
+      }
     });
-  }
 
-  /* MOMENTO 3: el bento se construye pieza a pieza, empezando por la tarjeta del movil */
-  var grid = document.getElementById("getGrid");
-  if (grid) {
-    gsap.from(grid.children, { y: 38, scale: .97, autoAlpha: 0, transformOrigin: "50% 100%", duration: .55, ease: "power3.out", stagger: { each: .07 }, scrollTrigger: { trigger: grid, start: "top 82%", once: true } });
-  }
+    /* ---- FASE 1: la pagina se monta ---- */
+    tl.to(sk, { scaleX: 1, duration: 3, stagger: 0.35 }, 0)
+      .to(txt, { autoAlpha: 1, y: 0, duration: 2, stagger: 0.22 }, 4.2)
+      .to(sk, { autoAlpha: 0, duration: 1.6, stagger: 0.12 }, 4.4)
+      .to("#mkpPhotoA", { autoAlpha: 1, scale: 1, duration: 2.4 }, 7.2)
+      .to({}, { duration: 1.4 }, 9.6);
 
-  /* los tres pasos entran en orden: es el relato draft -> notas -> live */
-  var steps = document.getElementById("stepsList");
-  if (steps) {
-    gsap.from(steps.children, { y: 34, autoAlpha: 0, duration: .55, ease: "power3.out", stagger: .13, scrollTrigger: { trigger: steps, start: "top 82%", once: true } });
-  }
+    /* ---- FASE 2: anotaciones del cliente y la pagina responde ---- */
+    tl.to(anns[0], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 12)
+      .to(anns[1], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 13.4)
+      .to(anns[2], { autoAlpha: 1, y: 0, scale: 1, duration: 1.4 }, 14.8)
+      .to("#mkpPrice", { scale: 1.7, duration: 1.8, ease: "back.out(2)" }, 16.6)
+      .to("#mkpPhotoB", { autoAlpha: 1, duration: 2 }, 18)
+      .to("#mkpHoursA", { autoAlpha: 0, y: -8, duration: 1.2 }, 19.8)
+      .to("#mkpHoursB", { autoAlpha: 1, y: 0, duration: 1.2 }, 20.2);
 
-  /* cinta de drafts: bucle continuo, se para en hover y en foco */
-  if (mv && track && mv.classList.contains("is-looping")) {
-    var loop = gsap.to(track, { xPercent: -50, duration: 34, ease: "none", repeat: -1 });
-    ["mouseenter", "focusin"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.pause(); }); });
-    ["mouseleave", "focusout"].forEach(function (ev) { mv.addEventListener(ev, function () { loop.play(); }); });
-  }
+    /* ---- FASE 3: aprobada, pagada, en vivo ---- */
+    tl.to(anns, { autoAlpha: 0, y: -8, scale: .96, duration: 1.4, stagger: 0.2 }, 24)
+      .to("#mkpUrlDraft", { autoAlpha: 0, duration: 1 }, 25.2)
+      .to("#mkpUrlLive", { autoAlpha: 1, duration: 1 }, 25.6)
+      .to("#mkpLock", { autoAlpha: 1, scale: 1, duration: 1, ease: "back.out(2.5)" }, 25.8)
+      .to("#mkpLive", { autoAlpha: 1, scale: 1, duration: 1.2, ease: "back.out(2)" }, 26.4)
+      .to({}, { duration: 3 }, 27.6);
 
-  window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  })();
+
+  /* ============ PIEZA 3 - movil interactivo (sin GSAP) ============ */
+  (function () {
+  (function () {
+    "use strict";
+    var root = document.documentElement;
+    var tablist = document.getElementById("mkmTabs");
+    var panelsBox = document.getElementById("mkmPanels");
+    if (!tablist || !panelsBox) { return; }
+
+    var tabs = Array.prototype.slice.call(tablist.querySelectorAll("[role=tab]"));
+    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
+    if (panels.indexOf(null) !== -1) { return; }
+
+    var reduce = RM;
+    root.classList.add("mkm-js");
+
+    function chatIsOpen() {
+      var c = document.getElementById("mkmChat");
+      return !!c && c.classList.contains("is-open");
+    }
+
+    /* ---------- pestanas ---------- */
+    var current = 0;
+    var timer = null;
+
+    panels.forEach(function (p, i) { if (i !== 0) { p.hidden = true; } });
+
+    function select(next, focusTab) {
+      if (chatIsOpen()) { closeChat(false); }
+      if (next === current || !panels[next]) { return; }
+      var dir = next > current ? 1 : -1;
+      var from = panels[current];
+      var to = panels[next];
+
+      tabs[current].setAttribute("aria-selected", "false");
+      tabs[current].tabIndex = -1;
+      tabs[next].setAttribute("aria-selected", "true");
+      tabs[next].tabIndex = 0;
+      if (focusTab) { tabs[next].focus(); }
+
+      to.hidden = false;
+      to.scrollTop = 0;
+      if (reduce) {
+        from.hidden = true;
+        current = next;
+        return;
+      }
+      to.style.transition = "none";
+      to.style.transform = "translateX(" + (dir * 18) + "%)";
+      to.style.opacity = "0";
+      void to.offsetWidth;
+      to.style.transition = "";
+      to.style.transform = "translateX(0)";
+      to.style.opacity = "1";
+      from.style.transform = "translateX(" + (-dir * 18) + "%)";
+      from.style.opacity = "0";
+
+      var leaving = from;
+      current = next;
+      if (timer) { clearTimeout(timer); }
+      timer = setTimeout(function () {
+        if (panels[current] !== leaving) {
+          leaving.hidden = true;
+          leaving.style.transition = "none";
+          leaving.style.transform = "";
+          leaving.style.opacity = "";
+          void leaving.offsetWidth;
+          leaving.style.transition = "";
+        }
+      }, 300);
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { select(i, false); });
+      tab.addEventListener("keydown", function (ev) {
+        var k = ev.key, n = -1;
+        if (k === "ArrowRight") { n = (i + 1) % tabs.length; }
+        else if (k === "ArrowLeft") { n = (i - 1 + tabs.length) % tabs.length; }
+        else if (k === "Home") { n = 0; }
+        else if (k === "End") { n = tabs.length - 1; }
+        else { return; }
+        ev.preventDefault();
+        select(n, true);
+      });
+    });
+
+    /* ---------- horario vivo ---------- */
+    var OPEN = 10 * 60, CLOSE = 20 * 60, SHUT_DAY = 1; /* lunes cerrado */
+    var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var chip = document.getElementById("mkmChip");
+    var chipTxt = document.getElementById("mkmChipTxt");
+    var live = document.getElementById("mkmLive");
+    var liveTxt = document.getElementById("mkmLiveTxt");
+    var weekRows = Array.prototype.slice.call(document.querySelectorAll(".mkm-week tr"));
+
+    function state() {
+      var now = new Date();
+      var d = now.getDay();
+      var m = now.getHours() * 60 + now.getMinutes();
+      if (d !== SHUT_DAY && m >= OPEN && m < CLOSE) {
+        return { open: true, chip: "Open now", full: "<b>Open now</b> &middot; closes at 20:00." };
+      }
+      if (d !== SHUT_DAY && m < OPEN) {
+        return { open: false, chip: "Opens at 10:00", full: "<b>Closed</b> &middot; opens today at 10:00." };
+      }
+      var k = 1;
+      while (k < 8 && (d + k) % 7 === SHUT_DAY) { k++; }
+      var nd = (d + k) % 7;
+      var when = k === 1 ? "tomorrow" : "on " + DAYS[nd];
+      return { open: false, chip: "Opens " + (k === 1 ? "tomorrow" : DAYS[nd].slice(0, 3)) + " 10:00", full: "<b>Closed</b> &middot; opens " + when + " at 10:00." };
+    }
+
+    function paint() {
+      var s = state();
+      if (chipTxt) { chipTxt.textContent = s.chip; }
+      if (chip) { chip.classList.toggle("is-shut", !s.open); }
+      if (liveTxt) { liveTxt.innerHTML = s.full + " Closed on Mondays."; }
+      if (live) { live.classList.toggle("is-shut", !s.open); }
+      var today = new Date().getDay();
+      weekRows.forEach(function (r) { r.classList.toggle("is-today", Number(r.getAttribute("data-day")) === today); });
+    }
+    paint();
+    setInterval(paint, 60000);
+
+    /* ---------- chat de demostracion ---------- */
+    var wa = document.getElementById("mkmWa");
+    var chat = document.getElementById("mkmChat");
+    var back = document.getElementById("mkmBack");
+    var msgs = Array.prototype.slice.call(document.querySelectorAll("#mkmThread [data-msg]"));
+    var msgTimers = [];
+
+    function openChat() {
+      if (!chat) { return; }
+      chat.hidden = false;
+      void chat.offsetWidth;
+      chat.classList.add("is-open");
+      wa.setAttribute("aria-expanded", "true");
+      msgs.forEach(function (m) { m.classList.remove("is-in"); });
+      msgTimers.forEach(clearTimeout);
+      msgTimers = msgs.map(function (m, i) {
+        return setTimeout(function () { m.classList.add("is-in"); }, reduce ? 0 : 260 + i * 620);
+      });
+      if (back) { back.focus(); }
+    }
+
+    function closeChat(returnFocus) {
+      if (!chat) { return; }
+      chat.classList.remove("is-open");
+      wa.setAttribute("aria-expanded", "false");
+      msgTimers.forEach(clearTimeout);
+      setTimeout(function () { if (!chat.classList.contains("is-open")) { chat.hidden = true; } }, reduce ? 0 : 300);
+      if (wa && returnFocus !== false) { wa.focus(); }
+    }
+
+    if (wa && chat) {
+      wa.addEventListener("click", function () {
+        if (chat.classList.contains("is-open")) { closeChat(true); } else { openChat(); }
+      });
+    }
+    if (back) { back.addEventListener("click", function () { closeChat(true); }); }
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && chat && chat.classList.contains("is-open")) { closeChat(true); }
+    });
+  })();
+  })();
+
+  /* ============ PIEZA 4 - visor de demos navegables (sin GSAP) ============ */
+  (function () {
+  (function () {
+    "use strict";
+
+    var root = document.getElementById("demos");
+    var dlg = document.getElementById("mkdViewer");
+    /* sin <dialog> (navegador viejo) no tocamos nada: las tarjetas siguen siendo enlaces */
+    if (!root || !dlg || typeof dlg.showModal !== "function") return;
+
+    document.documentElement.classList.add("mkd-js");
+
+    var NAME = "mkd-demo";
+    var BASE = 1440;   /* el ancho "de escritorio" que se renderiza y luego se escala */
+    var PHONE = 390;
+
+    var stage = document.getElementById("mkdStage");
+    var device = document.getElementById("mkdDevice");
+    var screenBox = document.getElementById("mkdScreen");
+    var vname = document.getElementById("mkdVName");
+    var urlEl = document.getElementById("mkdUrl");
+    var noteEl = document.getElementById("mkdNote");
+    var newTab = document.getElementById("mkdNewTab");
+    var closeBtn = document.getElementById("mkdClose");
+    var segBtns = document.querySelectorAll("#mkdSeg button");
+    var cards = root.querySelectorAll(".mkd-card");
+
+    var reduce = { matches: RM };
+    var narrow = window.matchMedia("(max-width: 759px)");
+    var ifr = null;
+    var current = null;
+    var mode = "phone";
+    var busy = false;
+
+    function canVT() { return !!document.startViewTransition && !reduce.matches; }
+
+    /* ancho de la barra de scroll: en modo telefono el iframe se hace asi de mas ancho
+       y la caja lo recorta, para que el marco no ensene una barra que un movil no tiene */
+    var SBW = null;
+    function sbw() {
+      if (SBW !== null) return SBW;
+      var p = document.createElement("div");
+      p.style.cssText = "position:absolute;top:-9999px;left:-9999px;width:100px;height:100px;overflow:scroll;";
+      document.body.appendChild(p);
+      SBW = p.offsetWidth - p.clientWidth;
+      document.body.removeChild(p);
+      return SBW;
+    }
+
+    /* ---------- el iframe no existe hasta la primera apertura ---------- */
+    function ensureFrame() {
+      if (ifr) return ifr;
+      ifr = document.createElement("iframe");
+      ifr.className = "mkd-frame";
+      ifr.setAttribute("loading", "lazy");
+      ifr.setAttribute("sandbox", "allow-scripts allow-same-origin");
+      ifr.addEventListener("load", wireInnerEsc);
+      screenBox.appendChild(ifr);
+      return ifr;
+    }
+
+    /* con el foco dentro del iframe, Esc tiene que seguir cerrando el visor */
+    function wireInnerEsc() {
+      try {
+        var d = ifr.contentDocument;
+        if (!d || d.__mkdEsc) return;
+        d.__mkdEsc = true;
+        d.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" || e.key === "Esc") { e.preventDefault(); closeViewer(); }
+        }, true);
+      } catch (err) { /* otro origen: el Esc lo gestiona el propio <dialog> */ }
+    }
+
+    /* ---------- medidas ---------- */
+    function layout() {
+      if (!dlg.open) return;
+      var bare = narrow.matches;
+      var m = bare ? "phone" : mode;
+      device.className = "mkd-device is-" + m + (bare ? " is-bare" : "");
+
+      var r = stage.getBoundingClientRect();
+      var availH = Math.max(260, r.height);
+      var availW = r.width;
+
+      if (bare) {                                   /* movil: a sangre, sin marco ni escalado */
+        device.style.width = "100%";
+        screenBox.style.width = "100%";
+        screenBox.style.height = Math.round(availH) + "px";
+        if (ifr) { ifr.style.width = "calc(100% + " + sbw() + "px)"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
+        return;
+      }
+
+      if (m === "phone") {
+        device.style.width = (PHONE + 20) + "px";
+        screenBox.style.width = PHONE + "px";
+        screenBox.style.height = Math.round(availH - 20 - 24) + "px";
+        if (ifr) { ifr.style.width = (PHONE + sbw()) + "px"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
+        return;
+      }
+
+      /* escritorio: iframe ancho de verdad, reducido con scale() */
+      var devW = Math.min(availW, 1260);
+      var boxW = devW - 20;
+      var boxH = Math.round(availH - 20 - 34);
+      var s = boxW / BASE;
+      device.style.width = devW + "px";
+      screenBox.style.width = boxW + "px";
+      screenBox.style.height = boxH + "px";
+      if (ifr) {
+        ifr.style.width = BASE + "px";
+        ifr.style.height = Math.round(boxH / s) + "px";   /* se compensa la altura al escalar */
+        ifr.style.transformOrigin = "0 0";
+        ifr.style.transform = "scale(" + s.toFixed(5) + ")";
+      }
+    }
+
+    function setMode(next) {
+      mode = next;
+      for (var i = 0; i < segBtns.length; i++) {
+        segBtns[i].setAttribute("aria-pressed", segBtns[i].getAttribute("data-mode") === next ? "true" : "false");
+      }
+      layout();
+    }
+
+    /* ---------- abrir ---------- */
+    function paint(card) {
+      current = card;
+      var name = card.getAttribute("data-name");
+      var href = card.getAttribute("href");
+      vname.textContent = name;
+      urlEl.textContent = card.getAttribute("data-host");
+      newTab.href = href;
+      newTab.setAttribute("aria-label", "Open the " + name + " demo in a new tab");
+      noteEl.textContent = name + " is an invented business. The page is real: built with the engine we use for client sites.";
+      var f = ensureFrame();
+      f.title = card.getAttribute("data-frame-title");
+      if (f.getAttribute("src") !== href) f.setAttribute("src", href);
+    }
+
+    function openNow(card) {
+      paint(card);
+      /* sin esto, al llegar al final de la demo el scroll se encadena y mueve la pagina de detras */
+      document.documentElement.classList.add("mkd-locked");
+      dlg.showModal();
+      layout();
+      closeBtn.focus();
+    }
+
+    function openViewer(card) {
+      if (busy || dlg.open) return;
+      var media = card.querySelector(".mkd-media");
+      if (!canVT() || !media) { dlg.classList.remove("is-vt"); openNow(card); return; }
+      busy = true;
+      dlg.classList.add("is-vt");
+      media.style.viewTransitionName = NAME;
+      var vt = document.startViewTransition(function () {
+        media.style.viewTransitionName = "";      /* el nombre no puede estar en dos sitios a la vez */
+        device.style.viewTransitionName = NAME;
+        openNow(card);
+      });
+      vt.finished.then(done, done);
+      function done() { device.style.viewTransitionName = ""; busy = false; }
+    }
+
+    /* ---------- cerrar ---------- */
+    function afterClose(card) {
+      if (ifr) ifr.setAttribute("src", "about:blank");   /* la demo deja de correr */
+      current = null;
+      if (card) { try { card.focus(); } catch (e) {} }
+    }
+
+    function closeViewer() {
+      if (!dlg.open || busy) return;
+      var card = current;
+      var media = card ? card.querySelector(".mkd-media") : null;
+      if (!canVT() || !media) { dlg.close(); document.documentElement.classList.remove("mkd-locked"); afterClose(card); return; }
+      busy = true;
+      device.style.viewTransitionName = NAME;
+      var vt = document.startViewTransition(function () {
+        device.style.viewTransitionName = "";
+        media.style.viewTransitionName = NAME;
+        dlg.close();
+        document.documentElement.classList.remove("mkd-locked");
+      });
+      vt.finished.then(done, done);
+      function done() { media.style.viewTransitionName = ""; busy = false; afterClose(card); }
+    }
+
+    /* ---------- cables ---------- */
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].addEventListener("click", function (e) {
+        /* ctrl/cmd/mayus-clic y clic central siguen abriendo la demo como enlace */
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        openViewer(this);
+      });
+    }
+
+    closeBtn.addEventListener("click", closeViewer);
+    dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeViewer(); });   /* Esc */
+    dlg.addEventListener("click", function (e) {                                          /* clic fuera */
+      if (e.target === dlg || e.target === stage) closeViewer();
+    });
+
+    for (var j = 0; j < segBtns.length; j++) {
+      segBtns[j].addEventListener("click", function () { setMode(this.getAttribute("data-mode")); });
+    }
+
+    var raf = 0;
+    window.addEventListener("resize", function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () { raf = 0; layout(); });
+    });
+  })();
+  })();
+
+  /* ============ PAGINA - entradas de seccion, cifras y bento ============ */
+  (function () {
+    if (RM || !GS) { return; }
+
+    /* entradas discretas de cabecera de seccion: un desplazamiento corto, no un fundido general.
+       opacity y NO autoAlpha: autoAlpha pone visibility:hidden y eso saca de la secuencia de
+       tabulacion todo lo que haya dentro (medido: con Tab se saltaban los botones de #price). */
+    gsap.utils.toArray("[data-reveal]").forEach(function (el) {
+      gsap.from(el, { y: 20, opacity: 0, duration: .5, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+    });
+
+    /* red de seguridad para el teclado: si el foco entra en algo todavia sin revelar, se revela ya */
+    document.addEventListener("focusin", function (ev) {
+      for (var n = ev.target; n && n !== document.body; n = n.parentElement) {
+        if (n.hasAttribute && (n.hasAttribute("data-reveal") || n.classList.contains("stat") || n.parentElement === document.getElementById("getGrid"))) {
+          if (+getComputedStyle(n).opacity < 1) { gsap.set(n, { opacity: 1, y: 0, scale: 1, clearProps: "visibility" }); }
+        }
+      }
+    });
+
+    /* las cifras cuentan sobre el teal pleno y suben en cascada */
+    var statRow = document.querySelector(".stat-row");
+    if (statRow) {
+      gsap.from(statRow.children, { y: 40, opacity: 0, duration: .6, ease: "power3.out", stagger: .12, scrollTrigger: { trigger: statRow, start: "top 84%", once: true } });
+      gsap.utils.toArray(".stat b").forEach(function (b) {
+        var target = parseInt(b.textContent, 10); if (!target) return;
+        var o = { v: 0 };
+        gsap.to(o, { v: target, duration: 1.3, ease: "power2.out", scrollTrigger: { trigger: statRow, start: "top 84%", once: true },
+          onUpdate: function () { b.textContent = Math.round(o.v) + "%"; },
+          onComplete: function () { b.textContent = target + "%"; } });
+      });
+    }
+
+    /* el bento se construye pieza a pieza, empezando por la tarjeta del movil */
+    var grid = document.getElementById("getGrid");
+    if (grid) {
+      gsap.from(grid.children, { y: 38, opacity: 0, duration: .55, ease: "power3.out", stagger: { each: .07 }, scrollTrigger: { trigger: grid, start: "top 82%", once: true } });
+    }
+  })();
+
+  if (GS) { window.addEventListener("load", function () { ScrollTrigger.refresh(); }); }
 });
 </script>
 </body>
