@@ -171,3 +171,13 @@ Encargo y copy pendiente: `C:\dev\prospeccion\docs\plans\2026-09-12-web-cuarta-v
 (hero +0,67, pasos +0,38, escena del teléfono +0,49). Se deja así salvo que Miguel prefiera recortar.
 Auditoría: 1440×900 / 1280×800 / 390×844 sin scroll horizontal, 0 iframes en carga, 0 imágenes rotas, 0 fallos AA,
 0 frases prohibidas, sin JS completa, con `reduce` scrubs vivos, todas las entradas disparadas en scroll continuo.
+
+## Quinta pasada (2026-09-12, madrugada): «Fast on a phone» con demo real
+
+Miguel rechazó la escena de la cuarta vuelta (móvil achatado, zoom raro a pantalla completa, demasiado rápida) y
+pidió que fuera «prácticamente igual que las demos en móvil: si se pone una demo, problema resuelto». Hecho: la
+pantalla del teléfono muestra `demos/demo-salon` en un iframe a 390 px lógicos (creado solo cuando `#get` se acerca:
+0 iframes en la carga), el teléfono mantiene 9/19.5 siempre, y en móvil el rail (220svh) hace crecer el teléfono
+hasta que la pantalla mide `innerWidth × (innerHeight − 64)` con el iframe a `scale(innerWidth/390)` (≈ 1: nítido),
+el marco se desvanece y la demo queda a sangre y tocable (`html.mkm-full`). La maqueta dibujada queda como estado
+sin JS. Foto de Miguel añadida (`assets/img/miguel.jpg`, 800×800). Página: 17,19 pantallas a 390×844.

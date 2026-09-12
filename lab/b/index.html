@@ -1017,22 +1017,69 @@ body > footer a:hover { color: #fff; }
 }
 
 /* =================================================================
+   DEMO DE VERDAD DENTRO DEL TELEFONO (.mkm-view / .mkm-frame)
+   Con JS la maqueta dibujada se sustituye entera por un <iframe> con la
+   demo de Plumgrove Hair Room a 390 px logicos, escalado a la pantalla
+   (el mismo metodo que el visor de demos). La maqueta dibujada sigue
+   siendo el estado SIN JS: apilada y legible, como hasta ahora.
+   Todas las medidas del aparato (relleno, radios, isla, barra de estado,
+   botones, indicador de inicio) las escribe el JS como variables sobre la
+   tarjeta, igual que hace el visor: asi el telefono se ve en la misma
+   proporcion en cualquier pantalla y nunca sale achatado.
+   ================================================================= */
+.mkm-phone.mkm-has-demo .mkm-topbar,
+.mkm-phone.mkm-has-demo .mkm-tabs,
+.mkm-phone.mkm-has-demo .mkm-panels,
+.mkm-phone.mkm-has-demo .mkm-bottom,
+.mkm-phone.mkm-has-demo .mkm-sheet { display: none !important; }
+.mkm-view { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: #fff; }
+.mkm-frame { position: absolute; left: 0; top: 0; display: block; border: 0; background: #fff; transform-origin: 0 0; }
+
+/* el aparato, proporcional: los valores por defecto son los de siempre, asi que
+   si el JS no escribiera las variables el telefono seguiria viendose igual */
+.mkm-js .get-grid article.lg .mkm-phone { border-radius: var(--mkm-rad, 44px); padding: 0; }
+.mkm-js .get-grid article.lg .mkm-screen { inset: var(--mkm-pady, 10px) var(--mkm-padx, 10px); border-radius: var(--mkm-srad, 34px); }
+.mkm-js .get-grid article.lg .mkm-phone::before {
+  left: calc(var(--mkm-btn, 3px) * -0.7); width: var(--mkm-btn, 3px); height: var(--mkm-b1, 21px);
+  border-radius: var(--mkm-btn, 3px) 0 0 var(--mkm-btn, 3px);
+  box-shadow: 0 var(--mkm-bg1, 40px) 0 0 #44484f, 0 var(--mkm-bg2, 76px) 0 0 #44484f;
+  opacity: var(--mkm-f, 1);
+}
+.mkm-js .get-grid article.lg .mkm-phone::after {
+  right: calc(var(--mkm-btn, 3px) * -0.7); width: var(--mkm-btn, 3px); height: var(--mkm-b3, 50px);
+  border-radius: 0 var(--mkm-btn, 3px) var(--mkm-btn, 3px) 0; opacity: var(--mkm-f, 1);
+}
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-status {
+  height: var(--mkm-sth, 38px); font-size: var(--mkm-stf, 12.5px); overflow: hidden;
+  padding: 0 var(--mkm-stp, 15px) 0 calc(var(--mkm-stp, 15px) * 1.27); opacity: var(--mkm-f, 1);
+}
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-status::before { width: var(--mkm-isw, 92px); height: var(--mkm-ish, 26px); top: var(--mkm-ist, 5px); }
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-sig { gap: calc(var(--mkm-stf, 12.5px) * .32); }
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-sig svg { height: calc(var(--mkm-stf, 12.5px) * .88); }
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-screen::before {
+  width: var(--mkm-hiw, 120px); max-width: none; height: var(--mkm-hih, 5px); bottom: var(--mkm-hib, 7px); opacity: var(--mkm-f, 1);
+}
+.mkm-js .get-grid article.lg .mkm-phone .mk-phone-screen::after { opacity: var(--mkm-f, 1); }
+
+/* =================================================================
    ESCENA MOVIL - "tu movil es el marco"  (< 760 px, solo con JS)
-   La tarjeta se convierte en un rail y dentro de ella .mkm-stage (lo
-   crea el JS) queda pegajoso justo bajo la nav, midiendo exactamente
-   el hueco visible. Con el scroll el telefono crece y se centra hasta
-   que SU pantalla cubre ese hueco: en ese momento el marco negro, la
-   isla, los botones y la barra de estado ya se han desvanecido, porque
-   el marco pasa a ser el telefono real del visitante. Todo lo gobierna
-   una sola variable, --mkm-e (0 = tarjeta normal, 1 = a pantalla
-   completa), que el JS escribe en la tarjeta. Sin JS no existe
+   La tarjeta se convierte en un rail largo y dentro de ella .mkm-stage
+   (lo crea el JS) queda pegajoso justo bajo la nav, midiendo exactamente
+   el hueco visible. Con el scroll el telefono crece SIN escalar nada por
+   encima de el: el JS le da ancho y alto en px y el unico scale que hay
+   es el del propio iframe, que al final vale innerWidth/390 (o sea, el
+   texto de la demo se ve como en un movil de verdad, nunca borroso). Al
+   final su pantalla mide exactamente innerWidth x (innerHeight - 64) y el
+   marco negro, la isla, los botones y la barra de estado ya se han ido.
+   --mkm-e (0 = tarjeta normal, 1 = a pantalla completa) y --mkm-f (1 = con
+   marco, 0 = sin marco) los escribe el JS en la tarjeta. Sin JS no existe
    html.mkm-scene y la maqueta sigue apilada y legible como siempre.
    ================================================================= */
 html.mkm-scene .get-grid article.lg {
-  /* el rail = el hueco pegajoso (100svh - 64) + 43svh de recorrido. Mas largo
-     se disfruta mas pero la seccion se come pantallas: 43svh es el techo que
-     deja #get en +0,5 pantallas netas. */
-  display: block; height: calc(143svh - 64px);
+  /* el rail = el hueco pegajoso (100svh - 64) + 130svh de recorrido: tres veces
+     y media el de la vuelta anterior, para que la escena no se vaya de golpe
+     mientras se scrollea. El tope lo pone el presupuesto de pantallas. */
+  display: block; height: calc(220svh - 64px);
   padding: 0; border-color: transparent; background: none; box-shadow: none;
   perspective: none; overflow: visible;
   /* la entrada de pagina (yPercent/rotateX de GSAP) no puede mover un rail pegajoso */
@@ -1044,71 +1091,76 @@ html.mkm-scene .get-grid article.lg .mkm-stagewrap { transform: none !important;
 /* fuera de la escena el contenedor no existe para el layout: la tarjeta sigue
    siendo el flex de siempre (texto a la izquierda, telefono a la derecha) */
 .mkm-stage { display: contents; }
+/* el borde va en box-shadow y no en border: un borde real le robaria 2 px al
+   hueco y la pantalla del telefono no llegaria a medir innerHeight - 64 exactos */
+/* El hueco pegajoso sigue midiendo lo que la caja de texto (si se le diera el
+   ancho del viewport, su ancho minimo ensancharia la columna de la rejilla y
+   aparecia 1 px de scroll lateral: medido). Quienes se salen a sangre son las
+   dos capas que ya estan fuera del flujo: el fondo (::before) y el lienzo del
+   telefono (.mkm-stagewrap). --mkm-gap / --mkm-gapr son lo que hay de cada
+   borde del stage al borde del viewport; los mide el JS. */
 html.mkm-scene .mkm-stage {
   display: block; position: sticky; top: 64px; height: calc(100svh - 64px);
-  border: 1px solid var(--ink); border-radius: var(--radius); overflow: visible;
+  border: 0; overflow: visible; background: none;
+  --mkm-in: calc(var(--mkm-gap, 0px) * var(--mkm-e, 0));
+  --mkm-inr: calc(var(--mkm-gapr, 0px) * var(--mkm-e, 0));
+}
+html.mkm-scene .mkm-stage::before {
+  content: ""; position: absolute; z-index: 0; top: 0; bottom: 0;
+  left: calc(0px - var(--mkm-in)); right: calc(0px - var(--mkm-inr));
+  border-radius: calc(var(--radius) * var(--mkm-f, 1));
+  box-shadow: inset 0 0 0 1px rgba(17,18,20, var(--mkm-f, 1));
   background-color: var(--ink);
   background-image: radial-gradient(115% 68% at 50% 90%, rgba(35,122,119,.45), transparent 62%);
 }
 html.mkm-scene .mkm-stage > .lg-copy {
   position: absolute; left: 20px; right: 20px; top: 20px; z-index: 2;
   max-width: none; pointer-events: none;
-  opacity: calc(1 - var(--mkm-e, 0) * 1.8);
-  transform: translateY(calc(var(--mkm-e, 0) * -16px));
+  opacity: var(--mkm-copy, 1);
+  transform: translateY(calc((1 - var(--mkm-copy, 1)) * -16px));
 }
 html.mkm-scene .mkm-stage > .mkm-stagewrap {
-  position: absolute; inset: 0; z-index: 1; display: grid; place-items: center;
+  position: absolute; z-index: 1; top: 0; bottom: 0;
+  left: calc(0px - var(--mkm-gap, 0px)); right: calc(0px - var(--mkm-gapr, 0px));
+  display: grid; place-items: center;
 }
 html.mkm-scene .mkm-stagewrap .mkm-cap {
-  position: absolute; left: 12px; right: 12px; bottom: 10px; margin: 0;
-  opacity: calc(1 - var(--mkm-e, 0) * 1.8);
+  position: absolute; bottom: 10px; margin: 0;
+  left: calc(12px + var(--mkm-gap, 0px)); right: calc(12px + var(--mkm-gapr, 0px));
+  font-size: 11.5px; line-height: 1.35;
+  opacity: var(--mkm-copy, 1);
 }
-/* el telefono: --mkm-sw/--mkm-sh (los da el JS) son el tamano de PANTALLA, con
-   la proporcion del viewport del visitante, y no cambian en toda la escena. Lo
-   que se encoge es el marco, de 10 px a 0: asi al final la caja del telefono ES
-   exactamente la pantalla y nada sobresale del viewport (si el marco sobrevive
-   sobresalen 2 x 10 x escala y aparece scroll lateral: medido, 413 px a 390). */
+/* la etiqueta del estado final: aparece a sangre y se va sola a los 2 s */
+.mkm-badge { display: none; }
+html.mkm-scene .mkm-badge {
+  display: block; position: absolute; left: 50%; bottom: 22px; z-index: 6; margin: 0;
+  transform: translateX(-50%); pointer-events: none; white-space: nowrap;
+  background: rgba(12,13,15,.74); color: #F9F6EF; border-radius: 999px;
+  padding: 7px 14px; font-size: 12px; font-weight: 600; letter-spacing: .01em;
+  opacity: 0; transition: opacity .35s ease;
+}
+html.mkm-scene .get-grid article.lg.mkm-showbadge .mkm-badge { opacity: 1; }
+/* el telefono en la escena: el ancho y el alto de la caja los escribe el JS en
+   px cada cuadro (nunca un scale por encima del iframe, que es lo que hacia que
+   la demo se viera con un zoom raro). Lo unico que se mueve con transform es la
+   posicion vertical, que no afecta a la escala del contenido. */
 html.mkm-scene .get-grid article.lg .mkm-stagewrap .mk-phone {
-  width: calc(var(--mkm-sw, 212px) + 20px * (1 - var(--mkm-e, 0)));
-  height: calc(var(--mkm-sh, 424px) + 20px * (1 - var(--mkm-e, 0)));
-  padding: calc(10px * (1 - var(--mkm-e, 0)));
-  aspect-ratio: auto;
-}
-/* la pantalla va anclada con inset 10px (no por el padding): se encoge igual */
-html.mkm-scene .get-grid article.lg .mkm-stagewrap .mkm-screen {
-  inset: calc(10px * (1 - var(--mkm-e, 0)));
-}
-html.mkm-scene .mkm-stagewrap .mk-phone {
-  margin: 0; will-change: transform;
-  transform: translateY(calc(var(--mkm-ty, 0px) * (1 - var(--mkm-e, 0))))
-             scale(calc(1 + (var(--mkm-sc, 1) - 1) * var(--mkm-e, 0)));
-  border-radius: calc(44px * (1 - var(--mkm-e, 0)));
-  background-color: rgba(11,12,15, calc(1 - var(--mkm-e, 0)));
+  aspect-ratio: auto; margin: 0; will-change: width, height;
+  transform: translateY(calc(var(--mkm-ty, 0px) * (1 - var(--mkm-e, 0))));
+  background-color: rgba(11,12,15, var(--mkm-f, 1));
   box-shadow:
-    inset 0 0 0 1.5px rgba(58,61,68, calc(1 - var(--mkm-e, 0))),
-    0 0 0 1px rgba(255,255,255, calc(.08 * (1 - var(--mkm-e, 0)))),
-    0 42px 76px -30px rgba(0,0,0, calc(.78 * (1 - var(--mkm-e, 0)))),
-    0 10px 26px -14px rgba(0,0,0, calc(.5 * (1 - var(--mkm-e, 0))));
+    inset 0 0 0 calc(1.5px * var(--mkm-f, 1)) rgba(58,61,68, var(--mkm-f, 1)),
+    0 0 0 1px rgba(255,255,255, calc(.08 * var(--mkm-f, 1))),
+    0 42px 76px -30px rgba(0,0,0, calc(.78 * var(--mkm-f, 1))),
+    0 10px 26px -14px rgba(0,0,0, calc(.5 * var(--mkm-f, 1)));
 }
-/* los botones laterales sobresalen 2 px del marco: escalados son 3,7 px de
-   scroll lateral, asi que ademas de apagarse se meten dentro */
-html.mkm-scene .mkm-stagewrap .mk-phone::before,
-html.mkm-scene .mkm-stagewrap .mk-phone::after { opacity: calc(1 - var(--mkm-e, 0) * 1.55); }
-html.mkm-scene .mkm-stagewrap .mk-phone::before { left: calc(-2px * (1 - var(--mkm-e, 0))); }
-html.mkm-scene .mkm-stagewrap .mk-phone::after { right: calc(-2px * (1 - var(--mkm-e, 0))); }
-html.mkm-scene .mkm-stagewrap .mk-phone-screen { border-radius: calc(34px * (1 - var(--mkm-e, 0))); }
-html.mkm-scene .mkm-stagewrap .mk-phone-screen::before,
-html.mkm-scene .mkm-stagewrap .mk-phone-screen::after { opacity: calc(1 - var(--mkm-e, 0) * 1.55); }
-/* la barra de estado dibujada se pliega: la de verdad es la del visitante */
-html.mkm-scene .mkm-stagewrap .mk-phone-status {
-  height: calc(32px * (1 - var(--mkm-e, 0))); overflow: hidden;
-  opacity: calc(1 - var(--mkm-e, 0) * 1.55);
-}
-/* mientras crece o se deshace, el dedo mueve la PAGINA: los paneles no se
-   quedan el gesto. A pantalla completa vuelven a ser tocables y desplazables
-   (sin overscroll-behavior: contain, para que al final del panel el scroll
+/* mientras crece o se deshace, el dedo mueve la PAGINA: la demo no se queda el
+   gesto. A pantalla completa vuelve a ser tocable y desplazable (sin
+   overscroll-behavior: contain, para que al llegar al final de la demo el scroll
    siga encadenando a la pagina y nadie se quede atrapado en la escena) */
+html.mkm-scene .get-grid article.lg .mkm-view,
 html.mkm-scene .get-grid article.lg .mkm-panels { pointer-events: none; }
+html.mkm-scene.mkm-full .get-grid article.lg .mkm-view,
 html.mkm-scene.mkm-full .get-grid article.lg .mkm-panels { pointer-events: auto; }
 html.mkm-scene .get-grid article.lg .mkm-shots { overscroll-behavior-x: contain; }
 /* la escena cuesta pantallas: se devuelven recortando aire en el resto de #get */
@@ -1522,9 +1574,9 @@ button.mkd-dot.is-red::after {
           <h3>Fast on a phone</h3>
           <p>One page that loads in a blink and reads well on a small screen.</p>
     <div class="mkm-try" aria-hidden="true">
-    <span>Tap the tabs</span>
-    <span>Tap a service</span>
-    <span>Tap the green button</span>
+    <span>Scroll it</span>
+    <span>Tap its buttons</span>
+    <span>It is a real page</span>
     </div>
           <span class="lg-note">Example page &middot; not a real business</span>
         </div>
@@ -2608,17 +2660,29 @@ document.addEventListener("DOMContentLoaded", function () {
     tablist.addEventListener("keydown", function () { closeSheet(false); });
     if (wa) { wa.addEventListener("click", function () { closeSheet(false); }); }
 
-    /* ---------- escena de movil: "tu movil es el marco" ----------
-       Por debajo de 760 px la tarjeta se convierte en un rail y el telefono
-       crece con el scroll hasta que su pantalla cubre el hueco visible.
-       La pantalla nace con la PROPORCION del viewport del visitante, asi que
-       un solo scale la hace encajar exacta (ni recorte ni franjas). */
+    /* ---------- el telefono ensena una demo de verdad ----------
+       Con JS la maqueta dibujada se sustituye entera por un <iframe> con la
+       demo de Plumgrove Hair Room a 390 px logicos, escalado a la pantalla del
+       telefono (el mismo metodo del visor). El iframe NO existe en la carga:
+       se crea cuando #get entra a menos de una pantalla. Sin JS la maqueta
+       dibujada sigue siendo el estado final, apilada y legible.
+
+       Por debajo de 760 px la tarjeta es un rail y el telefono crece con el
+       scroll hasta que su pantalla mide exactamente el hueco visible. La clave
+       de que la demo se vea perfecta: el iframe NUNCA cambia de tamano de
+       maquetacion (390 x 390*AR) ni hay ningun scale por encima de el; lo unico
+       que se mueve es su propio scale, que al final vale innerWidth/390. Asi ni
+       la demo se re-maqueta cuadro a cuadro ni el texto se ve borroso. */
     (function () {
+      var PHONE = 390, RATIO = 19.5 / 9;
       var card = document.querySelector("#getGrid article.lg");
       var copy = card && card.querySelector(".lg-copy");
       var stagewrap = card && card.querySelector(".mkm-stagewrap");
       var phone = card && card.querySelector(".mk-phone");
-      if (!card || !copy || !stagewrap || !phone) { return; }
+      var scr = card && card.querySelector(".mkm-screen");
+      var cap = card && card.querySelector(".mkm-cap");
+      var sect = document.getElementById("get");
+      if (!card || !copy || !stagewrap || !phone || !scr || !sect) { return; }
 
       /* el contenedor pegajoso se crea aqui: sin JS la tarjeta no cambia */
       var stage = document.createElement("div");
@@ -2627,35 +2691,183 @@ document.addEventListener("DOMContentLoaded", function () {
       stage.appendChild(copy);
       stage.appendChild(stagewrap);
 
+      var badge = document.createElement("p");
+      badge.className = "mkm-badge";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = "Example page · scroll it";
+      stagewrap.appendChild(badge);
+
       var mq = window.matchMedia("(max-width: 759.98px)");
       var on = false, tween = null, ticking = false, proxy = { v: 0 };
-      var GROW = .42, HOLD = .74;
+      var GROW0 = .25, GROW1 = .70, FADE = .30;
+      var view = null, ifr = null, mounted = false, barless = false;
+      /* medidas del reposo; las rellenan measureScene() / measureDesk() */
+      var TW = 1, TH = 1, AR = RATIO, sw0 = 1, padX0 = 10, padY0 = 10, sth0 = 38, ifH = 780;
+      var badgeT = null, wasFull = false;
 
       function ease(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(2 - 2 * x, 2) / 2; }
-
-      function measure() {
-        if (!on) { return; }
-        var H = stage.getBoundingClientRect().height;
+      function px(n) { return (Math.round(n * 100) / 100) + "px"; }
+      /* la escena solo tiene sentido si la pantalla del visitante tiene forma de
+         telefono: en una ventana ancha y baja (tablet pequena, ventana a medias)
+         se queda la tarjeta normal con el telefono y su demo dentro */
+      function sceneOK() {
         var vw = document.documentElement.clientWidth;
-        if (!H || !vw) { return; }
-        var R = H / vw;                                  /* proporcion del hueco visible */
-        var head = 20 + copy.getBoundingClientRect().height;
-        var room = H - 34 - head - 10;                   /* hueco libre bajo el texto */
-        var sw = Math.round(Math.min(232, vw * .62, room > 40 ? (room - 20) / R + 20 : 232) - 20);
-        if (sw < 150) { sw = 150; }
-        card.style.setProperty("--mkm-sw", sw + "px");
-        card.style.setProperty("--mkm-sh", Math.round(sw * R) + "px");
-        card.style.setProperty("--mkm-sc", (vw / sw).toFixed(4));
-        card.style.setProperty("--mkm-ty", Math.round(head / 2 - 17) + "px");
+        return mq.matches && vw > 0 && (window.innerHeight - 64) / vw >= 1.45;
+      }
+      function setv(k, v) { card.style.setProperty(k, v); }
+
+      /* ---- el iframe no existe hasta que #get esta a menos de una pantalla ---- */
+      function mount() {
+        if (mounted) { return; }
+        mounted = true;
+        view = document.createElement("div");
+        view.className = "mkm-view";
+        ifr = document.createElement("iframe");
+        ifr.className = "mkm-frame";
+        ifr.setAttribute("title", "Example page for Plumgrove Hair Room, a business that does not exist");
+        ifr.setAttribute("sandbox", "allow-scripts allow-same-origin");
+        ifr.addEventListener("load", hideBars);
+        ifr.src = "../demos/demo-salon/index.html";
+        view.appendChild(ifr);
+        scr.appendChild(view);
+        phone.classList.add("mkm-has-demo");
+        refresh();
+      }
+
+      /* un telefono no ensena barra de scroll: se apaga desde dentro del propio
+         documento (mismo origen) para que el iframe mida 390 px logicos exactos.
+         Si algun dia fuera de otro origen, se recorta ensanchandolo (barless). */
+      function hideBars() {
+        try {
+          var d = ifr.contentDocument;
+          if (!d) { throw new Error("no doc"); }
+          if (!d.__mkmNoBar) {
+            d.__mkmNoBar = true;
+            var s = d.createElement("style");
+            s.textContent = "html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}";
+            (d.head || d.documentElement).appendChild(s);
+          }
+          barless = true;
+        } catch (err) { barless = false; }
+        refresh();
+      }
+
+      /* ---- una sola funcion pinta el aparato, en la escena y fuera de ella ----
+         sw = ancho de PANTALLA en px; f = 1 con marco, 0 sin marco.
+         El alto del area de la demo es siempre sw*AR, asi que el iframe (390 x
+         390*AR escalado sw/390) encaja exacto sin cambiar de maquetacion. */
+      function apply(sw, f) {
+        var m = (sw / sw0) * f;
+        var padX = padX0 * m, padY = padY0 * m, sth = sth0 * m;
+        var screenH = sw * AR + sth;
+        var W = sw + 2 * padX, H = screenH + 2 * padY;
+        phone.style.width = px(W);
+        phone.style.height = px(H);
+        setv("--mkm-padx", px(padX));
+        setv("--mkm-pady", px(padY));
+        setv("--mkm-rad", px(W * 0.123 * f));
+        setv("--mkm-srad", px(sw * 0.095 * f));
+        setv("--mkm-sth", px(sth));
+        setv("--mkm-stf", px(sth * 0.33));
+        setv("--mkm-stp", px(sw * 0.04));
+        setv("--mkm-isw", px(sw * 0.24));
+        setv("--mkm-ish", px(sth * 0.7));
+        setv("--mkm-ist", px(sth * 0.15));
+        setv("--mkm-btn", px(W * 0.0085 * f));
+        setv("--mkm-b1", px(H * 0.027));
+        setv("--mkm-bg1", px(H * 0.052));
+        setv("--mkm-bg2", px(H * 0.098));
+        setv("--mkm-b3", px(H * 0.065));
+        setv("--mkm-hiw", px(sw * 0.33));
+        setv("--mkm-hih", px(Math.max(2, screenH * 0.0065) * f));
+        setv("--mkm-hib", px(Math.max(3, screenH * 0.009)));
+        setv("--mkm-f", f.toFixed(4));
+        if (ifr) { ifr.style.transform = "scale(" + (sw / PHONE).toFixed(5) + ")"; }
+      }
+
+      function sizeFrame() {
+        if (!ifr) { return; }
+        ifr.style.width = (barless ? PHONE : PHONE + 16) + "px";
+        ifr.style.height = ifH + "px";
+      }
+
+      /* ---- reposo fuera de la escena: manda el ancho que da el CSS ---- */
+      function measureDesk() {
+        phone.style.width = ""; phone.style.height = "";
+        /* el ancho se lee del estilo calculado y no del rect: la entrada de
+           pagina deja un rotateX con perspectiva y el rect vendria encogido */
+        var W = parseFloat(getComputedStyle(phone).width);
+        if (!W) { return false; }
+        var H = W * RATIO;
+        padX0 = Math.max(5, Math.round(W * 0.026));
+        padY0 = padX0;
+        sw0 = W - 2 * padX0;
+        var screenH = H - 2 * padY0;
+        sth0 = screenH * 0.047;
+        AR = (screenH - sth0) / sw0;
+        TW = sw0; TH = screenH;
+        ifH = Math.round(PHONE * AR);
+        sizeFrame();
+        return true;
+      }
+
+      /* ---- reposo dentro de la escena ----
+         El objetivo del final es TW x TH (el hueco pegajoso), asi que el area de
+         la demo nace ya con esa proporcion; la del telefono (9/19.5 exactos) se
+         consigue con el marco de arriba y abajo, que es mas grueso que el de los
+         lados igual que en un telefono con menton. Al crecer, el marco se va. */
+      function measureScene() {
+        /* el fondo y el lienzo del telefono salen a sangre con estos dos huecos */
+        var r = stage.getBoundingClientRect();
+        var vw = document.documentElement.clientWidth;
+        if (!r.width || !vw) { return false; }
+        setv("--mkm-gap", px(r.left));
+        setv("--mkm-gapr", px(vw - r.right));
+        TW = vw; TH = Math.round(r.height);
+        if (!TW || !TH) { return false; }
+        AR = TH / TW;
+        var top = 20 + copy.getBoundingClientRect().height + 18;
+        var bot = (cap ? cap.getBoundingClientRect().height : 0) + 18;
+        var room = TH - top - bot;
+        var W0 = Math.min(TW * 0.58, room / RATIO, 300);
+        if (W0 < 150) { W0 = 150; }
+        padX0 = Math.max(4, Math.round(W0 * 0.026));
+        sw0 = W0 - 2 * padX0;
+        sth0 = sw0 * AR * 0.0493;                 /* 4,7 % del alto de pantalla */
+        padY0 = (W0 * RATIO - (sw0 * AR + sth0)) / 2;
+        /* el marco de arriba y abajo no puede ser tan grueso que, al crecer con
+           el telefono, lo haga mas alto que el hueco: ese era el techo que se
+           salia del viewport a mitad de escena. Aqui se acota. */
+        var swMax = sw0 + (TW - sw0) * (1 - FADE);
+        var padYmax = (AR * (TW / swMax - 1) * sw0 - sth0) / 2;
+        if (padY0 > padYmax) { padY0 = padYmax; }
+        if (padY0 < padX0) { padY0 = padX0; }     /* viewport muy alto: se acepta la deriva */
+        var H0 = sw0 * AR + sth0 + 2 * padY0;
+        ifH = Math.round(PHONE * AR);
+        sizeFrame();
+        setv("--mkm-ty", px((top + (TH - bot)) / 2 - TH / 2));
+        return H0 > 0;
       }
 
       function render(t) {
-        var e = t <= GROW ? ease(t / GROW)
-              : t <= HOLD ? 1
-              : ease(Math.max(0, (1 - t) / (1 - HOLD)));
-        card.style.setProperty("--mkm-e", e.toFixed(4));
-        var full = e > .92;
-        if (full !== root.classList.contains("mkm-full")) { root.classList.toggle("mkm-full", full); }
+        var e = t <= GROW0 ? 0 : (t >= GROW1 ? 1 : ease((t - GROW0) / (GROW1 - GROW0)));
+        var f = e <= 1 - FADE ? 1 : Math.max(0, (1 - e) / FADE);
+        apply(sw0 + (TW - sw0) * e, f);
+        setv("--mkm-e", e.toFixed(4));
+        setv("--mkm-copy", Math.max(0, 1 - e * 2.5).toFixed(3));
+        var full = e > .995;
+        if (full !== wasFull) {
+          wasFull = full;
+          root.classList.toggle("mkm-full", full);
+          card.classList.toggle("mkm-showbadge", full);
+          clearTimeout(badgeT);
+          if (full) { badgeT = setTimeout(function () { card.classList.remove("mkm-showbadge"); }, 2000); }
+        }
+      }
+
+      function refresh() {
+        if (on) { if (measureScene()) { render(progress()); } }
+        else { if (measureDesk()) { apply(sw0, 1); } }
       }
 
       function progress() {
@@ -2676,7 +2888,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (on) { return; }
         on = true;
         root.classList.add("mkm-scene");
-        measure();
+        measureScene();
         if (GS) {
           /* scrub: lo gobierna el scroll de punta a punta, con algo de inercia
              para que el crecimiento se sienta continuo y no a saltos */
@@ -2686,8 +2898,8 @@ document.addEventListener("DOMContentLoaded", function () {
             scrollTrigger: {
               trigger: card, start: "top 64px",
               end: function () { return "+=" + Math.max(1, card.offsetHeight - stage.offsetHeight); },
-              scrub: .45, invalidateOnRefresh: true,
-              onRefreshInit: measure, onRefresh: measure
+              scrub: .8, invalidateOnRefresh: true,
+              onRefreshInit: measureScene, onRefresh: measureScene
             }
           });
         } else {
@@ -2704,35 +2916,48 @@ document.addEventListener("DOMContentLoaded", function () {
           tween.kill(); tween = null;
         }
         window.removeEventListener("scroll", onScroll);
+        clearTimeout(badgeT);
+        wasFull = false;
         root.classList.remove("mkm-scene");
         root.classList.remove("mkm-full");
-        card.style.removeProperty("--mkm-sw");
-        card.style.removeProperty("--mkm-sh");
-        card.style.removeProperty("--mkm-e");
-        card.style.removeProperty("--mkm-sc");
-        card.style.removeProperty("--mkm-ty");
+        card.classList.remove("mkm-showbadge");
+        setv("--mkm-e", "0");
+        setv("--mkm-copy", "1");
+        setv("--mkm-ty", "0px");
+        setv("--mkm-gap", "0px");
+        setv("--mkm-gapr", "0px");
+        if (measureDesk()) { apply(sw0, 1); }
       }
 
       var rt = null;
       function relayout() {
         clearTimeout(rt);
         rt = setTimeout(function () {
-          if (mq.matches) { enable(); } else { disable(); }
+          if (sceneOK()) { enable(); } else { disable(); }
           if (on) {
-            measure();
+            measureScene();
             if (GS && window.ScrollTrigger) { ScrollTrigger.refresh(); } else { render(progress()); }
           }
         }, 160);
       }
 
-      if (mq.matches) { enable(); }
+      if (sceneOK()) { enable(); } else { refresh(); }
       if (mq.addEventListener) { mq.addEventListener("change", relayout); }
       else if (mq.addListener) { mq.addListener(relayout); }
       window.addEventListener("resize", relayout);
       window.addEventListener("orientationchange", relayout);
-      window.addEventListener("load", function () { if (on) { measure(); render(progress()); } });
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function () { if (on) { measure(); render(progress()); } });
+      window.addEventListener("load", refresh);
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(refresh); }
+
+      /* el iframe se crea cuando #get entra a menos de una pantalla, en movil y
+         en escritorio por igual: en la carga inicial no hay ningun iframe */
+      if (window.IntersectionObserver) {
+        var io = new IntersectionObserver(function (es) {
+          if (es[0] && es[0].isIntersecting) { io.disconnect(); mount(); }
+        }, { rootMargin: "100%" });
+        io.observe(sect);
+      } else {
+        window.addEventListener("load", mount);
       }
     })();
   })();
