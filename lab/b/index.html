@@ -25,8 +25,10 @@
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/bricolage-grotesque-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-latin.woff2" crossorigin>
 <link rel="preload" as="image" type="image/webp" href="../assets/img/after-salon-720.webp" fetchpriority="high">
-<!-- inline y antes de pintar a proposito: si esta clase llega tarde, el hero parpadea -->
-<script>(function(d){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){d.documentElement.className+=' mkh-js';}}catch(e){}})(document);</script>
+<!-- inline y antes de pintar a proposito: si esta clase llega tarde, el hero parpadea.
+     Desde la 3a vuelta se pone SIEMPRE: con prefers-reduced-motion el scrub ligado al
+     scroll se mantiene (lo gobierna el visitante) y solo se apagan los bucles autonomos. -->
+<script>(function(d){try{d.documentElement.className+=' mkh-js';}catch(e){}})(document);</script>
 <style>
 html { scroll-padding-top: 82px; scrollbar-gutter: stable; }
 /* visor de demos: bloquear el fondo sin que la pagina se mueva (el gutter ya esta reservado) */
@@ -114,6 +116,11 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .nav ul a:hover::after { right: 0; }
 .nav .brandmark .word { white-space: nowrap; }
 .nav .btn { white-space: nowrap; }
+/* pasado el hero la nav se asienta: gana sombra y el boton de WhatsApp se compacta */
+.nav { transition: box-shadow .2s ease, background .2s ease; }
+.nav .btn-sm { transition: padding .2s ease, font-size .2s ease, transform .15s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease; }
+.nav.is-scrolled { box-shadow: 0 14px 34px -22px rgba(17,18,20,.6); background: color-mix(in srgb, var(--paper) 95%, transparent); }
+.nav.is-scrolled .btn-sm { padding: 8px 13px; font-size: 12.5px; }
 @media (max-width: 1560px) { .nav .tag { display: none; } }
 @media (max-width: 1100px) { .nav ul { display: none; } }
 @media (max-width: 480px) { .brandmark span.word { display: none; } }
@@ -122,11 +129,14 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .stats .band-kicker { font: 600 12px/1.4 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-lite); margin: 0 0 clamp(26px, 4vw, 44px); }
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 3.4vw, 44px); }
 .stat { border-top: 2px solid rgba(242,177,52,.55); padding-top: 20px; }
-.stat b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(62px, 8.6vw, 128px); line-height: .88; letter-spacing: -0.05em; color: #fff; font-variant-numeric: tabular-nums; min-width: 3.4ch; margin-bottom: 14px; }
+.stat b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(62px, 8.6vw, 128px); line-height: .88; letter-spacing: -0.05em; color: #fff; font-variant-numeric: tabular-nums; min-width: 3.4ch; margin-bottom: 10px; }
+/* barra fina bajo cada cifra: sin JS sale llena hasta su porcentaje; con JS la llena el scroll */
+.stat-bar { display: block; height: 4px; border-radius: 2px; background: rgba(255,255,255,.16); margin: 0 0 16px; overflow: hidden; }
+.stat-bar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); transform-origin: 0 50%; }
 .stat p { margin: 0 0 10px; font-size: clamp(14.5px, 1.2vw, 16px); color: var(--on-teal); line-height: 1.5; }
 .stat a { font-size: 13px; font-weight: 600; color: var(--accent-lite); text-underline-offset: 3px; }
 .stat a:hover { color: #fff; }
-@media (max-width: 860px) { .stat-row { grid-template-columns: 1fr; gap: 28px; } .stat b { font-size: clamp(58px, 17vw, 96px); } }
+@media (max-width: 860px) { .stat-row { grid-template-columns: 1fr; gap: 28px; } .stat b { font-size: clamp(58px, 17vw, 96px); margin-bottom: 7px; } .stat-bar { margin-bottom: 11px; } }
 
 /* ===== what you get: bento asimetrico ===== */
 .get { background: var(--tint); }
@@ -145,6 +155,8 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .get-grid article.lg { grid-column: 1 / -1; grid-row: auto; background-color: var(--ink); color: var(--paper); border-color: var(--ink); padding: clamp(24px, 3vw, 38px) clamp(20px, 2.6vw, 34px); flex-direction: row; flex-wrap: wrap; gap: clamp(24px, 5vw, 76px); justify-content: center; align-items: center;
   background-image: radial-gradient(115% 68% at 50% 90%, rgba(35,122,119,.45), transparent 62%); }
 .get-grid article.lg:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(17,18,20,.6); border-color: var(--ink); }
+/* el telefono se endereza al entrar (lo mueve el scroll): necesita profundidad en el padre */
+.get-grid article.lg { perspective: 1400px; }
 .get-grid article.lg .lg-copy h3 { color: #fff; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.03em; }
 .get-grid article.lg .lg-copy p { color: rgba(249,246,239,.84); font-size: 15px; }
 .lg-copy { flex: none; }
@@ -176,7 +188,8 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 /* ===== precio ===== */
 .price .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(26px, 4vw, 52px); align-items: start; }
 .big { font-family: var(--display); font-weight: 800; font-size: clamp(64px, 8.4vw, 120px); line-height: .92; letter-spacing: -0.05em; display: inline-block; position: relative; }
-.big::after { content: ""; position: absolute; left: 0; right: 28%; bottom: 0; height: .055em; background: var(--accent); border-radius: 4px; }
+/* el subrayado es un elemento real (no ::after) para que el scroll pueda dibujarlo */
+.big-u { position: absolute; left: 0; right: 28%; bottom: 0; height: .055em; background: var(--accent); border-radius: 4px; transform-origin: 0 50%; }
 .big small { font-size: 16px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-left: 12px; }
 .price ul { list-style: none; padding: 0; margin: 22px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
 .price ul li { padding: 10px 0 10px 20px; border-bottom: 1px solid var(--line); position: relative; }
@@ -208,6 +221,10 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .safe-grid b { display: block; font-family: var(--display); font-weight: 700; font-size: 17.5px; margin-bottom: 5px; }
 .safe-grid p { margin: 0; color: var(--muted); font-size: 14.5px; }
 .safe-grid a { color: var(--brand-deep); }
+/* con JS los numeros empiezan apagados y se encienden al cruzar el 60% de la pantalla;
+   sin JS (.mk-anim no llega) ya estan en teal, que es el estado final */
+.mk-anim .safe-grid li::before { color: #8d9198; transition: color .4s ease; }
+.mk-anim .safe-grid li.is-seen::before { color: var(--brand); }
 .safe-grid li:last-child { grid-column: 1 / -1; }
 .safe-grid li:last-child p { max-width: 74ch; }
 @media (max-width: 780px) { .safe-grid { grid-template-columns: 1fr; } }
@@ -239,9 +256,27 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq details p { color: var(--muted); max-width: 70ch; padding-bottom: 14px; font-size: 15px; margin: 0; }
 .faq details a { color: var(--brand-deep); }
+/* apertura animada de los <details> donde el navegador la soporta; donde no, abre de golpe
+   como siempre. El bloque global de reduced-motion apaga la transicion. */
+@supports selector(::details-content) {
+  .faq { interpolate-size: allow-keywords; }
+  .faq details::details-content { block-size: 0; overflow: hidden; content-visibility: hidden;
+    transition: block-size .32s cubic-bezier(.2,.8,.25,1), content-visibility .32s allow-discrete; }
+  .faq details[open]::details-content { block-size: auto; content-visibility: visible; }
+}
+
+/* ===== franja de sectores sobre el cierre ===== */
+.mk-mq { position: absolute; top: 0; left: 0; right: 0; z-index: 2; overflow: hidden; background: rgba(0,0,0,.16); border-bottom: 1px solid rgba(255,255,255,.12); }
+.mk-mq-track { display: flex; width: max-content; animation: mk-mq-run 46s linear infinite; }
+.mk-mq-track span { display: inline-flex; align-items: center; padding: 9px 0; font: 600 12px/1 var(--body); letter-spacing: .13em; text-transform: uppercase; color: var(--on-teal); white-space: nowrap; }
+.mk-mq-track i { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: .8; margin: 0 20px; flex: none; }
+.mk-mq:hover .mk-mq-track, .mk-mq:focus-within .mk-mq-track { animation-play-state: paused; }
+@keyframes mk-mq-run { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+@media (max-width: 620px) { .mk-mq-track span { font-size: 11px; padding: 8px 0; } .mk-mq-track i { margin: 0 14px; } }
 
 /* ===== cierre ===== */
-.cta { padding: clamp(56px, 8vw, 116px) 0; }
+/* el padding superior deja sitio a la franja de sectores, que va absoluta arriba */
+.cta { padding: clamp(78px, 8vw, 116px) 0 clamp(56px, 8vw, 116px); }
 .cta .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(28px, 4vw, 56px); align-items: end; }
 .cta h2 { font-size: clamp(38px, 6.4vw, 86px); max-width: 14ch; letter-spacing: -0.042em; }
 .cta p { margin: 16px 0 28px; color: var(--on-teal); max-width: 46ch; font-size: 17px; }
@@ -288,17 +323,40 @@ body > footer a:hover { color: #fff; }
   font-size: clamp(34px, 7.4vw, 68px);
 }
 .mkh-em { font-style: normal; box-shadow: inset 0 -.26em 0 rgba(242, 177, 52, .55); }
-.mkh-sub { margin: 14px 0 0; max-width: 46ch; color: var(--mkh-muted); font-size: clamp(15px, 1.9vw, 18px); line-height: 1.55; }
-.mkh-hint { display: none; margin: 22px 0 0; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
+/* subrayado de la garantia: lo pinta el scrub cuando la web nueva termina de montarse */
+.mkh-uw { position: relative; z-index: 0; }
+.mkh-ul { position: absolute; z-index: -1; left: -2px; right: -2px; bottom: -1px; height: .52em; border-radius: 2px; background: rgba(242, 177, 52, .62); transform: scaleX(1); transform-origin: 0 50%; }
+.mkh-js .mkh-ul { transform: scaleX(0); }
+/* flecha autonoma (animacion CSS): es lo unico del hero que apaga reduced-motion */
+.mkh-hint { display: none; margin: 20px 0 0; align-items: center; gap: 9px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
 .mkh-js .mkh-hint { display: flex; }
-.mkh-hint span { display: block; width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); animation: mkh-bob 1.9s ease-in-out infinite; }
-@keyframes mkh-bob { 0%, 100% { transform: rotate(45deg) translate(0, 0); } 50% { transform: rotate(45deg) translate(3px, 3px); } }
+.mkh-hint span { display: block; width: 10px; height: 10px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: rotate(45deg); animation: mkh-bob 1.9s ease-in-out infinite; }
+@keyframes mkh-bob { 0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: .5; } 50% { transform: rotate(45deg) translate(4px, 4px); opacity: 1; } }
 
 /* ---- scroll track + sticky stage ---- */
+/* En movil (< 1100) manda .mkh-track: la copia se va arriba y el teatro se queda pegado.
+   En escritorio el rail es .mkh-scroller y .mkh-stage es una rejilla de dos columnas
+   pegada bajo la nav, para que el marco entre entero en la primera pantalla. */
 .mkh-scroller { position: relative; }
-.mkh-js .mkh-scroller { height: 340vh; }
-.mkh-stage { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); padding: 0 var(--mkh-pad) clamp(20px, 4vw, 34px); }
-.mkh-js .mkh-stage { position: sticky; top: 64px; height: calc(100vh - 64px); height: calc(100svh - 64px); padding-top: clamp(10px, 2vw, 20px); justify-content: center; }
+.mkh-stage { display: block; }
+.mkh-track { position: relative; }
+.mkh-js .mkh-track { height: 163vh; height: 163svh; }
+.mkh-theatre { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); padding: 0 var(--mkh-pad) clamp(20px, 4vw, 34px); }
+.mkh-js .mkh-theatre { position: sticky; top: 64px; height: calc(100vh - 64px); height: calc(100svh - 64px); padding-top: clamp(10px, 2vw, 20px); justify-content: center; }
+
+@media (min-width: 1100px) {
+  .mkh-js .mkh-scroller { height: 260vh; }
+  .mkh-js .mkh-stage {
+    position: sticky; top: 64px; height: calc(100vh - 64px); height: calc(100svh - 64px);
+    max-width: 1200px; margin: 0 auto; padding: 0 var(--mkh-pad);
+    display: grid; grid-template-columns: minmax(0, 41%) minmax(0, 1fr);
+    align-items: center; align-content: center; gap: clamp(26px, 3vw, 50px);
+  }
+  .mkh-js .mkh-head { max-width: none; margin: 0; padding: 0; }
+  .mkh-js .mkh-h1 { font-size: clamp(34px, 3.6vw, 52px); max-width: 15ch; }
+  .mkh-js .mkh-track { display: contents; height: auto; }
+  .mkh-js .mkh-theatre { position: static; height: auto; max-height: 100%; width: 100%; min-width: 0; padding: 0; }
+}
 
 .mkh-label { position: relative; height: 1.6em; width: 100%; max-width: 1000px; margin: 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
 .mkh-lab { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 8px; }
@@ -309,10 +367,11 @@ body > footer a:hover { color: #fff; }
 
 /* ---- browser frame ---- */
 .mkh-browser {
-  width: min(1000px, 100%); max-height: 660px; display: flex; flex-direction: column;
+  width: min(1000px, 100%); display: flex; flex-direction: column;
   background: var(--mkh-paper); border: 1px solid #d7d4cc; border-radius: 14px; overflow: hidden;
   box-shadow: 0 34px 70px -38px rgba(17, 18, 20, .5), 0 2px 5px rgba(17, 18, 20, .05);
 }
+/* movil: el marco aprovecha el alto disponible; escritorio: proporcion fija (ver @media 1100) */
 .mkh-js .mkh-browser { flex: 1 1 auto; min-height: 0; }
 .mkh-chrome { flex: none; display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #ece9e2; border-bottom: 1px solid #dcd8d0; }
 .mkh-dots { display: flex; gap: 6px; flex: none; }
@@ -326,106 +385,130 @@ body > footer a:hover { color: #fff; }
 .mkh-u--old { display: none; }
 .mkh-js .mkh-u--old { display: flex; }
 
-.mkh-viewport { position: relative; flex: 1 1 auto; min-height: 0; background: var(--mkh-paper); }
-.mkh-js .mkh-viewport { background: var(--mkh-old-bg); }
+/* container-type + cqw: las dos maquetas se dibujan en unidades del propio marco,
+   asi que escalan exacto a cualquier ancho sin romper proporciones (como .mkp-page). */
+.mkh-viewport { position: relative; flex: 1 1 auto; min-height: 0; background: var(--mkh-paper); container-type: inline-size; --mkh-fs: clamp(9px, 2.9cqw, 14px); }
+.mkh-js .mkh-viewport { flex: 1 1 auto; background: var(--mkh-old-bg); }
+@media (min-width: 1100px) {
+  .mkh-js .mkh-browser { flex: none; }
+  .mkh-js .mkh-viewport { flex: none; aspect-ratio: 134 / 100; --mkh-fs: 1.86cqw; }
+}
 .mkh-face { position: relative; }
 .mkh-js .mkh-face { position: absolute; inset: 0; overflow: hidden; }
 .mkh-js .mkh-old { z-index: 2; }
-.mkh-js .mkh-new { z-index: 1; }
+.mkh-js .mkh-new { z-index: 3; }
 .mkh-old { display: none; }
 .mkh-js .mkh-old { display: block; }
-.mkh-rmlab { display: none; }
+/* la cuchilla del barrido diagonal: solo existe con JS */
+.mkh-sweep { position: absolute; z-index: 4; top: -12%; bottom: -12%; width: 14%; opacity: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(35,122,119,0) 0%, rgba(35,122,119,.28) 45%, var(--mkh-amber) 82%, rgba(242,177,52,0) 100%);
+  transform: translateX(-140%) skewX(-12deg); }
 
-/* ---------- the 2006 site ---------- */
-/* transparent on purpose: the viewport carries the grey, so the new page can be
-   seen assembling underneath while the old pieces are still falling */
+/* ---------- la web de plantilla que ya tiene la tienda (constructor generico) ----------
+   Nada de 2006: el sitio mediocre real de hoy. Dibujado en HTML/CSS y medido en em sobre
+   var(--mkh-fs) (= cqw del marco), asi que escala exacto a cualquier ancho. */
 .mkh-o-page {
-  height: 100%; display: flex; flex-direction: column;
-  padding: 0 0 8px; background: transparent;
-  font-family: "Times New Roman", Times, Georgia, serif;
-  font-size: clamp(11px, 2.4vw, 14px); line-height: 1.35; color: #101010; text-align: center;
+  position: relative; height: 100%; display: flex; flex-direction: column; overflow: hidden;
+  background: #fff; color: #3c3c3c; text-align: center;
+  font-family: Arial, Helvetica, sans-serif; font-size: var(--mkh-fs); line-height: 1.42;
 }
-.mkh-o-banner {
-  flex: none; padding: 5px 6px; font-weight: 700; font-size: .92em; letter-spacing: .06em; color: #2b0f68;
-  background: linear-gradient(90deg, #ff9c9c, #ffe08a, #b6f0a5, #a5dcf0, #d7b6f0, #ff9c9c);
-  border-bottom: 2px ridge #8f8f8f; text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
-}
-.mkh-o-title { font-family: inherit; line-height: 1.15; text-wrap: wrap; margin: 8px 0 2px; font-size: 2.05em; font-weight: 700; letter-spacing: .05em; color: #10108a; text-decoration: underline; text-shadow: 1px 1px 0 #fff, 2px 2px 0 #9a9a9a; }
-.mkh-o-sub { margin: 0 0 6px; font-size: .95em; color: #4a2d0a; }
-.mkh-o-nav { margin: 0 0 8px; font-size: .95em; color: #444; }
-.mkh-o-nav a { color: #0000ee; text-decoration: underline; }
-.mkh-o-table { width: calc(100% - 16px); margin: 0 8px; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
-.mkh-o-td { padding: 0; vertical-align: top; width: 50%; }
-.mkh-o-cell { border: 2px inset #b7b7b7; background: #ededed; padding: 5px; text-align: left; }
-.mkh-o-cell--photo { text-align: center; background: #e3e3e3; }
-.mkh-o-photo { display: block; width: 100%; height: clamp(58px, 11vh, 96px); background: #b9b9b9; border: 2px solid #7a7a7a; }
-.mkh-o-photo img { display: block; width: 100%; height: 100%; object-fit: fill; filter: saturate(.62) contrast(1.06); }
-.mkh-o-cap { margin-top: 3px; font-size: .82em; font-style: italic; color: #3a3a3a; }
-.mkh-o-blink { color: #cc0000; font-weight: 700; animation: mkh-blink 1.05s steps(1) infinite; }
-@keyframes mkh-blink { 50% { opacity: 0; } }
-.mkh-o-cell b { display: inline-block; margin-bottom: 2px; letter-spacing: .04em; }
-.mkh-o-cell a { color: #0000ee; }
-.mkh-o-list { font-family: "Courier New", Courier, monospace; font-size: .92em; white-space: pre-wrap; }
-.mkh-o-uc { flex: none; display: inline-flex; align-items: center; gap: 7px; align-self: center; margin: 9px auto 0; padding: 4px 9px 4px 4px; background: #ffef9f; border: 2px outset #d8c86a; }
-.mkh-o-uc-sign { position: relative; flex: none; width: 24px; height: 22px; background: #f2c21a; border: 2px solid #111; }
-.mkh-o-uc-sign i { position: absolute; background: #111; }
-.mkh-o-uc-hat { left: 4px; top: 2px; width: 9px; height: 4px; border-radius: 5px 5px 0 0; }
-.mkh-o-uc-body { left: 6px; top: 7px; width: 4px; height: 9px; }
-.mkh-o-uc-tool { left: 11px; top: 5px; width: 3px; height: 12px; transform-origin: 50% 0; animation: mkh-dig 1.1s ease-in-out infinite; }
-@keyframes mkh-dig { 0%, 100% { transform: rotate(22deg); } 50% { transform: rotate(52deg); } }
-.mkh-o-uc-txt { font-size: .84em; font-weight: 700; letter-spacing: .08em; color: #6b4b00; }
-.mkh-o-btns { flex: none; margin: 9px 0 0; display: flex; gap: 8px; justify-content: center; }
-.mkh-o-btn98 { display: inline-block; padding: 3px 10px; font-size: .88em; font-family: Arial, Helvetica, sans-serif; color: #111; background: #d4d0c8; border: 3px outset #efefef; }
-.mkh-o-badges { flex: none; margin: 8px 0 0; display: flex; gap: 5px; justify-content: center; }
-.mkh-o-badges span { display: inline-block; padding: 2px 6px; border: 1px solid #000; font: 700 8px/1.3 Arial, Helvetica, sans-serif; letter-spacing: .05em; color: #fff; text-transform: uppercase; }
-.mkh-o-badges span:nth-child(1) { background: linear-gradient(180deg, #5a5ab4, #17173f); }
-.mkh-o-badges span:nth-child(2) { background: linear-gradient(180deg, #b45a5a, #3f1717); }
-.mkh-o-badges span:nth-child(3) { background: linear-gradient(180deg, #4a4a4a, #111); }
-.mkh-o-foot { flex: none; margin-top: auto; padding-top: 10px; }
-.mkh-o-counter { font-size: .86em; color: #222; }
-.mkh-o-leds { display: inline-flex; gap: 1px; margin-left: 4px; vertical-align: middle; }
-.mkh-o-leds b { margin: 0; padding: 1px 3px; font-family: "Courier New", Courier, monospace; font-size: .95em; color: #35ff5e; background: #0b0b0b; border: 1px solid #5a5a5a; }
-.mkh-o-best { margin-top: 3px; font-size: .8em; color: #555; }
+/* cabecera: logo de texto en Arial y seis entradas apretadas */
+.mkh-o-top { flex: none; display: flex; align-items: center; gap: .6em; padding: .7em 1.1em; background: #fff; border-bottom: 1px solid #e3e3e3; }
+.mkh-o-logo { font-size: 1.25em; font-weight: 700; letter-spacing: .04em; color: #2f2f2f; white-space: nowrap; }
+.mkh-o-nav { margin-left: auto; display: flex; gap: .8em; font-size: .8em; color: #6b6b6b; white-space: nowrap; }
+.mkh-o-nav span:first-child { color: #337ab7; }
+/* hero de stock oscurecido, titular centrado y boton azul por defecto */
+.mkh-o-hero { flex: none; position: relative; height: 9em; overflow: hidden; background: #555; display: grid; place-items: center; }
+/* misma franja fotografica, pero estirada a lo ancho: la foto de stock mal recortada */
+.mkh-o-heroimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; transform: scaleX(1.24); filter: grayscale(.5) saturate(.55) brightness(.55) contrast(.9); }
+.mkh-o-heroin { position: relative; padding: 0 1em; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .55); }
+.mkh-o-heroin b { display: block; font-size: 1.8em; font-weight: 700; line-height: 1.15; }
+.mkh-o-heroin i { display: block; margin-top: .3em; font-style: normal; font-size: .88em; opacity: .9; }
+.mkh-o-btn { display: inline-block; margin-top: .8em; padding: .4em 1.1em; font-size: .84em; font-style: normal; color: #fff; background: #337ab7; border: 1px solid #2e6da4; border-radius: 3px; }
+/* tres tarjetas iguales con iconos genericos (una se quedo rota) */
+.mkh-o-cards { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .7em; padding: 1em 1.1em .8em; background: #fff; }
+.mkh-o-ico { display: block; width: 2.4em; height: 2.4em; margin: 0 auto .45em; border-radius: 50%; border: 2px solid #bdbdbd; background: repeating-linear-gradient(135deg, #efefef 0 .3em, #e3e3e3 .3em .6em); }
+.mkh-o-ico--broken { position: relative; border-style: dashed; border-color: #cfcfcf; background: #f5f5f5; }
+.mkh-o-ico--broken::after { content: "?"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.15em; color: #b8b8b8; }
+.mkh-o-card b { display: block; margin-bottom: .25em; font-size: .92em; color: #333; }
+.mkh-o-card p { margin: 0; font-size: .78em; line-height: 1.5; color: #8c8c8c; }
+/* parrafo apelmazado y justificado */
+.mkh-o-wall { flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0; padding: 0 1.1em .8em; font-size: .78em; line-height: 1.45; color: #7b7b7b; text-align: justify; background: #fff; }
+/* el mapa incrustado enorme, dibujado en CSS */
+.mkh-o-map { flex: none; position: relative; height: 7.2em; overflow: hidden; background: #e8e6e1; border-top: 1px solid #ddd; }
+.mkh-o-map::before { content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 2.2em, #d7d4ce 2.2em 2.45em), repeating-linear-gradient(90deg, transparent 0 3em, #d7d4ce 3em 3.25em); }
+.mkh-o-road { position: absolute; background: #fff; }
+.mkh-o-road--h { left: 0; right: 0; top: 47%; height: .5em; }
+.mkh-o-road--v { top: 0; bottom: 0; left: 34%; width: .42em; }
+.mkh-o-road--d { left: -10%; right: -10%; top: 20%; height: .34em; transform: rotate(-11deg); }
+.mkh-o-pin { position: absolute; left: 52%; top: 38%; width: 1.1em; height: 1.1em; border-radius: 50% 50% 50% 0; background: #db4437; transform: rotate(-45deg); box-shadow: 0 .1em .25em rgba(0, 0, 0, .3); }
+.mkh-o-maplink { position: absolute; left: .55em; top: .55em; padding: .25em .6em; font-size: .74em; color: #1a73e8; background: #fff; border: 1px solid #ccc; border-radius: 2px; }
+/* carrusel con puntitos */
+.mkh-o-dots { flex: none; display: flex; justify-content: center; gap: .45em; padding: .6em 0; background: #fff; }
+.mkh-o-dots i { width: .6em; height: .6em; border-radius: 50%; background: #d4d4d4; }
+.mkh-o-dots i:first-child { background: #9a9a9a; }
+/* pie con iconos sociales */
+.mkh-o-foot { flex: none; padding: .75em 1.1em 3em; background: #3f3f3f; color: #b9b9b9; font-size: .74em; }
+.mkh-o-soc { display: flex; justify-content: center; gap: .45em; margin-bottom: .5em; }
+.mkh-o-soc i { width: 1.5em; height: 1.5em; border-radius: 50%; background: #5a5a5a; }
+.mkh-o-foot span { display: block; }
+.mkh-o-foot em { font-style: normal; color: #8b8b8b; }
+/* boton flotante de WhatsApp, mal colocado, tapando texto */
+.mkh-o-wa { position: absolute; z-index: 5; right: .9em; bottom: 3em; width: 2.8em; height: 2.8em; border-radius: 50%; background: #25D366; box-shadow: 0 .2em .5em rgba(0, 0, 0, .32); display: grid; place-items: center; animation: mkh-wa 2.4s ease-in-out infinite; }
+.mkh-o-wa::before { content: ""; width: 1.4em; height: 1.4em; border-radius: 50% 50% 0 50%; border: .26em solid #fff; }
+@keyframes mkh-wa { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.28em); } }
+/* franja de cookies */
+.mkh-o-cookie { position: absolute; z-index: 6; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; gap: .8em; padding: .55em .9em; font-size: .76em; color: #e9e9e9; background: rgba(24, 24, 24, .93); }
+.mkh-o-cookie em { flex: none; font-style: normal; padding: .2em .8em; color: #fff; background: #337ab7; border-radius: 2px; }
 
-/* ---------- the new site ---------- */
-/* transparent like the old page: .mkh-viewport owns the colour so it can flip grey -> paper mid-sequence */
-.mkh-n-page { height: 100%; display: flex; flex-direction: column; background: transparent; color: var(--mkh-ink); font-family: var(--mkh-body); }
-.mkh-n-head { flex: none; display: flex; align-items: center; gap: 10px; padding: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px); border-bottom: 1px solid var(--mkh-line); }
-.mkh-n-mark { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--mkh-teal); color: #fff; font-family: var(--mkh-display); font-weight: 800; font-size: 12px; letter-spacing: .02em; }
-.mkh-n-word { font-family: var(--mkh-display); font-weight: 800; font-size: clamp(15px, 2.2vw, 19px); letter-spacing: -.01em; }
-.mkh-n-nav { margin-left: auto; display: flex; gap: clamp(10px, 2vw, 20px); font-size: 13px; color: var(--mkh-muted); }
-/* Drawn, not photographed. Every image in lab/assets is a screenshot of a web page with
-   typography baked in, so any crop leaked stray wording; a CSS panel is sharp at every size
-   and adds no asset dependency. To use a real photo of the business, drop an <img> back in
-   (position:absolute; inset:0; object-fit:cover) - the vignette and caption still work. */
-.mkh-n-photo { position: relative; flex: 1 1 auto; min-height: clamp(96px, 20vh, 210px); margin: clamp(10px, 2vw, 16px) clamp(12px, 2.4vw, 22px) 0; border-radius: 12px; overflow: hidden;
-  background:
-    radial-gradient(78% 62% at 50% -10%, rgba(255, 206, 126, .30), transparent 66%),
-    radial-gradient(72% 96% at 95% 106%, rgba(47, 154, 150, .44), transparent 64%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 86px),
-    linear-gradient(163deg, #14282c 0%, #0e1b1e 54%, #11322f 100%); }
-/* a row of warm bulbs along the top, the way a salon mirror is lit */
-.mkh-n-photo::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46%; pointer-events: none;
-  background-image:
-    radial-gradient(circle, rgba(255, 226, 168, .95) 0 17%, rgba(255, 214, 140, .30) 30%, transparent 56%),
-    radial-gradient(circle, rgba(255, 206, 126, .22) 0 40%, transparent 72%);
-  background-size: 44px 44px, 44px 88px; background-position: 0 13px, 0 0; background-repeat: repeat-x; }
-.mkh-n-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 56%; pointer-events: none;
-  background: linear-gradient(180deg, rgba(10, 20, 22, 0), rgba(10, 20, 22, .40) 52%, rgba(10, 20, 22, .80)); }
-.mkh-n-badge { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; padding: 0 clamp(12px, 2.2vw, 18px) clamp(10px, 1.8vw, 15px); color: #fff; font-size: 11.5px; letter-spacing: .02em; }
-.mkh-n-badge b { display: block; margin-bottom: 4px; font-family: var(--mkh-display); font-weight: 800; font-size: clamp(17px, 2.7vw, 27px); line-height: 1.1; letter-spacing: -.015em; }
-.mkh-n-body { flex: none; display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(14px, 2.6vw, 30px); padding: clamp(12px, 2.4vw, 20px) clamp(12px, 2.4vw, 22px) clamp(14px, 2.6vw, 22px); }
-.mkh-n-kicker { margin: 0 0 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
-.mkh-n-row { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; font-size: clamp(13px, 1.7vw, 15px); }
-.mkh-n-row i { flex: 1 1 auto; height: 0; border-bottom: 1px dotted #cfccc4; transform: translateY(-3px); font-style: normal; }
-.mkh-n-row b { font-weight: 600; font-variant-numeric: tabular-nums; }
-.mkh-n-side { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: clamp(10px, 2vw, 15px); border: 1px solid var(--mkh-line); border-radius: 12px; background: #fff; }
-.mkh-n-open { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--mkh-teal-deep); }
-.mkh-n-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mkh-teal); box-shadow: 0 0 0 4px rgba(35, 122, 119, .14); }
-.mkh-n-hrs { font-size: 13px; line-height: 1.65; color: var(--mkh-muted); font-variant-numeric: tabular-nums; }
-.mkh-n-cta { display: inline-block; margin-top: 2px; padding: 9px 16px; border-radius: 999px; background: var(--mkh-ink); color: var(--mkh-paper); font-size: 13.5px; font-weight: 600; }
-/* margin-top:auto pins the footer to the bottom, so the new page fills the frame at any height */
-.mkh-n-foot { flex: none; margin-top: auto; padding: 11px clamp(12px, 2.4vw, 22px); border-top: 1px solid var(--mkh-line); font-size: 12px; color: var(--mkh-muted); }
+/* ---------- la web que construimos: la misma tienda, cara ---------- */
+/* opaca a proposito: el barrido diagonal la descubre por encima de la vieja */
+.mkh-n-page { position: relative; height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--mkh-paper); color: var(--mkh-ink); font-family: var(--mkh-body); font-size: var(--mkh-fs); line-height: 1.45; }
+.mkh-n-head { flex: none; display: flex; align-items: center; gap: .9em; padding: .75em 1.2em; border-bottom: 1px solid var(--mkh-line); }
+.mkh-n-word { font-family: var(--mkh-display); font-weight: 800; font-size: 1.45em; letter-spacing: -.018em; white-space: nowrap; }
+.mkh-n-nav { display: flex; gap: 1.05em; font-size: .84em; color: var(--mkh-muted); white-space: nowrap; }
+.mkh-n-pill { margin-left: auto; display: inline-flex; align-items: center; gap: .45em; padding: .28em .75em; font-size: .78em; font-weight: 600; color: var(--mkh-teal-deep); background: #E7F0EF; border: 1px solid #cfe0de; border-radius: 999px; white-space: nowrap; }
+.mkh-n-dot { flex: none; width: .55em; height: .55em; border-radius: 50%; background: var(--mkh-teal); box-shadow: 0 0 0 .22em rgba(35, 122, 119, .16); }
+/* foto real a sangre, encuadrada a la franja fotografica, con el titular grande encima */
+.mkh-n-photo { position: relative; flex: none; height: 11em; overflow: hidden; background: #14282c; }
+/* encuadre a la franja fotografica: la imagen es un pantallazo de web con tipografia
+   incrustada, asi que el object-position deja fuera cabecera, nav y titulares */
+.mkh-n-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; }
+.mkh-n-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12, 18, 20, 0) 30%, rgba(12, 18, 20, .55) 66%, rgba(12, 18, 20, .86) 100%); }
+.mkh-n-over { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; padding: 0 1.2em .85em; color: #fff; text-align: left; }
+.mkh-n-over b { display: block; max-width: 17ch; font-family: var(--mkh-display); font-weight: 800; font-size: 1.7em; line-height: 1.08; letter-spacing: -.02em; }
+.mkh-n-over i { display: block; margin-top: .3em; font-style: normal; font-size: .82em; color: rgba(255, 255, 255, .88); }
+/* barra de prueba social */
+.mkh-n-social { flex: none; display: flex; align-items: center; justify-content: center; gap: .75em; padding: .5em 1.2em; font-size: .8em; color: var(--mkh-muted); background: var(--mkh-tint); border-bottom: 1px solid var(--mkh-line); white-space: nowrap; }
+.mkh-n-social b { color: var(--mkh-ink); font-weight: 600; }
+.mkh-n-social s { flex: none; width: 1px; height: 1em; background: #d6d2c9; }
+.mkh-n-body { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1.06fr .94fr; gap: 1.4em; padding: .95em 1.2em 1em; text-align: left; }
+.mkh-n-col { min-width: 0; }
+.mkh-n-kicker { margin: 0 0 .5em; font-size: .72em; letter-spacing: .14em; text-transform: uppercase; color: var(--mkh-muted); }
+/* tarifa tipografica con puntos guia */
+.mkh-n-row { display: flex; align-items: baseline; gap: .5em; padding: .26em 0; font-size: .92em; }
+.mkh-n-row i { flex: 1 1 auto; height: 0; border-bottom: 1px dotted #cfccc4; transform: translateY(-.28em); font-style: normal; }
+.mkh-n-row b { flex: none; font-weight: 600; font-variant-numeric: tabular-nums; }
+/* dos resenas cortas sin autor, con comillas grandes */
+.mkh-n-quotes { margin-top: .85em; display: grid; gap: .55em; }
+.mkh-n-quote { position: relative; margin: 0; padding: 0 0 0 1.5em; font-size: .82em; line-height: 1.42; color: #45484e; }
+.mkh-n-quote::before { content: "\201C"; position: absolute; left: 0; top: -.12em; font-family: var(--mkh-display); font-weight: 800; font-size: 2.4em; line-height: 1; color: var(--mkh-amber); }
+/* "Find us": mapa estilizado en teal y horario en dos columnas */
+.mkh-n-map { position: relative; height: 6.6em; margin-bottom: .7em; border-radius: .5em; overflow: hidden; background: #DCEAE8; border: 1px solid #c8dcda; }
+.mkh-n-map::before { content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 2em, rgba(35, 122, 119, .12) 2em 2.15em), repeating-linear-gradient(90deg, transparent 0 2.5em, rgba(35, 122, 119, .12) 2.5em 2.65em); }
+.mkh-n-st { position: absolute; background: #F4FAF9; }
+.mkh-n-st--h { left: 0; right: 0; top: 52%; height: .45em; }
+.mkh-n-st--v { top: 0; bottom: 0; left: 42%; width: .38em; }
+.mkh-n-st--d { left: -8%; right: -8%; top: 22%; height: .3em; transform: rotate(-9deg); }
+.mkh-n-pin { position: absolute; left: 44%; top: 41%; width: 1.05em; height: 1.05em; border-radius: 50% 50% 50% 0; background: var(--mkh-teal); transform: rotate(-45deg); box-shadow: 0 .1em .25em rgba(0, 0, 0, .22); }
+.mkh-n-hrs { display: grid; grid-template-columns: auto 1fr; gap: .1em .9em; font-size: .8em; color: var(--mkh-muted); font-variant-numeric: tabular-nums; }
+.mkh-n-hrs b { font-weight: 500; color: #45484e; }
+/* barra inferior fija de contacto */
+.mkh-n-bar { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: .5em; padding: .6em 1.2em; border-top: 1px solid var(--mkh-line); background: #fff; }
+.mkh-n-bar span { padding: .4em 0; text-align: center; font-size: .84em; font-weight: 600; border-radius: 999px; background: var(--mkh-tint); color: var(--mkh-ink); }
+.mkh-n-bar span:nth-child(2) { background: var(--mkh-teal); color: #fff; }
 
 /* ---- replay ---- */
 .mkh-replay { display: none; align-items: center; gap: 8px; margin: 0; padding: 7px 14px; border: 1px solid var(--mkh-line); border-radius: 999px; background: var(--mkh-paper); color: var(--mkh-muted); font: inherit; font-size: 12.5px; cursor: pointer; }
@@ -434,48 +517,37 @@ body > footer a:hover { color: #fff; }
 .mkh-replay:focus-visible { outline: 2px solid var(--mkh-teal); outline-offset: 3px; color: var(--mkh-ink); }
 .mkh-replay span { display: block; width: 11px; height: 11px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; }
 
-/* ---- narrow ---- */
-@media (max-width: 899px) {
-  .mkh-js .mkh-scroller { height: 163vh; height: 163svh; }
-  .mkh-browser { max-height: none; }
+/* ---- estrecho (el mismo relato con menos aire) ---- */
+@media (max-width: 1099px) {
+  /* el teatro se alinea arriba: nada de ~100px de hueco sobre el rotulo y bajo el Replay */
+  .mkh-js .mkh-theatre { justify-content: flex-start; padding-top: 12px; padding-bottom: 14px; }
   .mkh-n-nav { display: none; }
-  .mkh-o-nav { line-height: 1.7; }
-  /* fixed band, so it stays a wide strip on a phone instead of growing into a tall square */
-  .mkh-n-photo { flex: 0 0 auto; height: clamp(130px, 20vh, 190px); min-height: 0; }
-  /* the body takes the slack and keeps its rows at natural height */
-  .mkh-n-body { grid-template-columns: 1fr; gap: 12px; flex: 1 1 auto; align-content: start; }
+  .mkh-n-photo { height: 8.4em; }
+  .mkh-n-over b { font-size: 1.5em; max-width: 22ch; }
+  /* con el marco alto, el hueco se lo comen el mapa de cada maqueta, no un vacio */
+  .mkh-n-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: .9em; align-content: stretch; }
+  .mkh-n-quotes { margin-top: .6em; gap: .4em; }
+  .mkh-js #mkh-n-side { display: flex; flex-direction: column; min-height: 0; }
+  .mkh-js .mkh-n-map { flex: 1 1 auto; height: auto; min-height: 5.4em; }
+  .mkh-n-map { height: 5.4em; }
+  .mkh-o-hero { height: 7.6em; }
+  .mkh-o-map { height: 6em; }
+  .mkh-js .mkh-o-wall { flex: none; }
+  .mkh-js .mkh-o-map { flex: 1 1 auto; height: auto; min-height: 6em; }
 }
-/* short windows: trim the new page so its footer never falls outside the frame */
-@media (max-height: 700px) {
-  .mkh-js .mkh-stage { gap: 6px; }
-  .mkh-o-photo { height: 52px; }
-  .mkh-n-photo { height: clamp(96px, 16vh, 150px); }
-  .mkh-n-row { padding: 3px 0; }
-  .mkh-n-side { gap: 6px; }
-  .mkh-n-foot { padding-block: 8px; }
-  .mkh-n-body { padding-block: 10px 12px; }
+/* ventanas bajas: se recorta la columna de venta para que el marco siga entrando entero */
+@media (min-width: 1100px) and (max-height: 780px) {
+  .mkh-js .mkh-theatre { gap: 7px; }
+  .mkh-js .mkh-h1 { font-size: clamp(32px, 3vw, 42px); }
+  .mkh-head .lead { font-size: 15.5px; margin-top: 12px; }
+  .mkh-head .trust { margin-top: 14px; }
+  .mkh-hint { margin-top: 14px; }
 }
 
-/* ---- reduced motion: no sequence, both versions side by side ---- */
-@media (prefers-reduced-motion: reduce) {
-  .mkh-hint, .mkh-replay, .mkh-label, .mkh-chrome { display: none !important; }
-  .mkh-js .mkh-scroller, .mkh-scroller { height: auto !important; }
-  .mkh-js .mkh-stage, .mkh-stage { position: static !important; height: auto !important; }
-  .mkh-browser { width: min(1060px, 100%); max-height: none; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-  .mkh-viewport, .mkh-js .mkh-viewport { position: static !important; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 28px); background: transparent !important; }
-  .mkh-face, .mkh-js .mkh-face { position: static !important; display: block !important; overflow: hidden; border: 1px solid var(--mkh-line); border-radius: 12px; opacity: 1 !important; visibility: visible !important; }
-  .mkh-rmlab { display: block; padding: 8px 12px; background: var(--mkh-tint); border-bottom: 1px solid var(--mkh-line); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mkh-muted); }
-  .mkh-o-page, .mkh-n-page { height: auto; }
-  .mkh-n-body { grid-template-columns: 1fr; gap: 14px; }
-  .mkh-old { background: var(--mkh-old-bg); }
-  .mkh-new { background: var(--mkh-paper); }
-  .mkh-o-photo { height: 90px; }
-  .mkh-n-photo { min-height: 150px; }
-  .mkh-o-blink, .mkh-o-uc-tool, .mkh-hint span { animation: none !important; }
-}
-@media (prefers-reduced-motion: reduce) and (max-width: 899px) {
-  .mkh-viewport, .mkh-js .mkh-viewport { grid-template-columns: 1fr; }
-}
+/* ---- reduced-motion, criterio nuevo de la 3a vuelta ----
+   El scrub ligado al scroll SE MANTIENE: lo gobierna el visitante. Solo se apagan las
+   animaciones autonomas (flecha, WhatsApp flotante), y de eso ya se encarga la regla
+   global de arriba (animation: none !important), asi que aqui no hace falta nada mas. */
 /* ---- cabecera de venta del hero (se conserva del hero anterior) ---- */
 .mkh-head .kicker { display: inline-flex; align-items: center; gap: 9px; color: var(--brand-deep); font: 600 12px/1 var(--body); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 18px; background: #EAF1F0; border: 1px solid #cfe0de; border-radius: 999px; padding: 9px 14px; }
 .mkh-head .kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex: none; }
@@ -485,6 +557,12 @@ body > footer a:hover { color: #fff; }
 .mkh-head .price::after { content: ""; position: absolute; left: 0; right: 0; bottom: .04em; height: .22em; background: var(--accent); opacity: .5; z-index: -1; }
 .mkh-head .trust { display: flex; gap: 8px 20px; margin: 20px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--muted); flex-wrap: wrap; }
 .mkh-head .trust li::before { content: "\2713\00A0"; color: var(--brand); font-weight: 700; }
+@media (min-width: 1100px) {
+  .mkh-js .mkh-head .lead { font-size: 16.5px; max-width: 46ch; }
+  .mkh-js .mkh-head .cta-line { margin-top: 20px; gap: 16px; }
+  .mkh-js .mkh-head .price { font-size: clamp(28px, 2.4vw, 34px); }
+  .mkh-js .mkh-head .trust { flex-direction: column; gap: 5px; margin-top: 18px; font-size: 13px; }
+}
 .mkh-cap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px) clamp(18px, 3vw, 30px); font-size: 12.5px; color: var(--muted); line-height: 1.4; }
 
 /* =================================================================
@@ -505,8 +583,8 @@ body > footer a:hover { color: #fff; }
    Sin JS, sin GSAP o con reduced-motion la clase .mkp-anim no llega a ponerse:
    el rail no ocupa alto de mas y el bloque deja de estar pegado. */
 .mkp-stage { position: relative; margin-top: clamp(26px, 3.4vw, 46px); }
-.mkp-sticky { display: grid; grid-template-columns: 1fr minmax(280px, 380px); gap: clamp(26px, 3.2vw, 52px); align-items: center; padding: clamp(18px, 3vw, 40px) 0; }
-.mkp-anim .mkp-stage { height: 360vh; }
+.mkp-sticky { display: grid; grid-template-columns: 1fr minmax(280px, 380px); gap: clamp(26px, 3.2vw, 52px); align-items: center; padding: clamp(12px, 1.6vw, 22px) 0; }
+.mkp-anim .mkp-stage { height: 300vh; }
 .mkp-anim .mkp-sticky { position: sticky; top: 64px; min-height: calc(100vh - 64px); }
 
 /* ---- marco de navegador ---- */
@@ -618,6 +696,80 @@ body > footer a:hover { color: #fff; }
 }
 
 /* =================================================================
+   COMPONENTE COMPARTIDO - telefono realista (.mk-phone)
+   Un solo marco para la maqueta de 'Fast on a phone' y para el modo
+   telefono del visor de demos. Proporcion 9/19.5, marco de 10 px,
+   isla dinamica, botones laterales dibujados con pseudoelementos e
+   indicador de inicio. Sin JS el marco sigue siendo una caja en flujo
+   (la maqueta se apila y se lee); la proporcion solo manda cuando la
+   altura de la pantalla la fija alguien (.mkm-js o el visor).
+   ================================================================= */
+.mk-phone,
+.mkd-device.is-phone {
+  position: relative;
+  border-radius: 44px;
+  background: #0b0c0f;
+  padding: 10px;
+  box-shadow:
+    inset 0 0 0 1.5px #3a3d44,
+    0 0 0 1px rgba(255,255,255,.08),
+    0 42px 76px -30px rgba(0,0,0,.78),
+    0 10px 26px -14px rgba(0,0,0,.5);
+}
+/* botones laterales: izquierda = silencio + dos de volumen (copias con box-shadow) */
+.mk-phone::before,
+.mkd-device.is-phone::before {
+  content: ""; position: absolute; left: -2px; top: 19%;
+  width: 3px; height: 21px; border-radius: 2px 0 0 2px;
+  background: #44484f; pointer-events: none;
+  box-shadow: 0 40px 0 0 #44484f, 0 76px 0 0 #44484f;
+}
+/* derecha = encendido */
+.mk-phone::after,
+.mkd-device.is-phone::after {
+  content: ""; position: absolute; right: -2px; top: 29%;
+  width: 3px; height: 50px; border-radius: 0 2px 2px 0;
+  background: #44484f; pointer-events: none;
+}
+.mk-phone-screen,
+.mkd-device.is-phone .mkd-screen {
+  position: relative;
+  border-radius: 34px;
+  overflow: hidden;
+  background: #fff;
+}
+/* indicador de inicio */
+.mk-phone-screen::before,
+.mkd-device.is-phone .mkd-screen::before {
+  content: ""; position: absolute; left: 50%; bottom: 7px; z-index: 40;
+  width: 120px; max-width: 46%; height: 5px; border-radius: 3px;
+  /* difference: se ve igual sobre una pantalla blanca que sobre una demo oscura */
+  background: rgba(186,186,186,.95); mix-blend-mode: difference;
+  transform: translateX(-50%); pointer-events: none;
+}
+/* reflejo diagonal del cristal */
+.mk-phone-screen::after,
+.mkd-device.is-phone .mkd-screen::after {
+  content: ""; position: absolute; inset: 0; z-index: 39; pointer-events: none;
+  background: linear-gradient(122deg, rgba(255,255,255,.34) 0 13%, rgba(255,255,255,.10) 21%, rgba(255,255,255,0) 38%);
+}
+/* barra de estado dibujada dentro de la pantalla */
+.mk-phone-status { display: none; }
+.mk-phone .mk-phone-status,
+.mkd-device.is-phone .mk-phone-status {
+  display: flex; flex: none; position: relative; z-index: 30;
+  height: 38px; align-items: center; justify-content: space-between;
+  padding: 0 15px 0 19px; color: #111214;
+  font: 700 12.5px/1 var(--body); font-variant-numeric: tabular-nums;
+}
+.mk-phone-status::before {            /* isla dinamica */
+  content: ""; position: absolute; left: 50%; top: 5px; transform: translateX(-50%);
+  width: 92px; height: 26px; border-radius: 999px; background: #000;
+}
+.mk-phone-sig { display: inline-flex; align-items: center; gap: 4px; }
+.mk-phone-sig svg { display: block; height: 11px; width: auto; }
+
+/* =================================================================
    PIEZA 3 - movil interactivo  (lab/pieces/movil.html)
    Fuera: fuentes, :root, reset y el escaparate (.mkm-root/.mkm-wrap/
    .mkm-grid/.mkm-copy): la pieza vive dentro de la tarjeta 'Fast on a
@@ -633,15 +785,17 @@ body > footer a:hover { color: #fff; }
 .mkm-cap { margin: 14px 0 0; text-align: center; font-size: 12.5px; color: var(--muted); }
 
 /* ---- el telefono ---- */
-.mkm-phone { width: min(330px, 84vw); margin: 0 auto; border-radius: 30px; background: #06070a; padding: 10px; box-shadow: 0 34px 62px -26px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.09); }
-.mkm-notch { width: 62px; height: 5px; border-radius: 3px; background: #000; margin: 0 auto 8px; opacity: .6; }
-.mkm-screen { position: relative; background: #fff; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; color: var(--ink); font-size: 13px; line-height: 1.45; }
-.mkm-js .mkm-screen { height: 600px; }
+/* el marco lo pone el componente .mk-phone; aqui solo el tamano y el interior */
+.mkm-phone { width: min(300px, 80vw); margin: 0 auto; }
+.mkm-screen { display: flex; flex-direction: column; color: var(--ink); font-size: 13px; line-height: 1.45; }
+/* con JS manda la proporcion 9/19.5: la pantalla se estira dentro del marco */
+.mkm-js .mkm-phone { width: 277px; aspect-ratio: 9 / 19.5; padding: 0; }
+.mkm-js .mkm-screen { position: absolute; inset: 10px; }
 
 .mkm-topbar { flex: none; display: flex; align-items: center; gap: 8px; padding: 12px 13px 10px; border-bottom: 1px solid var(--line); background: #fff; }
 .mkm-logo { width: 20px; height: 20px; border-radius: 6px; background: var(--brand); flex: none; }
-.mkm-name { font-family: var(--display); font-weight: 800; font-size: 13.5px; letter-spacing: .01em; }
-.mkm-status { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border-radius: 999px; padding: 5px 9px; white-space: nowrap; }
+.mkm-name { font-family: var(--display); font-weight: 800; font-size: 13.5px; letter-spacing: .01em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mkm-status { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--brand-deep); background: #EAF1F0; border-radius: 999px; padding: 5px 9px; white-space: nowrap; }
 .mkm-status .mkm-dot { width: 7px; height: 7px; border-radius: 50%; background: #1f9e5e; flex: none; }
 .mkm-status.is-shut { color: #8a3f2f; background: #F6E9E4; }
 .mkm-status.is-shut .mkm-dot { background: #C1583F; }
@@ -698,8 +852,49 @@ body > footer a:hover { color: #fff; }
 .mkm-rev p { margin: 4px 0 4px; font-size: 12.5px; }
 .mkm-rev small { color: var(--muted); font-size: 11px; }
 
+/* ---- franja de fotos deslizable (dentro de Services) ---- */
+.mkm-shots { display: flex; gap: 8px; margin: 0 0 12px; padding-bottom: 2px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.mkm-shots::-webkit-scrollbar { display: none; }
+.mkm-js .mkm-shots { scroll-snap-type: x mandatory; }
+/* recorte a la franja fotografica: la fuente es un pantallazo de web, no una foto suelta.
+   288% = 720/250 px de origen; --sx y --sy mueven la ventana sobre la foto */
+.mkm-shot { flex: none; width: 78%; aspect-ratio: 5 / 3; position: relative; overflow: hidden; border-radius: 10px; background: #E7E9E4; scroll-snap-align: center; }
+.mkm-shot img { position: absolute; width: 288%; height: auto; max-width: none; left: var(--sx, -4%); top: var(--sy, -50%); }
+.mkm-shot figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 9px 6px; font-size: 10.5px; font-weight: 600; color: #fff;
+  background: linear-gradient(to top, rgba(10,11,13,.72), rgba(10,11,13,0)); }
+.mkm-sdots { display: none; justify-content: center; gap: 5px; margin: -4px 0 12px; }
+.mkm-js .mkm-sdots { display: flex; }
+.mkm-sdots i { width: 5px; height: 5px; border-radius: 50%; background: #C9CCC6; transition: background .18s ease, transform .18s ease; }
+.mkm-sdots i.is-on { background: var(--brand); transform: scale(1.35); }
+
+/* ---- un servicio se puede tocar (solo con JS: sin el son texto plano) ---- */
+.mkm-row.is-tap { cursor: pointer; justify-content: flex-start; gap: 8px; text-align: left; transition: background .15s ease; }
+.mkm-row.is-tap b { margin-left: auto; }
+.mkm-row.is-tap:hover { background: #F3F6F5; }
+.mkm-row.is-tap:focus-visible { outline: 2px solid var(--brand); outline-offset: -1px; border-radius: 6px; }
+.mkm-row.is-tap::after { content: "\203A"; flex: none; color: var(--muted); font-size: 15px; line-height: 1; }
+
+/* ---- hoja inferior con el detalle de un servicio ---- */
+.mkm-sheet { position: absolute; inset: 0; z-index: 20; }
+.mkm-sheet[hidden] { display: none; }
+.mkm-scrim { position: absolute; inset: 0; background: rgba(12,13,15,.42); opacity: 0; transition: opacity .24s ease; }
+.mkm-sheet.is-open .mkm-scrim { opacity: 1; }
+.mkm-sheet-card { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 16px 16px 0 0; padding: 8px 14px 20px;
+  box-shadow: 0 -14px 34px -18px rgba(17,18,20,.55); transform: translateY(102%); transition: transform .26s cubic-bezier(.2,.8,.25,1); }
+.mkm-sheet.is-open .mkm-sheet-card { transform: none; }
+.mkm-grab { display: block; width: 100%; appearance: none; background: none; border: 0; padding: 4px 0 10px; cursor: pointer; }
+.mkm-grab i { display: block; width: 38px; height: 4px; border-radius: 2px; background: #D6D9D3; margin: 0 auto; }
+.mkm-grab:hover i { background: #B8BCB5; }
+.mkm-sheet-card h4 { font-family: var(--display); font-weight: 800; font-size: 15.5px; letter-spacing: -.02em; margin: 0 0 6px; }
+.mkm-sheet-card p { margin: 0 0 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.mkm-sheet-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); font-size: 12px; color: var(--muted); }
+.mkm-sheet-meta b { font-family: var(--display); font-weight: 800; font-size: 15px; color: var(--brand-deep); letter-spacing: -.02em; }
+.mkm-book { display: block; width: 100%; appearance: none; border: 0; margin: 12px 0 0; background: var(--brand); color: #fff; border-radius: 999px; padding: 11px 10px; font: 700 12.5px/1 var(--body); cursor: pointer; transition: background .15s ease; }
+.mkm-book:hover { background: var(--brand-deep); }
+.mkm-sheet-note { display: block; margin: 7px 0 0; text-align: center; font-size: 10.5px; color: var(--muted); }
+
 /* ---- barra inferior ---- */
-.mkm-bottom { display: none; flex: none; padding: 10px 13px 13px; border-top: 1px solid var(--line); background: #fff; }
+.mkm-bottom { display: none; flex: none; padding: 10px 13px 20px; border-top: 1px solid var(--line); background: #fff; }
 .mkm-js .mkm-bottom { display: block; }
 .mkm-wa { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; appearance: none; border: 0; background: var(--brand); color: #fff; border-radius: 999px; padding: 12px 10px; font: 700 13px/1 var(--body); cursor: pointer; transition: background .15s ease, transform .15s ease; }
 .mkm-wa:hover { background: var(--brand-deep); transform: translateY(-1px); }
@@ -728,23 +923,47 @@ body > footer a:hover { color: #fff; }
 /* ---- responsive ---- */
 @media (max-width: 900px) {
   .mkm-stagewrap { order: -1; }
-  .mkm-js .mkm-screen { height: min(600px, 74vh); }
+  .mkm-js .mkm-phone { width: min(277px, 34vh); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .mkm-js .mkm-panel, .mkm-chat, .mkm-msg, .mkm-wa { transition: none !important; }
+  .mkm-js .mkm-panel, .mkm-chat, .mkm-msg, .mkm-wa, .mkm-scrim, .mkm-sheet-card, .mkm-sdots i { transition: none !important; }
 }
 /* --- la pieza dentro de la tarjeta oscura de #get --- */
 .get-grid article.lg .mkm-cap { color: var(--on-ink); }
 .get-grid article.lg .mkm-stagewrap { flex: none; }
-/* 520 px: las cuatro pestanas caben enteras sin scroll interno y la tarjeta no se dispara */
-.mkm-js .get-grid article.lg .mkm-screen { height: 520px; }
+/* 304 px de ancho = 659 de alto con la proporcion real: las cuatro pestanas caben
+   enteras, la tarjeta no se dispara y el telefono deja de parecer achatado */
+.mkm-js .get-grid article.lg .mkm-phone { width: 304px; }
 /* la pieza ponia el telefono por encima del texto (order:-1 en su escaparate); dentro de
    la tarjeta manda el titular, que es quien la nombra */
 .get-grid article.lg .mkm-stagewrap { order: 0; }
 /* un telefono real no ensena barra de scroll: dentro del marco tampoco */
 .get-grid article.lg .mkm-panel { scrollbar-width: none; }
 .get-grid article.lg .mkm-panel::-webkit-scrollbar { display: none; }
-@media (max-width: 620px) { .mkm-js .get-grid article.lg .mkm-screen { height: min(445px, 53vh); } }
+/* en movil el telefono no puede crecer: se limita el ANCHO y la proporcion da el alto
+   (214 px -> 464 de alto, lo mismo que ocupaba la maqueta achatada anterior) */
+@media (max-width: 620px) {
+  .mkm-js .get-grid article.lg .mkm-phone { width: min(214px, 58vw, 25.5vh); }
+  /* a 194 px de pantalla todo tiene que encoger un punto para que nada se salga */
+  .get-grid article.lg .mkm-tabs { padding: 7px 5px 0; }
+  .get-grid article.lg .mkm-tabs button { font-size: 10px; padding: 8px 1px 9px; letter-spacing: -.03em; }
+  .get-grid article.lg .mkm-panel { padding: 11px 10px 16px; }
+  .get-grid article.lg .mkm-topbar { padding: 9px 9px 8px; gap: 6px; }
+  .get-grid article.lg .mkm-logo { width: 16px; height: 16px; border-radius: 5px; }
+  .get-grid article.lg .mkm-name { font-size: 11px; }
+  .get-grid article.lg .mkm-status { font-size: 9.5px; padding: 4px 6px; gap: 4px; }
+  .get-grid article.lg .mkm-status .mkm-dot { width: 5px; height: 5px; }
+  .get-grid article.lg .mkm-bottom { padding: 9px 10px 18px; }
+  .get-grid article.lg .mkm-wa { font-size: 11px; padding: 10px 8px; gap: 6px; }
+  .get-grid article.lg .mkm-row { font-size: 11.5px; padding: 7px 0; }
+  .get-grid article.lg .mkm-shot figcaption { font-size: 9.5px; padding: 12px 7px 5px; }
+  .get-grid article.lg .mk-phone-status { height: 32px; padding: 0 9px 0 12px; font-size: 10.5px; }
+  .get-grid article.lg .mk-phone-status::before { width: 70px; height: 21px; top: 5px; }
+  .get-grid article.lg .mk-phone-sig { gap: 3px; }
+  .get-grid article.lg .mk-phone-sig svg { height: 9px; }
+  .get-grid article.lg .mk-phone-screen::before { width: 92px; height: 4px; bottom: 6px; }
+  .mkm-try span { font-size: 12px; padding: 7px 11px; }
+}
 
 /* =================================================================
    PIEZA 4 - visor de demos navegables  (lab/pieces/demos.html)
@@ -818,10 +1037,7 @@ body > footer a:hover { color: #fff; }
 
 .mkd-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
 .mkd-device { position: relative; background: #1b1c20; border-radius: 22px; padding: 10px; box-shadow: 0 40px 90px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08); max-width: 100%; }
-.mkd-device.is-phone { border-radius: 40px; }
-.mkd-notch { display: none; height: 24px; align-items: center; justify-content: center; }
-.mkd-notch i { display: block; width: 58px; height: 5px; border-radius: 3px; background: #3a3c42; }
-.mkd-device.is-phone .mkd-notch { display: flex; }
+/* el modo telefono usa el componente .mk-phone (marco, isla, botones, indicador) */
 .mkd-chrome { display: none; height: 34px; align-items: center; gap: 12px; padding: 0 4px 0 6px; }
 .mkd-device.is-desktop .mkd-chrome { display: flex; }
 .mkd-dots { display: inline-flex; gap: 6px; flex: none; }
@@ -830,10 +1046,10 @@ body > footer a:hover { color: #fff; }
 .mkd-url { flex: 1 1 auto; min-width: 0; background: rgba(255,255,255,.08); border-radius: 7px; height: 22px; display: flex; align-items: center; gap: 7px; padding: 0 10px; font-size: 12px; color: var(--on-ink); white-space: nowrap; overflow: hidden; }
 .mkd-url svg { width: 11px; height: 11px; flex: none; }
 .mkd-screen { position: relative; background: #fff; overflow: hidden; border-radius: 12px; }
-.mkd-device.is-phone .mkd-screen { border-radius: 28px; }
+.mkd-device.is-phone .mkd-screen { display: flex; flex-direction: column; }
 .mkd-device.is-bare { border-radius: 20px; padding: 6px; }
 .mkd-device.is-bare .mkd-screen { border-radius: 15px; }
-.mkd-frame { display: block; border: 0; background: #fff; }
+.mkd-frame { display: block; flex: none; border: 0; background: #fff; }
 
 .mkd-note { flex: none; margin: 0; text-align: center; font-size: 12.5px; line-height: 1.45; color: #9aa0a8; }
 
@@ -845,8 +1061,11 @@ body > footer a:hover { color: #fff; }
   .mkd-panel { gap: 0; }
   .mkd-bar { border-radius: 0; border-left: 0; border-right: 0; border-top: 0; padding: 8px 8px 8px 14px; }
   .mkd-device.is-bare { border-radius: 0; padding: 0; box-shadow: none; background: #fff; width: 100%; }
-  .mkd-device.is-bare .mkd-screen { border-radius: 0; }
-  .mkd-device.is-bare .mkd-notch { display: none; }
+  /* a sangre: el telefono del visitante ya es el marco, asi que se apaga el dibujado */
+  .mkd-device.is-bare .mkd-screen { border-radius: 0; display: block; }
+  .mkd-device.is-bare::before, .mkd-device.is-bare::after,
+  .mkd-device.is-bare .mkd-screen::before, .mkd-device.is-bare .mkd-screen::after { display: none; }
+  .mkd-device.is-bare .mk-phone-status { display: none; }
   .mkd-note { padding: 9px 14px; background: rgba(18,19,22,.97); border-top: 1px solid rgba(255,255,255,.08); }
 }
 @media (max-width: 599px) { .mkd-chip { display: none; } .mkd-ghost .mkd-lbl { display: none; } .mkd-ghost { padding: 8px 11px; } }
@@ -935,6 +1154,9 @@ body > footer a:hover { color: #fff; }
 
 <header class="mkh-hero" id="top">
 
+ <div class="mkh-scroller" id="mkh-scroller">
+  <div class="mkh-stage">
+
   <div class="mkh-head">
     <span class="kicker">Ready-made websites for local businesses</span>
     <h1 class="mkh-h1">Your website is <em class="mkh-em">already built</em>. Pay only if you want it.</h1>
@@ -943,12 +1165,12 @@ body > footer a:hover { color: #fff; }
       <span class="price">S$590</span>
       <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
     </div>
-    <ul class="trust"><li>No payment until you approve the final version</li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
+    <ul class="trust"><li><span class="mkh-uw">No payment until you approve the final version<i class="mkh-ul" id="mkh-ul" aria-hidden="true"></i></span></li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
     <p class="mkh-hint">Scroll <span aria-hidden="true"></span></p>
   </div>
 
-  <div class="mkh-scroller" id="mkh-scroller">
-    <div class="mkh-stage">
+    <div class="mkh-track" id="mkh-track">
+      <div class="mkh-theatre">
 
       <p class="mkh-label">
         <span class="mkh-lab mkh-lab--a">what most shops have</span>
@@ -968,116 +1190,116 @@ body > footer a:hover { color: #fff; }
 
           <!-- ---------- BEFORE ---------- -->
           <div class="mkh-face mkh-old" id="mkh-old">
-            <span class="mkh-rmlab">Before — what most shops have</span>
             <div class="mkh-o-page" aria-hidden="true">
-              <div class="mkh-o-banner" id="mkh-o-banner">★ ★ ★ &nbsp; W E L C O M E &nbsp; T O &nbsp; O U R &nbsp; H O M E P A G E &nbsp; ★ ★ ★</div>
-              <h2 class="mkh-o-title" id="mkh-o-title">YOURSALON</h2>
-              <p class="mkh-o-sub" id="mkh-o-sub"><i>"Your hair is our passion since 1998"</i></p>
-              <p class="mkh-o-nav" id="mkh-o-nav"><a>Home</a> | <a>About Us</a> | <a>Our Services</a> | <a>Price List</a> | <a>Contact</a> | <a>Guestbook</a></p>
-              <table class="mkh-o-table">
-                <tbody>
-                  <tr>
-                    <td class="mkh-o-td"><div class="mkh-o-cell mkh-o-cell--photo">
-                      <div class="mkh-o-photo"><img src="../assets/img/after-salon-720.webp" width="720" height="450" alt="" loading="eager" decoding="async"></div>
-                      <div class="mkh-o-cap">our shop (photo)</div>
-                    </div></td>
-                    <td class="mkh-o-td"><div class="mkh-o-cell">
-                      <span class="mkh-o-blink">NEW!!</span> Welcome to our web site!!! We are a family hair salon.
-                      Please <a>click here</a> to call for appointment. Walk-in also can. Thank you for visiting!!!
-                    </div></td>
-                  </tr>
-                  <tr>
-                    <td class="mkh-o-td"><div class="mkh-o-cell">
-                      <b>PRICE LIST</b>
-                      <div class="mkh-o-list">Lady Cut ....... $28
-Gent Cut ...... $18
-Colouring ... fr $80
-Perm ..... pls call</div>
-                    </div></td>
-                    <td class="mkh-o-td"><div class="mkh-o-cell">
-                      <b>OPENING HOUR</b>
-                      <div class="mkh-o-list">Mon-Fri : 10am-8pm
-Sat &amp; Sun : 9am-6pm
-Closed on P. Holiday</div>
-                    </div></td>
-                  </tr>
-                  <tr>
-                    <td class="mkh-o-td" colspan="2"><div class="mkh-o-cell">
-                      <b>OUR SERVICES</b>
-                      <div class="mkh-o-list">Hair Cut * Hair Dye * Rebonding * Treatment * Wedding Set
-Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
-                    </div></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="mkh-o-uc" id="mkh-o-uc">
-                <span class="mkh-o-uc-sign"><i class="mkh-o-uc-hat"></i><i class="mkh-o-uc-body"></i><i class="mkh-o-uc-tool"></i></span>
-                <span class="mkh-o-uc-txt">UNDER CONSTRUCTION</span>
+              <div class="mkh-o-top" id="mkh-o-top">
+                <span class="mkh-o-logo">YOURSALON</span>
+                <span class="mkh-o-nav" id="mkh-o-nav"><span>Home</span><span>About Us</span><span>Services</span><span>Gallery</span><span>Testimonials</span><span>Contact</span></span>
               </div>
-              <p class="mkh-o-btns" id="mkh-o-btns">
-                <span class="mkh-o-btn98">Sign Our Guestbook</span>
-                <span class="mkh-o-btn98">E-mail Us</span>
-              </p>
-              <p class="mkh-o-badges" id="mkh-o-badges">
-                <span>Best with Netscape</span><span>HTML 4.0</span><span>Get Flash Player</span>
-              </p>
-              <div class="mkh-o-foot" id="mkh-o-foot">
-                <div class="mkh-o-counter">You are visitor number
-                  <span class="mkh-o-leds" id="mkh-o-leds"><b>0</b><b>0</b><b>1</b><b>4</b><b>2</b><b>2</b><b>7</b></span>
+              <div class="mkh-o-hero" id="mkh-o-hero">
+                <img class="mkh-o-heroimg" src="../assets/img/after-salon-480.webp" width="480" height="300" alt="" loading="eager" decoding="async">
+                <div class="mkh-o-heroin">
+                  <b>Welcome to Our Website</b>
+                  <i>We provide quality services to all our valued customers</i>
+                  <span class="mkh-o-btn">Learn More</span>
                 </div>
-                <div class="mkh-o-best">Best viewed in 1024 × 768 · Last updated: 14 March 2006</div>
               </div>
+              <div class="mkh-o-cards" id="mkh-o-cards">
+                <div class="mkh-o-card"><span class="mkh-o-ico"></span><b>Quality Service</b><p>We are committed to providing the best possible service to every customer.</p></div>
+                <div class="mkh-o-card"><span class="mkh-o-ico mkh-o-ico--broken"></span><b>Experienced Team</b><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p></div>
+                <div class="mkh-o-card"><span class="mkh-o-ico"></span><b>Customer Satisfaction</b><p>Your satisfaction is our top priority. Contact us today to find out more.</p></div>
+              </div>
+              <p class="mkh-o-wall" id="mkh-o-wall">Our salon was established in 1998 and since that time we have been serving customers from all over the island with a wide range of hair and beauty services at affordable prices. Our friendly and professional staff are fully trained and always ready to assist you with any enquiry you may have regarding our services, our promotions and our opening hours. We believe that every customer deserves the very best and we always do our utmost to make sure that you leave our salon feeling happy and satisfied with the result. Please do not hesitate to contact us for an appointment or simply walk in at your convenience.</p>
+              <div class="mkh-o-map" id="mkh-o-map">
+                <span class="mkh-o-road mkh-o-road--h"></span>
+                <span class="mkh-o-road mkh-o-road--v"></span>
+                <span class="mkh-o-road mkh-o-road--d"></span>
+                <span class="mkh-o-pin"></span>
+                <span class="mkh-o-maplink">View larger map</span>
+              </div>
+              <div class="mkh-o-dots" id="mkh-o-dots"><i></i><i></i><i></i><i></i></div>
+              <div class="mkh-o-foot" id="mkh-o-foot">
+                <span class="mkh-o-soc"><i></i><i></i><i></i><i></i></span>
+                <span>&copy; 2019 YOURSALON. All Rights Reserved. Powered by SiteBuilder Pro</span>
+                <span><em>Last updated: 2019</em></span>
+              </div>
+              <span class="mkh-o-wa" id="mkh-o-wa"></span>
+              <div class="mkh-o-cookie" id="mkh-o-cookie">This website uses cookies to ensure you get the best experience. <em>OK</em></div>
             </div>
           </div>
-
-          <!-- ---------- AFTER ---------- -->
+          <!-- ---------- DESPUES: la que construimos ---------- -->
           <div class="mkh-face mkh-new" id="mkh-new">
-            <span class="mkh-rmlab">After — what we build</span>
             <div class="mkh-n-page">
               <header class="mkh-n-head" id="mkh-n-head">
-                <span class="mkh-n-mark" aria-hidden="true">YS</span>
                 <span class="mkh-n-word">Your Salon</span>
-                <nav class="mkh-n-nav"><span>Services</span><span>Prices</span><span>Visit</span></nav>
+                <nav class="mkh-n-nav"><span>Services</span><span>Prices</span><span>Reviews</span><span>Visit</span></nav>
+                <span class="mkh-n-pill" id="mkh-n-pill"><i class="mkh-n-dot" id="mkh-n-dot"></i>Open now &middot; until 20:00</span>
               </header>
               <div class="mkh-n-photo" id="mkh-n-photo">
-                <span class="mkh-n-badge" id="mkh-n-badge"><b>Cuts, colour and treatments</b>Tanjong Pagar · since 1998</span>
+                <img class="mkh-n-img" src="../assets/img/after-salon-720.webp" srcset="../assets/img/after-salon-720.webp 720w, ../assets/img/after-salon-1080.webp 1080w" sizes="(min-width: 1100px) 46vw, 92vw" width="720" height="450" alt="" loading="eager" decoding="async">
+                <div class="mkh-n-over" id="mkh-n-over">
+                  <b>Cuts, colour and treatments in Tanjong Pagar</b>
+                  <i>Walk in, or book in ten seconds on WhatsApp</i>
+                </div>
+              </div>
+              <div class="mkh-n-social" id="mkh-n-social">
+                <span><b>4.9 &#9733;</b> 128 reviews</span><s></s><span>Since 1998</span><s></s><span>Tanjong Pagar</span>
               </div>
               <div class="mkh-n-body">
-                <div>
+                <div class="mkh-n-col">
                   <p class="mkh-n-kicker" id="mkh-n-kicker">Price list</p>
                   <div class="mkh-n-row"><span>Cut &amp; finish</span><i></i><b>$28</b></div>
                   <div class="mkh-n-row"><span>Gents cut</span><i></i><b>$18</b></div>
                   <div class="mkh-n-row"><span>Colour</span><i></i><b>from $80</b></div>
                   <div class="mkh-n-row"><span>Perm</span><i></i><b>from $120</b></div>
+                  <div class="mkh-n-row"><span>Scalp treatment</span><i></i><b>from $60</b></div>
+                  <div class="mkh-n-quotes" id="mkh-n-quotes">
+                    <p class="mkh-n-quote">Been coming here for years. They always know exactly what I want.</p>
+                    <p class="mkh-n-quote">Booked on WhatsApp in the morning, walked out happy by lunchtime.</p>
+                  </div>
                 </div>
-                <aside class="mkh-n-side" id="mkh-n-side">
-                  <span class="mkh-n-open"><span class="mkh-n-dot" id="mkh-n-dot"></span> Open now · closes 20:00</span>
-                  <div class="mkh-n-hrs">Mon–Fri&nbsp; 10:00–20:00<br>Sat–Sun&nbsp; 09:00–18:00</div>
-                  <span class="mkh-n-cta" id="mkh-n-cta">Book an appointment</span>
+                <aside class="mkh-n-col" id="mkh-n-side">
+                  <p class="mkh-n-kicker">Find us</p>
+                  <div class="mkh-n-map" id="mkh-n-map">
+                    <span class="mkh-n-st mkh-n-st--h"></span>
+                    <span class="mkh-n-st mkh-n-st--v"></span>
+                    <span class="mkh-n-st mkh-n-st--d"></span>
+                    <span class="mkh-n-pin"></span>
+                  </div>
+                  <div class="mkh-n-hrs" id="mkh-n-hrs">
+                    <b>Mon&ndash;Fri</b><span>10:00&ndash;20:00</span>
+                    <b>Saturday</b><span>09:00&ndash;18:00</span>
+                    <b>Sunday</b><span>09:00&ndash;18:00</span>
+                    <b>Phone</b><span>+65 6xxx xxxx</span>
+                  </div>
                 </aside>
               </div>
-              <footer class="mkh-n-foot" id="mkh-n-foot">Tanjong Pagar, Singapore &nbsp;·&nbsp; +65 6xxx xxxx</footer>
+              <footer class="mkh-n-bar" id="mkh-n-bar"><span>Call</span><span>WhatsApp</span><span>Directions</span></footer>
             </div>
           </div>
+
+          <span class="mkh-sweep" id="mkh-sweep" aria-hidden="true"></span>
 
         </div>
       </div>
 
       <button type="button" class="mkh-replay" id="mkh-replay"><span aria-hidden="true"></span>Replay</button>
 
+      </div>
     </div>
-  </div>
 
-  <p class="mkh-cap">Both versions are drawn here, side by side, for a salon that does not exist &middot; the old one is the kind of page most shops still have</p>
+  </div>
+ </div>
+
+  <p class="mkh-cap">Both versions are drawn here for a salon that does not exist &middot; the first one is the kind of template site most shops have today</p>
 </header>
 
 <section class="stats band-teal" id="stats">
   <div class="wrap">
     <p class="band-kicker">What people do before they visit</p>
     <div class="stat-row">
-      <div class="stat"><b>85%</b><p>of Singaporeans check a business online before they visit. If your site looks broken on a phone, they go elsewhere.</p><a href="https://hashmeta.com/blog/singapore-seo-landscape-in-trends-and-opportunities/" target="_blank" rel="noopener">Source</a></div>
-      <div class="stat"><b>76%</b><p>of people who search for a local business on their phone visit within 24 hours. Your hours, prices and WhatsApp need to be right there.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
-      <div class="stat"><b>87%</b><p>read reviews before they visit. We put your real reviews and your Google map on the page.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+      <div class="stat"><b>85%</b><span class="stat-bar" aria-hidden="true"><i style="width:85%"></i></span><p>of Singaporeans check a business online before they visit. If your site looks broken on a phone, they go elsewhere.</p><a href="https://hashmeta.com/blog/singapore-seo-landscape-in-trends-and-opportunities/" target="_blank" rel="noopener">Source</a></div>
+      <div class="stat"><b>76%</b><span class="stat-bar" aria-hidden="true"><i style="width:76%"></i></span><p>of people who search for a local business on their phone visit within 24 hours. Your hours, prices and WhatsApp need to be right there.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
+      <div class="stat"><b>87%</b><span class="stat-bar" aria-hidden="true"><i style="width:87%"></i></span><p>read reviews before they visit. We put your real reviews and your Google map on the page.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
     </div>
   </div>
 </section>
@@ -1093,14 +1315,23 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
           <p>One page that loads in a blink and reads well on a small screen.</p>
     <div class="mkm-try" aria-hidden="true">
     <span>Tap the tabs</span>
+    <span>Tap a service</span>
     <span>Tap the green button</span>
     </div>
           <span class="lg-note">Example page &middot; not a real business</span>
         </div>
         <div class="mkm-stagewrap">
-          <div class="mkm-phone">
-            <div class="mkm-notch" aria-hidden="true"></div>
-            <div class="mkm-screen">
+          <div class="mkm-phone mk-phone">
+            <div class="mkm-screen mk-phone-screen">
+
+              <div class="mk-phone-status" aria-hidden="true">
+                <span class="mk-phone-time" id="mkmClock">9:41</span>
+                <span class="mk-phone-sig">
+                  <svg viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.4" y="5.5" width="3" height="5.5" rx="1"/><rect x="8.8" y="3" width="3" height="8" rx="1"/><rect x="13.2" y="0.5" width="3" height="10.5" rx="1" opacity=".35"/></svg>
+                  <svg viewBox="0 0 14 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1.1 4.1a8.4 8.4 0 0 1 11.8 0"/><path d="M3.5 6.6a5 5 0 0 1 7 0"/><path d="M5.9 9.1a1.6 1.6 0 0 1 2.2 0"/></svg>
+                  <svg viewBox="0 0 25 11" fill="none"><rect x=".8" y=".8" width="20" height="9.4" rx="2.8" stroke="currentColor" stroke-width="1.1" opacity=".45"/><rect x="2.4" y="2.4" width="14.4" height="6.2" rx="1.6" fill="currentColor"/><path d="M22.4 4v3a2.4 2.4 0 0 0 0-3z" fill="currentColor" opacity=".45"/></svg>
+                </span>
+              </div>
 
               <div class="mkm-topbar">
                 <span class="mkm-logo" aria-hidden="true"></span>
@@ -1119,11 +1350,22 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
 
                 <section class="mkm-panel" id="mkmPanel-serv" role="tabpanel" aria-labelledby="mkmTab-serv" tabindex="0">
                   <h3>Services</h3>
-                  <div class="mkm-row"><span>Cut &amp; blow dry<small>45 min</small></span><b>S$45</b></div>
-                  <div class="mkm-row"><span>Colour, roots<small>90 min</small></span><b>S$120</b></div>
-                  <div class="mkm-row"><span>Balayage<small>2 h 30</small></span><b>S$210</b></div>
-                  <div class="mkm-row"><span>Keratin smoothing<small>3 h</small></span><b>S$280</b></div>
-                  <div class="mkm-row"><span>Fringe trim<small>15 min</small></span><b>Free</b></div>
+                  <div class="mkm-shots" id="mkmShots" role="group" aria-label="Photos of the salon, swipe sideways">
+                    <figure class="mkm-shot" style="--sx:-4%;--sy:-56%"><img src="../assets/img/after-salon-720.webp" alt="Brick wall and mirrors down the left of the room" loading="lazy" decoding="async"><figcaption>The room</figcaption></figure>
+                    <figure class="mkm-shot" style="--sx:-108%;--sy:-50%"><img src="../assets/img/after-salon-720.webp" alt="Warm bulbs hanging over the cutting stations" loading="lazy" decoding="async"><figcaption>The lights</figcaption></figure>
+                    <figure class="mkm-shot" style="--sx:-188%;--sy:-143%"><img src="../assets/img/after-salon-720.webp" alt="The glass partition and the colour bar at the back" loading="lazy" decoding="async"><figcaption>The colour bar</figcaption></figure>
+                  </div>
+                  <div class="mkm-sdots" id="mkmSdots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+                  <div class="mkm-row" data-svc data-dur="45 min" data-price="S$45" data-desc="Wash, cut and a proper blow dry. Tell us how much time you want to spend on it at home and we cut for that.">
+                    <span>Cut &amp; blow dry<small>45 min</small></span><b>S$45</b></div>
+                  <div class="mkm-row" data-svc data-dur="90 min" data-price="S$120" data-desc="Roots only, matched to what you already have. Ammonia-free tint, gloss finish, toner included if you need one.">
+                    <span>Colour, roots<small>90 min</small></span><b>S$120</b></div>
+                  <div class="mkm-row" data-svc data-dur="2 h 30" data-price="S$210" data-desc="Hand-painted, so it grows out soft and you can leave it four months. Includes the toner and a treatment.">
+                    <span>Balayage<small>2 h 30</small></span><b>S$210</b></div>
+                  <div class="mkm-row" data-svc data-dur="3 h" data-price="S$280" data-desc="For thick or frizzy hair in this weather. Formaldehyde-free. Lasts three to four months; wash it 48 hours later.">
+                    <span>Keratin smoothing<small>3 h</small></span><b>S$280</b></div>
+                  <div class="mkm-row" data-svc data-dur="15 min" data-price="Free" data-desc="Free between cuts if we cut it. Walk in, we will fit you in around the bookings.">
+                    <span>Fringe trim<small>15 min</small></span><b>Free</b></div>
                   <p class="mkm-hint">Prices include GST. Walk-ins welcome; booking is faster.</p>
                 </section>
 
@@ -1201,6 +1443,18 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
                 <span class="mkm-demo">Demo &middot; nothing is sent</span>
               </div>
 
+              <div class="mkm-sheet" id="mkmSheet" hidden>
+                <div class="mkm-scrim" id="mkmScrim"></div>
+                <div class="mkm-sheet-card" role="dialog" aria-modal="true" aria-labelledby="mkmSheetName" tabindex="-1" id="mkmSheetCard">
+                  <button type="button" class="mkm-grab" id="mkmGrab" aria-label="Close this service"><i aria-hidden="true"></i></button>
+                  <h4 id="mkmSheetName">Service</h4>
+                  <p id="mkmSheetDesc"></p>
+                  <div class="mkm-sheet-meta"><span id="mkmSheetDur"></span><b id="mkmSheetPrice"></b></div>
+                  <button type="button" class="mkm-book" id="mkmBook">Book this</button>
+                  <span class="mkm-sheet-note" id="mkmSheetNote">Nothing is booked here</span>
+                </div>
+              </div>
+
             </div>
           </div>
           <p class="mkm-cap">Example page for a business that does not exist.</p>
@@ -1220,7 +1474,7 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
 <section class="price tex" id="price">
   <div class="wrap">
     <div data-reveal>
-      <span class="rule amber" aria-hidden="true"></span><div class="big">S$590<small>one-off</small></div>
+      <span class="rule amber" aria-hidden="true"></span><div class="big">S$590<small>one-off</small><i class="big-u" aria-hidden="true"></i></div>
       <ul>
         <li>One page, fast on a phone, on your own domain</li>
         <li>Your prices, hours, team, reviews, WhatsApp and map</li>
@@ -1455,12 +1709,20 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
 
     <div class="mkd-stage" id="mkdStage">
       <div class="mkd-device is-phone" id="mkdDevice">
-        <div class="mkd-notch"><i></i></div>
         <div class="mkd-chrome">
           <span class="mkd-dots"><i></i><i></i><i></i></span>
           <span class="mkd-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg><span id="mkdUrl">example</span></span>
         </div>
-        <div class="mkd-screen" id="mkdScreen"></div>
+        <div class="mkd-screen" id="mkdScreen">
+          <div class="mk-phone-status" aria-hidden="true">
+            <span class="mk-phone-time" id="mkdClock">9:41</span>
+            <span class="mk-phone-sig">
+              <svg viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.4" y="5.5" width="3" height="5.5" rx="1"/><rect x="8.8" y="3" width="3" height="8" rx="1"/><rect x="13.2" y="0.5" width="3" height="10.5" rx="1" opacity=".35"/></svg>
+              <svg viewBox="0 0 14 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1.1 4.1a8.4 8.4 0 0 1 11.8 0"/><path d="M3.5 6.6a5 5 0 0 1 7 0"/><path d="M5.9 9.1a1.6 1.6 0 0 1 2.2 0"/></svg>
+              <svg viewBox="0 0 25 11" fill="none"><rect x=".8" y=".8" width="20" height="9.4" rx="2.8" stroke="currentColor" stroke-width="1.1" opacity=".45"/><rect x="2.4" y="2.4" width="14.4" height="6.2" rx="1.6" fill="currentColor"/><path d="M22.4 4v3a2.4 2.4 0 0 0 0-3z" fill="currentColor" opacity=".45"/></svg>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1518,6 +1780,13 @@ Perm (hot &amp; cold) * Scalp Care * Hair Extension * Kids Cut</div>
 </section>
 
 <section class="cta band-teal" id="contact">
+  <!-- franja fina de sectores: texto nuevo, no de venta; se para con reduced-motion (regla global) -->
+  <div class="mk-mq" aria-hidden="true">
+    <div class="mk-mq-track">
+      <span>Barbers<i></i>Hair salons<i></i>Aircon servicing<i></i>Plumbers<i></i>Cleaning<i></i>Car workshops<i></i>Pet grooming<i></i>Tuition centres<i></i>Music schools<i></i>Bakeries<i></i>Cafes<i></i>Florists<i></i>Tailors<i></i></span>
+      <span>Barbers<i></i>Hair salons<i></i>Aircon servicing<i></i>Plumbers<i></i>Cleaning<i></i>Car workshops<i></i>Pet grooming<i></i>Tuition centres<i></i>Music schools<i></i>Bakeries<i></i>Cafes<i></i>Florists<i></i>Tailors<i></i></span>
+    </div>
+  </div>
   <div class="wrap">
     <div data-reveal>
       <span class="rule" aria-hidden="true"></span>
@@ -1558,111 +1827,124 @@ document.addEventListener("DOMContentLoaded", function () {
     var replayTween = null;
 
     function init() {
-      // No GSAP (blocked CDN, offline) or reduced motion: fall back to the finished site. Never a blank frame.
+      // Sin GSAP (CDN bloqueado, sin red) se cae a la web nueva terminada: nunca un marco vacio.
+      // Con prefers-reduced-motion el scrub SE MANTIENE (lo gobierna el visitante); solo se
+      // apagan los bucles CSS, de lo que ya se encarga la regla global de reduced-motion.
       if (!window.gsap || !window.ScrollTrigger) { root.classList.remove("mkh-js"); return; }
-      if (RM) { root.classList.remove("mkh-js"); return; }
-
 
       var scroller = document.getElementById("mkh-scroller");
+      var track = document.getElementById("mkh-track");
       var replay = document.getElementById("mkh-replay");
       var mm = gsap.matchMedia();
 
-      mm.add({
-        wide: "(min-width: 900px)",
-        ok: "(prefers-reduced-motion: no-preference)"
-      }, function (ctx) {
-        if (!ctx.conditions.ok) { root.classList.remove("mkh-js"); return; }
+      // las dos ramas declaradas: con una sola condicion, matchMedia no ejecuta nada cuando no casa
+      mm.add({ wide: "(min-width: 1100px)", small: "(max-width: 1099px)" }, function (ctx) {
         root.classList.add("mkh-js");
 
         var narrow = !ctx.conditions.wide;
-        var cells = gsap.utils.toArray(".mkh-o-cell");
-        var rows = gsap.utils.toArray(".mkh-n-row");
-        var newBits = ["#mkh-n-head", "#mkh-n-photo", "#mkh-n-badge", "#mkh-n-kicker", "#mkh-n-side", "#mkh-n-cta", "#mkh-n-foot"];
+        // en escritorio el rail es el hero entero (arranca a 0 de scroll); en movil, solo el teatro
+        var trigger = narrow ? track : scroller;
+        var navs = gsap.utils.toArray("#mkh-o-nav span");
+        var cards = gsap.utils.toArray("#mkh-o-cards .mkh-o-card");
+        var rows = gsap.utils.toArray("#mkh-new .mkh-n-row");
+        var quotes = gsap.utils.toArray("#mkh-n-quotes .mkh-n-quote");
+        var newBits = ["#mkh-n-head", "#mkh-n-photo", "#mkh-n-over", "#mkh-n-social", "#mkh-n-kicker", "#mkh-n-side", "#mkh-n-bar"];
 
-        // start state: old page on screen, new page laid out but hidden piece by piece
-        gsap.set("#mkh-new", { autoAlpha: 1 });
+        // estado inicial: la plantilla en pantalla y la nueva montada pero tapada por el clip
+        gsap.set("#mkh-new", { autoAlpha: 1, clipPath: "polygon(0% 0%, 0% 0%, -45% 100%, -45% 100%)" });
         gsap.set(newBits, { autoAlpha: 0 });
-        gsap.set(rows, { autoAlpha: 0, x: -16 });
-        gsap.set("#mkh-n-head", { y: -18 });
-        gsap.set("#mkh-n-photo", { clipPath: "inset(0% 50% 0% 50%)" });
-        gsap.set("#mkh-n-badge", { y: 10 });
-        gsap.set("#mkh-n-kicker", { y: 10 });
-        gsap.set("#mkh-n-side", { y: 20 });
-        gsap.set("#mkh-n-cta", { y: 12, scale: .96 });
-        gsap.set("#mkh-n-foot", { y: 12 });
+        gsap.set(quotes, { autoAlpha: 0, y: 10 });
+        gsap.set(rows, { autoAlpha: 0, x: -14 });
+        gsap.set("#mkh-n-head", { y: -14 });
+        gsap.set("#mkh-n-photo", { scale: 1.06 });
+        gsap.set("#mkh-n-over", { y: 14 });
+        gsap.set("#mkh-n-social", { y: 10 });
+        gsap.set("#mkh-n-kicker", { y: 8 });
+        gsap.set("#mkh-n-side", { y: 16 });
+        gsap.set("#mkh-n-bar", { y: 14 });
         gsap.set("#mkh-n-dot", { scale: 0 });
+        gsap.set("#mkh-sweep", { autoAlpha: 0, xPercent: -140 });
+        gsap.set("#mkh-ul", { scaleX: 0 });
         gsap.set(".mkh-u--new", { autoAlpha: 0 });
         gsap.set(".mkh-lab--b", { autoAlpha: 0, y: 8 });
         gsap.set("#mkh-old", { autoAlpha: 1 });
 
         var tl = gsap.timeline({
           defaults: { ease: "power2.out" },
-          scrollTrigger: { trigger: scroller, start: "top top", end: "bottom bottom", scrub: .55, invalidateOnRefresh: true }
+          scrollTrigger: { trigger: trigger, start: "top 64px", end: "bottom bottom", scrub: .55, invalidateOnRefresh: true }
         });
 
         if (!narrow) {
-          // --- wide: every old element leaves with its own gesture ---
-          tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -3, y: 3, duration: .4 }, 0)
-            .to("#mkh-o-banner", { rotation: -13, yPercent: -170, autoAlpha: 0, duration: 1, ease: "power2.in" }, .4)
-            .to("#mkh-o-uc", { x: 6, duration: .1, repeat: 5, yoyo: true }, .5)
-            .to("#mkh-o-uc", { y: 220, rotation: 18, autoAlpha: 0, duration: .9, ease: "power2.in" }, 1.1)
-            .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 7, yoyo: true }, 1.3)
-            .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .5 }, 1.95)
-            .to("#mkh-o-badges span", { autoAlpha: 0, y: 170, rotation: -9, duration: .7, ease: "power2.in", stagger: .07 }, 2.05)
-            .to("#mkh-o-nav", { autoAlpha: 0, y: 26, duration: .5 }, 2.2)
-            .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .35, stagger: .06 }, 1.9)
-            .to(cells, { skewX: 2.5, x: 5, duration: .3, stagger: { each: .06, from: "random" } }, 2.3)
-            .to(cells, {
-              y: 300, autoAlpha: 0, duration: 1, ease: "power2.in",
-              rotation: function () { return gsap.utils.random(-11, 11); },
-              xPercent: function () { return gsap.utils.random(-16, 16); },
-              stagger: { each: .09, from: "end" }
-            }, 2.6)
-            .to(["#mkh-o-title", "#mkh-o-sub"], { autoAlpha: 0, y: -20, duration: .5, stagger: .08 }, 2.8)
-            .to("#mkh-o-btns", { autoAlpha: 0, y: 140, rotation: 7, duration: .6, ease: "power2.in" }, 3)
-            .to("#mkh-o-foot", { autoAlpha: 0, y: 100, duration: .6, ease: "power2.in" }, 3.2)
-            .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: 1.2 }, 2.7)
-            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .6 }, 3.1)
-            .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.1 }, 3.5)
-            .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 4.15)
-            .to("#mkh-n-kicker", { autoAlpha: 1, y: 0, duration: .45 }, 4.4)
-            .to(rows, { autoAlpha: 1, x: 0, duration: .55, stagger: .12 }, 4.5)
-            .to("#mkh-n-badge", { autoAlpha: 1, y: 0, duration: .5 }, 4.7)
-            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .6 }, 5.2)
-            .to("#mkh-n-dot", { scale: 1, duration: .45, ease: "back.out(3)" }, 5.6)
-            .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .5 }, 5.8)
-            .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .5 }, 6)
-            .to(".mkh-u--old", { autoAlpha: 0, duration: .3 }, 5.9)
-            .to(".mkh-u--new", { autoAlpha: 1, duration: .4 }, 6.05)
-            .to(".mkh-lab--a", { autoAlpha: 0, y: -8, duration: .3 }, 5.9)
-            .to(".mkh-lab--b", { autoAlpha: 1, y: 0, duration: .4 }, 6.1)
-            .to({}, { duration: .9 }, 6.7);
+          // --- escritorio: 0-30% la plantilla se rompe, 30-45% barrido, 45-100% se monta la nueva ---
+          tl.to(navs, { y: 24, rotation: 4, autoAlpha: 0, duration: .9, ease: "power2.in", stagger: .07 }, .1)
+            .to("#mkh-o-wa", { x: 90, y: -46, rotation: 30, autoAlpha: 0, duration: .8, ease: "back.in(2)" }, .9)
+            .to(cards, { x: function (i) { return (i - 1) * 16; }, rotation: function () { return gsap.utils.random(-5, 5); }, duration: .5, stagger: .08 }, 1)
+            .to("#mkh-o-cookie", { y: 70, autoAlpha: 0, duration: .6, ease: "power2.in" }, 1.3)
+            .to(cards, {
+              y: 260, autoAlpha: 0, duration: .9, ease: "power2.in",
+              rotation: function () { return gsap.utils.random(-14, 14); },
+              stagger: { each: .1, from: "end" }
+            }, 1.5)
+            .to("#mkh-o-map", { transformOrigin: "50% 0%", scaleY: .02, autoAlpha: 0, duration: .8, ease: "power2.in" }, 2)
+            .to("#mkh-o-dots", { autoAlpha: 0, duration: .4 }, 2.15)
+            .to("#mkh-o-wall", { autoAlpha: 0, y: -18, duration: .6 }, 2.4)
+            .to("#mkh-o-hero", { yPercent: -14, autoAlpha: 0, duration: .8, ease: "power2.in" }, 2.6)
+            .to("#mkh-o-foot", { y: 90, autoAlpha: 0, duration: .7, ease: "power2.in" }, 2.9)
+            .to("#mkh-o-top", { y: -52, autoAlpha: 0, duration: .6, ease: "power2.in" }, 3.05)
+            .to("#mkh-sweep", { autoAlpha: 1, duration: .25 }, 3.3)
+            .to("#mkh-sweep", { xPercent: 820, duration: 1.35, ease: "power1.inOut" }, 3.35)
+            .to("#mkh-new", { clipPath: "polygon(0% 0%, 145% 0%, 100% 100%, 0% 100%)", duration: 1.3, ease: "power1.inOut" }, 3.4)
+            .to("#mkh-n-photo", { autoAlpha: 1, scale: 1, duration: 1.1 }, 4.2)
+            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .6 }, 4.5)
+            .to("#mkh-sweep", { autoAlpha: 0, duration: .3 }, 4.55)
+            .to("#mkh-old", { autoAlpha: 0, duration: .3 }, 4.6)
+            .to("#mkh-n-over", { autoAlpha: 1, y: 0, duration: .7 }, 4.9)
+            .to("#mkh-n-social", { autoAlpha: 1, y: 0, duration: .6 }, 5.4)
+            .to("#mkh-n-kicker", { autoAlpha: 1, y: 0, duration: .45 }, 5.9)
+            .to(rows, { autoAlpha: 1, x: 0, duration: .5, stagger: .13 }, 6.05)
+            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .6 }, 6.5)
+            .to(quotes, { autoAlpha: 1, y: 0, duration: .5, stagger: .14 }, 6.9)
+            .to("#mkh-n-dot", { scale: 1, duration: .45, ease: "back.out(3)" }, 7.05)
+            .to("#mkh-n-bar", { autoAlpha: 1, y: 0, duration: .55 }, 7.4)
+            .to(".mkh-u--old", { autoAlpha: 0, duration: .3 }, 7.8)
+            .to(".mkh-lab--a", { autoAlpha: 0, y: -8, duration: .3 }, 7.8)
+            .to(".mkh-u--new", { autoAlpha: 1, duration: .4 }, 7.95)
+            .to(".mkh-lab--b", { autoAlpha: 1, y: 0, duration: .4 }, 8)
+            .to("#mkh-ul", { scaleX: 1, duration: .6 }, 8.1)
+            .to({}, { duration: 1.2 }, 8.8);
         } else {
-          // --- narrow: same story, fewer beats ---
-          tl.to("#mkh-o-banner", { transformOrigin: "0% 100%", rotation: -10, yPercent: -170, autoAlpha: 0, duration: .8, ease: "power2.in" }, 0)
-            .to("#mkh-o-leds", { opacity: .12, duration: .07, repeat: 5, yoyo: true }, .3)
-            .to("#mkh-o-leds", { autoAlpha: 0, scale: .82, duration: .4 }, .85)
-            .to(["#mkh-o-uc", "#mkh-o-nav", "#mkh-o-badges"], { autoAlpha: 0, y: 90, duration: .7, stagger: .1, ease: "power2.in" }, .55)
-            .to(cells, { borderColor: "#237A77", backgroundColor: "#EDEAE1", duration: .3, stagger: .05 }, 1.05)
-            .to(cells, {
-              y: 260, autoAlpha: 0, duration: .8, ease: "power2.in",
-              rotation: function () { return gsap.utils.random(-9, 9); },
-              stagger: { each: .07, from: "end" }
-            }, 1.4)
-            .to(["#mkh-o-title", "#mkh-o-sub", "#mkh-o-btns", "#mkh-o-foot"], { autoAlpha: 0, y: -16, duration: .55, stagger: .06 }, 2.1)
-            .to("#mkh-viewport", { backgroundColor: "#F9F6EF", duration: .9 }, 1.95)
-            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .55 }, 2.35)
-            .to("#mkh-n-photo", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", duration: .95 }, 2.75)
-            .to("#mkh-old", { autoAlpha: 0, duration: .25 }, 2.95)
-            .to(["#mkh-n-kicker", "#mkh-n-badge"], { autoAlpha: 1, y: 0, duration: .45, stagger: .1 }, 3.4)
-            .to(rows, { autoAlpha: 1, x: 0, duration: .45, stagger: .09 }, 3.55)
-            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .5 }, 4)
-            .to("#mkh-n-dot", { scale: 1, duration: .4, ease: "back.out(3)" }, 4.3)
-            .to("#mkh-n-cta", { autoAlpha: 1, y: 0, scale: 1, duration: .45 }, 4.4)
-            .to("#mkh-n-foot", { autoAlpha: 1, y: 0, duration: .45 }, 4.6)
-            .to([".mkh-u--old", ".mkh-lab--a"], { autoAlpha: 0, duration: .3 }, 4.6)
-            .to([".mkh-u--new", ".mkh-lab--b"], { autoAlpha: 1, y: 0, duration: .4 }, 4.8)
-            .to({}, { duration: .8 }, 5.4);
+          // --- movil: el mismo relato con menos golpes ---
+          tl.to(navs, { y: 20, autoAlpha: 0, duration: .8, ease: "power2.in", stagger: .05 }, .1)
+            .to("#mkh-o-wa", { x: 70, y: -34, autoAlpha: 0, duration: .7, ease: "back.in(2)" }, .9)
+            .to("#mkh-o-cookie", { y: 60, autoAlpha: 0, duration: .5, ease: "power2.in" }, 1.3)
+            .to(cards, {
+              y: 210, autoAlpha: 0, duration: .9, ease: "power2.in",
+              rotation: function () { return gsap.utils.random(-10, 10); },
+              stagger: { each: .09, from: "end" }
+            }, 1.5)
+            .to("#mkh-o-map", { transformOrigin: "50% 0%", scaleY: .02, autoAlpha: 0, duration: .7, ease: "power2.in" }, 2)
+            .to(["#mkh-o-wall", "#mkh-o-dots"], { autoAlpha: 0, duration: .5 }, 2.3)
+            .to("#mkh-o-hero", { yPercent: -12, autoAlpha: 0, duration: .8, ease: "power2.in" }, 2.6)
+            .to(["#mkh-o-foot", "#mkh-o-top"], { autoAlpha: 0, y: 40, duration: .6, ease: "power2.in" }, 2.95)
+            .to("#mkh-sweep", { autoAlpha: 1, duration: .25 }, 3.3)
+            .to("#mkh-sweep", { xPercent: 820, duration: 1.3, ease: "power1.inOut" }, 3.35)
+            .to("#mkh-new", { clipPath: "polygon(0% 0%, 145% 0%, 100% 100%, 0% 100%)", duration: 1.25, ease: "power1.inOut" }, 3.4)
+            .to("#mkh-n-photo", { autoAlpha: 1, scale: 1, duration: 1 }, 4.2)
+            .to("#mkh-n-head", { autoAlpha: 1, y: 0, duration: .55 }, 4.5)
+            .to("#mkh-sweep", { autoAlpha: 0, duration: .3 }, 4.55)
+            .to("#mkh-old", { autoAlpha: 0, duration: .3 }, 4.6)
+            .to("#mkh-n-over", { autoAlpha: 1, y: 0, duration: .6 }, 4.9)
+            .to("#mkh-n-social", { autoAlpha: 1, y: 0, duration: .5 }, 5.4)
+            .to("#mkh-n-kicker", { autoAlpha: 1, y: 0, duration: .45 }, 5.9)
+            .to(rows, { autoAlpha: 1, x: 0, duration: .45, stagger: .1 }, 6.05)
+            .to(quotes, { autoAlpha: 1, y: 0, duration: .45, stagger: .1 }, 6.6)
+            .to("#mkh-n-side", { autoAlpha: 1, y: 0, duration: .55 }, 6.85)
+            .to("#mkh-n-dot", { scale: 1, duration: .4, ease: "back.out(3)" }, 7.2)
+            .to("#mkh-n-bar", { autoAlpha: 1, y: 0, duration: .5 }, 7.5)
+            .to([".mkh-u--old", ".mkh-lab--a"], { autoAlpha: 0, duration: .3 }, 7.85)
+            .to([".mkh-u--new", ".mkh-lab--b"], { autoAlpha: 1, y: 0, duration: .4 }, 8)
+            .to("#mkh-ul", { scaleX: 1, duration: .5 }, 8.1)
+            .to({}, { duration: 1.2 }, 8.8);
         }
 
         function cancelReplay() { if (replayTween) { replayTween.kill(); replayTween = null; } }
@@ -1698,7 +1980,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============ PIEZA 2 - los tres pasos contados ============ */
   (function () {
-    if (RM || !GS) { return; }
+    /* el scrub lo gobierna el visitante: la escena se mantiene con reduced-motion */
+    if (!GS) { return; }
   var root = document.documentElement;
 
     var stage = document.getElementById("mkpStage");
@@ -1733,7 +2016,7 @@ document.addEventListener("DOMContentLoaded", function () {
       defaults: { ease: "none" },
       scrollTrigger: {
         trigger: stage,
-        start: "top top",
+        start: "top 64px",
         end: "bottom bottom",
         scrub: 0.6,
         onUpdate: function (self) {
@@ -1768,8 +2051,15 @@ document.addEventListener("DOMContentLoaded", function () {
       .to("#mkpUrlDraft", { autoAlpha: 0, duration: 1 }, 25.2)
       .to("#mkpUrlLive", { autoAlpha: 1, duration: 1 }, 25.6)
       .to("#mkpLock", { autoAlpha: 1, scale: 1, duration: 1, ease: "back.out(2.5)" }, 25.8)
+      /* cuarto golpe: la URL en vivo se enciende con un destello ambar que se apaga */
+      .fromTo(".mkp-url", { boxShadow: "0 0 0 0 rgba(242,177,52,0)" },
+        { boxShadow: "0 0 0 4px rgba(242,177,52,.55)", duration: .8, ease: "power2.out" }, 25.6)
+      .to(".mkp-url", { boxShadow: "0 0 0 0 rgba(242,177,52,0)", duration: 1.8, ease: "power2.in" }, 26.4)
       .to("#mkpLive", { autoAlpha: 1, scale: 1, duration: 1.2, ease: "back.out(2)" }, 26.4)
-      .to({}, { duration: 3 }, 27.6);
+      /* y el sello 'live' late una vez (un solo latido, sin bucle) */
+      .to("#mkpLive", { scale: 1.14, duration: .5, ease: "sine.inOut" }, 27.8)
+      .to("#mkpLive", { scale: 1, duration: .7, ease: "sine.inOut" }, 28.3)
+      .to({}, { duration: 2.4 }, 29);
 
   })();
 
@@ -1876,13 +2166,13 @@ document.addEventListener("DOMContentLoaded", function () {
         return { open: true, chip: "Open now", full: "<b>Open now</b> &middot; closes at 20:00." };
       }
       if (d !== SHUT_DAY && m < OPEN) {
-        return { open: false, chip: "Opens at 10:00", full: "<b>Closed</b> &middot; opens today at 10:00." };
+        return { open: false, chip: "Opens 10:00", full: "<b>Closed</b> &middot; opens today at 10:00." };
       }
       var k = 1;
       while (k < 8 && (d + k) % 7 === SHUT_DAY) { k++; }
       var nd = (d + k) % 7;
       var when = k === 1 ? "tomorrow" : "on " + DAYS[nd];
-      return { open: false, chip: "Opens " + (k === 1 ? "tomorrow" : DAYS[nd].slice(0, 3)) + " 10:00", full: "<b>Closed</b> &middot; opens " + when + " at 10:00." };
+      return { open: false, chip: "Opens " + DAYS[nd].slice(0, 3) + " 10:00", full: "<b>Closed</b> &middot; opens " + when + " at 10:00." };
     }
 
     function paint() {
@@ -1936,6 +2226,135 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", function (ev) {
       if (ev.key === "Escape" && chat && chat.classList.contains("is-open")) { closeChat(true); }
     });
+
+    /* ---------- reloj de la barra de estado ---------- */
+    var clock = document.getElementById("mkmClock");
+    function tick() {
+      if (!clock) { return; }
+      var n = new Date();
+      clock.textContent = n.getHours() + ":" + ("0" + n.getMinutes()).slice(-2);
+    }
+    tick();
+    setInterval(tick, 20000);
+
+    /* ---------- franja de fotos: los puntitos siguen al scroll ---------- */
+    var shots = document.getElementById("mkmShots");
+    var sdots = document.getElementById("mkmSdots");
+    if (shots && sdots) {
+      shots.setAttribute("tabindex", "0");
+      var figs = Array.prototype.slice.call(shots.querySelectorAll(".mkm-shot"));
+      var dots = Array.prototype.slice.call(sdots.querySelectorAll("i"));
+      var sraf = 0;
+      var paintDots = function () {
+        var mid = shots.scrollLeft + shots.clientWidth / 2;
+        var best = 0, bd = Infinity;
+        figs.forEach(function (f, i) {
+          var d = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid);
+          if (d < bd) { bd = d; best = i; }
+        });
+        dots.forEach(function (d, k) { d.classList.toggle("is-on", k === best); });
+      };
+      shots.addEventListener("scroll", function () {
+        if (sraf) { return; }
+        sraf = requestAnimationFrame(function () { sraf = 0; paintDots(); });
+      });
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(paintDots, { root: shots, threshold: [.55, .9] });
+        figs.forEach(function (f) { io.observe(f); });
+      }
+    }
+
+    /* ---------- hoja inferior con el detalle de un servicio ---------- */
+    var sheet = document.getElementById("mkmSheet");
+    var sheetCard = document.getElementById("mkmSheetCard");
+    var scrim = document.getElementById("mkmScrim");
+    var grab = document.getElementById("mkmGrab");
+    var book = document.getElementById("mkmBook");
+    var sName = document.getElementById("mkmSheetName");
+    var sDesc = document.getElementById("mkmSheetDesc");
+    var sDur = document.getElementById("mkmSheetDur");
+    var sPrice = document.getElementById("mkmSheetPrice");
+    var sNote = document.getElementById("mkmSheetNote");
+    var rows = Array.prototype.slice.call(document.querySelectorAll("#mkmPanel-serv [data-svc]"));
+    var sheetFrom = null, sheetTimer = null, bookTimer = null;
+    var BOOK_LABEL = book ? book.textContent : "";
+
+    function sheetIsOpen() { return !!sheet && sheet.classList.contains("is-open"); }
+
+    function svcName(row) {
+      var s = row.querySelector("span");
+      if (!s) { return "Service"; }
+      var n = s.firstChild;
+      return ((n && n.nodeType === 3 ? n.nodeValue : s.textContent) || "").trim();
+    }
+
+    function openSheet(row) {
+      if (!sheet) { return; }
+      if (chatIsOpen()) { closeChat(false); }
+      sheetFrom = row;
+      sName.textContent = svcName(row);
+      sDesc.textContent = row.getAttribute("data-desc") || "";
+      sDur.textContent = row.getAttribute("data-dur") || "";
+      sPrice.textContent = row.getAttribute("data-price") || "";
+      if (bookTimer) { clearTimeout(bookTimer); bookTimer = null; }
+      if (book) { book.disabled = false; book.textContent = BOOK_LABEL; }
+      if (sNote) { sNote.innerHTML = "Nothing is booked here"; }
+      if (sheetTimer) { clearTimeout(sheetTimer); sheetTimer = null; }
+      sheet.hidden = false;
+      void sheet.offsetWidth;
+      sheet.classList.add("is-open");
+      rows.forEach(function (r) { r.setAttribute("aria-expanded", r === row ? "true" : "false"); });
+      if (book) { book.focus(); }
+    }
+
+    function closeSheet(returnFocus) {
+      if (!sheet || !sheetIsOpen()) { return; }
+      sheet.classList.remove("is-open");
+      rows.forEach(function (r) { r.setAttribute("aria-expanded", "false"); });
+      if (sheetTimer) { clearTimeout(sheetTimer); }
+      sheetTimer = setTimeout(function () { if (!sheetIsOpen()) { sheet.hidden = true; } }, reduce ? 0 : 300);
+      if (returnFocus !== false && sheetFrom) { try { sheetFrom.focus(); } catch (e) {} }
+    }
+
+    rows.forEach(function (row) {
+      row.classList.add("is-tap");
+      row.setAttribute("role", "button");
+      row.setAttribute("tabindex", "0");
+      row.setAttribute("aria-haspopup", "dialog");
+      row.setAttribute("aria-expanded", "false");
+      row.addEventListener("click", function () { openSheet(row); });
+      row.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " " || ev.key === "Spacebar") { ev.preventDefault(); openSheet(row); }
+      });
+    });
+
+    if (scrim) { scrim.addEventListener("click", function () { closeSheet(true); }); }
+    if (grab) { grab.addEventListener("click", function () { closeSheet(true); }); }
+    if (book) {
+      book.addEventListener("click", function () {
+        book.disabled = true;
+        book.innerHTML = "Demo &middot; nothing is sent";
+        bookTimer = setTimeout(function () { closeSheet(true); }, 950);
+      });
+    }
+    if (sheetCard) {
+      sheetCard.addEventListener("keydown", function (ev) {
+        if (ev.key !== "Tab") { return; }
+        var f = [grab, book].filter(function (b) { return b && !b.disabled; });
+        if (!f.length) { return; }
+        ev.preventDefault();
+        var i = f.indexOf(document.activeElement);
+        var n = ev.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 || i === -1 ? 0 : i + 1);
+        f[n].focus();
+      });
+    }
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && sheetIsOpen()) { ev.stopPropagation(); closeSheet(true); }
+    });
+    /* cambiar de pestana o abrir el chat cierra la hoja */
+    tablist.addEventListener("click", function () { closeSheet(false); });
+    tablist.addEventListener("keydown", function () { closeSheet(false); });
+    if (wa) { wa.addEventListener("click", function () { closeSheet(false); }); }
   })();
   })();
 
@@ -1953,7 +2372,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var NAME = "mkd-demo";
     var BASE = 1440;   /* el ancho "de escritorio" que se renderiza y luego se escala */
-    var PHONE = 390;
+    var PHONE = 390;   /* el ancho logico "de telefono" que se renderiza y luego se escala */
+    var RATIO = 19.5 / 9;   /* proporcion real de un telefono: el visor ya no lo achata */
+    var STATUS = 38;        /* alto de la barra de estado dibujada dentro de la pantalla */
 
     var stage = document.getElementById("mkdStage");
     var device = document.getElementById("mkdDevice");
@@ -2025,21 +2446,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (bare) {                                   /* movil: a sangre, sin marco ni escalado */
         device.style.width = "100%";
+        device.style.height = "";
         screenBox.style.width = "100%";
         screenBox.style.height = Math.round(availH) + "px";
         if (ifr) { ifr.style.width = "calc(100% + " + sbw() + "px)"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
         return;
       }
 
+      /* telefono: manda la proporcion 9/19.5. El alto disponible da el tamano y el
+         iframe se sigue pintando a 390 px logicos, reducido con scale(). */
       if (m === "phone") {
-        device.style.width = (PHONE + 20) + "px";
-        screenBox.style.width = PHONE + "px";
-        screenBox.style.height = Math.round(availH - 20 - 24) + "px";
-        if (ifr) { ifr.style.width = (PHONE + sbw()) + "px"; ifr.style.height = "100%"; ifr.style.transform = "none"; }
+        var ph = Math.round(Math.min(availH, PHONE * RATIO));
+        var pw = Math.round(ph / RATIO);
+        var pbW = pw - 20, pbH = ph - 20;
+        var ps = pbW / PHONE;
+        var innerH = Math.max(140, pbH - STATUS);
+        device.style.width = pw + "px";
+        device.style.height = ph + "px";
+        screenBox.style.width = pbW + "px";
+        screenBox.style.height = pbH + "px";
+        if (ifr) {
+          ifr.style.width = (PHONE + sbw()) + "px";
+          ifr.style.height = Math.round(innerH / ps) + "px";
+          ifr.style.transformOrigin = "0 0";
+          ifr.style.transform = "scale(" + ps.toFixed(5) + ")";
+        }
         return;
       }
 
       /* escritorio: iframe ancho de verdad, reducido con scale() */
+      device.style.height = "";
       var devW = Math.min(availW, 1260);
       var boxW = devW - 20;
       var boxH = Math.round(availH - 20 - 34);
@@ -2073,6 +2509,8 @@ document.addEventListener("DOMContentLoaded", function () {
       newTab.href = href;
       newTab.setAttribute("aria-label", "Open the " + name + " demo in a new tab");
       noteEl.textContent = name + " is an invented business. The page is real: built with the engine we use for client sites.";
+      var dc = document.getElementById("mkdClock");
+      if (dc) { var nn = new Date(); dc.textContent = nn.getHours() + ":" + ("0" + nn.getMinutes()).slice(-2); }
       var f = ensureFrame();
       f.title = card.getAttribute("data-frame-title");
       if (f.getAttribute("src") !== href) f.setAttribute("src", href);
@@ -2157,28 +2595,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============ PAGINA - entradas de seccion, cifras y bento ============ */
   (function () {
-    if (RM || !GS) { return; }
+    /* sin condicion de reduced-motion a proposito: todo lo de aqui lo dispara o lo gobierna
+       el scroll, y con reduce la pagina no puede quedarse muerta. Lo unico autonomo de la
+       pagina (la franja de sectores del cierre) es CSS y lo apaga la regla global. */
+    if (!GS) { return; }
+    document.documentElement.classList.add("mk-anim");
+    var SOFT = "power3.out";
 
-    /* entradas discretas de cabecera de seccion: un desplazamiento corto, no un fundido general.
+    /* red de seguridad para el teclado: si el foco entra en algo a medio revelar, se revela ya.
+       Mira el estilo EN LINEA, que es lo unico que escribe GSAP.
        opacity y NO autoAlpha: autoAlpha pone visibility:hidden y eso saca de la secuencia de
        tabulacion todo lo que haya dentro (medido: con Tab se saltaban los botones de #price). */
-    gsap.utils.toArray("[data-reveal]").forEach(function (el) {
-      gsap.from(el, { y: 20, opacity: 0, duration: .5, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
-    });
-
-    /* red de seguridad para el teclado: si el foco entra en algo todavia sin revelar, se revela ya */
     document.addEventListener("focusin", function (ev) {
       for (var n = ev.target; n && n !== document.body; n = n.parentElement) {
-        if (n.hasAttribute && (n.hasAttribute("data-reveal") || n.classList.contains("stat") || n.parentElement === document.getElementById("getGrid"))) {
-          if (+getComputedStyle(n).opacity < 1) { gsap.set(n, { opacity: 1, y: 0, scale: 1, clearProps: "visibility" }); }
+        if (!n.style) { continue; }
+        if (n.style.clipPath) { gsap.set(n, { clearProps: "clipPath" }); }
+        if (n.style.opacity !== "" && +n.style.opacity < 1) {
+          gsap.set(n, { opacity: 1, y: 0, scale: 1, rotateX: 0, clearProps: "visibility" });
         }
       }
     });
 
-    /* las cifras cuentan sobre el teal pleno y suben en cascada */
+    /* entradas discretas de cabecera de seccion: un desplazamiento corto, no un fundido general */
+    gsap.utils.toArray("[data-reveal]").forEach(function (el) {
+      if (el.classList.contains("who-photo-frame")) { return; }   /* ese tiene su propia entrada */
+      var late = el.closest("#who") ? .34 : 0;                    /* en #who el texto entra tras la foto */
+      gsap.from(el, { y: 20, opacity: 0, duration: .5, delay: late, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+    });
+
+    /* ---- #stats: las cifras cuentan y bajo cada una una barra ambar que llena el scroll ---- */
     var statRow = document.querySelector(".stat-row");
     if (statRow) {
-      gsap.from(statRow.children, { y: 40, opacity: 0, duration: .6, ease: "power3.out", stagger: .12, scrollTrigger: { trigger: statRow, start: "top 84%", once: true } });
+      gsap.from(statRow.children, { y: 40, opacity: 0, duration: .6, ease: SOFT, stagger: .12, scrollTrigger: { trigger: statRow, start: "top 84%", once: true } });
       gsap.utils.toArray(".stat b").forEach(function (b) {
         var target = parseInt(b.textContent, 10); if (!target) return;
         var o = { v: 0 };
@@ -2186,12 +2634,87 @@ document.addEventListener("DOMContentLoaded", function () {
           onUpdate: function () { b.textContent = Math.round(o.v) + "%"; },
           onComplete: function () { b.textContent = target + "%"; } });
       });
+      gsap.fromTo(".stat-bar i", { scaleX: 0 }, { scaleX: 1, ease: "none",
+        scrollTrigger: { trigger: statRow, start: "top 84%", end: "top 34%", scrub: .5 } });
     }
 
-    /* el bento se construye pieza a pieza, empezando por la tarjeta del movil */
+    /* ---- #get: el telefono entra desde abajo y se endereza; el bento se enciende por columnas ---- */
+    var phone = document.querySelector("#getGrid .mkm-stagewrap");
+    if (phone) {
+      gsap.fromTo(phone, { yPercent: 7, rotateX: 14 }, { yPercent: 0, rotateX: 0, ease: "none", transformOrigin: "50% 100%",
+        scrollTrigger: { trigger: phone, start: "top 96%", end: "top 42%", scrub: .6 } });
+    }
     var grid = document.getElementById("getGrid");
     if (grid) {
-      gsap.from(grid.children, { y: 38, opacity: 0, duration: .55, ease: "power3.out", stagger: { each: .07 }, scrollTrigger: { trigger: grid, start: "top 82%", once: true } });
+      gsap.from(grid.children, { y: 38, opacity: 0, duration: .55, ease: SOFT,
+        stagger: { each: .09, grid: "auto", axis: "x", from: "start" },
+        scrollTrigger: { trigger: grid, start: "top 82%", once: true } });
+    }
+
+    /* ---- #price: la cifra crece, el subrayado se dibuja y la tabla cae en cascada ---- */
+    var big = document.querySelector(".price .big");
+    if (big) {
+      gsap.from(big, { scale: .92, duration: .6, ease: SOFT, transformOrigin: "0% 100%",
+        scrollTrigger: { trigger: big, start: "top 88%", once: true } });
+      gsap.from(".price .big-u", { scaleX: 0, duration: .7, delay: .22, ease: "power2.inOut",
+        scrollTrigger: { trigger: big, start: "top 88%", once: true } });
+    }
+    var cmp = document.querySelector(".cmp table");
+    if (cmp) {
+      gsap.from(cmp.querySelectorAll("tr"), { y: 15, opacity: 0, duration: .42, ease: "power2.out", stagger: .07,
+        scrollTrigger: { trigger: cmp, start: "top 86%", once: true } });
+      var us = cmp.querySelector("tr.us");
+      if (us) {
+        gsap.fromTo(us.children, { backgroundColor: "rgba(242,177,52,.6)" },
+          { backgroundColor: "rgba(233,242,241,1)", duration: 1.1, delay: .55, ease: "power2.out",
+            scrollTrigger: { trigger: cmp, start: "top 86%", once: true },
+            onComplete: function () { gsap.set(us.children, { clearProps: "backgroundColor" }); } });
+      }
+    }
+
+    /* ---- #demos: las tarjetas se destapan de abajo arriba y el poster se asienta ---- */
+    var dcards = gsap.utils.toArray("#demos .mkd-grid > li");
+    if (dcards.length) {
+      gsap.fromTo(dcards, { clipPath: "inset(0% 0% 100% 0%)", y: 20 },
+        { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: .7, ease: SOFT, stagger: .12,
+          scrollTrigger: { trigger: "#demos .mkd-grid", start: "top 86%", once: true },
+          onComplete: function () { gsap.set(dcards, { clearProps: "clipPath" }); } });
+      gsap.utils.toArray("#demos .mkd-media img").forEach(function (im) {
+        gsap.fromTo(im, { scale: 1.045 }, { scale: 1, ease: "none",
+          scrollTrigger: { trigger: im, start: "top 98%", end: "top 42%", scrub: .5 } });
+      });
+    }
+
+    /* ---- #safe: cascada por fila y el numero se enciende al cruzar el 60% de la pantalla ---- */
+    var safeItems = gsap.utils.toArray("#safe .safe-grid li");
+    if (safeItems.length) {
+      gsap.from(safeItems, { y: 18, opacity: 0, duration: .45, ease: "power2.out", stagger: .06,
+        scrollTrigger: { trigger: "#safe .safe-grid", start: "top 88%", once: true } });
+      safeItems.forEach(function (li) {
+        ScrollTrigger.create({ trigger: li, start: "top 60%", once: true, onEnter: function () { li.classList.add("is-seen"); } });
+      });
+    }
+
+    /* ---- #who: el marco circular se abre ---- */
+    var frame = document.querySelector(".who-photo-frame");
+    if (frame) {
+      gsap.fromTo(frame, { clipPath: "circle(0% at 50% 50%)" },
+        { clipPath: "circle(50% at 50% 50%)", duration: .75, ease: "power2.out",
+          scrollTrigger: { trigger: "#who", start: "top 80%", once: true },
+          onComplete: function () { gsap.set(frame, { clearProps: "clipPath" }); } });
+    }
+
+    /* ---- la nav se asienta al pasar el hero ---- */
+    var nav = document.querySelector(".nav"), hero = document.getElementById("top");
+    if (nav && hero) {
+      ScrollTrigger.create({
+        /* onEnter/onLeaveBack y no onToggle: al tocar el final del documento el tramo deja
+           de estar "activo" y la nav perdia la sombra justo en el pie */
+        start: function () { return hero.offsetTop + hero.offsetHeight - 64; }, end: "max",
+        onEnter: function () { nav.classList.add("is-scrolled"); },
+        onEnterBack: function () { nav.classList.add("is-scrolled"); },
+        onLeaveBack: function () { nav.classList.remove("is-scrolled"); }
+      });
     }
   })();
 

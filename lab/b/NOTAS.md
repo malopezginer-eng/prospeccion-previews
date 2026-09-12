@@ -104,3 +104,42 @@ del `body` (17 px en vez de 16), que no cambia ningún texto**.
   prevista por la pieza, legible y completa, pero larga.
 - El repo tiene `lab/pieces/` y `lab/demos/` sin trackear (de las otras sesiones). **No se ha commiteado
   nada**: el brief acota el trabajo a `lab/b/` y el commit de todo el lote es del que coordina.
+
+# Tercera vuelta (2026-09-12) — las ocho peticiones de Miguel
+
+Encargo: `C:\dev\prospeccion\docs\plans\2026-09-12-web-tercera-vuelta.md`. Informes largos de cada pieza en el
+scratchpad de la sesión (`INFORME-hero.md`, `INFORME-telefono.md`, `INFORME-demos.md`, `INFORME-dinamismo.md`).
+
+## Diagnóstico de «no se anima en escritorio»
+
+El código funcionaba en un Chromium limpio a 1440×900. Dos causas reales: (1) el teatro empezaba a 727 px, bajo el
+pliegue; (2) **Miguel navega con `prefers-reduced-motion: reduce`** (Windows por RDP apaga los efectos de
+animación) y la página apagaba hero, pasos y entradas. Criterio nuevo: **el scrub ligado al scroll se mantiene con
+`reduce`** (lo gobierna el visitante); solo se paran las animaciones autónomas (loops, marquee, latidos).
+
+## Qué cambió
+
+- **Hero**: a ≥ 1100 px el stage sticky es una rejilla copia | navegador y el ScrollTrigger arranca a 1 px. «Antes»
+  = plantilla de constructor de hoy (menú de 6, hero de stock, tres tarjetas, mapa enorme, WhatsApp flotante,
+  cookies, «© 2019 · Powered by SiteBuilder Pro»); «después» = foto real a sangre, prueba social, tarifa de 5, dos
+  reseñas, mapa teal, horario, barra Call · WhatsApp · Directions; proporción fija con `cqw`. Coreografía: rotura →
+  barrido diagonal → montaje en orden de lectura → subrayado ámbar de la garantía. Trampa nueva: `gsap.matchMedia`
+  necesita declaradas las dos condiciones o el móvil se queda sin timeline.
+- **How it works**: sin condición `RM`; `start: "top 64px"`, rail 300vh; cuarto golpe (destello en la URL y un
+  latido del sello «live»).
+- **Teléfono `.mk-phone`** compartido por «Fast on a phone» y el visor: 9/19.5, isla dinámica, botones, barra de
+  estado con hora real. Visor en modo teléfono con proporción real (`h = min(availH, 390·19.5/9)`) e iframe escalado.
+  Dentro del móvil: hoja inferior por servicio, franja de fotos con snap, chat de WhatsApp.
+- **Dinamismo**: una entrada con significado por sección (barras en cifras, teléfono que se endereza, cifra y
+  subrayado del precio, tarjetas de demos con `clip-path`, cascada de razones, foto circular, FAQ animada, marquee de
+  sectores, nav `.is-scrolled`). Todo GSAP, 0 KB extra; 0 long tasks con CPU ×4 en móvil emulado; CLS 0,03.
+- **Demos**: `MAX_BLOCKS` 8 → 9 en el motor; barber, salon y pets ganan `about`/`faq`/`services`/`reviews` sin
+  perder `gallery`; JSON enriquecidos, reseñas sin autor, sin mapa (sin `address` a propósito); pósters regenerados.
+  Arreglo de `preview.css` para `.services-list .row` a 320 px.
+
+## Auditoría (Playwright, 2026-09-12)
+
+1440×900 / 1280×800 / 390×844: sin scroll horizontal (390 = 390), **14,87 pantallas de móvil**, 0 iframes en carga,
+0 imágenes rotas, 0 fallos de contraste AA (parseando `color(srgb)`), 0 frases prohibidas de OFERTA §6, 66 paradas
+de Tab; sin JS página completa (14,55 pantallas); con `reduce` hero y pasos siguen animando por scroll. Único 404:
+`assets/img/miguel.jpg` (la foto de Miguel, pendiente).
