@@ -143,3 +143,31 @@ animación) y la página apagaba hero, pasos y entradas. Criterio nuevo: **el sc
 0 imágenes rotas, 0 fallos de contraste AA (parseando `color(srgb)`), 0 frases prohibidas de OFERTA §6, 66 paradas
 de Tab; sin JS página completa (14,55 pantallas); con `reduce` hero y pasos siguen animando por scroll. Único 404:
 `assets/img/miguel.jpg` (la foto de Miguel, pendiente).
+
+# Cuarta vuelta (2026-09-12, noche) — feedback de Miguel sobre la tercera
+
+Encargo y copy pendiente: `C:\dev\prospeccion\docs\plans\2026-09-12-web-cuarta-vuelta-y-copy.md`. Informes:
+`INFORME-{hero,telefono,pasos,visor,offer}-v4.md` en el scratchpad de la sesión.
+
+- **Más lento**: hero 260 → 360vh (móvil 163 → 230svh), pasos 300 → 400vh (móvil 158 → 200vh), `scrub` .9,
+  entradas y staggers ×1,5, marquee 68 s.
+- **Hero con contraste**: «antes» con fondo gris frío, texto apelmazado, azul de plantilla, franja «SALE», popup de
+  newsletter, hero de stock desenfocado, segunda fila de tarjetas con iconos rotos, pie de 13 enlaces; «después» con
+  más aire y tipografía mayor; rótulos grandes; frío → cálido durante el barrido.
+- **Fast on a phone**: escritorio `clamp(304px, 39vh, 356px)`; en < 760 px escena sticky en la que el teléfono
+  crece hasta que su pantalla cubre el viewport (la pantalla nace con la proporción del viewport para que un solo
+  `scale` la cubra exacta) y los paneles reciben toques solo a pantalla completa (`html.mkm-full`).
+- **How it works**: «we open at 10» solo cambia la hora (Mon–Sun se mantiene); «make this bigger» rodea el titular
+  y este crece 2.2 → 3.1em; «use our photo» pasa de un placeholder «STOCK PHOTO» dibujado a la foto real con barrido;
+  un ✓ ámbar por respuesta.
+- **Visor de demos**: sin barra externa ni nota. Escritorio: ventana de macOS a `min(96vw, 1600px)`, el punto rojo
+  cierra, conmutador y «new tab» dentro de la barra, iframe a 1440 escalado al ancho. Teléfono: 87-91 % de la altura,
+  × flotante, píldora debajo; isla, botones y radios proporcionales (24 % / 3,3 % de la pantalla), que era la
+  diferencia NUC ↔ portátil. < 760 px a sangre con solo la ×.
+- **`/offer/`**: rediseñada con el mismo copy (1086 palabras, multiset idéntico): pasos en fila, tarjetas de altura
+  natural con el botón bajo el precio y toda la tarjeta clicable, secciones a dos columnas.
+
+**Pantallas de móvil: 16,42 a 390×844** (tope anterior 15). El exceso viene de los rails más largos que pidió Miguel
+(hero +0,67, pasos +0,38, escena del teléfono +0,49). Se deja así salvo que Miguel prefiera recortar.
+Auditoría: 1440×900 / 1280×800 / 390×844 sin scroll horizontal, 0 iframes en carga, 0 imágenes rotas, 0 fallos AA,
+0 frases prohibidas, sin JS completa, con `reduce` scrubs vivos, todas las entradas disparadas en scroll continuo.
