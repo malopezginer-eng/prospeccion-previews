@@ -25,7 +25,7 @@
 <link rel="preload" as="image" imagesrcset="https://images.pexels.com/photos/31577046/pexels-photo-31577046.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/31577046/pexels-photo-31577046.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/31577046/pexels-photo-31577046.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/31577046/pexels-photo-31577046.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/31577046/pexels-photo-31577046.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" imagesizes="100vw" fetchpriority="high">
 <style>
 :root {
-  --ink: #F2E9D9; --paper: #16120D; --tint: #241E15; --brand: #7A5C2E; --accent: #B08A3E; --on-brand: #ffffff;
+  --ink: #F2E9D9; --paper: #16120D; --tint: #241E15; --brand: #7A5C2E; --accent: #B08A3E; --on-brand: #ffffff; --on-accent: #111111;
   --radius: 8px; --display: "Antonio", Georgia, serif; --body: "Public Sans", system-ui, sans-serif; --display-weight: 700;
   --muted: color-mix(in srgb, var(--ink) 64%, var(--paper));
   --line: color-mix(in srgb, var(--ink) 13%, var(--paper));
@@ -64,6 +64,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .proposal a:hover { text-decoration: underline; }
 @media (max-width: 760px) { .proposal { flex-wrap: nowrap; padding: 8px 14px; font-size: 12px; } .proposal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } }
+@media (max-width: 760px) { .proposal .sig { display: none; } }   /* 12/09: en movil manda la frase, no la firma */
+@media (max-width: 520px) { .proposal span { white-space: normal; } .proposal a { flex: none; } }   /* 12/09: la frase entera en dos lineas antes que cortar el nombre */
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
@@ -73,6 +75,16 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .nav ul a { text-decoration: none; font-size: 14px; font-weight: 600; color: var(--muted); }
 .nav ul a:hover { color: var(--ink); }
 @media (max-width: 820px) { .nav ul { display: none; } }
+/* en pantallas estrechas el nombre largo y el boton no caben en una linea y empujaban
+   la pagina hacia la derecha (scroll horizontal): aqui se les deja encoger */
+.nav .wrap > * { min-width: 0; }
+@media (max-width: 760px) {
+  .nav .wrap { gap: 12px; }
+  .brandmark { white-space: normal; font-size: 18px; line-height: 1.12; overflow-wrap: anywhere; }
+  .nav .btn { padding: 12px 14px; font-size: 14px; }
+}
+/* por debajo de 520px no caben nombre y boton: el hero ya trae su propia llamada justo debajo */
+@media (max-width: 520px) { .nav .btn { display: none; } }
 
 /* ---------- botones ---------- */
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease; white-space: nowrap; }
@@ -134,7 +146,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 [data-hero="block"] .hero-media { aspect-ratio: 4 / 3; border-radius: var(--radius) var(--radius) 0 0; }
 [data-hero="block"] .hero .lead { color: color-mix(in srgb, var(--on-brand) 78%, transparent); }
 [data-hero="block"] .eyebrow, [data-hero="block"] .hl { color: var(--accent); }
-[data-hero="block"] .btn-brand { background: var(--accent); color: #111; }
+[data-hero="block"] .btn-brand { background: var(--accent); color: var(--on-accent); }
 [data-hero="block"] .btn-ghost { color: inherit; }
 @media (max-width: 860px) {
   [data-hero="block"] .hero-body { grid-template-columns: 1fr; }
@@ -181,7 +193,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .services-head .lead { margin-top: 16px; }
 .services-list { list-style: none; margin: 0; padding: 0; counter-reset: svc; }
 .services-list li { counter-increment: svc; }
-.services-list .row { display: flex; align-items: baseline; gap: 14px; }
+.services-list .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.services-list .row h3 { min-width: 0; overflow-wrap: break-word; }
 .services-list .leader { flex: 1; border-bottom: 2px dotted color-mix(in srgb, var(--ink) 30%, transparent); transform: translateY(-6px); min-width: 24px; }
 .services-list .price { white-space: nowrap; }
 .services-list p { color: var(--muted); margin: 6px 0 0; font-size: 16px; max-width: 54ch; }
@@ -305,7 +318,7 @@ address a { text-decoration: none; font-weight: 600; }
 .cta .wrap { display: grid; grid-template-columns: 1.4fr .6fr; gap: 32px; align-items: end; }
 .cta h2 { font-size: clamp(38px, 6vw, 84px); max-width: 14ch; }
 .cta .actions { justify-content: flex-end; }
-.cta .btn-brand { background: var(--accent); color: #111; }
+.cta .btn-brand { background: var(--accent); color: var(--on-accent); }
 .cta .btn-ghost { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, transparent); }
 [data-hero="full"] .cta { background: var(--brand); color: var(--on-brand); }
 [data-hero="full"] .cta .btn-ghost { color: inherit; }
@@ -324,6 +337,9 @@ footer a { color: inherit; }
 .mobile-bar a { flex: 1; text-align: center; justify-content: center; padding: 13px 10px; font-size: 15px; }
 .mobile-bar.js:not(.show) { transform: translateY(110%); }
 @media (max-width: 760px) { .mobile-bar { display: flex; } }
+/* pasada final 12/09: la barra usa el fondo del papel, no el del hero, asi que sus botones fantasma van en tinta (antes heredaban el blanco de [data-hero="full"] y desaparecian en paletas claras) */
+[data-hero="full"] .mobile-bar .btn-ghost { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 38%, transparent); }
+[data-hero="full"] .mobile-bar .btn-ghost:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* ---------- detalles por familia (uno por familia, no mas) ---------- */
 /* dental: arco fino bajo el titular */
@@ -489,7 +505,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 @media (max-width: 760px) { [data-hero="full"] .hero { min-height: min(70vh, 640px); } [data-hero="full"] .hero-body { padding-top: 96px; } section { padding: clamp(44px, 8vw, 64px) 0; } }
 /* --- S4: logo real del negocio en la nav */
 .brandmark img.logo { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
-@media (max-width: 760px) { .brandmark img.logo { height: 32px; max-width: 140px; } }
+@media (max-width: 760px) { .brandmark img.logo { height: 40px; max-width: 170px; } }   /* 12/09: a 32 px la marca no se leia */
 /* --- S4: bloque de cierre de MNKY (tokens propios: no es un bloque del negocio) */
 .mnky { background: #F9F6EF; color: #1b1b1f; border-top: 6px solid #237A77; font-family: "Bricolage Grotesque", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
 .mnky .wrap { max-width: 860px; }
@@ -510,11 +526,11 @@ footer .identity { font-size: 13px; margin: 0; }
 </style>
 </head>
 <body>
-<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · A website proposal for Autocutt Barbershop — ready to go live when you say so.</span><a href="https://previews.mnkykonnekt.com/offer/?ref=autocutt-barbershop">See how ›</a></div>
+<div class="proposal"><span>I built this website for Autocutt Barbershop. Have a look and decide.<span class="sig"> · <strong>Miguel Ángel López · MNKY KONNEKT</strong></span></span><a href="https://previews.mnkykonnekt.com/offer/?ref=autocutt-barbershop">What happens next ›</a></div>
 <nav class="nav">
   <div class="wrap">
     <a class="brandmark" href="#top"><img class="logo" src="assets/logo.jpg" alt="Autocutt Barbershop"></a>
-    <ul><li><a href="#locations">Locations</a></li><li><a href="#team">Team</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#services">Services</a></li><li><a href="#prices">Prices</a></li></ul>
+    <ul><li><a href="#services">Services</a></li><li><a href="#prices">Prices</a></li><li><a href="#team">Team</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#about">About</a></li></ul>
     <a class="btn btn-brand btn-sm" href="https://autocutt1.simplybook.asia/v2/">Book on WhatsApp</a>
   </div>
 </nav>
@@ -538,11 +554,12 @@ footer .identity { font-size: 13px; margin: 0; }
 
 <section class="cred"><ul class="wrap"><li><b class="small">Singapore-registered since 2016</b></li><li><b class="small">Two locations: Yio Chu Kang &amp; Joo Chiat</b></li><li><b class="small">In-house O&#x27;Boy pomade line</b></li></ul></section>
 <div class="marquee" aria-label="Specialties"><div class="marquee-track"><div class="marquee-copy"><span>Hair tattoo designs</span><span class="sep">✂</span><span>Hot towel shave with Original fragrance cologne</span><span class="sep">✂</span><span>In-house O&#x27;Boy pomade and grooming products</span><span class="sep">✂</span><span>Vintage, old-school barbershop setup</span><span class="sep">✂</span></div><div class="marquee-copy" aria-hidden="true"><span>Hair tattoo designs</span><span class="sep">✂</span><span>Hot towel shave with Original fragrance cologne</span><span class="sep">✂</span><span>In-house O&#x27;Boy pomade and grooming products</span><span class="sep">✂</span><span>Vintage, old-school barbershop setup</span><span class="sep">✂</span></div></div></div>
-<section class="locations" id="locations"><div class="wrap"><h2 data-reveal>Two shops</h2><div class="locations-grid" data-reveal-group><article><h3>Serangoon Branch (Yio Chu Kang Road)</h3><address><div>68 Yio Chu Kang Road, Singapore 545569</div></address><table class="hours" data-hours="[[&quot;Monday \u2013 Friday&quot;, &quot;10:00 \u2013 20:00&quot;], [&quot;Saturday \u2013 Sunday&quot;, &quot;10:00 \u2013 18:00&quot;]]"><tr><td>Monday – Friday</td><td>10:00 – 20:00</td></tr><tr><td>Saturday – Sunday</td><td>10:00 – 18:00</td></tr></table><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Autocutt+Barbershop+68+Yio+Chu+Kang+Road%2C+Singapore+545569" target="_blank" rel="noopener">Open in Google Maps</a></article><article><h3>Autocutt Boardroom (Joo Chiat Branch)</h3><address><div>55 Joo Chiat Pl, Singapore 427779</div></address><table class="hours" data-hours="[[&quot;Monday \u2013 Friday&quot;, &quot;10:00 \u2013 20:00&quot;], [&quot;Saturday \u2013 Sunday&quot;, &quot;10:00 \u2013 18:00&quot;]]"><tr><td>Monday – Friday</td><td>10:00 – 20:00</td></tr><tr><td>Saturday – Sunday</td><td>10:00 – 18:00</td></tr></table><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Autocutt+Barbershop+55+Joo+Chiat+Pl%2C+Singapore+427779" target="_blank" rel="noopener">Open in Google Maps</a></article></div></div></section>
-<section class="team" id="team"><div class="wrap"><h2 data-reveal>The team</h2><ul class="team-grid" data-reveal-group><li><span class="avatar" aria-hidden="true">C</span><h3>Chris Seow</h3></li><li><span class="avatar" aria-hidden="true">A</span><h3>Aaron</h3></li><li><span class="avatar" aria-hidden="true">R</span><h3>Roger</h3></li><li><span class="avatar" aria-hidden="true">J</span><h3>Jamie</h3></li></ul></div></section>
-<section class="gallery" id="gallery"><div class="wrap"><div class="gallery-grid" data-reveal-group><figure><img src="https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Barbershop interior with leather chairs" width="6000" height="4000" style="background:#5C514D" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Barber tools laid out on the counter" width="6000" height="4000" style="background:#9E7F62" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Hot towel shave at the barbershop" width="6240" height="4160" style="background:#544947" decoding="async" loading="lazy"></figure></div></div></section>
 <section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead">The prices above are the Yio Chu Kang Road (Serangoon) shop&#x27;s own list, in Singapore dollars. The Joo Chiat outlet, Autocutt Boardroom, publishes a separate list of its own — see the price table — with different names and rates for the same core services, plus extras like waxing and facials.</p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Haircut</h3><span class="leader"></span><b class="price">S$50</b></div><p>The standard cut at the Yio Chu Kang Road shop.</p></li><li><div class="row"><h3>Hot Towel Shave</h3><span class="leader"></span><b class="price">from S$60</b></div><p>A straight-razor shave finished with a hot towel and the shop&#x27;s Original fragrance cologne.</p></li><li><div class="row"><h3>Beard Trim</h3><span class="leader"></span><b class="price">from S$50</b></div><p>Beard shaping on its own or added to a cut.</p></li><li><div class="row"><h3>Hair Wash</h3><span class="leader"></span><b class="price">from S$15</b></div><p>A wash on its own, or added to any other service.</p></li><li><div class="row"><h3>Hair Tattoo</h3></div><p>A design shaved into the hair; priced once the design is agreed.</p></li></ol></div></section>
 <section class="prices" id="prices"><div class="wrap"><h2 data-reveal>Core services by location</h2><div data-reveal><div class="tiers tabs"><input type="radio" name="tiers-autocutt-barbershop" id="tiers-autocutt-barbershop-0" checked><input type="radio" name="tiers-autocutt-barbershop" id="tiers-autocutt-barbershop-1"><nav class="tab-labels" aria-label="Price groups"><label for="tiers-autocutt-barbershop-0">Yio Chu Kang Rd (Serangoon)</label><label for="tiers-autocutt-barbershop-1">Joo Chiat (Boardroom)</label></nav><div class="pane"><table class="tiers-table"><thead><tr><th>Service</th><th>Price</th></tr></thead><tbody><tr><td><b>Haircut / Regular Cut</b></td><td class="price">S$50</td></tr><tr><td><b>Beard Trim</b></td><td class="price">from S$50</td></tr><tr><td><b>Hot Towel Shave</b></td><td class="price">from S$60</td></tr><tr><td><b>Hair Wash</b></td><td class="price">from S$15</td></tr></tbody></table></div><div class="pane"><table class="tiers-table"><thead><tr><th>Service</th><th>Price</th></tr></thead><tbody><tr><td><b>Regular Cut</b></td><td class="price">S$40</td></tr><tr><td><b>Senior Cut</b></td><td class="price">S$60</td></tr><tr><td><b>Beard Trim</b></td><td class="price">S$50</td></tr><tr><td><b>Hot Towel Shave</b><span>+ Wash S$15, + Wash &amp; Massage S$35</span></td><td class="price">S$60</td></tr><tr><td><b>Head &amp; Scalp Spa</b></td><td class="price">S$50</td></tr><tr><td><b>Facial Cleansing</b></td><td class="price">S$65</td></tr><tr><td><b>Nose Waxing</b></td><td class="price">S$30</td></tr><tr><td><b>Ear Cleaning</b></td><td class="price">S$30</td></tr></tbody></table></div></div></div></div></section>
+<section class="team" id="team"><div class="wrap"><h2 data-reveal>The team</h2><ul class="team-grid" data-reveal-group><li><span class="avatar" aria-hidden="true">C</span><h3>Chris Seow</h3></li><li><span class="avatar" aria-hidden="true">A</span><h3>Aaron</h3></li><li><span class="avatar" aria-hidden="true">R</span><h3>Roger</h3></li><li><span class="avatar" aria-hidden="true">J</span><h3>Jamie</h3></li></ul></div></section>
+<section class="gallery" id="gallery"><div class="wrap"><div class="gallery-grid" data-reveal-group><figure><img src="https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Barbershop interior with leather chairs" width="6000" height="4000" style="background:#5C514D" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/13138476/pexels-photo-13138476.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Barber tools laid out on the counter" width="6000" height="4000" style="background:#9E7F62" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/5853394/pexels-photo-5853394.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Hot towel shave at the barbershop" width="6240" height="4160" style="background:#544947" decoding="async" loading="lazy"></figure></div></div></section>
+<section class="about" id="about"><div class="wrap"><div data-reveal><h2>About Autocutt Barbershop</h2><p>Autocutt Barbershop has operated in Singapore since 2016 (registered as AUTOCUTT BARBERSHOP, a sole proprietorship), styled as an old-school, vintage-inspired shop decorated with rare World War-era bikes and vintage automobile signs. A second outlet, Autocutt Boardroom, opened in Joo Chiat under its own registration in 2021.</p><p>The Yio Chu Kang Road shop covers the core list — haircut, hot towel shave, beard trim, hair wash and a hair tattoo service priced once the design is set — finished with the shop&#x27;s own Original fragrance cologne. The Joo Chiat Boardroom runs a separate price list, adding nose waxing, ear cleaning, a head and scalp spa and facial cleansing, plus a membership you can ask staff about. Autocutt also sells its own O&#x27;Boy pomade line and runs a barbering academy for newcomers to the trade.</p><div class="stats" data-reveal-group><div class="stat"><b data-count>2016</b><span>Established</span></div><div class="stat"><b data-count>2</b><span>Locations</span></div><div class="stat"><b data-count>S$40</b><span>Cuts from</span></div></div></div><div class="about-media" data-reveal><img src="https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/8867538/pexels-photo-8867538.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 45vw" alt="Barber trimming a beard with clippers" width="2832" height="4240" style="background:#A8968A" decoding="async" loading="lazy"></div></div></section>
+<section class="faq" id="faq"><div class="wrap"><h2 data-reveal>Questions people ask</h2><div data-reveal-group><details><summary>How much is a haircut?</summary><p>S$50 at the Yio Chu Kang Road shop. At the Joo Chiat Boardroom, a Regular Cut is S$40 and a Senior Cut is S$60.</p></details><details><summary>Do you take walk-ins?</summary><p>Walk-ins are welcome but subject to slot availability; the shop asks you to call, WhatsApp or message +65 9186 1233 to book ahead.</p></details><details><summary>What else does the Joo Chiat Boardroom offer?</summary><p>Beyond cuts and shaves, there&#x27;s nose waxing, ear cleaning, a head and scalp spa, and facial cleansing, plus a membership you can ask staff about.</p></details><details><summary>Do you sell your own products?</summary><p>Yes. The O&#x27;Boy line includes a Cuban Coffee matt paste, a lavender citrus waterbased pomade and a grooming spray.</p></details></div></div></section>
 <section class="find getting-there" id="find"><div class="wrap"><div data-reveal><h2 id="hours">Opening hours</h2><table class="hours" data-hours="[[&quot;Monday \u2013 Friday&quot;, &quot;10:00 \u2013 20:00&quot;], [&quot;Saturday \u2013 Sunday&quot;, &quot;10:00 \u2013 18:00&quot;]]"><tr><td>Monday – Friday</td><td>10:00 – 20:00</td></tr><tr><td>Saturday – Sunday</td><td>10:00 – 18:00</td></tr></table><h2>Getting to Yio Chu Kang</h2><ul class="transit"><li><b>MRT</b><span>Yio Chu Kang MRT (NS15)</span></li></ul><address><div>68 Yio Chu Kang Road, Singapore 545569 (segundo local: Autocutt Boardroom, 55 Joo Chiat Pl, Singapore 427779)</div><div>WhatsApp: <a href="https://wa.me/6591861233">+65 91861233</a></div><div><a href="https://instagram.com/autocutt" target="_blank" rel="noopener">Instagram @autocutt</a> · <a href="https://www.facebook.com/autocutt/" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=Autocutt+Barbershop+68+Yio+Chu+Kang+Road%2C+Singapore+545569+%28segundo+local%3A+Autocutt+Boardroom%2C+55+Joo+Chiat+Pl%2C+Singapore+427779%29" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to Autocutt Barbershop" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Autocutt+Barbershop+68+Yio+Chu+Kang+Road%2C+Singapore+545569+%28segundo+local%3A+Autocutt+Boardroom%2C+55+Joo+Chiat+Pl%2C+Singapore+427779%29&output=embed"></iframe><div class="map-tag">68 Yio Chu Kang Road</div></div></div></section>
 
 <section class="cta" id="contact">
@@ -552,7 +569,7 @@ footer .identity { font-size: 13px; margin: 0; }
   </div>
 </section>
 
-<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">A proposal from MNKY KONNEKT</p><h2>This is a draft for Autocutt Barbershop.</h2><p class="mnky-lead">Your website is already built. Pay only if you want it.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name and hosting for the first year, two rounds of changes.</li><li><b>Live in 7 working days or your money back</b> (the clock pauses while we wait on you).</li><li><b>A small studio in Spain</b> — you always deal with the same person, Miguel Ángel López.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20Autocutt%20Barbershop">WhatsApp Miguel</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=autocutt-barbershop">See the full offer</a></div><p class="mnky-note">Not yours to keep? Tell us and this draft comes down the same day.</p></div></section>
+<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">Built for Autocutt Barbershop by MNKY KONNEKT</p><h2>I made this website for Autocutt Barbershop.</h2><p class="mnky-lead">Have a look first. If you want it, I will finish it and put it on your own domain.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name, hosting for the first year and two rounds of changes.</li><li><b>Live within 7 working days of payment, or your money back.</b> The clock pauses while we wait for your logo, text or domain details.</li><li><b>MNKY KONNEKT is registered in Spain.</b> You will be dealing with me, Miguel Ángel López, from here to launch.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20Autocutt%20Barbershop">Ask me on WhatsApp</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=autocutt-barbershop">What happens next</a></div><p class="mnky-note">If it is not for you, tell us and we will take it down the same day.</p></div></section>
 
 <footer>
   <div class="wrap">
@@ -626,7 +643,9 @@ footer .identity { font-size: 13px; margin: 0; }
     new IntersectionObserver(function (es) { bar.classList.toggle('show', !es[0].isIntersecting); }, { threshold: 0.12 }).observe(hero);
   }
 
-  if (RM || !window.gsap || !window.ScrollTrigger) return;
+  /* pasada final 12/09: con prefers-reduced-motion se mantiene lo que responde al scroll (reveals, cifras) y se apagan
+     las animaciones autonomas (coreografia de carga, zoom de la foto, tallo). Miguel navega con `reduce` por RDP. */
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.SplitText) gsap.registerPlugin(SplitText);
@@ -645,7 +664,7 @@ footer .identity { font-size: 13px; margin: 0; }
     tl.from('.cred', { autoAlpha: 0, duration: .5 }, .9);
   }
   var ready = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]) : Promise.resolve();
-  ready.then(intro);
+  if (!RM) ready.then(intro);
 
   /* 4. Reveal unico al hacer scroll; grupos con stagger */
   gsap.utils.toArray('[data-reveal]').forEach(function (el) {
@@ -668,7 +687,7 @@ footer .identity { font-size: 13px; margin: 0; }
 
   /* 6. Tallo de floristeria que se dibuja al hacer scroll */
   var stem = document.querySelector('[data-family="florist"] .hero-motif path');
-  if (stem && stem.getTotalLength) {
+  if (!RM && stem && stem.getTotalLength) {
     var len = stem.getTotalLength();
     gsap.set(stem, { strokeDasharray: len, strokeDashoffset: len });
     gsap.to(stem, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.out', delay: .6 });

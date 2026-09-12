@@ -25,7 +25,7 @@
 <link rel="preload" as="image" imagesrcset="https://images.pexels.com/photos/32644933/pexels-photo-32644933.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/32644933/pexels-photo-32644933.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/32644933/pexels-photo-32644933.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/32644933/pexels-photo-32644933.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/32644933/pexels-photo-32644933.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" imagesizes="100vw" fetchpriority="high">
 <style>
 :root {
-  --ink: #F2F1EE; --paper: #131315; --tint: #232326; --brand: #1A1A1D; --accent: #C41E1E; --on-brand: #ffffff;
+  --ink: #F2F1EE; --paper: #131315; --tint: #232326; --brand: #1A1A1D; --accent: #C41E1E; --on-brand: #ffffff; --on-accent: #ffffff;
   --radius: 4px; --display: "Chakra Petch", Georgia, serif; --body: "Barlow Condensed", system-ui, sans-serif; --display-weight: 700;
   --muted: color-mix(in srgb, var(--ink) 64%, var(--paper));
   --line: color-mix(in srgb, var(--ink) 13%, var(--paper));
@@ -64,6 +64,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .proposal a:hover { text-decoration: underline; }
 @media (max-width: 760px) { .proposal { flex-wrap: nowrap; padding: 8px 14px; font-size: 12px; } .proposal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } }
+@media (max-width: 760px) { .proposal .sig { display: none; } }   /* 12/09: en movil manda la frase, no la firma */
+@media (max-width: 520px) { .proposal span { white-space: normal; } .proposal a { flex: none; } }   /* 12/09: la frase entera en dos lineas antes que cortar el nombre */
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
@@ -73,6 +75,16 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .nav ul a { text-decoration: none; font-size: 14px; font-weight: 600; color: var(--muted); }
 .nav ul a:hover { color: var(--ink); }
 @media (max-width: 820px) { .nav ul { display: none; } }
+/* en pantallas estrechas el nombre largo y el boton no caben en una linea y empujaban
+   la pagina hacia la derecha (scroll horizontal): aqui se les deja encoger */
+.nav .wrap > * { min-width: 0; }
+@media (max-width: 760px) {
+  .nav .wrap { gap: 12px; }
+  .brandmark { white-space: normal; font-size: 18px; line-height: 1.12; overflow-wrap: anywhere; }
+  .nav .btn { padding: 12px 14px; font-size: 14px; }
+}
+/* por debajo de 520px no caben nombre y boton: el hero ya trae su propia llamada justo debajo */
+@media (max-width: 520px) { .nav .btn { display: none; } }
 
 /* ---------- botones ---------- */
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease; white-space: nowrap; }
@@ -134,7 +146,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 [data-hero="block"] .hero-media { aspect-ratio: 4 / 3; border-radius: var(--radius) var(--radius) 0 0; }
 [data-hero="block"] .hero .lead { color: color-mix(in srgb, var(--on-brand) 78%, transparent); }
 [data-hero="block"] .eyebrow, [data-hero="block"] .hl { color: var(--accent); }
-[data-hero="block"] .btn-brand { background: var(--accent); color: #111; }
+[data-hero="block"] .btn-brand { background: var(--accent); color: var(--on-accent); }
 [data-hero="block"] .btn-ghost { color: inherit; }
 @media (max-width: 860px) {
   [data-hero="block"] .hero-body { grid-template-columns: 1fr; }
@@ -181,7 +193,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .services-head .lead { margin-top: 16px; }
 .services-list { list-style: none; margin: 0; padding: 0; counter-reset: svc; }
 .services-list li { counter-increment: svc; }
-.services-list .row { display: flex; align-items: baseline; gap: 14px; }
+.services-list .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.services-list .row h3 { min-width: 0; overflow-wrap: break-word; }
 .services-list .leader { flex: 1; border-bottom: 2px dotted color-mix(in srgb, var(--ink) 30%, transparent); transform: translateY(-6px); min-width: 24px; }
 .services-list .price { white-space: nowrap; }
 .services-list p { color: var(--muted); margin: 6px 0 0; font-size: 16px; max-width: 54ch; }
@@ -305,7 +318,7 @@ address a { text-decoration: none; font-weight: 600; }
 .cta .wrap { display: grid; grid-template-columns: 1.4fr .6fr; gap: 32px; align-items: end; }
 .cta h2 { font-size: clamp(38px, 6vw, 84px); max-width: 14ch; }
 .cta .actions { justify-content: flex-end; }
-.cta .btn-brand { background: var(--accent); color: #111; }
+.cta .btn-brand { background: var(--accent); color: var(--on-accent); }
 .cta .btn-ghost { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, transparent); }
 [data-hero="full"] .cta { background: var(--brand); color: var(--on-brand); }
 [data-hero="full"] .cta .btn-ghost { color: inherit; }
@@ -324,6 +337,9 @@ footer a { color: inherit; }
 .mobile-bar a { flex: 1; text-align: center; justify-content: center; padding: 13px 10px; font-size: 15px; }
 .mobile-bar.js:not(.show) { transform: translateY(110%); }
 @media (max-width: 760px) { .mobile-bar { display: flex; } }
+/* pasada final 12/09: la barra usa el fondo del papel, no el del hero, asi que sus botones fantasma van en tinta (antes heredaban el blanco de [data-hero="full"] y desaparecian en paletas claras) */
+[data-hero="full"] .mobile-bar .btn-ghost { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 38%, transparent); }
+[data-hero="full"] .mobile-bar .btn-ghost:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* ---------- detalles por familia (uno por familia, no mas) ---------- */
 /* dental: arco fino bajo el titular */
@@ -489,7 +505,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 @media (max-width: 760px) { [data-hero="full"] .hero { min-height: min(70vh, 640px); } [data-hero="full"] .hero-body { padding-top: 96px; } section { padding: clamp(44px, 8vw, 64px) 0; } }
 /* --- S4: logo real del negocio en la nav */
 .brandmark img.logo { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
-@media (max-width: 760px) { .brandmark img.logo { height: 32px; max-width: 140px; } }
+@media (max-width: 760px) { .brandmark img.logo { height: 40px; max-width: 170px; } }   /* 12/09: a 32 px la marca no se leia */
 /* --- S4: bloque de cierre de MNKY (tokens propios: no es un bloque del negocio) */
 .mnky { background: #F9F6EF; color: #1b1b1f; border-top: 6px solid #237A77; font-family: "Bricolage Grotesque", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
 .mnky .wrap { max-width: 860px; }
@@ -510,7 +526,7 @@ footer .identity { font-size: 13px; margin: 0; }
 </style>
 </head>
 <body>
-<div class="proposal"><span><strong>Bella Web Bali</strong> · A website proposal for Ubud Scooter Rental — ready to go live when you say so.</span><a href="https://previews.mnkykonnekt.com/offer-bali/?ref=ubud-scooter-rental">See how ›</a></div>
+<div class="proposal"><span>I built this website for Ubud Scooter Rental. Have a look and decide.<span class="sig"> · <strong>Miguel Ángel López · MNKY KONNEKT</strong></span></span><a href="https://previews.mnkykonnekt.com/offer-bali/?ref=ubud-scooter-rental">What happens next ›</a></div>
 <nav class="nav">
   <div class="wrap">
     <a class="brandmark" href="#top">Ubud Scooter Rental</a>
@@ -623,7 +639,9 @@ footer .identity { font-size: 13px; margin: 0; }
     new IntersectionObserver(function (es) { bar.classList.toggle('show', !es[0].isIntersecting); }, { threshold: 0.12 }).observe(hero);
   }
 
-  if (RM || !window.gsap || !window.ScrollTrigger) return;
+  /* pasada final 12/09: con prefers-reduced-motion se mantiene lo que responde al scroll (reveals, cifras) y se apagan
+     las animaciones autonomas (coreografia de carga, zoom de la foto, tallo). Miguel navega con `reduce` por RDP. */
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.SplitText) gsap.registerPlugin(SplitText);
@@ -642,7 +660,7 @@ footer .identity { font-size: 13px; margin: 0; }
     tl.from('.cred', { autoAlpha: 0, duration: .5 }, .9);
   }
   var ready = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]) : Promise.resolve();
-  ready.then(intro);
+  if (!RM) ready.then(intro);
 
   /* 4. Reveal unico al hacer scroll; grupos con stagger */
   gsap.utils.toArray('[data-reveal]').forEach(function (el) {
@@ -665,7 +683,7 @@ footer .identity { font-size: 13px; margin: 0; }
 
   /* 6. Tallo de floristeria que se dibuja al hacer scroll */
   var stem = document.querySelector('[data-family="florist"] .hero-motif path');
-  if (stem && stem.getTotalLength) {
+  if (!RM && stem && stem.getTotalLength) {
     var len = stem.getTotalLength();
     gsap.set(stem, { strokeDasharray: len, strokeDashoffset: len });
     gsap.to(stem, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.out', delay: .6 });

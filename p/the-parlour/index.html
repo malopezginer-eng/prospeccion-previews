@@ -25,7 +25,7 @@
 <link rel="preload" as="image" imagesrcset="https://images.pexels.com/photos/7195808/pexels-photo-7195808.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/7195808/pexels-photo-7195808.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/7195808/pexels-photo-7195808.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/7195808/pexels-photo-7195808.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/7195808/pexels-photo-7195808.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" imagesizes="100vw" fetchpriority="high">
 <style>
 :root {
-  --ink: #221B1F; --paper: #F6F2F3; --tint: #E9E0E4; --brand: #6B5A66; --accent: #C98C8C; --on-brand: #ffffff;
+  --ink: #221B1F; --paper: #F6F2F3; --tint: #E9E0E4; --brand: #6B5A66; --accent: #C98C8C; --on-brand: #ffffff; --on-accent: #111111;
   --radius: 12px; --display: "Fraunces", Georgia, serif; --body: "Jost", system-ui, sans-serif; --display-weight: 400;
   --muted: color-mix(in srgb, var(--ink) 64%, var(--paper));
   --line: color-mix(in srgb, var(--ink) 13%, var(--paper));
@@ -64,6 +64,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .proposal a { color: #9fe3c7; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .proposal a:hover { text-decoration: underline; }
 @media (max-width: 760px) { .proposal { flex-wrap: nowrap; padding: 8px 14px; font-size: 12px; } .proposal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } }
+@media (max-width: 760px) { .proposal .sig { display: none; } }   /* 12/09: en movil manda la frase, no la firma */
+@media (max-width: 520px) { .proposal span { white-space: normal; } .proposal a { flex: none; } }   /* 12/09: la frase entera en dos lineas antes que cortar el nombre */
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
@@ -73,6 +75,16 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .nav ul a { text-decoration: none; font-size: 14px; font-weight: 600; color: var(--muted); }
 .nav ul a:hover { color: var(--ink); }
 @media (max-width: 820px) { .nav ul { display: none; } }
+/* en pantallas estrechas el nombre largo y el boton no caben en una linea y empujaban
+   la pagina hacia la derecha (scroll horizontal): aqui se les deja encoger */
+.nav .wrap > * { min-width: 0; }
+@media (max-width: 760px) {
+  .nav .wrap { gap: 12px; }
+  .brandmark { white-space: normal; font-size: 18px; line-height: 1.12; overflow-wrap: anywhere; }
+  .nav .btn { padding: 12px 14px; font-size: 14px; }
+}
+/* por debajo de 520px no caben nombre y boton: el hero ya trae su propia llamada justo debajo */
+@media (max-width: 520px) { .nav .btn { display: none; } }
 
 /* ---------- botones ---------- */
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 16px; line-height: 1; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease; white-space: nowrap; }
@@ -134,7 +146,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 [data-hero="block"] .hero-media { aspect-ratio: 4 / 3; border-radius: var(--radius) var(--radius) 0 0; }
 [data-hero="block"] .hero .lead { color: color-mix(in srgb, var(--on-brand) 78%, transparent); }
 [data-hero="block"] .eyebrow, [data-hero="block"] .hl { color: var(--accent); }
-[data-hero="block"] .btn-brand { background: var(--accent); color: #111; }
+[data-hero="block"] .btn-brand { background: var(--accent); color: var(--on-accent); }
 [data-hero="block"] .btn-ghost { color: inherit; }
 @media (max-width: 860px) {
   [data-hero="block"] .hero-body { grid-template-columns: 1fr; }
@@ -181,7 +193,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 .services-head .lead { margin-top: 16px; }
 .services-list { list-style: none; margin: 0; padding: 0; counter-reset: svc; }
 .services-list li { counter-increment: svc; }
-.services-list .row { display: flex; align-items: baseline; gap: 14px; }
+.services-list .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.services-list .row h3 { min-width: 0; overflow-wrap: break-word; }
 .services-list .leader { flex: 1; border-bottom: 2px dotted color-mix(in srgb, var(--ink) 30%, transparent); transform: translateY(-6px); min-width: 24px; }
 .services-list .price { white-space: nowrap; }
 .services-list p { color: var(--muted); margin: 6px 0 0; font-size: 16px; max-width: 54ch; }
@@ -305,7 +318,7 @@ address a { text-decoration: none; font-weight: 600; }
 .cta .wrap { display: grid; grid-template-columns: 1.4fr .6fr; gap: 32px; align-items: end; }
 .cta h2 { font-size: clamp(38px, 6vw, 84px); max-width: 14ch; }
 .cta .actions { justify-content: flex-end; }
-.cta .btn-brand { background: var(--accent); color: #111; }
+.cta .btn-brand { background: var(--accent); color: var(--on-accent); }
 .cta .btn-ghost { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, transparent); }
 [data-hero="full"] .cta { background: var(--brand); color: var(--on-brand); }
 [data-hero="full"] .cta .btn-ghost { color: inherit; }
@@ -324,6 +337,9 @@ footer a { color: inherit; }
 .mobile-bar a { flex: 1; text-align: center; justify-content: center; padding: 13px 10px; font-size: 15px; }
 .mobile-bar.js:not(.show) { transform: translateY(110%); }
 @media (max-width: 760px) { .mobile-bar { display: flex; } }
+/* pasada final 12/09: la barra usa el fondo del papel, no el del hero, asi que sus botones fantasma van en tinta (antes heredaban el blanco de [data-hero="full"] y desaparecian en paletas claras) */
+[data-hero="full"] .mobile-bar .btn-ghost { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 38%, transparent); }
+[data-hero="full"] .mobile-bar .btn-ghost:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* ---------- detalles por familia (uno por familia, no mas) ---------- */
 /* dental: arco fino bajo el titular */
@@ -489,7 +505,7 @@ table.tiers-table td.price { font-family: var(--display); font-weight: var(--dis
 @media (max-width: 760px) { [data-hero="full"] .hero { min-height: min(70vh, 640px); } [data-hero="full"] .hero-body { padding-top: 96px; } section { padding: clamp(44px, 8vw, 64px) 0; } }
 /* --- S4: logo real del negocio en la nav */
 .brandmark img.logo { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
-@media (max-width: 760px) { .brandmark img.logo { height: 32px; max-width: 140px; } }
+@media (max-width: 760px) { .brandmark img.logo { height: 40px; max-width: 170px; } }   /* 12/09: a 32 px la marca no se leia */
 /* --- S4: bloque de cierre de MNKY (tokens propios: no es un bloque del negocio) */
 .mnky { background: #F9F6EF; color: #1b1b1f; border-top: 6px solid #237A77; font-family: "Bricolage Grotesque", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
 .mnky .wrap { max-width: 860px; }
@@ -510,7 +526,7 @@ footer .identity { font-size: 13px; margin: 0; }
 </style>
 </head>
 <body>
-<div class="proposal"><span><strong>MNKY KONNEKT SL</strong> · A website proposal for The Parlour — ready to go live when you say so.</span><a href="https://previews.mnkykonnekt.com/offer/?ref=the-parlour">See how ›</a></div>
+<div class="proposal"><span>I built this website for The Parlour. Have a look and decide.<span class="sig"> · <strong>Miguel Ángel López · MNKY KONNEKT</strong></span></span><a href="https://previews.mnkykonnekt.com/offer/?ref=the-parlour">What happens next ›</a></div>
 <nav class="nav">
   <div class="wrap">
     <a class="brandmark" href="#top">The Parlour</a>
@@ -536,12 +552,14 @@ footer .identity { font-size: 13px; margin: 0; }
   
 </header>
 
+<section class="cred"><ul class="wrap"><li><b class="small">Kevin Murphy and Bellami Professional partner salon</b></li><li><b class="small">Singapore-registered since 2016</b></li><li><b class="small">Two minutes from Kovan MRT</b></li></ul></section>
 <section class="services" id="services"><div class="wrap services-wrap"><div class="services-head" data-reveal><h2>What we do</h2><p class="lead">Prices are the ranges published on their services page in Singapore dollars; they say prices are subject to change at any time and to ask your stylist. Haircuts include shampoo, blow dry and style. Occasion work is priced separately: up-do from S$120, just curls from S$50, makeup S$120, up-do with makeup S$310, bridal and fashion styling from S$350. Extensions and The Scalp Reset are quoted after a consultation.</p></div><ol class="services-list" data-reveal-group><li><div class="row"><h3>Cuts and blow dry</h3><span class="leader"></span><b class="price">from S$80</b></div><p>Precision cutting on straight, wavy and curly hair, Asian and Caucasian alike. Every haircut includes shampoo, blow dry and style. A wash and blow dry on its own starts from S$50.</p></li><li><div class="row"><h3>Colour, balayage and colour correction</h3><span class="leader"></span><b class="price">from S$170</b></div><p>Roots, all-over colour and foil highlights, plus custom colour, balayage, ombre and foilyage. Colour correction is what the founder is known for. Toner and root smudges can each be added to any colour service for S$50.</p></li><li><div class="row"><h3>Cezanne smoothing treatment</h3><span class="leader"></span><b class="price">from S$300</b></div><p>A formaldehyde-free smoothing treatment for Singapore frizz. It shortens styling time, adds shine and restores bonds on broken or damaged hair.</p></li><li><div class="row"><h3>Kevin Murphy and bond-building treatments</h3><span class="leader"></span><b class="price">from S$50</b></div><p>Hair-repair treatments including K18, Redken Acidic Bonding Concentrate and Kevin Murphy, for hair damaged by bleaching, balayage, colour correction, heat styling or chemical services. Book a standalone treatment with a blow dry, or add it to any other service.</p></li><li><div class="row"><h3>Bellami hair extensions</h3></div><p>The salon is a certified Bellami Professional partner, working with 100% Remy human hair in tape, weft and keratin tip methods. Priced after a consultation, since length and volume change the quote.</p></li><li><div class="row"><h3>The Scalp Reset</h3></div><p>A scalp recovery programme for thinning, shedding and postpartum or stress-related hair loss. Starts with an in-salon or virtual consultation, then a 6 to 12 week plan applied twice a week.</p></li></ol></div></section>
 <section class="prices" id="prices"><div class="wrap"><h2 data-reveal>Haircut by stylist level</h2><div data-reveal><div class="tiers"><table class="tiers-table"><thead><tr><th>Stylist</th><th>Price</th></tr></thead><tbody><tr><td><b>Stylist</b><span>Includes shampoo, blow dry and style</span></td><td class="price">S$80 – S$100</td></tr><tr><td><b>Director</b><span>Includes shampoo, blow dry and style</span></td><td class="price">S$100 – S$150</td></tr></tbody></table></div></div></div></section>
 <section class="team" id="team"><div class="wrap"><h2 data-reveal>The team</h2><ul class="team-grid" data-reveal-group><li><span class="avatar" aria-hidden="true">J</span><h3>Jessi</h3><p class="role">Founder</p><p>American stylist, qualified in 2003, trained in Chicago, New York, San Francisco and Singapore. Kevin Murphy Style Master, Schwarzkopf Master Colorist, certified Brazilian Blowout stylist and Bumble and Bumble University graduate. Natural highlighting, balayage, colour correction and precision cutting; also teaches one-to-one styling classes.</p></li><li><span class="avatar" aria-hidden="true">S</span><h3>Sylvia</h3><p class="role">Stylist</p><p>Studied at the London School of Arts, then completed a year on The Parlour apprentice programme under Jessi. Certified Cezanne stylist. Natural highlighting, balayage, creative colour, smoothing and Bellami extensions in tape, weft and keratin tip.</p></li><li><span class="avatar" aria-hidden="true">K</span><h3>Katie</h3><p class="role">Stylist</p><p>Originally from Vietnam, a graduate of Kimage and The Parlour Academy. Certified in Bellami keratin and tape extensions. Colour, balayage and smoothing treatments.</p></li><li><span class="avatar" aria-hidden="true">S</span><h3>Sarah</h3><p class="role">Master Stylist</p><p>Over ten years in the industry, after an apprenticeship at The Parlour. Precision cutting, colour, colour correction and styling. In the salon three days a month, so book early.</p></li><li><span class="avatar" aria-hidden="true">C</span><h3>Cindy Goh</h3><p class="role">Master Stylist</p><p>From Singapore, with over 15 years as a makeup artist and 7 years of hairdressing in Melbourne. Colour, precision cuts and styling.</p></li></ul></div></section>
 <section class="gallery" id="gallery"><div class="wrap"><div class="gallery-grid" data-reveal-group><figure><img src="https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/7384654/pexels-photo-7384654.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Salon mirror and chair with warm lighting" width="5184" height="2912" style="background:#4F4F4F" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/8834022/pexels-photo-8834022.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Hairdresser cutting a client&#x27;s hair" width="5892" height="3933" style="background:#9E9B94" decoding="async" loading="lazy"></figure><figure><img src="https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/7750130/pexels-photo-7750130.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 760px) 80vw, 40vw" alt="Hair colouring at the salon" width="7360" height="4912" style="background:#9E8D84" decoding="async" loading="lazy"></figure></div></div></section>
 <section class="reviews" id="reviews"><div class="wrap"><h2 data-reveal>In their words</h2><div class="reviews-grid" data-reveal-group><figure><blockquote><p>“Jess&#x27;s cuts and colours are better than I enjoyed in London, and more affordable.”</p></blockquote><figcaption>Customer review · published on <a href="https://www.theparloursg.com/reviews" target="_blank" rel="noopener">theparloursg.com</a></figcaption></figure><figure><blockquote><p>“Jessie has inspired me to fight the humidity head on and style my hair again.”</p></blockquote><figcaption>Customer review · published on <a href="https://www.theparloursg.com/reviews" target="_blank" rel="noopener">theparloursg.com</a></figcaption></figure><figure><blockquote><p>“I&#x27;m a fussy blonde and can&#x27;t stand yellow in my hair, so I can&#x27;t live without Jesse&#x27;s way with the toner and Olaplex.”</p></blockquote><figcaption>Customer review · published on <a href="https://www.theparloursg.com/reviews" target="_blank" rel="noopener">theparloursg.com</a></figcaption></figure><figure><blockquote><p>“I know my hair is in good hands and I am very particular about my (difficult to manage) hair! Jessi is a hair wizard!”</p></blockquote><figcaption>Customer review · published on <a href="https://www.theparloursg.com/reviews" target="_blank" rel="noopener">theparloursg.com</a></figcaption></figure></div></div></section>
 <section class="about" id="about"><div class="wrap"><div data-reveal><h2>About The Parlour</h2><p>The Parlour is a small hair studio on Lowland Road in Kovan, a two-minute walk from the MRT. It was started by Jessi, an American stylist who qualified in 2003 and has worked in Chicago, New York, San Francisco and Singapore. Expat Living readers voted the salon one of the best in the city for expats, and The Honeycombers has picked it for blonde highlights.</p><p>The five stylists trained in different places, so hair that behaves differently gets treated differently. The salon partners with Kevin Murphy and Bellami Professional, stocks Olaplex, and does Cezanne smoothing for Singapore humidity. Colour correction and blonde work are the jobs people cross the island for, and there is now a scalp programme for thinning hair. They say the diary fills weeks ahead, so book early.</p><div class="stats" data-reveal-group><div class="stat"><b data-count>2016</b><span>Established</span></div><div class="stat"><b data-count>5</b><span>Stylists</span></div><div class="stat"><b>Kovan</b><span>Neighbourhood</span></div></div></div><div class="about-media" data-reveal><img src="https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=940" srcset="https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=480 480w, https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=640 640w, https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=940 940w, https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=1280 1280w, https://images.pexels.com/photos/7440135/pexels-photo-7440135.jpeg?auto=compress&cs=tinysrgb&w=1880 1880w" sizes="(max-width: 860px) 100vw, 45vw" alt="Stylist washing a client&#x27;s hair at the basin" width="5304" height="7426" style="background:#908783" decoding="async" loading="lazy"></div></div></section>
+<section class="faq" id="faq"><div class="wrap"><h2 data-reveal>Questions people ask</h2><div data-reveal-group><details><summary>How far ahead should I book?</summary><p>Weeks, ideally. The salon is small and they say the diary fills up. Book online through Fresha or call +65 8106 8099. Sarah is only in three days a month, so book her earlier still.</p></details><details><summary>Where exactly is it?</summary><p>33 Lowland Road, Unit H, Singapore 547429. About two minutes on foot from Kovan MRT on the North East line. They ask you to use the postcode so you don&#x27;t end up at the wrong door.</p></details><details><summary>Do you work with Asian hair as well as Caucasian hair?</summary><p>Yes. They cut and colour straight, wavy and curly hair, Asian and Caucasian, and the stylists trained in five different countries.</p></details><details><summary>What is The Scalp Reset?</summary><p>A scalp programme for thinning, shedding, and postpartum or hormonal hair loss. It starts with a consultation in the salon or online, then a 6 to 12 week plan applied twice a week.</p></details></div></div></section>
 <section class="find getting-there" id="find"><div class="wrap"><div data-reveal><h2>Getting to Kovan</h2><ul class="transit"><li><b>MRT</b><span>Kovan MRT (NE13) · about 2 min on foot</span></li><li><b>Look for</b><span>Unit H in the row of shops at 33 Lowland Road, round the corner from Kovan MRT and Heartland Mall Kovan</span></li></ul><address><div>33 Lowland Road, #00-H, Singapore 547429</div><div>Phone: <a href="tel:6581068099">+65 8106 8099</a></div><div><a href="https://instagram.com/theparloursg" target="_blank" rel="noopener">Instagram @theparloursg</a> · <a href="https://www.facebook.com/ExpatSalonSg/" target="_blank" rel="noopener">Facebook</a></div><div>Languages: English</div></address><div class="actions"><a class="btn btn-ghost btn-sm" href="https://www.google.com/maps/search/?api=1&query=The+Parlour+33+Lowland+Road%2C+%2300-H%2C+Singapore+547429" target="_blank" rel="noopener">Open in Google Maps</a></div></div><div class="map" data-reveal><iframe title="Map to The Parlour" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=The+Parlour+33+Lowland+Road%2C+%2300-H%2C+Singapore+547429&output=embed"></iframe><div class="map-tag">33 Lowland Road</div></div></div></section>
 
 <section class="cta" id="contact">
@@ -551,7 +569,7 @@ footer .identity { font-size: 13px; margin: 0; }
   </div>
 </section>
 
-<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">A proposal from MNKY KONNEKT</p><h2>This is a draft for The Parlour.</h2><p class="mnky-lead">Your website is already built. Pay only if you want it.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name and hosting for the first year, two rounds of changes.</li><li><b>Live in 7 working days or your money back</b> (the clock pauses while we wait on you).</li><li><b>A small studio in Spain</b> — you always deal with the same person, Miguel Ángel López.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20The%20Parlour">WhatsApp Miguel</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=the-parlour">See the full offer</a></div><p class="mnky-note">Not yours to keep? Tell us and this draft comes down the same day.</p></div></section>
+<section class="mnky" id="proposal"><div class="wrap"><p class="mnky-kicker">Built for The Parlour by MNKY KONNEKT</p><h2>I made this website for The Parlour.</h2><p class="mnky-lead">Have a look first. If you want it, I will finish it and put it on your own domain.</p><ul class="mnky-points"><li><b>S$590 once.</b> A .com in your name, hosting for the first year and two rounds of changes.</li><li><b>Live within 7 working days of payment, or your money back.</b> The clock pauses while we wait for your logo, text or domain details.</li><li><b>MNKY KONNEKT is registered in Spain.</b> You will be dealing with me, Miguel Ángel López, from here to launch.</li></ul><div class="mnky-actions"><a class="mnky-btn" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20the%20draft%20for%20The%20Parlour">Ask me on WhatsApp</a><a class="mnky-link" href="https://previews.mnkykonnekt.com/offer/?ref=the-parlour">What happens next</a></div><p class="mnky-note">If it is not for you, tell us and we will take it down the same day.</p></div></section>
 
 <footer>
   <div class="wrap">
@@ -625,7 +643,9 @@ footer .identity { font-size: 13px; margin: 0; }
     new IntersectionObserver(function (es) { bar.classList.toggle('show', !es[0].isIntersecting); }, { threshold: 0.12 }).observe(hero);
   }
 
-  if (RM || !window.gsap || !window.ScrollTrigger) return;
+  /* pasada final 12/09: con prefers-reduced-motion se mantiene lo que responde al scroll (reveals, cifras) y se apagan
+     las animaciones autonomas (coreografia de carga, zoom de la foto, tallo). Miguel navega con `reduce` por RDP. */
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.SplitText) gsap.registerPlugin(SplitText);
@@ -644,7 +664,7 @@ footer .identity { font-size: 13px; margin: 0; }
     tl.from('.cred', { autoAlpha: 0, duration: .5 }, .9);
   }
   var ready = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]) : Promise.resolve();
-  ready.then(intro);
+  if (!RM) ready.then(intro);
 
   /* 4. Reveal unico al hacer scroll; grupos con stagger */
   gsap.utils.toArray('[data-reveal]').forEach(function (el) {
@@ -667,7 +687,7 @@ footer .identity { font-size: 13px; margin: 0; }
 
   /* 6. Tallo de floristeria que se dibuja al hacer scroll */
   var stem = document.querySelector('[data-family="florist"] .hero-motif path');
-  if (stem && stem.getTotalLength) {
+  if (!RM && stem && stem.getTotalLength) {
     var len = stem.getTotalLength();
     gsap.set(stem, { strokeDasharray: len, strokeDashoffset: len });
     gsap.to(stem, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.out', delay: .6 });
